@@ -13,7 +13,8 @@ class Sidebar(Application):
         self.owner_and_wiki_maps_without_ownership = {}
 
     def run(self):
-        super().run()
+        self.__target_paths__()
+        self.__owner_and_wiki_maps__()
         self.__filter_owners__()
         self.__update_wiki_list__()
         with open(self.path_to_sidebar, 'w') as f:

@@ -13,7 +13,8 @@ class Home(Application):
         self.owner_and_wiki_maps_without_ownership = {}
 
     def run(self):
-        super().run()
+        self.__target_paths__()
+        self.__owner_and_wiki_maps__()
         self.__filter_owners__()
         self.__write_home_template__()
         self.__update_home_passage__()

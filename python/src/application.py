@@ -11,8 +11,7 @@ class Application:
         self.owner_and_wiki_maps = {}
 
     def run(self):
-        self.__target_paths__()
-        self.__owner_and_wiki_maps__()
+        raise NotImplementedError('This method must be implemented in each subclass.')
 
     # private
 
@@ -27,6 +26,7 @@ class Application:
 
     # @return [dict<str => list<str>>]
     def __owner_and_wiki_maps__(self):
+        self.__target_paths__()
         for target_path in self.target_paths:
             with open(target_path) as f:
                 wiki = os.path.basename(target_path)
