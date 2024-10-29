@@ -3,9 +3,7 @@ require_relative './application'
 
 class Directory < Application
   def run
-    mkdirs
-    mv_wikis_to_dirs
-    delete_empty_dirs
+    [mkdirs, mv_wikis_to_dirs, delete_empty_dirs]
   end
 
   private
@@ -27,18 +25,24 @@ class Directory < Application
   # @return [Array<String>]
   def mkdirs
     return unless target_dirs
-    target_dirs.each { |target_dir|
+    target_dirs.each.with_object([]) { |target_dir, paths|
       path = File.join(base_path, target_dir)
-      FileUtils.mkdir_p(path) unless Dir.exist?(path)
+      unless Dir.exist?(path)
+        FileUtils.mkdir_p(path)
+        paths << path
+      end
     }
   end
 
   # @return [Array<String>]
   def mv_wikis_to_dirs
-    owner_and_wiki_maps.each { |owner, wikis|
+    owner_and_wiki_maps.each.with_object([]) { |(owner, wikis), diffs|
       wikis.each { |wiki|
         dest_path = File.join(base_path, owner.gsub(/\@/, ''), wiki)
-        FileUtils.move(source_path_maps[wiki], dest_path) unless source_path_maps[wiki] == dest_path
+        unless source_path_maps[wiki] == dest_path
+          FileUtils.move(source_path_maps[wiki], dest_path)
+          diffs << "#{source_path_maps[wiki]} => #{dest_path}"
+        end
       }
     }
   end
@@ -46,7 +50,7 @@ class Directory < Application
   # @return [Array<String>]
   def delete_empty_dirs
     dirs = Dir[File.join(base_path, '**')].uniq
-    dirs.each { |dir|
+    dirs.each.with_object([]) { |dir, dirs|
       # [NOTE] Navigation pages are needed.
       if dir == path_to_home || dir == path_to_sidebar
         next
@@ -58,6 +62,7 @@ class Directory < Application
         next
       else
         FileUtils.rm_rf(dir)
+        dirs << dir
       end
     }
   end

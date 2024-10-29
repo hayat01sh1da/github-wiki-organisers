@@ -17,9 +17,10 @@ class Directory(Application):
         self.__owner_and_wiki_maps__()
         self.__source_path_maps__()
         self.__target_dirs__()
-        self.__mkdirs__()
-        self.__mv_wikis_to_dirs__()
-        self.__delete_empty_dirs__()
+        paths = self.__mkdirs__()
+        diffs = self.__mv_wikis_to_dirs__()
+        dirs  = self.__delete_empty_dirs__()
+        return paths, diffs, dirs
 
     # private
 
@@ -36,18 +37,22 @@ class Directory(Application):
 
     # @return None
     def __mkdirs__(self):
+        paths = []
         if self.target_dirs:
             for target_dir in self.target_dirs:
                 path = os.path.join(self.base_path, re.sub(r'@', '', target_dir))
                 if not os.path.exists(path):
                     os.makedirs(path)
+                    paths.append(path)
                 else:
                     continue
+            return paths
         else:
             return
 
     # @return [str]
     def __mv_wikis_to_dirs__(self):
+        diffs = []
         for owner, wikis in self.owner_and_wiki_maps.items():
             for wiki in wikis:
                 dest_path = os.path.join(self.base_path, re.sub(r'@', '', owner), wiki)
@@ -55,9 +60,12 @@ class Directory(Application):
                     continue
                 else:
                     shutil.move(self.source_path_maps[wiki], dest_path)
+                    diffs.append('{original_path} => {dest_path}'.format(original_path = self.source_path_maps[wiki], dest_path = dest_path))
+        return diffs
 
     # @return None
     def __delete_empty_dirs__(self):
+        dirs  = []
         paths = list(set((glob.glob(os.path.join(self.base_path, '**'), recursive = True))))
 
         for path in paths:
@@ -73,3 +81,5 @@ class Directory(Application):
             else:
                 if len(os.listdir(path)) == 0:
                     os.removedirs(path)
+                    dirs.append(path)
+        return dirs

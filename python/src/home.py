@@ -4,7 +4,10 @@ import re
 sys.path.append('./src')
 from application import Application
 
+HOME_URL = 'https://github.com/hayat01sh1da/github-wiki-categorisers/wiki'
+
 class Home(Application):
+
     def __init__(self, base_path = os.path.join('..', '..')):
         super().__init__(base_path)
         self.base_owner_url                        = 'https://github.com/orgs/quipper/teams/'
@@ -20,6 +23,7 @@ class Home(Application):
         self.__update_home_passage__()
         with open(self.path_to_home, 'w') as f:
             f.write(self.home_passage.rstrip() + '\n')
+        return HOME_URL
 
     # private
 

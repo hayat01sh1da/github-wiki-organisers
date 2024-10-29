@@ -1,6 +1,8 @@
 require_relative './application'
 
 class Home < Application
+  HOME_URL = 'https://github.com/hayat01sh1da/github-wiki-categorisers/wiki'.freeze
+
   def initialize(base_path)
     super(base_path)
     @base_owner_url = 'https://github.com/orgs/quipper/teams/'
@@ -11,6 +13,7 @@ class Home < Application
     write_home_template
     update_home_passage
     IO.write(path_to_home, home_passage.chomp)
+    HOME_URL
   end
 
   private
