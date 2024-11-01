@@ -28,6 +28,5 @@ jobs:
         with:
           ruby-version: '3.3.5'
       - name: Run MiniTest
-        run: |
-          cd ./ruby
-          rake
+        working-directory: ./ruby
+        run: rake
