@@ -4,7 +4,7 @@ import re
 sys.path.append('./src')
 from application import Application
 
-HOME_URL = 'https://github.com/hayat01sh1da/github-wiki-categorisers/wiki'
+HOME_URL = 'https://github.com/hayat01sh1da/github-wiki-organisers/wiki'
 
 class Home(Application):
 
