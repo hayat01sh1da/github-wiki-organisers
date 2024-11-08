@@ -5,8 +5,6 @@ name: UnitTest
 
 on:
   push:
-    branches:
-      - master
     paths:
       - ./python
       - '!./python/README.md'

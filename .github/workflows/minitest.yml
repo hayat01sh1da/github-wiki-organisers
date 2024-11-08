@@ -9,8 +9,6 @@ name: MiniTest
 
 on:
   push:
-    branches:
-      - master
     paths:
       - ./ruby
       - '!./ruby/README.md'
