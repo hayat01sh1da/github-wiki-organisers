@@ -9,15 +9,19 @@ name: MiniTest
 
 on:
   push:
+    branches:
+      - master
     paths:
-      - ./ruby
-      - '!./ruby/README.md'
+      - '.github/workflows/minitest.yml'
+      - 'ruby/Rakefile'
+      - '**.rb'
   pull_request:
     branches:
       - master
     paths:
-      - ./ruby
-      - '!./ruby/README.md'
+      - '.github/workflows/minitest.yml'
+      - 'ruby/Rakefile'
+      - '**.rb'
 
 permissions:
   contents: read

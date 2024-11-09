@@ -6,14 +6,14 @@ name: UnitTest
 on:
   push:
     paths:
-      - ./python
-      - '!./python/README.md'
+      - '.github/workflows/unittest.yml'
+      - '**.py'
   pull_request:
     branches:
       - master
     paths:
-      - ./python
-      - '!./python/README.md'
+      - '.github/workflows/unittest.yml'
+      - '**.py'
 
 permissions:
   contents: read
