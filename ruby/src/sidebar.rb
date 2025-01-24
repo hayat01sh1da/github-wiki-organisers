@@ -4,12 +4,12 @@ class Sidebar < Application
   def initialize(base_path)
     super(base_path)
     @base_owner_url = 'https://github.com/orgs/quipper/teams/'
-    @wiki_list      = ''
+    @wiki_list      = []
   end
 
   def run
     update_wiki_list
-    IO.write(path_to_sidebar, wiki_list)
+    IO.write(path_to_sidebar, wiki_list.join)
   end
 
   private

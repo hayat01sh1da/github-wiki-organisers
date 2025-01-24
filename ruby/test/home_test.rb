@@ -10,7 +10,7 @@ class HomeTest < ApplicationTest
   end
 
   def test_self_run
-    assert_equal(home, home_passage)
+    assert_equal(home, home_passage.join)
   end
 
   private
@@ -18,7 +18,8 @@ class HomeTest < ApplicationTest
   attr_reader :home
 
   def home_passage
-    passage  = "このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n\n"
+    passage  = []
+    passage << "このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n\n"
     passage << "## Wiki ページの運用ルール\n\n"
     passage << "Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n"
     passage << "治安維持のため、各ページの冒頭に `Owner: {オーナーチーム名}` を明記して頂きますようよろしくお願いします。  \n"

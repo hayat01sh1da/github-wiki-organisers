@@ -6,13 +6,13 @@ class Home < Application
   def initialize(base_path)
     super(base_path)
     @base_owner_url = 'https://github.com/orgs/quipper/teams/'
-    @home_passage   = ''
+    @home_passage   = []
   end
 
   def run
     write_home_template
     update_home_passage
-    IO.write(path_to_home, home_passage.chomp)
+    IO.write(path_to_home, home_passage.join.chomp)
     HOME_URL
   end
 

@@ -10,7 +10,7 @@ class SidebarTest < ApplicationTest
   end
 
   def test_self_run
-    assert_equal(sidebar, wiki_list)
+    assert_equal(sidebar, wiki_list.join)
   end
 
   private
@@ -18,7 +18,8 @@ class SidebarTest < ApplicationTest
   attr_reader :sidebar
 
   def wiki_list
-    list  = "- [@test-owner](https://github.com/orgs/quipper/teams/test-owner)\n"
+    list  = []
+    list << "- [@test-owner](https://github.com/orgs/quipper/teams/test-owner)\n"
     list << "  - [[Owner記名ありページ]]\n"
     list << "- Ownerチームが不明だが必要なページ群\n"
     list << "  - [[Ownerチームが不明だが必要なページ]]\n"
