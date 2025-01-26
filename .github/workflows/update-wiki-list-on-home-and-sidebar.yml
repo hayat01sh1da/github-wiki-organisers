@@ -1,0 +1,82 @@
+name: Update Wiki List on Home and Sidebar
+
+on:
+  schedule:
+    # 12:00 and 22:00 JST every weekday
+    # ⚠️ The timing is somehow not accurate at all
+    - cron: "0 3 * * 1-5"
+    - cron: "0 13 * * 1-5"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout the Main Repository
+        uses: actions/checkout@v2
+        with:
+          repository: "${{ github.repository }}"
+          ref: master
+          path: ./github-wiki-organisers
+      - name: Checkout the Wiki Repository
+        uses: actions/checkout@v2
+        with:
+          repository: "${{ github.repository }}.wiki"
+          ref: master
+          path: ./github-wiki-organisers/wiki
+      - name: Configure Git Identity
+        working-directory: ./github-wiki-organisers/wiki
+        run: |
+          set -xe
+          git config --global user.name  "[bot] ${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+      - uses: actions/setup-node@v2
+      - name: Update github-wiki-organisers Wiki
+        working-directory: ./github-wiki-organisers/wiki
+        run: |
+          set -xe
+          git pull origin master
+          bash update.sh
+          git add -A
+          git commit -m "Update Wiki list on Home and Sidebar by @${{ github.actor }}" || true
+          git push origin master || true
+      # - name: Slack Notification
+      #   uses: slackapi/slack-github-action@v1
+      #   if: ${{ github.event.head_commit.message != '' }}
+      #   env:
+      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+      #   with:
+      #     channel-id: '' #
+      #     payload: |
+      #       {
+      #         "blocks": [
+      #           {
+      #             "type": "header",
+      #             "text": {
+      #               "type": "plain_text",
+      #               "text": "aya-issue Wiki 最新化通知"
+      #             }
+      #           },
+      #           {
+      #             "type": "section",
+      #             "text": {
+      #               "type": "mrkdwn",
+      #               "text": "Workflows: <https://github.com/quipper/github-wiki-organisers/blob/master/.github/workflows/update-wiki.yml|Update Wiki>"
+      #             }
+      #           },
+      #           {
+      #             "type": "section",
+      #             "text": {
+      #               "type": "mrkdwn",
+      #               "text": "Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
+      #             }
+      #           },
+      #           {
+      #             "type": "section",
+      #             "text": {
+      #               "type": "mrkdwn",
+      #               "text": "Source: <https://github.com/quipper/github-wiki-organisers/wiki|aya-issue Wiki>"
+      #             }
+      #           }
+      #         ]
+      #       }
