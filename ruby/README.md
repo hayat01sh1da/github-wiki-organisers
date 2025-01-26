@@ -28,8 +28,9 @@ $ ruby export_unowned_wiki_list.rb
 ==================== Exporting Unowned Wiki List... ====================
 Here is the result:
 
-Owner記名なし: 1534件
-
+Ownerチームが不明だが必要なページ群: 13件
+Ownerチーム・要or不要が不明なページ群: 209件
+Owner記名なし: 0件
 
 Check it out result on '../../unowned_wiki_count_list_by_namespace.txt' !!
 ==================== Done Exporting Unowned Wiki List 🎉 ====================
@@ -40,13 +41,13 @@ Check it out result on '../../unowned_wiki_count_list_by_namespace.txt' !!
 ```command
 $ cd ./ruby
 $ rake
-Run options: --seed 47091
+Run options: --seed 64243
 
 # Running:
 
-....
+.........
 
-Finished in 0.375974s, 10.6390 runs/s, 13.2988 assertions/s.
+Finished in 0.781830s, 11.5115 runs/s, 14.0696 assertions/s.
 
-4 runs, 5 assertions, 0 failures, 0 errors, 0 skips
+9 runs, 11 assertions, 0 failures, 0 errors, 0 skips
 ```

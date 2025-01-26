@@ -26,15 +26,13 @@ Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/
 
 ```command
 $ cd ./python
-$ python export_unowned_wiki_list.py            
+$ python export_unowned_wiki_list.py
 ==================== Exporting Unowned Wiki List... ====================
-========== Organising Home... ==========
 Here is the result:
 
-
-# infer-owner: 1件
-Owner記名なし: 1535件
-
+Ownerチームが不明だが必要なページ群: 13件
+Ownerチーム・要or不要が不明なページ群: 209件
+Owner記名なし: 0件
 
 Check it out result on '../../unowned_wiki_count_list_by_namespace.txt' !!
 ==================== Done Exporting Unowned Wiki List 🎉 ====================
@@ -45,9 +43,9 @@ Check it out result on '../../unowned_wiki_count_list_by_namespace.txt' !!
 ```command
 $ cd ./python
 $ python -m unittest discover ./test
-.......
+............
 ----------------------------------------------------------------------
-Ran 7 tests in 0.040s
+Ran 12 tests in 0.087s
 
 OK
 ```
