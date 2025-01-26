@@ -10,10 +10,10 @@ class Home(Application):
 
     def __init__(self, base_path = os.path.join('..', '..')):
         super().__init__(base_path)
-        self.base_owner_url                        = 'https://github.com/orgs/quipper/teams/'
-        self.home_passage                          = ''
-        self.owner_and_wiki_maps_with_ownership    = {}
-        self.owner_and_wiki_maps_without_ownership = {}
+        self.base_owner_url    = 'https://github.com/orgs/quipper/teams/'
+        self.home_passage      = ''
+        self.owned_wiki_maps   = {}
+        self.unowned_wiki_maps = {}
 
     def run(self):
         self.__target_paths__()
@@ -31,9 +31,9 @@ class Home(Application):
     def __filter_owners__(self):
         for namespace, wikis in self.owner_and_wiki_maps.items():
             if re.search(r'@', namespace):
-                self.owner_and_wiki_maps_with_ownership[namespace] = wikis
+                self.owned_wiki_maps[namespace] = wikis
             else:
-                self.owner_and_wiki_maps_without_ownership[namespace] = wikis
+                self.unowned_wiki_maps[namespace] = wikis
 
     # @return [str]
     def __write_home_template__(self):
@@ -45,13 +45,13 @@ class Home(Application):
 
     # @return [str]
     def __update_home_passage__(self):
-        for owner, wikis in self.owner_and_wiki_maps_with_ownership.items():
+        for owner, wikis in self.owned_wiki_maps.items():
             self.home_passage += '## [{owner}]({owner_url})\n\n'.format(owner = owner, owner_url = self.base_owner_url + re.sub(r'@', '', owner))
             for wiki in wikis:
                 self.home_passage += '- [[{wiki}]]\n'.format(wiki = re.sub(r'\.md', '', wiki))
             self.home_passage += '\n'
 
-        for namespace, wikis in self.owner_and_wiki_maps_without_ownership.items():
+        for namespace, wikis in self.unowned_wiki_maps.items():
             self.home_passage += '## {namespace}\n\n'.format(namespace = namespace)
             for wiki in wikis:
                 self.home_passage += '- [[{wiki}]]\n'.format(wiki = re.sub(r'\.md', '', wiki))

@@ -21,13 +21,13 @@ class Home < Application
   attr_reader :base_owner_url, :home_passage
 
   # @return [Hash<String => Array<String>>]
-  def owner_and_wiki_maps_with_ownership
-    @owner_and_wiki_maps_with_ownership ||= owner_and_wiki_maps.select { |owner, _| owner.include?('@') }
+  def owned_wiki_maps
+    @owned_wiki_maps ||= owner_and_wiki_maps.select { |owner, _| owner.include?('@') }
   end
 
   # @return [Hash<String => Array<String>>]
-  def owner_and_wiki_maps_without_ownership
-    @owner_and_wiki_maps_without_ownership ||= owner_and_wiki_maps.reject { |owner, _| owner.include?('@') }
+  def unowned_wiki_maps
+    @unowned_wiki_maps ||= owner_and_wiki_maps.reject { |owner, _| owner.include?('@') }
   end
 
   # @return [String]
@@ -41,7 +41,7 @@ class Home < Application
 
   # @return nil
   def update_home_passage
-    owner_and_wiki_maps_with_ownership.each { |owner, wikis|
+    owned_wiki_maps.each { |owner, wikis|
       home_passage << "## [#{owner}](#{base_owner_url + owner.gsub(/\@/, '')})\n\n"
       wikis.each { |wiki|
         home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
@@ -49,7 +49,7 @@ class Home < Application
       home_passage << "\n"
     }
 
-    owner_and_wiki_maps_without_ownership.each { |namespace, wikis|
+    unowned_wiki_maps.each { |namespace, wikis|
       home_passage << "## #{namespace}\n\n"
       wikis.each { |wiki|
         home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"

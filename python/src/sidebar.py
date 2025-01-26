@@ -7,10 +7,10 @@ from application import Application
 class Sidebar(Application):
     def __init__(self, base_path = os.path.join('..', '..')):
         super().__init__(base_path)
-        self.base_owner_url                        = 'https://github.com/orgs/quipper/teams/'
-        self.wiki_list                             = ''
-        self.owner_and_wiki_maps_with_ownership    = {}
-        self.owner_and_wiki_maps_without_ownership = {}
+        self.base_owner_url    = 'https://github.com/orgs/quipper/teams/'
+        self.wiki_list         = ''
+        self.owned_wiki_maps   = {}
+        self.unowned_wiki_maps = {}
 
     def run(self):
         self.__target_paths__()
@@ -26,18 +26,18 @@ class Sidebar(Application):
     def __filter_owners__(self):
         for namespace, wikis in self.owner_and_wiki_maps.items():
             if re.search(r'@', namespace):
-                self.owner_and_wiki_maps_with_ownership[namespace] = wikis
+                self.owned_wiki_maps[namespace] = wikis
             else:
-                self.owner_and_wiki_maps_without_ownership[namespace] = wikis
+                self.unowned_wiki_maps[namespace] = wikis
 
     # @return [str]
     def __update_wiki_list__(self):
-        for owner, wikis in self.owner_and_wiki_maps_with_ownership.items():
+        for owner, wikis in self.owned_wiki_maps.items():
             self.wiki_list += '- [{owner}]({owner_url})\n'.format(owner = owner, owner_url = self.base_owner_url + re.sub(r'@', '', owner))
             for wiki in wikis:
                 self.wiki_list += '  - [[{wiki}]]\n'.format(wiki = re.sub(r'\.md', '', wiki))
 
-        for namespace, wikis in self.owner_and_wiki_maps_without_ownership.items():
+        for namespace, wikis in self.unowned_wiki_maps.items():
             self.wiki_list += '- {namespace}\n'.format(namespace = namespace)
             for wiki in wikis:
                 self.wiki_list += '  - [[{wiki}]]\n'.format(wiki = re.sub(r'\.md', '', wiki))
