@@ -1,0 +1,71 @@
+name: Notify Unowned Wiki List
+
+on:
+  schedule:
+    # 09:00 JST every Monday
+    # ⚠️ The timing is somehow not accurate at all
+    - cron: '0 0 * * 1'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout the Wiki Repository
+        uses: actions/checkout@v2
+        with:
+          repository: "${{ github.repository }}.wiki"
+          ref: master
+          path: .wiki
+      - name: Set ENV
+        working-directory: .wiki
+        run: |
+          set -xe
+          git pull origin master
+          bash export_unowned_wiki_list.sh
+          while IFS= read -r line; do
+            unowned_wiki_count_list+=($line)
+          done < ./unowned_wiki_count_list_by_namespace.txt
+          echo UNOWNED_BUT_NECESSARY=${unowned_wiki_count_list[@]:0:2} >> $GITHUB_ENV
+          echo UNOWNED_AND_NECESSITY_UNKNOWN=${unowned_wiki_count_list[@]:2:2} >> $GITHUB_ENV
+          echo OWNERSHIP_UNDECLARED=${unowned_wiki_count_list[@]:4:5} >> $GITHUB_ENV
+          rm unowned_wiki_count_list_by_namespace.txt
+      - name: Slack Notification
+        uses: slackapi/slack-github-action@v1
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+        with:
+          channel-id: '' # Channel
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "【aya-issue Wiki Ownership 不明ページ件数週次レポート】"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "<https://github.com/quipper/github-wiki-organisers/wiki#ownerチームが不明だが必要なページ群|github-wiki-organisers Wiki - ${{ env.UNOWNED_BUT_NECESSARY }}>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "<https://github.com/quipper/github-wiki-organisers/wiki#ownerチーム要or不要が不明なページ群|github-wiki-organisers Wiki - ${{ env.UNOWNED_AND_NECESSITY_UNKNOWN }}>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "<https://github.com/quipper/github-wiki-organisers/wiki#owner記名なし|github-wiki-organisers Wiki - ${{ env.OWNERSHIP_UNDECLARED }}>"
+                  }
+                }
+              ]
+            }
