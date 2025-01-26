@@ -32,7 +32,7 @@ class Application
 
   # @return [String]
   def target_paths
-    @target_paths ||= paths_to_wikis.delete_if { it == path_to_home || it == path_to_sidebar || it =~ /github\-wiki\-organisers/ }
+    @target_paths ||= paths_to_wikis.delete_if { _1 == path_to_home || _1 == path_to_sidebar || _1 =~ /github\-wiki\-organisers/ }
   end
 
   # @return [Hash<String => Array<String>>]
