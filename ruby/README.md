@@ -4,11 +4,11 @@
 
 ## 2. Execution
 
-### 2-1. Main
+### 2-1. Update Wiki List on Home and Sidebar
 
 ```command
 $ cd ./ruby
-$ ruby main.rb
+$ ruby update_wiki_list_on_home_and_sidebar.rb
 ==================== Categorizing the Entire github-wiki-organisers Wiki Pages... ====================
 ========== Organising Home... ==========
 Check out An Up-to-date Wiki List on Home at https://github.com/hayat01sh1da/github-wiki-organisers/wiki !!
