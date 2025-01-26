@@ -19,7 +19,7 @@ class SidebarTest < ApplicationTest
 
   def wiki_list
     list  = []
-    list << "- [@test-owner](https://github.com/orgs/quipper/teams/test-owner)\n"
+    list << "- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n"
     list << "  - [[Owner記名ありページ]]\n"
     list << "- Ownerチームが不明だが必要なページ群\n"
     list << "  - [[Ownerチームが不明だが必要なページ]]\n"

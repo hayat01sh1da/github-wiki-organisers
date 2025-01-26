@@ -25,7 +25,7 @@ class TestHome(TestApplication):
         passage += 'Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n'
         passage += '治安維持のため、各ページの冒頭に `Owner: {オーナーチーム名}` を明記して頂きますようよろしくお願いします。  \n'
         passage += 'なお、Home・Sidebar は専用のスクリプトで自動更新しますので編集は不要です。\n\n'
-        passage += '## [@test-owner](https://github.com/orgs/quipper/teams/test-owner)\n\n'
+        passage += '## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n\n'
         passage += '- [[Owner記名ありページ]]\n\n'
         passage += '## Ownerチームが不明だが必要なページ群\n\n'
         passage += '- [[Ownerチームが不明だが必要なページ]]\n\n'

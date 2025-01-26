@@ -7,7 +7,7 @@ from application import Application
 class Sidebar(Application):
     def __init__(self, base_path = os.path.join('..', '..')):
         super().__init__(base_path)
-        self.base_owner_url    = 'https://github.com/orgs/quipper/teams/'
+        self.base_owner_url    = 'https://github.com/orgs/hayat01sh1da/teams/'
         self.wiki_list         = ''
         self.owned_wiki_maps   = {}
         self.unowned_wiki_maps = {}

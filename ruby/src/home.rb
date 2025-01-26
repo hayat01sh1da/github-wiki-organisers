@@ -5,7 +5,7 @@ class Home < Application
 
   def initialize(base_path)
     super(base_path)
-    @base_owner_url = 'https://github.com/orgs/quipper/teams/'
+    @base_owner_url = 'https://github.com/orgs/hayat01sh1da/teams/'
     @home_passage   = []
   end
 
