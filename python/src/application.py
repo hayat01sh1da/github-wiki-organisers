@@ -43,3 +43,5 @@ class Application:
                     self.owner_and_wiki_maps[owner] = []
 
                 self.owner_and_wiki_maps[owner].append(wiki)
+
+        self.owner_and_wiki_maps = dict(sorted(self.owner_and_wiki_maps.items()))

@@ -27,7 +27,7 @@ class Application
 
   # @return [Hash<String => Array<String>>]
   def owner_and_wiki_maps
-    @owner_and_wiki_maps ||= target_paths.map.with_object(Hash.new { |hash, owner| hash[owner] = [] }) { |target_path, hash|
+    @owner_and_wiki_maps ||= target_paths.each.with_object(Hash.new { |hash, owner| hash[owner] = [] }) { |target_path, hash|
       File.open(target_path) { |file|
         wiki = File.basename(file)
 
@@ -40,6 +40,6 @@ class Application
 
         hash[owner] << wiki
       }
-    }
+    }.sort.to_h
   end
 end
