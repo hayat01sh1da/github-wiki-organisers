@@ -40,43 +40,43 @@ jobs:
           git add -A
           git commit -m "Update Wiki list on Home and Sidebar by @${{ github.actor }}" || true
           git push origin master || true
-      # - name: Slack Notification
-      #   uses: slackapi/slack-github-action@v1
-      #   if: ${{ github.event.head_commit.message != '' }}
-      #   env:
-      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
-      #   with:
-      #     channel-id: '' # Channel ID
-      #     payload: |
-      #       {
-      #         "blocks": [
-      #           {
-      #             "type": "header",
-      #             "text": {
-      #               "type": "plain_text",
-      #               "text": "【aya-issue Wiki 自動整理スクリプト実行通知】"
-      #             }
-      #           },
-      #           {
-      #             "type": "section",
-      #             "text": {
-      #               "type": "mrkdwn",
-      #               "text": "Workflows: <https://github.com/quipper/github-wiki-organisers/blob/master/.github/workflows/update-wiki.yml|Update Wiki>"
-      #             }
-      #           },
-      #           {
-      #             "type": "section",
-      #             "text": {
-      #               "type": "mrkdwn",
-      #               "text": "Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
-      #             }
-      #           },
-      #           {
-      #             "type": "section",
-      #             "text": {
-      #               "type": "mrkdwn",
-      #               "text": "Source: <https://github.com/hayat01sh1da/github-wiki-organisers/wiki|github-wiki-organisers Wiki>"
-      #             }
-      #           }
-      #         ]
-      #       }
+      - name: Slack Notification
+        uses: slackapi/slack-github-action@v1
+        if: ${{ github.event.head_commit.message != '' }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+        with:
+          channel-id: '' # Channel ID
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "【aya-issue Wiki 自動整理スクリプト実行通知】"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Workflows: <https://github.com/quipper/github-wiki-organisers/blob/master/.github/workflows/update-wiki.yml|Update Wiki>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Source: <https://github.com/hayat01sh1da/github-wiki-organisers/wiki|github-wiki-organisers Wiki>"
+                  }
+                }
+              ]
+            }
