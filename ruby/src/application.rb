@@ -20,6 +20,16 @@ class Application
 
   attr_reader :base_path, :path_to_home, :path_to_sidebar, :paths_to_wikis
 
+  # @return [Hash<String => Array<String>>]
+  def owned_wiki_maps
+    @owned_wiki_maps ||= owner_and_wiki_maps.select { |owner, _| owner.include?('@') }
+  end
+
+  # @return [Hash<String => Array<String>>]
+  def unowned_wiki_maps
+    @unowned_wiki_maps ||= owner_and_wiki_maps.reject { |owner, _| owner.include?('@') }
+  end
+
   # @return [String]
   def target_paths
     @target_paths ||= paths_to_wikis.delete_if { it == path_to_home || it == path_to_sidebar || it =~ /github\-wiki\-organisers/ }

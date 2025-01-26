@@ -16,16 +16,6 @@ class Sidebar < Application
 
   attr_reader :base_owner_url, :wiki_list
 
-  # @return [Hash<String => Array<String>>]
-  def owned_wiki_maps
-    @owned_wiki_maps ||= owner_and_wiki_maps.select { |owner, _| owner.include?('@') }
-  end
-
-  # @return [Hash<String => Array<String>>]
-  def unowned_wiki_maps
-    @unowned_wiki_maps ||= owner_and_wiki_maps.reject { |owner, _| owner.include?('@') }
-  end
-
   # @return nil
   def update_wiki_list
     owned_wiki_maps.each { |owner, wikis|

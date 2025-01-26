@@ -9,6 +9,8 @@ class Application:
         self.path_to_sidebar     = os.path.join(base_path, '_Sidebar.md')
         self.target_paths        = sorted(glob.glob(os.path.join(base_path, '**', '*.md'), recursive = True))
         self.owner_and_wiki_maps = {}
+        self.owned_wiki_maps     = {}
+        self.unowned_wiki_maps   = {}
 
     def run(self):
         raise NotImplementedError('This method must be implemented in each subclass.')
@@ -45,3 +47,11 @@ class Application:
                 self.owner_and_wiki_maps[owner].append(wiki)
 
         self.owner_and_wiki_maps = dict(sorted(self.owner_and_wiki_maps.items()))
+
+    # @return None
+    def __filter_owners__(self):
+        for namespace, wikis in self.owner_and_wiki_maps.items():
+            if re.search(r'@', namespace):
+                self.owned_wiki_maps[namespace] = wikis
+            else:
+                self.unowned_wiki_maps[namespace] = wikis

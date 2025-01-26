@@ -20,16 +20,6 @@ class Home < Application
 
   attr_reader :base_owner_url, :home_passage
 
-  # @return [Hash<String => Array<String>>]
-  def owned_wiki_maps
-    @owned_wiki_maps ||= owner_and_wiki_maps.select { |owner, _| owner.include?('@') }
-  end
-
-  # @return [Hash<String => Array<String>>]
-  def unowned_wiki_maps
-    @unowned_wiki_maps ||= owner_and_wiki_maps.reject { |owner, _| owner.include?('@') }
-  end
-
   # @return [String]
   def write_home_template
     home_passage << "このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n\n"

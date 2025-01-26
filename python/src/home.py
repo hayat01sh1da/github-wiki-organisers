@@ -7,13 +7,10 @@ from application import Application
 HOME_URL = 'https://github.com/hayat01sh1da/github-wiki-organisers/wiki'
 
 class Home(Application):
-
     def __init__(self, base_path = os.path.join('..', '..')):
         super().__init__(base_path)
-        self.base_owner_url    = 'https://github.com/orgs/hayat01sh1da/teams/'
-        self.home_passage      = ''
-        self.owned_wiki_maps   = {}
-        self.unowned_wiki_maps = {}
+        self.base_owner_url = 'https://github.com/orgs/hayat01sh1da/teams/'
+        self.home_passage   = ''
 
     def run(self):
         self.__target_paths__()
@@ -26,14 +23,6 @@ class Home(Application):
         return HOME_URL
 
     # private
-
-    # @return None
-    def __filter_owners__(self):
-        for namespace, wikis in self.owner_and_wiki_maps.items():
-            if re.search(r'@', namespace):
-                self.owned_wiki_maps[namespace] = wikis
-            else:
-                self.unowned_wiki_maps[namespace] = wikis
 
     # @return [str]
     def __write_home_template__(self):
