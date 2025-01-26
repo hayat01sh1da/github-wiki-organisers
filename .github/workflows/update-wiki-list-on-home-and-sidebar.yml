@@ -61,7 +61,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Workflows: <https://github.com/quipper/github-wiki-organisers/blob/master/.github/workflows/update-wiki.yml|Update Wiki>"
+                    "text": "Workflows: <https://github.com/quipper/github-wiki-organisers/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml|Update Wiki>"
                   }
                 },
                 {
