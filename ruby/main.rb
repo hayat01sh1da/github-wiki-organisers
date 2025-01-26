@@ -1,7 +1,7 @@
 require_relative './src/home'
 require_relative './src/sidebar'
 
-puts '==================== Categorizing the Entire aya-issues Wiki Pages... ===================='
+puts '==================== Categorizing the Entire github-wiki-organisers Wiki Pages... ===================='
 
 puts '========== Organising Home... =========='
 home_url = Home.run
@@ -13,4 +13,4 @@ Sidebar.run
 puts "Check out An Up-to-date Wiki List on Sidebar at #{home_url} !!"
 puts "========== Done Organising Home 🎉 =========="
 
-puts '==================== Done Categorizing the Entire aya-issues Wiki Pages 🎉 ===================='
+puts '==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ===================='

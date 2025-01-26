@@ -9,17 +9,17 @@
 ```command
 $ cd ./python
 $ python main.py
-==================== Categorizing the Entire aya-issues Wiki Pages... ====================
+==================== Categorizing the Entire github-wiki-organisers Wiki Pages... ====================
 ========== Organising Home... ==========
 Check out An Up-to-date Wiki List on Home at https://github.com/hayat01sh1da/github-wiki-organisers/wiki !!
 ========== Done Organising Home 🎉 ==========
 
 ========== Organising Sidebar... ==========
 Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/github-wiki-organisers/wiki !!
-==================== Done Categorizing the Entire aya-issues Wiki Pages 🎉 ====================
+==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ====================
 ========== Done Organising Sidebar 🎉 ==========
 
-==================== Done Categorizing the Entire aya-issues Wiki Pages 🎉 ====================
+==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ====================
 ```
 
 ## 2-2. Export Unowned Wiki List
