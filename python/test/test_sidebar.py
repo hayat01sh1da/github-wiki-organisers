@@ -20,16 +20,16 @@ class TestSidebar(TestApplication):
     # private
 
     def __wiki_list__(self):
-        list  = '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
-        list += '  - [[Owner記名ありページ]]\n'
-        list += '- Ownerチームが不明だが必要なページ群\n'
-        list += '  - [[Ownerチームが不明だが必要なページ]]\n'
-        list += '- Ownerチーム・要or不要が不明なページ群\n'
-        list += '  - [[Ownerチーム・要or不要が不明なページ]]\n'
-        list += '- Owner記名なし\n'
-        list += '  - [[Owner記名なしページ1]]\n'
-        list += '  - [[Owner記名なしページ2]]\n'
-        return list
+        _list  = '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
+        _list += '  - [[Owner記名ありページ]]\n'
+        _list += '- Ownerチームが不明だが必要なページ群\n'
+        _list += '  - [[Ownerチームが不明だが必要なページ]]\n'
+        _list += '- Ownerチーム・要or不要が不明なページ群\n'
+        _list += '  - [[Ownerチーム・要or不要が不明なページ]]\n'
+        _list += '- Owner記名なし\n'
+        _list += '  - [[Owner記名なしページ1]]\n'
+        _list += '  - [[Owner記名なしページ2]]\n'
+        return _list
 
 if __name__ == '__main__':
     unittest.main()
