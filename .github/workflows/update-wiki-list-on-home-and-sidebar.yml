@@ -46,7 +46,7 @@ jobs:
       #   env:
       #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
       #   with:
-      #     channel-id: '' #
+      #     channel-id: '' # Channel ID
       #     payload: |
       #       {
       #         "blocks": [
@@ -54,7 +54,7 @@ jobs:
       #             "type": "header",
       #             "text": {
       #               "type": "plain_text",
-      #               "text": "aya-issue Wiki 最新化通知"
+      #               "text": "【aya-issue Wiki 自動整理スクリプト実行通知】"
       #             }
       #           },
       #           {
@@ -75,7 +75,7 @@ jobs:
       #             "type": "section",
       #             "text": {
       #               "type": "mrkdwn",
-      #               "text": "Source: <https://github.com/quipper/github-wiki-organisers/wiki|aya-issue Wiki>"
+      #               "text": "Source: <https://github.com/hayat01sh1da/github-wiki-organisers/wiki|github-wiki-organisers Wiki>"
       #             }
       #           }
       #         ]
