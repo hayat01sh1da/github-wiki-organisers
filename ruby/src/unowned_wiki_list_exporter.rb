@@ -32,6 +32,6 @@ class UnknownWikiListExporter < Application
       "#{namespace}: #{wikis.length}件"
     }.then { |it|
       it + missing_count_lists_by_namespace
-    }
+    }.sort
   end
 end

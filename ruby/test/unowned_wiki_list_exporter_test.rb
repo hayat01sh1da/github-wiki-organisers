@@ -14,9 +14,9 @@ class UnknownWikiListExporterTest < ApplicationTest
   attr_reader :unowned_wiki_count_list
 end
 
-class RegularCase < UnknownWikiListExporterTest
+class RegularCase1 < UnknownWikiListExporterTest
   def test_self_run
-    assert_equal(unowned_wiki_count_list, unowned_wiki_count_list_by_namespace.join)
+    assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
   end
 
   private
@@ -29,9 +29,81 @@ class RegularCase < UnknownWikiListExporterTest
   end
 end
 
-class IrregularCase < UnknownWikiListExporterTest
+class RegularCase2 < UnknownWikiListExporterTest
   def test_self_run
-    assert_equal(unowned_wiki_count_list, unowned_wiki_count_list_by_namespace.join)
+    assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
+  end
+
+  private
+
+  def unowned_wiki_count_list_by_namespace
+    list  = []
+    list << "Ownerチームが不明だが必要なページ群: 1件\n"
+    list << "Ownerチーム・要or不要が不明なページ群: 1件\n"
+    list << "Owner記名なし: 2件\n"
+  end
+
+  def test_file_maps
+    {
+      'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
+      'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
+      'Owner記名なしページ1.md' => '',
+      'Owner記名なしページ2.md' => 'This is a sample Wiki'
+    }
+  end
+end
+
+class IrregularCase1 < UnknownWikiListExporterTest
+  def test_self_run
+    assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
+  end
+
+  private
+
+  def unowned_wiki_count_list_by_namespace
+    list  = []
+    list << "Ownerチームが不明だが必要なページ群: 0件\n"
+    list << "Ownerチーム・要or不要が不明なページ群: 1件\n"
+    list << "Owner記名なし: 2件\n"
+  end
+
+  def test_file_maps
+    {
+      'Owner記名ありページ.md' => 'Owner: @test-owner',
+      'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
+      'Owner記名なしページ1.md' => '',
+      'Owner記名なしページ2.md' => 'This is a sample Wiki'
+    }
+  end
+end
+
+class IrregularCase2 < UnknownWikiListExporterTest
+  def test_self_run
+    assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
+  end
+
+  private
+
+  def unowned_wiki_count_list_by_namespace
+    list  = []
+    list << "Ownerチームが不明だが必要なページ群: 1件\n"
+    list << "Ownerチーム・要or不要が不明なページ群: 0件\n"
+    list << "Owner記名なし: 2件\n"
+  end
+
+  def test_file_maps
+    {
+      'Owner記名ありページ.md' => 'Owner: @test-owner',
+      'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
+      'Owner記名なしページ1.md' => '',
+      'Owner記名なしページ2.md' => 'This is a sample Wiki'
+    }
+  end
+end
+
+class IrregularCase3 < UnknownWikiListExporterTest
+  def test_self_run
+    assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
   end
 
   private
