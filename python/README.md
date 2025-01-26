@@ -4,6 +4,8 @@
 
 ## 2. Execution
 
+### 2-1. Main
+
 ```command
 $ cd ./python
 $ python main.py
@@ -20,14 +22,32 @@ Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/
 ==================== Done Categorizing the Entire aya-issues Wiki Pages 🎉 ====================
 ```
 
+## 2-2. Export Unowned Wiki List
+
+```command
+$ cd ./python
+$ python export_unowned_wiki_list.py            
+==================== Exporting Unowned Wiki List... ====================
+========== Organising Home... ==========
+Here is the result:
+
+
+# infer-owner: 1件
+Owner記名なし: 1535件
+
+
+Check it out result on '../../unowned_wiki_count_list_by_namespace.txt' !!
+==================== Done Exporting Unowned Wiki List 🎉 ====================
+```
+
 ## 3. Bulk Execution of Unit Tests
 
 ```command
 $ cd ./python
 $ python -m unittest discover ./test
-.....
+.......
 ----------------------------------------------------------------------
-Ran 5 tests in 0.242s
+Ran 7 tests in 0.040s
 
 OK
 ```

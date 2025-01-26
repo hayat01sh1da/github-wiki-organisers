@@ -4,6 +4,8 @@
 
 ## 2. Execution
 
+### 2-1. Main
+
 ```command
 $ cd ./ruby
 $ ruby main.rb
@@ -18,18 +20,33 @@ Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/
 ==================== Done Categorizing the Entire aya-issues Wiki Pages 🎉 ====================
 ```
 
+## 2-2. Export Unowned Wiki List
+
+```command
+$ cd ./ruby
+$ ruby export_unowned_wiki_list.rb
+==================== Exporting Unowned Wiki List... ====================
+Here is the result:
+
+Owner記名なし: 1534件
+
+
+Check it out result on '../../unowned_wiki_count_list_by_namespace.txt' !!
+==================== Done Exporting Unowned Wiki List 🎉 ====================
+```
+
 ## 3. Bulk Execution of Unit Tests
 
 ```command
 $ cd ./ruby
 $ rake
-Run options: --seed 37265
+Run options: --seed 47091
 
 # Running:
 
-...
+....
 
-Finished in 35.729262s, 0.0840 runs/s, 0.1120 assertions/s.
+Finished in 0.375974s, 10.6390 runs/s, 13.2988 assertions/s.
 
-3 runs, 4 assertions, 0 failures, 0 errors, 0 skips
+4 runs, 5 assertions, 0 failures, 0 errors, 0 skips
 ```
