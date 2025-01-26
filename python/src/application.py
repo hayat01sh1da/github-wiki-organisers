@@ -18,11 +18,10 @@ class Application:
     # @return [str]
     def __target_paths__(self):
         for target_path in self.target_paths:
-            match target_path:
-                case self.path_to_home | self.path_to_sidebar:
-                    self.target_paths.remove(target_path)
-                case _:
-                    continue
+            if target_path == self.path_to_home or target_path == self.path_to_sidebar or re.search(r'github\-wiki\-organisers', target_path):
+                self.target_paths.remove(target_path)
+            else:
+                continue
 
     # @return [dict<str => list<str>>]
     def __owner_and_wiki_maps__(self):
