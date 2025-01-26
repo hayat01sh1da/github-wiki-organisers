@@ -5,7 +5,7 @@ from application import Application
 
 NAMESPACE_LIST = (
     'Ownerチームが不明だが必要なページ群',
-    'Ownerチームが不明だが必要なページ群',
+    'Ownerチーム・要or不要が不明なページ群',
     'Owner記名なし'
 )
 
