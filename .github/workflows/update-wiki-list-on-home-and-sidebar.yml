@@ -36,7 +36,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash update.sh
+          bash update_wiki_list_on_home_and_sidebar.sh
           git add -A
           git commit -m "Update Wiki list on Home and Sidebar by @${{ github.actor }}" || true
           git push origin master || true
