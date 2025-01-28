@@ -54,7 +54,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "【aya-issue Wiki 自動整理スクリプト実行通知】"
+                    "text": "【github-wiki-organisers Wiki 自動整理スクリプト実行通知】"
                   }
                 },
                 {
