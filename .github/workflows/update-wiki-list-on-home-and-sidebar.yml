@@ -30,7 +30,7 @@ jobs:
           set -xe
           git config --global user.name  "[bot] ${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
       - name: Update github-wiki-organisers Wiki
         working-directory: ./github-wiki-organisers/wiki
         run: |
