@@ -50,21 +50,21 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチームが不明だが必要なページ群|github-wiki-organisers Wiki - ${{ env.UNOWNED_BUT_NECESSARY }}>"
+                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチームが不明だが必要なページ群|${{ env.UNOWNED_BUT_NECESSARY }}>"
                   }
                 },
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチーム要or不要が不明なページ群|github-wiki-organisers Wiki - ${{ env.UNOWNED_AND_NECESSITY_UNKNOWN }}>"
+                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチーム要or不要が不明なページ群|${{ env.UNOWNED_AND_NECESSITY_UNKNOWN }}>"
                   }
                 },
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#owner記名なし|github-wiki-organisers Wiki - ${{ env.OWNERSHIP_UNDECLARED }}>"
+                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#owner記名なし|${{ env.OWNERSHIP_UNDECLARED }}>"
                   }
                 }
               ]
