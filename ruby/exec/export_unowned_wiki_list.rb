@@ -1,4 +1,4 @@
-require_relative './src/unowned_wiki_list_exporter'
+require_relative '../src/unowned_wiki_list_exporter'
 
 puts '==================== Exporting Unowned Wiki List... ===================='
 count_lists_by_namespace, path_to_export = UnknownWikiListExporter.run

@@ -8,7 +8,7 @@
 
 ```command
 $ cd ./ruby
-$ ruby update_wiki_list_on_home_and_sidebar.rb
+$ ruby ./exec/update_wiki_list_on_home_and_sidebar.rb
 ==================== Categorizing the Entire github-wiki-organisers Wiki Pages... ====================
 ========== Organising Home... ==========
 Check out An Up-to-date Wiki List on Home at https://github.com/hayat01sh1da/github-wiki-organisers/wiki !!
@@ -24,7 +24,7 @@ Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/
 
 ```command
 $ cd ./ruby
-$ ruby export_unowned_wiki_list.rb
+$ ruby ./exec/export_unowned_wiki_list.rb
 ==================== Exporting Unowned Wiki List... ====================
 Here is the result:
 

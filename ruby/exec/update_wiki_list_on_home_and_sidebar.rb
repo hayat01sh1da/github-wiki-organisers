@@ -1,5 +1,5 @@
-require_relative './src/home'
-require_relative './src/sidebar'
+require_relative '../src/home'
+require_relative '../src/sidebar'
 
 puts '==================== Categorizing the Entire github-wiki-organisers Wiki Pages... ===================='
 

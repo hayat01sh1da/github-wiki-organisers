@@ -2,7 +2,7 @@ import sys
 import os
 import shutil
 import glob
-sys.path.append('./src')
+sys.path.append('../src')
 
 from home import Home
 from sidebar import Sidebar

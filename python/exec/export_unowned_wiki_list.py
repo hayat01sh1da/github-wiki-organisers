@@ -2,7 +2,7 @@ import sys
 import os
 import shutil
 import glob
-sys.path.append('./src')
+sys.path.append('../src')
 from unowned_wiki_list_exporter import UnknownWikiListExporter
 
 print('==================== Exporting Unowned Wiki List... ====================')

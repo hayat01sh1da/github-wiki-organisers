@@ -8,7 +8,7 @@
 
 ```command
 $ cd ./python
-$ python update_wiki_list_on_home_and_sidebar.py
+$ python ./exec/update_wiki_list_on_home_and_sidebar.py
 ==================== Categorizing the Entire github-wiki-organisers Wiki Pages... ====================
 ========== Organising Home... ==========
 Check out An Up-to-date Wiki List on Home at https://github.com/hayat01sh1da/github-wiki-organisers/wiki !!
@@ -26,7 +26,7 @@ Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/
 
 ```command
 $ cd ./python
-$ python export_unowned_wiki_list.py
+$ python ./exec/export_unowned_wiki_list.py
 ==================== Exporting Unowned Wiki List... ====================
 Here is the result:
 
