@@ -28,8 +28,8 @@ jobs:
         working-directory: ./github-wiki-organisers/wiki
         run: |
           set -xe
-          git config --global user.name  "[bot] ${{ github.actor }}"
-          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name  "GitHub Actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - uses: actions/setup-node@v4
       - name: Update github-wiki-organisers Wiki
         working-directory: ./github-wiki-organisers/wiki
@@ -38,11 +38,14 @@ jobs:
           git pull origin master
           bash update_wiki_list_on_home_and_sidebar.sh
           git add -A
-          git commit -m "Update Wiki list on Home and Sidebar by @${{ github.actor }}" || true
+          current_time=$(TZ=Asia/Tokyo date "+%Y-%m-%d %H:%M:%S")
+          git commit -m "Update Wiki list on Home and Sidebar by GitHub Actions[bot] at $current_time" || true
           git push origin master || true
+          echo COMMIT_MESSAGE=$(git log --oneline -1) >> $GITHUB_ENV
+          echo CURRENT_TIME=$current_time >> $GITHUB_ENV
       - name: Slack Notification
         uses: slackapi/slack-github-action@v1
-        if: ${{ github.event.head_commit.message != '' }}
+        if: contains(env.COMMIT_MESSAGE, env.CURRENT_TIME)
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
         with:
@@ -68,7 +71,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Commit: <${{ github.event.head_commit.url }}|${{ github.event.head_commit.message }}>"
+                    "text": "Commit: ${{ env.COMMIT_MESSAGE }}"
                   }
                 },
                 {
