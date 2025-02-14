@@ -22,7 +22,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash export_unowned_wiki_list.sh
+          bash export_unowned_wiki_count_list_by_namespace.sh
           while IFS= read -r line; do
             unowned_wiki_count_list+=($line)
           done < ./unowned_wiki_count_list_by_namespace.txt
