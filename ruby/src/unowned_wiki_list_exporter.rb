@@ -13,8 +13,8 @@ class UnknownWikiListExporter < Application
   end
 
   def run
-    File.open(path_to_export, 'wb') { |f| f.puts(count_lists_by_namespace) }
-    [count_lists_by_namespace, path_to_export]
+    File.open(path_to_export, 'wb') { |f| f.puts(count_list_by_namespace) }
+    [count_list_by_namespace, path_to_export]
   end
 
   private
@@ -22,16 +22,16 @@ class UnknownWikiListExporter < Application
   attr_reader :path_to_export
 
   # @return [Array<String>]
-  def missing_count_lists_by_namespace
+  def missing_count_list_by_namespace
     (NAMESPACE_LIST - unowned_wiki_maps.keys).map { |namespace| "#{namespace}: 0件" }
   end
 
   # @return [Array<String>]
-  def count_lists_by_namespace
-    @count_lists_by_namespace ||= unowned_wiki_maps.map { |namespace, wikis|
+  def count_list_by_namespace
+    @count_list_by_namespace ||= unowned_wiki_maps.map { |namespace, wikis|
       "#{namespace}: #{wikis.length}件"
     }.then { |it|
-      it + missing_count_lists_by_namespace
+      it + missing_count_list_by_namespace
     }.sort
   end
 end
