@@ -9,7 +9,7 @@ NAMESPACE_LIST = (
     'Owner記名なし'
 )
 
-class UnknownWikiListExporter(Application):
+class UnknownWikiCountListExporter(Application):
     def __init__(self, base_path = os.path.join('..', '..')):
         super().__init__(base_path)
         self.path_to_export           = os.path.join(self.base_path, 'unowned_wiki_count_list_by_namespace.txt')

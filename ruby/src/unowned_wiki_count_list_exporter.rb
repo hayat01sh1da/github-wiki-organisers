@@ -1,6 +1,6 @@
 require_relative './application'
 
-class UnknownWikiListExporter < Application
+class UnknownWikiCountListExporter < Application
   NAMESPACE_LIST = [
     'Ownerチームが不明だが必要なページ群',
     'Ownerチーム・要or不要が不明なページ群',

@@ -3,18 +3,18 @@ import os
 import unittest
 sys.path.append('./src')
 sys.path.append('./test')
-from unowned_wiki_list_exporter import UnknownWikiListExporter
+from unowned_wiki_count_list_exporter import UnknownWikiCountListExporter
 from test_application import TestApplication
 
-class TestUnknownWikiListExporter(TestApplication):
+class TestUnknownWikiCountListExporter(TestApplication):
     def setUp(self):
         super().setUp()
-        UnknownWikiListExporter(self.base_path).run()
+        UnknownWikiCountListExporter(self.base_path).run()
         path_to_unowned_wiki_count_list = os.path.join(self.base_path, 'unowned_wiki_count_list_by_namespace.txt')
         with open(path_to_unowned_wiki_count_list) as f:
             self.unowned_wiki_count_list = f.read()
 
-class RegularCase1(TestUnknownWikiListExporter):
+class RegularCase1(TestUnknownWikiCountListExporter):
     def test_run(self):
         self.assertEqual(self.unowned_wiki_count_list, self.__unowned_wiki_count_list_by_namespace__())
 
@@ -26,7 +26,7 @@ class RegularCase1(TestUnknownWikiListExporter):
         lists += 'Owner記名なし: 2件\n'
         return lists
 
-class RegularCase2(TestUnknownWikiListExporter):
+class RegularCase2(TestUnknownWikiCountListExporter):
     def test_run(self):
         self.assertEqual(self.unowned_wiki_count_list, self.__unowned_wiki_count_list_by_namespace__())
 
@@ -46,7 +46,7 @@ class RegularCase2(TestUnknownWikiListExporter):
             'Owner記名なしページ2.md': 'This is a sample Wiki'
         }
 
-class IrregularCase1(TestUnknownWikiListExporter):
+class IrregularCase1(TestUnknownWikiCountListExporter):
     def test_run(self):
         self.assertEqual(self.unowned_wiki_count_list, self.__unowned_wiki_count_list_by_namespace__())
 
@@ -66,7 +66,7 @@ class IrregularCase1(TestUnknownWikiListExporter):
             'Owner記名なしページ2.md': 'This is a sample Wiki'
         }
 
-class IrregularCase2(TestUnknownWikiListExporter):
+class IrregularCase2(TestUnknownWikiCountListExporter):
     def test_run(self):
         self.assertEqual(self.unowned_wiki_count_list, self.__unowned_wiki_count_list_by_namespace__())
 
@@ -86,7 +86,7 @@ class IrregularCase2(TestUnknownWikiListExporter):
             'Owner記名なしページ2.md': 'This is a sample Wiki'
         }
 
-class IrregularCase3(TestUnknownWikiListExporter):
+class IrregularCase3(TestUnknownWikiCountListExporter):
     def test_run(self):
         self.assertEqual(self.unowned_wiki_count_list, self.__unowned_wiki_count_list_by_namespace__())
 

@@ -1,10 +1,10 @@
 require_relative './application_test'
-require_relative '../src/unowned_wiki_list_exporter'
+require_relative '../src/unowned_wiki_count_list_exporter'
 
-class UnknownWikiListExporterTest < ApplicationTest
+class UnknownWikiCountListExporterTest < ApplicationTest
   def setup
     super
-    UnknownWikiListExporter.run(base_path:)
+    UnknownWikiCountListExporter.run(base_path:)
     path_to_unowned_wiki_count_list = File.join(base_path, 'unowned_wiki_count_list_by_namespace.txt')
     @unowned_wiki_count_list        = IO.read(path_to_unowned_wiki_count_list)
   end
@@ -14,7 +14,7 @@ class UnknownWikiListExporterTest < ApplicationTest
   attr_reader :unowned_wiki_count_list
 end
 
-class RegularCase1 < UnknownWikiListExporterTest
+class RegularCase1 < UnknownWikiCountListExporterTest
   def test_self_run
     assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
   end
@@ -29,7 +29,7 @@ class RegularCase1 < UnknownWikiListExporterTest
   end
 end
 
-class RegularCase2 < UnknownWikiListExporterTest
+class RegularCase2 < UnknownWikiCountListExporterTest
   def test_self_run
     assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
   end
@@ -53,7 +53,7 @@ class RegularCase2 < UnknownWikiListExporterTest
   end
 end
 
-class IrregularCase1 < UnknownWikiListExporterTest
+class IrregularCase1 < UnknownWikiCountListExporterTest
   def test_self_run
     assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
   end
@@ -77,7 +77,7 @@ class IrregularCase1 < UnknownWikiListExporterTest
   end
 end
 
-class IrregularCase2 < UnknownWikiListExporterTest
+class IrregularCase2 < UnknownWikiCountListExporterTest
   def test_self_run
     assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
   end
@@ -101,7 +101,7 @@ class IrregularCase2 < UnknownWikiListExporterTest
   end
 end
 
-class IrregularCase3 < UnknownWikiListExporterTest
+class IrregularCase3 < UnknownWikiCountListExporterTest
   def test_self_run
     assert_equal(unowned_wiki_count_list_by_namespace.join, unowned_wiki_count_list)
   end
