@@ -3,14 +3,13 @@ import glob
 import re
 
 class Application:
-    def __init__(self, base_path = os.path.join('..', '..')):
-        self.base_path           = base_path
-        self.path_to_home        = os.path.join(base_path, 'Home.md')
-        self.path_to_sidebar     = os.path.join(base_path, '_Sidebar.md')
-        self.target_paths        = sorted(glob.glob(os.path.join(base_path, '**', '*.md'), recursive = True))
-        self.owner_and_wiki_maps = {}
-        self.owned_wiki_maps     = {}
-        self.unowned_wiki_maps   = {}
+    def __init__(self, base_path                     = os.path.join('..', '..')):
+        self.base_path                               = base_path
+        self.path_to_home                            = os.path.join(base_path, 'Home.md')
+        self.path_to_sidebar                         = os.path.join(base_path, '_Sidebar.md')
+        self.target_paths                            = self.__target_paths__()
+        self.owner_and_wiki_maps                     = self.__owner_and_wiki_maps__()
+        self.owned_wiki_maps, self.unowned_wiki_maps = self.__filter_owners__()
 
     def run(self):
         raise NotImplementedError('This method must be implemented in each subclass.')
@@ -19,15 +18,20 @@ class Application:
 
     # @return [str]
     def __target_paths__(self):
-        for target_path in self.target_paths:
+        target_paths = sorted(glob.glob(os.path.join(self.base_path, '**', '*.md'), recursive = True))
+
+        for target_path in target_paths:
             if target_path == self.path_to_home or target_path == self.path_to_sidebar or re.search(r'github\-wiki\-organisers', target_path):
-                self.target_paths.remove(target_path)
+                target_paths.remove(target_path)
             else:
                 continue
 
+        return target_paths
+
     # @return [dict<str => list<str>>]
     def __owner_and_wiki_maps__(self):
-        self.__target_paths__()
+        owner_and_wiki_maps = {}
+
         for target_path in self.target_paths:
             with open(target_path) as f:
                 wiki = os.path.basename(target_path)
@@ -40,18 +44,23 @@ class Application:
                     owner = 'Owner記名なし'
 
                 try:
-                    self.owner_and_wiki_maps[owner]
+                    owner_and_wiki_maps[owner]
                 except KeyError:
-                    self.owner_and_wiki_maps[owner] = []
+                    owner_and_wiki_maps[owner] = []
 
-                self.owner_and_wiki_maps[owner].append(wiki)
+                owner_and_wiki_maps[owner].append(wiki)
 
-        self.owner_and_wiki_maps = dict(sorted(self.owner_and_wiki_maps.items()))
+        return dict(sorted(owner_and_wiki_maps.items()))
 
-    # @return None
+    # @return [dict<str => list<str>>]
     def __filter_owners__(self):
+        owned_wiki_maps   = {}
+        unowned_wiki_maps = {}
+
         for namespace, wikis in self.owner_and_wiki_maps.items():
             if re.search(r'@', namespace):
-                self.owned_wiki_maps[namespace] = wikis
+                owned_wiki_maps[namespace] = wikis
             else:
-                self.unowned_wiki_maps[namespace] = wikis
+                unowned_wiki_maps[namespace] = wikis
+
+        return owned_wiki_maps, unowned_wiki_maps
