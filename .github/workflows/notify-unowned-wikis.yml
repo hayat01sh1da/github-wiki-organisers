@@ -5,6 +5,7 @@ on:
     # 09:00 JST every Monday
     # ⚠️ The timing is somehow not accurate at all
     - cron: '0 0 * * 1'
+  workflow_dispatch:
 
 jobs:
   build:
