@@ -30,7 +30,7 @@ class UnknownWikiCountListExporter < Application
   def count_list_by_namespace
     @count_list_by_namespace ||= unowned_wiki_maps.map { |namespace, wikis|
       "#{namespace}: #{wikis.length}件"
-    }.then { |it|
+    }.then {
       it + missing_count_list_by_namespace
     }.sort
   end
