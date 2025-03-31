@@ -12,7 +12,7 @@ class Home < Application
   def run
     write_home_template
     update_home_passage
-    IO.write(path_to_home, home_passage.join.chomp)
+    File.write(path_to_home, home_passage.join.chomp)
     HOME_URL
   end
 
