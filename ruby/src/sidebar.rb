@@ -9,7 +9,7 @@ class Sidebar < Application
 
   def run
     update_wiki_list
-    IO.write(path_to_sidebar, wiki_list.join)
+    File.write(path_to_sidebar, wiki_list.join)
   end
 
   private
