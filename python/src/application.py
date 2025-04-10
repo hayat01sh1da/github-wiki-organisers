@@ -39,7 +39,7 @@ class Application:
                 _ownership_declaration = f.readlines()
                 if _ownership_declaration != [] and re.search(r'[Oo]wner', _ownership_declaration[0]):
                     ownership_declaration = re.sub('\n', '', _ownership_declaration[0])
-                    owner                 = re.sub(r'Owner:\s?', '', ownership_declaration)
+                    owner                 = re.sub(r'[Oo]wner:\s?', '', ownership_declaration)
                 else:
                     owner = 'Owner記名なし'
 

@@ -43,7 +43,7 @@ class Application
 
         ownership_declaration = file.readlines.first
         owner = if ownership_declaration&.start_with?(/[Oo]wner/)
-          ownership_declaration.chomp.gsub(/Owner:\s?/, '')
+          ownership_declaration.chomp.gsub(/[Oo]wner:\s?/, '')
         else
           'Owner記名なし'
         end
