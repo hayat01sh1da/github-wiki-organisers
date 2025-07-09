@@ -29,14 +29,18 @@ class Home(Application):
 
         for owner, wikis in self.owned_wiki_maps.items():
             home_passage += '## [{owner}]({owner_url})\n\n'.format(owner = owner, owner_url = self.base_owner_url + re.sub(r'@', '', owner))
+            home_passage += '<details><summary>Wiki 一覧</summary>\n\n'
             for wiki in wikis:
                 home_passage += '- [[{wiki}]]\n'.format(wiki = re.sub(r'\.md', '', wiki))
+            home_passage += '\n</details>\n'
             home_passage += '\n'
 
         for namespace, wikis in self.unowned_wiki_maps.items():
             home_passage += '## {namespace}\n\n'.format(namespace = namespace)
+            home_passage += '<details><summary>Wiki 一覧</summary>\n\n'
             for wiki in wikis:
                 home_passage += '- [[{wiki}]]\n'.format(wiki = re.sub(r'\.md', '', wiki))
+            home_passage += '\n</details>\n'
             home_passage += '\n'
 
         return home_passage

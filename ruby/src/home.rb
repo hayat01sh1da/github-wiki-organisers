@@ -33,17 +33,21 @@ class Home < Application
   def update_home_passage
     owned_wiki_maps.each { |owner, wikis|
       home_passage << "## [#{owner}](#{base_owner_url + owner.gsub(/\@/, '')})\n\n"
+      home_passage << "<details><summary>Wiki 一覧</summary>\n\n"
       wikis.each { |wiki|
         home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
       }
+      home_passage << "\n</details>\n"
       home_passage << "\n"
     }
 
     unowned_wiki_maps.each { |namespace, wikis|
       home_passage << "## #{namespace}\n\n"
+      home_passage << "<details><summary>Wiki 一覧</summary>\n\n"
       wikis.each { |wiki|
         home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
       }
+      home_passage << "\n</details>\n"
       home_passage << "\n"
     }
   end
