@@ -1,11 +1,11 @@
 require_relative './application'
 
 class Home < Application
-  HOME_URL = 'https://github.com/hayat01sh1da/github-wiki-organisers/wiki'.freeze
+  HOME_URL = "https://github.com/#{ENV.fetch('USERNAME', 'hayat01sh1da')}/github-wiki-organisers/wiki".freeze
 
   def initialize(base_path)
     super(base_path)
-    @base_owner_url = 'https://github.com/orgs/hayat01sh1da/teams/'
+    @base_owner_url = "https://github.com/orgs/#{ENV.fetch('USERNAME', 'hayat01sh1da')}/teams/"
     @home_passage   = []
   end
 
