@@ -3,12 +3,18 @@ import glob
 import re
 
 class Application:
+    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o'):
         self.base_path                             = base_path
+        self.genre                                 = genre
         self.path_to_home                          = os.path.join(base_path, 'Home.md')
         self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
         self.target_paths                          = self.__target_paths__()
         self.wiki_maps_with_namespace              = self.__wiki_maps_with_namespace__()
         self.owned_wiki_maps, self.plain_wiki_maps = self.__filter_owners__()
+
+    def validate(self):
+        if self.genre not in ['-o', '--owner', '-c', '--category']:
+            raise ValueError(f'Unknown genre: `{self.genre}`')
 
     def run(self):
         raise NotImplementedError('This method must be implemented in each subclass.')
@@ -20,36 +26,36 @@ class Application:
         target_paths = sorted(glob.glob(os.path.join(self.base_path, '**', '*.md'), recursive = True))
 
         for target_path in target_paths:
-            if target_path == self.path_to_home or target_path == self.path_to_sidebar or re.search(r'github\-wiki\-organisers', target_path):
-                target_paths.remove(target_path)
-            else:
-                continue
+            match target_path:
+                case self.path_to_home | self.path_to_sidebar:
+                    target_paths.remove(target_path)
+                case _:
+                    if re.search(r'github\-wiki\-organisers', target_path):
+                        target_paths.remove(target_path)
+                    else:
+                        continue
 
         return target_paths
 
-    # @return [dict<str => list<str>>]
-    def __wiki_maps_with_namespace__(self):
-        wiki_maps_with_namespace = {}
+    # @return [regex]
+    def __target_regexp__(self):
+        match self.genre:
+            case '-o' | '--owner':
+                return re.compile(r'[Oo]wner:\s?')
+            case '-c' | '--category':
+                return re.compile(r'[Cc]ategory:\s?')
+            case _:
+                raise ValueError(f'Unknown genre: `{self.genre}`')
 
-        for target_path in self.target_paths:
-            with open(target_path) as f:
-                wiki = os.path.basename(target_path)
-
-                _ownership_declaration = f.readlines()
-                if _ownership_declaration != [] and re.search(r'[Oo]wner', _ownership_declaration[0]):
-                    ownership_declaration = re.sub('\n', '', _ownership_declaration[0])
-                    owner                 = re.sub(r'[Oo]wner:\s?', '', ownership_declaration)
-                else:
-                    owner = 'Owner記名なし'
-
-                try:
-                    wiki_maps_with_namespace[owner]
-                except KeyError:
-                    wiki_maps_with_namespace[owner] = []
-
-                wiki_maps_with_namespace[owner].append(wiki)
-
-        return dict(sorted(wiki_maps_with_namespace.items()))
+    # @return [str]
+    def __no_declaration__(self):
+        match self.genre:
+            case '-o' | '--owner':
+                return 'Owner記名なし'
+            case '-c' | '--category':
+                return 'Category記載なし'
+            case _:
+                raise ValueError(f'Unknown genre: `{self.genre}`')
 
     # @return [dict<str => list<str>>]
     def __filter_owners__(self):
@@ -63,3 +69,28 @@ class Application:
                 plain_wiki_maps[namespace] = wikis
 
         return owned_wiki_maps, plain_wiki_maps
+
+    # @return [dict<str => list<str>>]
+    def __wiki_maps_with_namespace__(self):
+        wiki_maps_with_namespace = {}
+
+        for target_path in self.target_paths:
+            with open(target_path) as f:
+                wiki = os.path.basename(target_path)
+                target_regexp = re.sub(r'\.md$', '', wiki)
+
+                _ownership_declaration = f.readlines()
+                if _ownership_declaration != [] and re.search(self.__target_regexp__(), _ownership_declaration[0]):
+                    ownership_declaration = re.sub('\n', '', _ownership_declaration[0])
+                    owner                 = re.sub(self.__target_regexp__(), '', ownership_declaration)
+                else:
+                    owner = self.__no_declaration__()
+
+                try:
+                    wiki_maps_with_namespace[owner]
+                except KeyError:
+                    wiki_maps_with_namespace[owner] = []
+
+                wiki_maps_with_namespace[owner].append(wiki)
+
+        return dict(sorted(wiki_maps_with_namespace.items()))

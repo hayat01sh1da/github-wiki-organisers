@@ -7,13 +7,14 @@ from home import Home
 from test_application import TestApplication
 
 class TestHome(TestApplication):
-    def setUp(self):
-        super().setUp()
-        Home(self.base_path).run()
+    def setUp(self, genre = '-o'):
+        super().setUp(genre = genre)
+        Home(base_path = self.base_path, genre = genre).run()
         path_to_home = os.path.join(self.base_path, 'Home.md')
         with open(path_to_home) as f:
             self.home = f.read()
 
+class OwnedHomeTest(TestHome):
     def test_run(self):
         self.assertEqual(self.home, self.__home_passage__())
 
@@ -45,6 +46,35 @@ class TestHome(TestApplication):
         passage += '- [[Owner記名なしページ1]]\n'
         passage += '- [[Owner記名なしページ2]]\n'
         passage += '\n</details>\n'
+
+        return passage
+
+class PlainHomeTest(TestHome):
+    def setUp(self):
+        super().setUp(genre = '-c')
+
+    def test_run(self):
+        self.assertEqual(self.home, self.__home_passage__())
+
+    # private
+
+    def __home_passage__(self):
+        passage  = 'このページは Category ごとに Wiki をグルーピングして一覧化しています。\n\n'
+        passage += '## Wiki ページの運用ルール\n\n'
+        passage += 'Category が不明だと、保守性と検索性の悪化が発生します。  \n'
+        passage += '治安維持のため、各ページの冒頭に `Category: {カテゴリー名}` を明記して頂きますようよろしくお願いします。  \n'
+        passage += 'なお、Home・Sidebar は専用のスクリプトで自動更新しますので編集は不要です。\n\n'
+        passage += '## Category記載なし\n\n'
+        passage += '<details><summary>Wiki 一覧</summary>\n\n'
+        passage += '- [[Category記載なしページ1]]\n'
+        passage += '- [[Category記載なしページ2]]\n'
+        passage += '\n</details>\n'
+        passage += '\n'
+        passage += '## test-category\n\n'
+        passage += '<details><summary>Wiki 一覧</summary>\n\n'
+        passage += '- [[Category記載ありページ]]\n'
+        passage += '\n</details>\n'
+
         return passage
 
 if __name__ == '__main__':
