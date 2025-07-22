@@ -1,6 +1,7 @@
 import os
 import glob
 import re
+from collections import defaultdict
 
 class Application:
     def __init__(self, base_path = os.path.join('..', '..'), genre = '-o'):
@@ -10,7 +11,7 @@ class Application:
         self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
         self.target_paths                          = self.__target_paths__()
         self.wiki_maps_with_namespace              = self.__wiki_maps_with_namespace__()
-        self.owned_wiki_maps, self.plain_wiki_maps = self.__filter_owners__()
+        self.owned_wiki_maps, self.plain_wiki_maps = self.__filter_namespace__()
 
     def validate(self):
         if self.genre not in ['-o', '--owner', '-c', '--category']:
@@ -58,7 +59,7 @@ class Application:
                 raise ValueError(f'Unknown genre: `{self.genre}`')
 
     # @return [dict<str => list<str>>]
-    def __filter_owners__(self):
+    def __filter_namespace__(self):
         owned_wiki_maps = {}
         plain_wiki_maps = {}
 
@@ -72,25 +73,35 @@ class Application:
 
     # @return [dict<str => list<str>>]
     def __wiki_maps_with_namespace__(self):
-        wiki_maps_with_namespace = {}
+        hash                     = defaultdict(list)
+        uncategrised_wiki_maps   = defaultdict(list)
+        wiki_maps_with_namespace = defaultdict(list)
 
         for target_path in self.target_paths:
             with open(target_path) as f:
                 wiki = os.path.basename(target_path)
                 target_regexp = re.sub(r'\.md$', '', wiki)
 
-                _ownership_declaration = f.readlines()
-                if _ownership_declaration != [] and re.search(self.__target_regexp__(), _ownership_declaration[0]):
-                    ownership_declaration = re.sub('\n', '', _ownership_declaration[0])
-                    owner                 = re.sub(self.__target_regexp__(), '', ownership_declaration)
+                _namespace_declaration = f.readlines()
+                if _namespace_declaration != [] and re.search(self.__target_regexp__(), _namespace_declaration[0]):
+                    namespace_declaration  = re.sub('\n', '', _namespace_declaration[0])
+                    namespace              = re.sub(self.__target_regexp__(), '', namespace_declaration)
                 else:
-                    owner = self.__no_declaration__()
+                    namespace = self.__no_declaration__()
 
-                try:
-                    wiki_maps_with_namespace[owner]
-                except KeyError:
-                    wiki_maps_with_namespace[owner] = []
+                match self.genre:
+                    case '-o' | '--namespace':
+                        try:
+                            hash[namespace].append(wiki)
+                        except KeyError:
+                            hash[namespace] = []
+                    case '-c' | '--category':
+                        try:
+                            uncategrised_wiki_maps[namespace].append(wiki)
+                        except KeyError:
+                            uncategrised_wiki_maps[namespace] = []
 
-                wiki_maps_with_namespace[owner].append(wiki)
+        wiki_maps_with_namespace = dict(sorted(hash.items()))
+        wiki_maps_with_namespace.update(uncategrised_wiki_maps)
 
-        return dict(sorted(wiki_maps_with_namespace.items()))
+        return wiki_maps_with_namespace

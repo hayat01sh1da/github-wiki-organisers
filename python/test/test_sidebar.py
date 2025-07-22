@@ -42,11 +42,11 @@ class PlainHomeTest(TestSidebar):
     # private
 
     def __sidebar_passage__(self):
-        lst  = '- Category記載なし\n'
+        lst  = '- test-category\n'
+        lst += '  - [[Category記載ありページ]]\n'
+        lst += '- Category記載なし\n'
         lst += '  - [[Category記載なしページ1]]\n'
         lst += '  - [[Category記載なしページ2]]\n'
-        lst += '- test-category\n'
-        lst += '  - [[Category記載ありページ]]\n'
 
         return lst
 
