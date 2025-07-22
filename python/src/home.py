@@ -4,12 +4,12 @@ import re
 sys.path.append('./src')
 from application import Application
 
-HOME_URL = 'https://github.com/{user_name}/github-wiki-organisers/wiki'.format(user_name = os.environ.get('USERNAME', 'hayat01sh1da'))
+HOME_URL = f'https://github.com/{os.environ.get("USERNAME", "hayat01sh1da")}/github-wiki-organisers/wiki'
 
 class Home(Application):
     def __init__(self, base_path, genre):
         super().__init__(base_path, genre)
-        self.base_owner_url = 'https://github.com/orgs/{user_name}/teams/'.format(user_name = os.environ.get('USERNAME', 'hayat01sh1da'))
+        self.base_owner_url = f'https://github.com/orgs/{os.environ.get("USERNAME", "hayat01sh1da")}/teams/'
         self.home_passage = ''
 
     def run(self):

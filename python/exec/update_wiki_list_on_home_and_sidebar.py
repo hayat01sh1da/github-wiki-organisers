@@ -13,12 +13,12 @@ print('==================== Categorizing the Entire github-wiki-organisers Wiki 
 
 print('========== Organising Home... ==========')
 home_url = Home(genre = genre).run()
-print('Check out An Up-to-date Wiki List on Home at {home_url} !!'.format(home_url = home_url))
+print(f'Check out An Up-to-date Wiki List on Home at {home_url} !!')
 print('========== Done Organising Home 🎉 ==========\n')
 
 print('========== Organising Sidebar... ==========')
 Sidebar(genre = genre).run()
-print('Check out An Up-to-date Wiki List on Sidebar at {home_url} !!'.format(home_url = home_url))
+print(f'Check out An Up-to-date Wiki List on Sidebar at {home_url} !!')
 print('==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ====================')
 print('========== Done Organising Sidebar 🎉 ==========\n')
 
