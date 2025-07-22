@@ -6,7 +6,7 @@ class SidebarTest < ApplicationTest
     super(genre:)
     Sidebar.run(base_path:, genre:)
     @path_to_sidebar = File.join(base_path, '_Sidebar.md')
-    @sidebar         = IO.read(path_to_sidebar)
+    @sidebar         = File.read(path_to_sidebar)
   end
 
   private

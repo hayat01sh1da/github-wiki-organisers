@@ -6,7 +6,7 @@ class HomeTest < ApplicationTest
     super(genre:)
     Home.run(base_path:, genre:)
     @path_to_home = File.join(base_path, 'Home.md')
-    @home         = IO.read(path_to_home)
+    @home         = File.read(path_to_home)
   end
 
   private

@@ -6,7 +6,7 @@ class UnknownWikiCountListExporterTest < ApplicationTest
     super(genre:)
     UnknownWikiCountListExporter.run(base_path:, genre:)
     @path_to_unknown_wiki_count_list = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
-    @unknown_wiki_count_list         = IO.read(path_to_unknown_wiki_count_list)
+    @unknown_wiki_count_list         = File.read(path_to_unknown_wiki_count_list)
   end
 
   private
