@@ -20,20 +20,20 @@ Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/
 ==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ====================
 ```
 
-## 2-2. Export Unowned Wiki List
+## 2-2. Export Unknown Wiki List
 
 ```command
 $ cd ./ruby
-$ ruby ./exec/export_unowned_wiki_list.rb
-==================== Exporting Unowned Wiki List... ====================
+$ ruby ./exec/export_unknown_wiki_list.rb
+==================== Exporting Unknown Wiki List... ====================
 Here is the result:
 
 Ownerチームが不明だが必要なページ群: 13件
 Ownerチーム・要or不要が不明なページ群: 209件
 Owner記名なし: 0件
 
-Check it out result on '../../unowned_wiki_count_list_by_namespace.txt' !!
-==================== Done Exporting Unowned Wiki List 🎉 ====================
+Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
+==================== Done Exporting Unknown Wiki List 🎉 ====================
 ```
 
 ## 3. Bulk Execution of Unit Tests
