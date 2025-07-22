@@ -68,7 +68,8 @@ class Application
 
   # @return [Hash<String => Array<String>>]
   def wiki_maps_with_namespace
-    hash = Hash.new { |hash, namespace| hash[namespace] = [] }
+    hash                   = Hash.new { |hash, namespace| hash[namespace] = [] }
+    uncategrised_wiki_maps = Hash.new { |hash, namespace| hash[namespace] = [] }
 
     @wiki_maps_with_namespace ||= target_paths.each.with_object(hash) { |target_path, hash|
       File.open(target_path) { |file|
@@ -81,8 +82,9 @@ class Application
           no_declaration
         end
 
-        hash[namespace] << wiki
+        hash[namespace] << wiki unless namespace == no_declaration
+        uncategrised_wiki_maps[namespace] << wiki if namespace == no_declaration
       }
-    }.sort.to_h
+    }.sort.to_h.merge(uncategrised_wiki_maps)
   end
 end

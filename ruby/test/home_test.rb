@@ -70,15 +70,15 @@ class PlainHomeTest < HomeTest
       "Category が不明だと、保守性と検索性の悪化が発生します。  \n",
       "治安維持のため、各ページの冒頭に `Category: {カテゴリー名}` を明記して頂きますようよろしくお願いします。  \n",
       "なお、Home・Sidebar は専用のスクリプトで自動更新しますので編集は不要です。\n\n",
+      "## test-category\n\n",
+      "<details><summary>Wiki 一覧</summary>\n\n",
+      "- [[Category記載ありページ]]\n",
+      "\n</details>\n",
+      "\n",
       "## Category記載なし\n\n",
       "<details><summary>Wiki 一覧</summary>\n\n",
       "- [[Category記載なしページ1]]\n",
       "- [[Category記載なしページ2]]\n",
-      "\n</details>\n",
-      "\n",
-      "## test-category\n\n",
-      "<details><summary>Wiki 一覧</summary>\n\n",
-      "- [[Category記載ありページ]]\n",
       "\n</details>\n"
     ]
   end

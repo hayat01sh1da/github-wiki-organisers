@@ -49,11 +49,11 @@ class PlainSidebarTest < SidebarTest
 
   def wiki_list
     [
+      "- test-category\n",
+      "  - [[Category記載ありページ]]\n",
       "- Category記載なし\n",
       "  - [[Category記載なしページ1]]\n",
-      "  - [[Category記載なしページ2]]\n",
-      "- test-category\n",
-      "  - [[Category記載ありページ]]\n"
+      "  - [[Category記載なしページ2]]\n"
     ]
   end
 end
