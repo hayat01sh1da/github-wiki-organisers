@@ -3,11 +3,13 @@ import os
 import shutil
 import glob
 sys.path.append('../src')
-from unowned_wiki_count_list_exporter import UnknownWikiCountListExporter
+from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
+
+_, genre, *_ = sys.argv
 
 print('==================== Exporting Unowned Wiki List... ====================')
 print('========== Organising Home... ==========')
-count_list_by_namespace, path_to_export = UnknownWikiCountListExporter().run()
+count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(genre = genre).run()
 print('Here is the result:\n\n')
 
 print(count_list_by_namespace)
