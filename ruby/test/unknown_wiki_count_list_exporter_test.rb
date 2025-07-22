@@ -33,7 +33,7 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
   class RegularCase2 < OwnershipTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
     end
 
     private
@@ -58,7 +58,7 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
   class IrregularCase1 < OwnershipTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
     end
 
     private
@@ -83,7 +83,7 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
   class IrregularCase2 < OwnershipTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
     end
 
     private
@@ -108,7 +108,7 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
   class IrregularCase3 < OwnershipTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
     end
 
     private
@@ -153,7 +153,7 @@ class CategoryTest < UnknownWikiCountListExporterTest
 
   class IrregularCase < CategoryTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
     end
 
     private
