@@ -7,7 +7,7 @@ from application import Application
 class Sidebar(Application):
     def __init__(self, base_path, genre):
         super().__init__(base_path, genre)
-        self.base_owner_url = f'https://github.com/orgs/{os.environ.get("USERNAME", "hayat01sh1da")}/teams/'
+        self.base_owner_url = f'https://github.com/orgs/{os.environ.get('USERNAME', 'hayat01sh1da')}/teams/'
         self.wiki_list      = self.__write_wiki_list__()
 
     def run(self):
