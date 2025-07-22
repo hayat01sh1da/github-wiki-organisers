@@ -145,8 +145,7 @@ class CategoryTest < UnknownWikiCountListExporterTest
 
     def unknown_wiki_count_list_by_namespace
       [
-        "Category記載なし: 2件\n",
-        "test-category: 1件\n"
+        "Category記載なし: 2件\n"
       ]
     end
   end

@@ -38,10 +38,21 @@ class UnknownWikiCountListExporter < Application
 
   # @return [Array<String>]
   def count_list_by_namespace
-    @count_list_by_namespace ||= plain_wiki_maps.map { |namespace, wikis|
-      "#{namespace}: #{wikis.length}件"
-    }.then {
-      it + missing_count_list_by_namespace
-    }.sort
+    @count_list_by_namespace ||= begin
+      filtered_count_list_by_namespace = case genre
+      when '-o', '--owner'
+        plain_wiki_maps
+      when '-c', '--category'
+        plain_wiki_maps.select { |namespace, _|
+          namespace_list.include?(namespace)
+        }
+      end
+
+      filtered_count_list_by_namespace.map { |namespace, wikis|
+        "#{namespace}: #{wikis.length}件"
+      }.then {
+        it + missing_count_list_by_namespace
+      }.sort
+    end
   end
 end
