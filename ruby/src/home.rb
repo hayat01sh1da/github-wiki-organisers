@@ -31,8 +31,8 @@ class Home < Application
 
   # @return nil
   def update_home_passage
-    owned_wiki_maps.each { |owner, wikis|
-      home_passage << "## [#{owner}](#{base_owner_url + owner.gsub(/\@/, '')})\n\n"
+    owned_wiki_maps.each { |namespace, wikis|
+      home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n\n"
       home_passage << "<details><summary>Wiki 一覧</summary>\n\n"
       wikis.each { |wiki|
         home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
@@ -41,7 +41,7 @@ class Home < Application
       home_passage << "\n"
     }
 
-    unowned_wiki_maps.each { |namespace, wikis|
+    plain_wiki_maps.each { |namespace, wikis|
       home_passage << "## #{namespace}\n\n"
       home_passage << "<details><summary>Wiki 一覧</summary>\n\n"
       wikis.each { |wiki|

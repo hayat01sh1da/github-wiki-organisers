@@ -23,12 +23,12 @@ class UnknownWikiCountListExporter < Application
 
   # @return [Array<String>]
   def missing_count_list_by_namespace
-    (NAMESPACE_LIST - unowned_wiki_maps.keys).map { |namespace| "#{namespace}: 0件" }
+    (NAMESPACE_LIST - plain_wiki_maps.keys).map { |namespace| "#{namespace}: 0件" }
   end
 
   # @return [Array<String>]
   def count_list_by_namespace
-    @count_list_by_namespace ||= unowned_wiki_maps.map { |namespace, wikis|
+    @count_list_by_namespace ||= plain_wiki_maps.map { |namespace, wikis|
       "#{namespace}: #{wikis.length}件"
     }.then {
       it + missing_count_list_by_namespace

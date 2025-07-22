@@ -22,12 +22,12 @@ class Application
 
   # @return [Hash<String => Array<String>>]
   def owned_wiki_maps
-    @owned_wiki_maps ||= owner_and_wiki_maps.select { |owner, _| owner.include?('@') }
+    @owned_wiki_maps ||= wiki_maps_with_namespace.select { |namespace, _| namespace.include?('@') }
   end
 
   # @return [Hash<String => Array<String>>]
-  def unowned_wiki_maps
-    @unowned_wiki_maps ||= owner_and_wiki_maps.reject { |owner, _| owner.include?('@') }
+  def plain_wiki_maps
+    @plain_wiki_maps ||= wiki_maps_with_namespace.reject { |namespace, _| namespace.include?('@') }
   end
 
   # @return [String]
@@ -36,19 +36,20 @@ class Application
   end
 
   # @return [Hash<String => Array<String>>]
-  def owner_and_wiki_maps
-    @owner_and_wiki_maps ||= target_paths.each.with_object(Hash.new { |hash, owner| hash[owner] = [] }) { |target_path, hash|
+  def wiki_maps_with_namespace
+    hash                        = Hash.new { |hash, namespace| hash[namespace] = [] }
+    @wiki_maps_with_namespace ||= target_paths.each.with_object(hash) { |target_path, hash|
       File.open(target_path) { |file|
         wiki = File.basename(file)
 
-        ownership_declaration = file.readlines.first
-        owner = if ownership_declaration&.start_with?(/[Oo]wner/)
-          ownership_declaration.chomp.gsub(/[Oo]wner:\s?/, '')
+        namespace_declaration = file.readlines.first
+        namespace             = if namespace_declaration&.start_with?(/[Oo]wner/)
+          namespace_declaration.chomp.gsub(/[Oo]wner:\s?/, '')
         else
           'Owner記名なし'
         end
 
-        hash[owner] << wiki
+        hash[namespace] << wiki
       }
     }.sort.to_h
   end

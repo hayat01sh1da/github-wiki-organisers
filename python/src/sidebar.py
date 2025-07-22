@@ -25,7 +25,7 @@ class Sidebar(Application):
             for wiki in wikis:
                 wiki_list += '  - [[{wiki}]]\n'.format(wiki = re.sub(r'\.md', '', wiki))
 
-        for namespace, wikis in self.unowned_wiki_maps.items():
+        for namespace, wikis in self.plain_wiki_maps.items():
             wiki_list += '- {namespace}\n'.format(namespace = namespace)
             for wiki in wikis:
                 wiki_list += '  - [[{wiki}]]\n'.format(wiki = re.sub(r'\.md', '', wiki))

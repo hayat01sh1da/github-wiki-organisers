@@ -3,13 +3,12 @@ import glob
 import re
 
 class Application:
-    def __init__(self, base_path                     = os.path.join('..', '..')):
-        self.base_path                               = base_path
-        self.path_to_home                            = os.path.join(base_path, 'Home.md')
-        self.path_to_sidebar                         = os.path.join(base_path, '_Sidebar.md')
-        self.target_paths                            = self.__target_paths__()
-        self.owner_and_wiki_maps                     = self.__owner_and_wiki_maps__()
-        self.owned_wiki_maps, self.unowned_wiki_maps = self.__filter_owners__()
+        self.base_path                             = base_path
+        self.path_to_home                          = os.path.join(base_path, 'Home.md')
+        self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
+        self.target_paths                          = self.__target_paths__()
+        self.wiki_maps_with_namespace              = self.__wiki_maps_with_namespace__()
+        self.owned_wiki_maps, self.plain_wiki_maps = self.__filter_owners__()
 
     def run(self):
         raise NotImplementedError('This method must be implemented in each subclass.')
@@ -29,8 +28,8 @@ class Application:
         return target_paths
 
     # @return [dict<str => list<str>>]
-    def __owner_and_wiki_maps__(self):
-        owner_and_wiki_maps = {}
+    def __wiki_maps_with_namespace__(self):
+        wiki_maps_with_namespace = {}
 
         for target_path in self.target_paths:
             with open(target_path) as f:
@@ -44,23 +43,23 @@ class Application:
                     owner = 'Owner記名なし'
 
                 try:
-                    owner_and_wiki_maps[owner]
+                    wiki_maps_with_namespace[owner]
                 except KeyError:
-                    owner_and_wiki_maps[owner] = []
+                    wiki_maps_with_namespace[owner] = []
 
-                owner_and_wiki_maps[owner].append(wiki)
+                wiki_maps_with_namespace[owner].append(wiki)
 
-        return dict(sorted(owner_and_wiki_maps.items()))
+        return dict(sorted(wiki_maps_with_namespace.items()))
 
     # @return [dict<str => list<str>>]
     def __filter_owners__(self):
-        owned_wiki_maps   = {}
-        unowned_wiki_maps = {}
+        owned_wiki_maps = {}
+        plain_wiki_maps = {}
 
-        for namespace, wikis in self.owner_and_wiki_maps.items():
+        for namespace, wikis in self.wiki_maps_with_namespace.items():
             if re.search(r'@', namespace):
                 owned_wiki_maps[namespace] = wikis
             else:
-                unowned_wiki_maps[namespace] = wikis
+                plain_wiki_maps[namespace] = wikis
 
-        return owned_wiki_maps, unowned_wiki_maps
+        return owned_wiki_maps, plain_wiki_maps

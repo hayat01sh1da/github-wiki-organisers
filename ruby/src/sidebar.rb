@@ -25,7 +25,7 @@ class Sidebar < Application
       }
     }
 
-    unowned_wiki_maps.each { |namespace, wikis|
+    plain_wiki_maps.each { |namespace, wikis|
       wiki_list << "- #{namespace}\n"
       wikis.each { |wiki|
         wiki_list << "  - [[#{wiki.gsub(/\.md/, '')}]]\n"

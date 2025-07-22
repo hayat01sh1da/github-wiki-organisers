@@ -35,7 +35,7 @@ class Home(Application):
             home_passage += '\n</details>\n'
             home_passage += '\n'
 
-        for namespace, wikis in self.unowned_wiki_maps.items():
+        for namespace, wikis in self.plain_wiki_maps.items():
             home_passage += '## {namespace}\n\n'.format(namespace = namespace)
             home_passage += '<details><summary>Wiki 一覧</summary>\n\n'
             for wiki in wikis:

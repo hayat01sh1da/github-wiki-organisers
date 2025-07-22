@@ -27,11 +27,11 @@ class UnknownWikiCountListExporter(Application):
     def __count_list_by_namespace__(self):
         count_list_by_namespace = []
 
-        for namespace in (NAMESPACE_LIST - self.unowned_wiki_maps.keys()):
+        for namespace in (NAMESPACE_LIST - self.plain_wiki_maps.keys()):
             count_list_by_namespace.append(
                 '{namespace}: 0件\n'.format(namespace=namespace))
 
-        for namespace, wikis in self.unowned_wiki_maps.items():
+        for namespace, wikis in self.plain_wiki_maps.items():
             count_list_by_namespace.append('{namespace}: {count}件\n'.format(namespace = namespace, count = len(wikis)))
 
         return count_list_by_namespace
