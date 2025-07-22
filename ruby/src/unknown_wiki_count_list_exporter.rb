@@ -1,15 +1,9 @@
 require_relative './application'
 
 class UnknownWikiCountListExporter < Application
-  NAMESPACE_LIST = [
-    'Ownerチームが不明だが必要なページ群',
-    'Ownerチーム・要or不要が不明なページ群',
-    'Owner記名なし'
-  ].freeze
-
-  def initialize(base_path)
-    super(base_path)
-    @path_to_export = File.join(base_path, 'unowned_wiki_count_list_by_namespace.txt')
+  def initialize(base_path, genre)
+    super(base_path, genre)
+    @path_to_export = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
   end
 
   def run
@@ -22,8 +16,24 @@ class UnknownWikiCountListExporter < Application
   attr_reader :path_to_export
 
   # @return [Array<String>]
+  def namespace_list
+    case genre
+    when '-o', '--owner'
+      [
+        'Ownerチームが不明だが必要なページ群',
+        'Ownerチーム・要or不要が不明なページ群',
+        'Owner記名なし'
+      ]
+    when '-c', '--category'
+      [
+        'Category記載なし'
+      ]
+    end
+  end
+
+  # @return [Array<String>]
   def missing_count_list_by_namespace
-    (NAMESPACE_LIST - plain_wiki_maps.keys).map { |namespace| "#{namespace}: 0件" }
+    (namespace_list - plain_wiki_maps.keys).map { |namespace| "#{namespace}: 0件" }
   end
 
   # @return [Array<String>]

@@ -1,8 +1,8 @@
 require_relative './application'
 
 class Sidebar < Application
-  def initialize(base_path)
-    super(base_path)
+  def initialize(base_path, genre)
+    super(base_path, genre)
     @base_owner_url = "https://github.com/orgs/#{ENV.fetch('USERNAME', 'hayat01sh1da')}/teams/"
     @wiki_list      = []
   end
@@ -18,8 +18,8 @@ class Sidebar < Application
 
   # @return nil
   def update_wiki_list
-    owned_wiki_maps.each { |owner, wikis|
-      wiki_list << "- [#{owner}](#{base_owner_url + owner.gsub(/\@/, '')})\n"
+    owned_wiki_maps.each { |namespace, wikis|
+      wiki_list << "- [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"
       wikis.each { |wiki|
         wiki_list << "  - [[#{wiki.gsub(/\.md/, '')}]]\n"
       }
