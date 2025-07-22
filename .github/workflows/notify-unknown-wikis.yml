@@ -1,4 +1,4 @@
-name: Notify Unowned Wiki List
+name: Notify Unknown Wiki List
 
 on:
   schedule:
@@ -30,14 +30,14 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash export_unowned_wiki_count_list_by_namespace.sh
+          bash export_unknown_wiki_count_list_by_namespace.sh
           while IFS= read -r line; do
-            unowned_wiki_count_list+=($line)
-          done < ./unowned_wiki_count_list_by_namespace.txt
-          echo UNOWNED_BUT_NECESSARY=${unowned_wiki_count_list[@]:0:2} >> $GITHUB_ENV
-          echo UNOWNED_AND_NECESSITY_UNKNOWN=${unowned_wiki_count_list[@]:2:2} >> $GITHUB_ENV
-          echo OWNERSHIP_UNDECLARED=${unowned_wiki_count_list[@]:4:5} >> $GITHUB_ENV
-          rm unowned_wiki_count_list_by_namespace.txt
+            unknown_wiki_count_list+=($line)
+          done < ./unknown_wiki_count_list_by_namespace.txt
+          echo UNKNOWN_BUT_NECESSARY=${unknown_wiki_count_list[@]:0:2} >> $GITHUB_ENV
+          echo UNKNOWN_AND_NECESSITY_UNKNOWN=${unknown_wiki_count_list[@]:2:2} >> $GITHUB_ENV
+          echo OWNERSHIP_UNDECLARED=${unknown_wiki_count_list[@]:4:5} >> $GITHUB_ENV
+          rm unknown_wiki_count_list_by_namespace.txt
       - name: Slack Notification
         uses: slackapi/slack-github-action@v1
         env:
@@ -58,14 +58,14 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチームが不明だが必要なページ群|${{ env.UNOWNED_BUT_NECESSARY }}>"
+                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチームが不明だが必要なページ群|${{ env.UNKNOWN_BUT_NECESSARY }}>"
                   }
                 },
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチーム要or不要が不明なページ群|${{ env.UNOWNED_AND_NECESSITY_UNKNOWN }}>"
+                    "text": "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチーム要or不要が不明なページ群|${{ env.UNKNOWN_AND_NECESSITY_UNKNOWN }}>"
                   }
                 },
                 {
