@@ -24,9 +24,7 @@ Check out An Up-to-date Wiki List on Home at https://github.com/hayat01sh1da/git
 
 ========== Organising Sidebar... ==========
 Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/github-wiki-organisers/wiki !!
-==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ====================
-========== Done Organising Sidebar 🎉 ==========
-
+========== Done Organising Home 🎉 ==========
 ==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ====================
 ```
 
@@ -39,9 +37,7 @@ Check out An Up-to-date Wiki List on Home at https://github.com/hayat01sh1da/git
 
 ========== Organising Sidebar... ==========
 Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/github-wiki-organisers/wiki !!
-==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ====================
-========== Done Organising Sidebar 🎉 ==========
-
+========== Done Organising Home 🎉 ==========
 ==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ====================
 ```
 
@@ -50,14 +46,11 @@ Check out An Up-to-date Wiki List on Sidebar at https://github.com/hayat01sh1da/
 ```command
 $ python ./exec/export_unknown_wiki_count_list_by_namespace.py -o
 ==================== Exporting Unknown Wiki List... ====================
-========== Organising Home... ==========
 Here is the result:
-
 
 Ownerチームが不明だが必要なページ群: 1件
 Ownerチーム・要or不要が不明なページ群: 1件
-Owner記名なし: 4件
-
+Owner記名なし: 5件
 
 Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ==================== Done Exporting Unknown Wiki List 🎉 ====================
@@ -65,15 +58,10 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 
 ```command
 $ python ./exec/export_unknown_wiki_count_list_by_namespace.py -c
-==================== Done Exporting Unknown Wiki List 🎉 ====================
-01045255@CF4678 python % python ./exec/export_unknown_wiki_count_list_by_namespace.py -c
 ==================== Exporting Unknown Wiki List... ====================
-========== Organising Home... ==========
 Here is the result:
 
-
 Category記載なし: 7件
-
 
 Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ==================== Done Exporting Unknown Wiki List 🎉 ====================

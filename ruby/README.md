@@ -50,7 +50,7 @@ Here is the result:
 
 Ownerチームが不明だが必要なページ群: 1件
 Ownerチーム・要or不要が不明なページ群: 1件
-Owner記名なし: 2件
+Owner記名なし: 5件
 
 Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ==================== Done Exporting Unknown Wiki List 🎉 ====================
@@ -61,7 +61,7 @@ $ ruby ./exec/export_unknown_wiki_count_list_by_namespace.rb -c
 ==================== Exporting Unknown Wiki List... ====================
 Here is the result:
 
-Category記載なし: 5件
+Category記載なし: 7件
 
 Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ==================== Done Exporting Unknown Wiki List 🎉 ====================
