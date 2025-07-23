@@ -2,22 +2,23 @@ import sys
 import os
 import shutil
 import glob
-sys.path.append('../src')
+sys.path.append('./src')
 
 from home import Home
 from sidebar import Sidebar
 
 _, genre, *_ = sys.argv
+base_path    = os.path.join('..', '..')
 
 print('==================== Categorizing the Entire github-wiki-organisers Wiki Pages... ====================')
 
 print('========== Organising Home... ==========')
-home_url = Home(genre = genre).run()
+home_url = Home(base_path = base_path, genre = genre).run()
 print(f'Check out An Up-to-date Wiki List on Home at {home_url} !!')
 print('========== Done Organising Home 🎉 ==========\n')
 
 print('========== Organising Sidebar... ==========')
-Sidebar(genre = genre).run()
+Sidebar(base_path= base_path, genre = genre).run()
 print(f'Check out An Up-to-date Wiki List on Sidebar at {home_url} !!')
 print('==================== Done Categorizing the Entire github-wiki-organisers Wiki Pages 🎉 ====================')
 print('========== Done Organising Sidebar 🎉 ==========\n')
