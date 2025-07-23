@@ -3,6 +3,7 @@ import os
 import unittest
 sys.path.append('./src')
 sys.path.append('./test')
+
 from sidebar import Sidebar
 from test_application import TestApplication
 
