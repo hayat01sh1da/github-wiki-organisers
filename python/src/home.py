@@ -10,7 +10,7 @@ class Home(Application):
     def __init__(self, base_path, genre):
         super().__init__(base_path, genre)
         self.base_owner_url = f'https://github.com/orgs/{os.environ.get('USERNAME', 'hayat01sh1da')}/teams/'
-        self.home_passage = ''
+        self.home_passage   = ''
 
     def run(self):
         self.__write_home_template__()
