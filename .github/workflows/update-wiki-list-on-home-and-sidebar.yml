@@ -51,42 +51,27 @@ jobs:
           echo COMMIT_MESSAGE=$(git log --oneline -1) >> $GITHUB_ENV
           echo CURRENT_TIME=$current_time >> $GITHUB_ENV
       - name: Slack Notification
-        uses: slackapi/slack-github-action@v1
+        uses: slackapi/slack-github-action@v2
         if: contains(env.COMMIT_MESSAGE, env.CURRENT_TIME)
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
         with:
-          channel-id: '' # Channel ID
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
-            {
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "【github-wiki-organisers Wiki 自動整理スクリプト実行通知】"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Workflows: <https://github.com/hayat01sh1da/github-wiki-organisers/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml|Update Wiki List on Home and Sidebar>"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Commit: ${{ env.COMMIT_MESSAGE }}"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Source: <https://github.com/hayat01sh1da/github-wiki-organisers/wiki|github-wiki-organisers Wiki>"
-                  }
-                }
-              ]
-            }
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            blocks:
+              - type: "header"
+                text:
+                  type: "plain_text"
+                  text: "【github-wiki-organisers Wiki 自動整理スクリプト実行通知】"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "Workflows: <https://github.com/hayat01sh1da/github-wiki-organisers/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml|Update Wiki List on Home and Sidebar>"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "Commit: ${{ env.COMMIT_MESSAGE }}"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "Source: <https://github.com/hayat01sh1da/github-wiki-organisers/wiki|github-wiki-organisers Wiki>"
