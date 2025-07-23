@@ -1,0 +1,54 @@
+name: Notify Uncategorised Wiki List
+
+on:
+  schedule:
+    # 09:00 JST every Monday
+    # ⚠️ The timing is somehow not accurate at all
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout the Wiki Repository
+        uses: actions/checkout@v2
+        with:
+          repository: "${{ github.repository }}.wiki"
+          ref: master
+          path: .wiki
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4.5
+      - name: Set ENV
+        working-directory: .wiki
+        run: |
+          set -xe
+          git pull origin master
+          bash export_unknown_wiki_count_list_by_namespace.sh
+          while IFS= read -r line; do
+            unknown_wiki_count_list+=($line)
+          done < ./unknown_wiki_count_list_by_namespace.txt
+          echo UNCATEGORISED=${unknown_wiki_count_list[@]:0:2} >> $GITHUB_ENV
+          rm unknown_wiki_count_list_by_namespace.txt
+      - name: Slack Notification
+        uses: slackapi/slack-github-action@v2
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
+            blocks:
+              - type: "header"
+                text:
+                  type: "plain_text"
+                  text: "【github-wiki-organisers Wiki Category 不明ページ件数週次レポート】"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#category記載なし|${{ env.UNCATEGORISED }}>"
