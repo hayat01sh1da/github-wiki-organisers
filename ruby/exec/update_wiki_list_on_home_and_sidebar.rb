@@ -19,7 +19,7 @@ puts "========== Done Organising Home 🎉 ==========\n\n"
 
 puts '========== Organising Sidebar... =========='
 
-home_url = case genre
+case genre
 when '-o', '--owner', '-c', '--category'
   Sidebar.run(genre:)
 when
