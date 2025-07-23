@@ -18,7 +18,7 @@ class ApplicationTest < Minitest::Test
 
   def test_validate!
     error = assert_raises ArgumentError do
-      Application.new(base_path, '-x').validate!
+      Application.new(base_path:, genre: '-x').validate!
     end
     assert_equal(error.message, 'Unknown genre: `-x`')
   end

@@ -2,12 +2,12 @@ class Application
   class NotImplementedError < StandardError; end
 
   def self.run(base_path: File.join('..', '..'), genre: '-o')
-    instance = new(base_path, genre)
+    instance = new(base_path:, genre:)
     instance.validate!
     instance.run
   end
 
-  def initialize(base_path, genre)
+  def initialize(base_path:, genre:)
     @genre           = genre
     @base_path       = base_path
     @path_to_home    = File.join(base_path, 'Home.md')

@@ -1,8 +1,8 @@
 require_relative './application'
 
 class UnknownWikiCountListExporter < Application
-  def initialize(base_path, genre)
-    super(base_path, genre)
+  def initialize(base_path:, genre:)
+    super(base_path:, genre:)
     @path_to_export = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
   end
 
