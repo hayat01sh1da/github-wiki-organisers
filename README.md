@@ -9,10 +9,18 @@
 
 ## 3. How to Use
 
-Make sure that you declare the owner of the Wiki on the top of the document as follows.
+Make sure that you declare the owner or the category of the Wiki on the top of the document as follows.
 
 ```markdown
 Owner: @sample-owner
+
+---
+
+This is a sample Wiki.
+```
+
+```markdown
+Category: sample-category
 
 ---
 
