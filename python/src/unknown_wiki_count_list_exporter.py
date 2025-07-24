@@ -1,4 +1,3 @@
-from re import match
 import sys
 import os
 sys.path.append('./src')
