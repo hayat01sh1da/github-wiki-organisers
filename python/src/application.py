@@ -80,7 +80,6 @@ class Application:
         for target_path in self.target_paths:
             with open(target_path) as f:
                 wiki = os.path.basename(target_path)
-                target_regexp = re.sub(r'\.md$', '', wiki)
 
                 _namespace_declaration = f.readlines()
                 if _namespace_declaration != [] and re.search(self.__target_regexp__(), _namespace_declaration[0]):
