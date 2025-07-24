@@ -35,22 +35,18 @@ class Home(Application):
                 self.home_passage += 'Category が不明だと、保守性と検索性の悪化が発生します。  \n'
                 self.home_passage += '治安維持のため、各ページの冒頭に `Category: {カテゴリー名}` を明記して頂きますようよろしくお願いします。  \n'
 
-        self.home_passage += 'なお、Home・Sidebar は専用のスクリプトで自動更新しますので編集は不要です。\n\n'
+        self.home_passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n\n'
 
     # @return [str]
     def __update_home_template__(self):
         for namespace, wikis in self.owned_wiki_maps.items():
             self.home_passage += f'## [{namespace}]({self.base_owner_url + re.sub(r'@', '', namespace)})\n\n'
-            self.home_passage += '<details><summary>Wiki 一覧</summary>\n\n'
             for wiki in wikis:
                 self.home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
-            self.home_passage += '\n</details>\n'
             self.home_passage += '\n'
 
         for namespace, wikis in self.plain_wiki_maps.items():
             self.home_passage += f'## {namespace}\n\n'
-            self.home_passage += '<details><summary>Wiki 一覧</summary>\n\n'
             for wiki in wikis:
                 self.home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
-            self.home_passage += '\n</details>\n'
             self.home_passage += '\n'

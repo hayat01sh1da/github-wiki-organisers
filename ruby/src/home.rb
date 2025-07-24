@@ -35,28 +35,24 @@ class Home < Application
       home_passage << "治安維持のため、各ページの冒頭に `Category: {カテゴリー名}` を明記して頂きますようよろしくお願いします。  \n"
     end
 
-    home_passage << "なお、Home・Sidebar は専用のスクリプトで自動更新しますので編集は不要です。\n\n"
+    home_passage << "なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n\n"
   end
 
   # @return nil
   def update_home_passage
     owned_wiki_maps.each { |namespace, wikis|
       home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n\n"
-      home_passage << "<details><summary>Wiki 一覧</summary>\n\n"
       wikis.each { |wiki|
         home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
       }
-      home_passage << "\n</details>\n"
       home_passage << "\n"
     }
 
     plain_wiki_maps.each { |namespace, wikis|
       home_passage << "## #{namespace}\n\n"
-      home_passage << "<details><summary>Wiki 一覧</summary>\n\n"
       wikis.each { |wiki|
         home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
       }
-      home_passage << "\n</details>\n"
       home_passage << "\n"
     }
   end
