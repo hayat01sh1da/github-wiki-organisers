@@ -38,13 +38,9 @@ class UnknownWikiCountListExporter(Application):
         filtered_count_list_by_namespace = {}
         count_list_by_namespace          = []
 
-        match self.genre:
-            case '-o' | '--owner':
-                filtered_count_list_by_namespace = dict(self.plain_wiki_maps.items())
-            case '-c' | '--category':
-                for namespace, wikis in self.plain_wiki_maps.items():
-                    if namespace in self.__namespace_list__():
-                        filtered_count_list_by_namespace[namespace] = wikis
+        for namespace, wikis in self.plain_wiki_maps.items():
+            if namespace in self.__namespace_list__():
+                filtered_count_list_by_namespace[namespace] = wikis
 
         for namespace in (self.__namespace_list__() - filtered_count_list_by_namespace.keys()):
             count_list_by_namespace.append(f'{namespace}: 0件\n')

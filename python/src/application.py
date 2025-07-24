@@ -88,17 +88,10 @@ class Application:
                 else:
                     namespace = self.__no_declaration__()
 
-                match self.genre:
-                    case '-o' | '--namespace':
-                        try:
-                            hash[namespace].append(wiki)
-                        except KeyError:
-                            hash[namespace] = []
-                    case '-c' | '--category':
-                        try:
-                            uncategrised_wiki_maps[namespace].append(wiki)
-                        except KeyError:
-                            uncategrised_wiki_maps[namespace] = []
+                if namespace == self.__no_declaration__():
+                    uncategrised_wiki_maps[namespace].append(wiki)
+                else:
+                    hash[namespace].append(wiki)
 
         wiki_maps_with_namespace = dict(sorted(hash.items()))
         wiki_maps_with_namespace.update(uncategrised_wiki_maps)
