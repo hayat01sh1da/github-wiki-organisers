@@ -125,10 +125,7 @@ class RegularCase(CategoryTest):
     # private
 
     def __unknown_wiki_count_list_by_namespace__(self):
-        lst  = 'Category記載なし: 2件\n'
-        lst += 'test-category: 1件\n'
-
-        return lst
+        return 'Category記載なし: 2件\n'
 
 class IrregularCase(CategoryTest):
     def test_run(self):

@@ -1,3 +1,4 @@
+from re import match
 import sys
 import os
 sys.path.append('./src')
@@ -33,12 +34,21 @@ class UnknownWikiCountListExporter(Application):
 
     # @return [list<str>]
     def __count_list_by_namespace__(self):
-        count_list_by_namespace = []
+        filtered_count_list_by_namespace = {}
+        count_list_by_namespace          = []
 
-        for namespace in (self.__namespace_list__() - self.plain_wiki_maps.keys()):
+        match self.genre:
+            case '-o' | '--owner':
+                filtered_count_list_by_namespace = dict(self.plain_wiki_maps.items())
+            case '-c' | '--category':
+                for namespace, wikis in self.plain_wiki_maps.items():
+                    if namespace in self.__namespace_list__():
+                        filtered_count_list_by_namespace[namespace] = wikis
+
+        for namespace in (self.__namespace_list__() - filtered_count_list_by_namespace.keys()):
             count_list_by_namespace.append(f'{namespace}: 0件\n')
 
-        for namespace, wikis in self.plain_wiki_maps.items():
+        for namespace, wikis in filtered_count_list_by_namespace.items():
             count_list_by_namespace.append(f'{namespace}: {len(wikis)}件\n')
 
         return count_list_by_namespace
