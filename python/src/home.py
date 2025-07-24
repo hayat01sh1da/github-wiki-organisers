@@ -2,6 +2,7 @@ import sys
 import os
 import re
 sys.path.append('./src')
+
 from application import Application
 
 HOME_URL = f'https://github.com/{os.environ.get('USERNAME', 'hayat01sh1da')}/github-wiki-organisers/wiki'

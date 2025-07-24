@@ -2,6 +2,7 @@ import sys
 import os
 import re
 sys.path.append('./src')
+
 from application import Application
 
 class Sidebar(Application):

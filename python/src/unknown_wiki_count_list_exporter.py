@@ -2,6 +2,7 @@ from re import match
 import sys
 import os
 sys.path.append('./src')
+
 from application import Application
 
 class UnknownWikiCountListExporter(Application):
