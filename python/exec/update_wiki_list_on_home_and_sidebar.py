@@ -7,8 +7,8 @@ sys.path.append('./src')
 from home import Home
 from sidebar import Sidebar
 
-_, genre, *_ = sys.argv
 base_path    = os.path.join('..', '..')
+_, genre, *_ = sys.argv
 
 print('==================== Categorizing the Entire github-wiki-organisers Wiki Pages... ====================')
 

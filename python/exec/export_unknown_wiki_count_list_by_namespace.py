@@ -6,8 +6,8 @@ sys.path.append('./src')
 
 from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
 
-_, genre, *_ = sys.argv
 base_path    = os.path.join('..', '..')
+_, genre, *_ = sys.argv
 
 print('==================== Exporting Unknown Wiki List... ====================')
 print('========== Organising Home... ==========')
