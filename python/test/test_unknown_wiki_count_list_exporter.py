@@ -52,7 +52,7 @@ class RegularCase2(OwnershipTest):
             'Owner記名なしページ2.md': 'This is a sample Wiki'
         }
 
-class IrregularCase1(TestUnknownWikiCountListExporter):
+class IrregularCase1(OwnershipTest):
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
 
@@ -73,7 +73,7 @@ class IrregularCase1(TestUnknownWikiCountListExporter):
             'Owner記名なしページ2.md': 'This is a sample Wiki'
         }
 
-class IrregularCase2(TestUnknownWikiCountListExporter):
+class IrregularCase2(OwnershipTest):
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
 
@@ -94,7 +94,7 @@ class IrregularCase2(TestUnknownWikiCountListExporter):
             'Owner記名なしページ2.md': 'This is a sample Wiki'
         }
 
-class IrregularCase3(TestUnknownWikiCountListExporter):
+class IrregularCase3(OwnershipTest):
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
 
