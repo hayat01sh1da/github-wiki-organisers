@@ -2,7 +2,7 @@ require_relative '../src/unknown_wiki_count_list_exporter'
 
 genre, *_ = ARGV
 
-puts '==================== Exporting Unknown Wiki List... ===================='
+puts '==================== Exporting Unknown Wiki Count List... ===================='
 
 count_list_by_namespace, path_to_export = case genre
 when '-o', '--owner', '-c', '--category'
@@ -18,4 +18,4 @@ count_list_by_namespace.each { |count_list|
 }
 
 puts "\nCheck it out result on '#{path_to_export}' !!"
-puts '==================== Done Exporting Unknown Wiki List 🎉 ===================='
+puts '==================== Done Exporting Unknown Wiki Count List 🎉 ===================='
