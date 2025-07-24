@@ -18,7 +18,7 @@ print(f'Check out an Up-to-date Wiki List on Home at {home_url} !!')
 print('========== Done Organising Home 🎉 ==========\n')
 
 print('========== Organising Sidebar... ==========')
-Sidebar(base_path= base_path, genre = genre).run()
+Sidebar(base_path = base_path, genre = genre).run()
 print(f'Check out an Up-to-date Wiki List on Sidebar at {home_url} !!')
 print('==================== Done Categorising the Entire github-wiki-organisers Wiki Pages 🎉 ====================')
 print('========== Done Organising Sidebar 🎉 ==========\n')

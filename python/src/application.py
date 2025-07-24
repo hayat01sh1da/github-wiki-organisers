@@ -79,9 +79,9 @@ class Application:
 
         for target_path in self.target_paths:
             with open(target_path) as f:
-                wiki = os.path.basename(target_path)
-
+                wiki                   = os.path.basename(target_path)
                 _namespace_declaration = f.readlines()
+
                 if _namespace_declaration != [] and re.search(self.__target_regexp__(), _namespace_declaration[0]):
                     namespace_declaration  = re.sub('\n', '', _namespace_declaration[0])
                     namespace              = re.sub(self.__target_regexp__(), '', namespace_declaration)
