@@ -20,14 +20,14 @@ class ApplicationTest < Minitest::Test
     error = assert_raises ArgumentError do
       Application.new(base_path:, genre: '-x').validate!
     end
-    assert_equal(error.message, 'Unknown genre: `-x`')
+    assert_equal('Unknown genre: `-x`', error.message)
   end
 
   def test_self_run
     error = assert_raises Application::NotImplementedError do
       Application.run(base_path:, genre:)
     end
-    assert_equal(error.message, 'This method must be implemented in each subclass.')
+    assert_equal('This method must be implemented in each subclass.', error.message)
   end
 
   private

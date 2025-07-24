@@ -16,7 +16,7 @@ end
 
 class OwnedHomeTest < HomeTest
   def test_self_run
-    assert_equal(home, home_passage.join)
+    assert_equal(home_passage.join, home)
   end
 
   private
@@ -50,7 +50,7 @@ class PlainHomeTest < HomeTest
   end
 
   def test_self_run
-    assert_equal(home, home_passage.join)
+    assert_equal(home_passage.join, home)
   end
 
   private

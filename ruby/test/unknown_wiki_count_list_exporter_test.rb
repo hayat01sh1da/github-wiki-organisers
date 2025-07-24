@@ -17,7 +17,7 @@ end
 class OwnershipTest < UnknownWikiCountListExporterTest
   class RegularCase1 < OwnershipTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
+      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
     end
 
     private
@@ -33,7 +33,7 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
   class RegularCase2 < OwnershipTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
+      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
     end
 
     private
@@ -58,7 +58,7 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
   class IrregularCase1 < OwnershipTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
+      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
     end
 
     private
@@ -83,7 +83,7 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
   class IrregularCase2 < OwnershipTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
+      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
     end
 
     private
@@ -108,7 +108,7 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
   class IrregularCase3 < OwnershipTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
+      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
     end
 
     private
@@ -138,7 +138,7 @@ class CategoryTest < UnknownWikiCountListExporterTest
 
   class RegularCase < CategoryTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
+      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
     end
 
     private
@@ -152,7 +152,7 @@ class CategoryTest < UnknownWikiCountListExporterTest
 
   class IrregularCase < CategoryTest
     def test_self_run
-      assert_equal(unknown_wiki_count_list, unknown_wiki_count_list_by_namespace.join)
+      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
     end
 
     private

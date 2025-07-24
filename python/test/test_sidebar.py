@@ -38,11 +38,11 @@ class PlainHomeTest(TestSidebar):
         super().setUp(genre = '-c')
 
     def test_run(self):
-        self.assertEqual(self.sidebar, self.__sidebar_passage__())
+        self.assertEqual(self.sidebar, self.__wiki_list__())
 
     # private
 
-    def __sidebar_passage__(self):
+    def __wiki_list__(self):
         lst  = '- test-category\n'
         lst += '  - [[Category記載ありページ]]\n'
         lst += '- Category記載なし\n'

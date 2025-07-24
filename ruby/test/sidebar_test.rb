@@ -16,7 +16,7 @@ end
 
 class OwnedSidebarTest < SidebarTest
   def test_self_run
-    assert_equal(sidebar, wiki_list.join)
+    assert_equal(wiki_list.join, sidebar)
   end
 
   private
@@ -42,7 +42,7 @@ class PlainSidebarTest < SidebarTest
   end
 
   def test_self_run
-    assert_equal(sidebar, wiki_list.join)
+    assert_equal(wiki_list.join, sidebar)
   end
 
   private
