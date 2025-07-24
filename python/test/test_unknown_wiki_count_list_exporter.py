@@ -4,7 +4,7 @@ import unittest
 sys.path.append('./src')
 sys.path.append('./test')
 
-from export_unknown_wiki_count_list_by_namespace import UnknownWikiCountListExporter
+from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
 from test_application import TestApplication
 
 class TestUnknownWikiCountListExporter(TestApplication):
