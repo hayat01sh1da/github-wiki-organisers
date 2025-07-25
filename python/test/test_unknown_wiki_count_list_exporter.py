@@ -220,7 +220,7 @@ class JapaneseOwnerTestIrregularCase2(TestUnknownWikiCountListExporter):
     # private
 
     def __unknown_wiki_count_list_by_namespace__(self):
-        lst  = 'Ownerチームが不明だが必要なページ群: \n'
+        lst  = 'Ownerチームが不明だが必要なページ群: 0\n'
         lst += 'Ownerチーム・要or不要が不明なページ群: 1\n'
         lst += 'Owner記名なし: 2\n'
 
@@ -259,7 +259,7 @@ class JapaneseOwnerTestIrregularCase3(TestUnknownWikiCountListExporter):
 
 class JapaneseCategoryTestRegularCase(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(genre = 'c', language = '-ja')
+        super().setUp(genre = '-c', language = '-ja')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -271,7 +271,7 @@ class JapaneseCategoryTestRegularCase(TestUnknownWikiCountListExporter):
 
 class JapaneseCategoryTestIrregularCase(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(genre = 'c', language = '-ja')
+        super().setUp(genre = '-c', language = '-ja')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())

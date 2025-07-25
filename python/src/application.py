@@ -61,9 +61,9 @@ class Application:
                     case '-ja':
                         return 'Owner記名なし'
             case '-c' | '--category':
-                match self.genre:
+                match self.language:
                     case '-en':
-                        return 'Unowned'
+                        return 'Uncategorised'
                     case '-ja':
                         return 'Category記載なし'
 
