@@ -9,12 +9,6 @@ class HomeTest < ApplicationTest
     @home         = File.read(path_to_home)
   end
 
-  private
-
-  attr_reader :path_to_home, :home
-end
-
-class OwnedHomeTest < HomeTest
   def test_validate!
     error = assert_raises ArgumentError do
       Home.new(base_path:, genre: '-o', template_lang: 'spa').validate!
@@ -22,6 +16,12 @@ class OwnedHomeTest < HomeTest
     assert_equal('Unknown template_lang: `spa`', error.message)
   end
 
+  private
+
+  attr_reader :path_to_home, :home
+end
+
+class OwnedHomeTest < HomeTest
   def test_self_run
     assert_equal(home_passage.join, home)
   end
@@ -62,13 +62,6 @@ end
 class PlainHomeTest < HomeTest
   def setup
     super(genre: '-c')
-  end
-
-  def test_validate!
-    error = assert_raises ArgumentError do
-      Home.new(base_path:, genre: '-c', template_lang: 'spa').validate!
-    end
-    assert_equal('Unknown template_lang: `spa`', error.message)
   end
 
   def test_self_run
