@@ -48,9 +48,9 @@ $ ruby ./exec/export_unknown_wiki_count_list_by_namespace.rb -o
 ==================== Exporting Unknown Wiki Count List... ====================
 Here is the result:
 
-Ownerチームが不明だが必要なページ群: 1件
-Ownerチーム・要or不要が不明なページ群: 1件
-Owner記名なし: 5件
+Unknown Owner nor Necessity: 1
+Unowned but Necessary: 1
+Unowned: 5
 
 Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ==================== Done Exporting Unknown Wiki Count List 🎉 ====================
@@ -61,7 +61,7 @@ $ ruby ./exec/export_unknown_wiki_count_list_by_namespace.rb -c
 ==================== Exporting Unknown Wiki Count List... ====================
 Here is the result:
 
-Category記載なし: 7件
+Uncategorised: 7
 
 Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ==================== Done Exporting Unknown Wiki Count List 🎉 ====================

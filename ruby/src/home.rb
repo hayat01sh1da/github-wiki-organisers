@@ -3,21 +3,9 @@ require_relative './application'
 class Home < Application
   HOME_URL = "https://github.com/#{ENV.fetch('USERNAME', 'hayat01sh1da')}/github-wiki-organisers/wiki".freeze
 
-  def self.run(base_path: File.join('..', '..'), genre: '-o', template_lang: 'ja')
-    instance = new(base_path:, genre:, template_lang:)
-    instance.validate!
-    instance.run
-  end
-
-  def initialize(base_path:, genre:, template_lang:)
-    super(base_path:, genre:)
+  def initialize(base_path:, genre:, language:)
+    super(base_path:, genre:, language:)
     @base_owner_url = "https://github.com/orgs/#{ENV.fetch('USERNAME', 'hayat01sh1da')}/teams/"
-    @template_lang  = template_lang
-  end
-
-  def validate!
-    super
-    raise ArgumentError, "Unknown template_lang: `#{template_lang}`" unless ['ja', 'en'].include?(template_lang)
   end
 
   def run
@@ -28,7 +16,7 @@ class Home < Application
 
   private
 
-  attr_reader :base_owner_url, :template_lang
+  attr_reader :base_owner_url
 
   # @return [String]
   def template_genre
@@ -42,7 +30,7 @@ class Home < Application
 
   # @return [String]
   def path_to_home_template
-    File.join('..', 'home_template', template_genre, "#{template_lang}.md")
+    File.join('..', 'home_template', template_genre, "#{language}.md")
   end
 
   # @return [Array<String>]

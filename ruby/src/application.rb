@@ -1,14 +1,15 @@
 class Application
   class NotImplementedError < StandardError; end
 
-  def self.run(base_path: File.join('..', '..'), genre: '-o')
-    instance = new(base_path:, genre:)
+  def self.run(base_path: File.join('..', '..'), genre: '-o', language: 'en')
+    instance = new(base_path:, genre:, language:)
     instance.validate!
     instance.run
   end
 
-  def initialize(base_path:, genre:)
+  def initialize(base_path:, genre:, language:)
     @genre           = genre
+    @language        = language
     @base_path       = base_path
     @path_to_home    = File.join(base_path, 'Home.md')
     @path_to_sidebar = File.join(base_path, '_Sidebar.md')
@@ -17,6 +18,7 @@ class Application
 
   def validate!
     raise ArgumentError, "Unknown genre: `#{genre}`" unless ['-o', '--owner', '-c', '--category'].include?(genre)
+    raise ArgumentError, "Unknown language: `#{language}`" unless ['en', 'ja'].include?(language)
   end
 
   def run
@@ -25,7 +27,7 @@ class Application
 
   private
 
-  attr_reader :genre, :base_path, :path_to_home, :path_to_sidebar, :paths_to_wikis
+  attr_reader :genre, :language, :base_path, :path_to_home, :path_to_sidebar, :paths_to_wikis
 
   # @return [String]
   def target_paths
@@ -48,11 +50,21 @@ class Application
 
   # @return [String]
   def no_declaration
-     @no_declaration ||= case genre
-    when '-o', '--owner'
-      'Owner記名なし'
-    when '-c', '--category'
-      'Category記載なし'
+     @no_declaration ||= case language
+    when 'en'
+      case genre
+      when '-o', '--owner'
+        'Unowned'
+      when '-c', '--category'
+        'Uncategorised'
+      end
+    when 'ja'
+      case genre
+      when '-o', '--owner'
+        'Owner記名なし'
+      when '-c', '--category'
+        'Category記載なし'
+      end
     end
   end
 
