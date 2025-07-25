@@ -66,8 +66,8 @@ module English
 
       def unknown_wiki_count_list_by_namespace
         [
-          "Unknown Owner nor Necessity: 1\n",
-          "Unowned but Necessary: 0\n",
+          "Unknown Owner nor Necessity: 0\n",
+          "Unowned but Necessary: 1\n",
           "Unowned: 2\n"
         ]
       end
@@ -75,7 +75,7 @@ module English
       def test_file_maps
         {
           'Owned Wiki.md' => 'Owner: @test-owner',
-          'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
+          'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
           'Unowned Wiki 1.md' => '',
           'Unowned Wiki 2.md' => 'This is a sample Wiki'
         }
@@ -91,8 +91,8 @@ module English
 
       def unknown_wiki_count_list_by_namespace
         [
-          "Unknown Owner nor Necessity: 0\n",
-          "Unowned but Necessary: 1\n",
+          "Unknown Owner nor Necessity: 1\n",
+          "Unowned but Necessary: 0\n",
           "Unowned: 2\n"
         ]
       end
@@ -100,7 +100,7 @@ module English
       def test_file_maps
         {
           'Owned Wiki.md' => 'Owner: @test-owner',
-          'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
+          'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
           'Unowned Wiki 1.md' => '',
           'Unowned Wiki 2.md' => 'This is a sample Wiki'
         }
@@ -160,13 +160,14 @@ module English
 
       def unknown_wiki_count_list_by_namespace
         [
-          "Uncategorised: 4\n"
+          "Uncategorised: 5\n"
         ]
       end
 
       def test_file_maps
         {
           'Owned Wiki.md' => 'Owner: @test-owner',
+          'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
           'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
           'Unowned Wiki 1.md' => '',
           'Unowned Wiki 2.md' => 'This is a sample Wiki'
