@@ -31,14 +31,14 @@ class Home(Application):
                 self.home_passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
                 self.home_passage += '\n'
                 self.home_passage += 'Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n'
-                self.home_passage += '治安維持のため、各ページの冒頭に `Owner: {オーナーチーム名}` を明記して頂きますようよろしくお願いします。\n'
+                self.home_passage += '治安維持のため、各ページの冒頭に `Owner: @オーナーチーム` を明記して頂きますようよろしくお願いします。\n'
             case '-c' | '--category':
                 self.home_passage += '## Wiki ページの運用ルール\n'
                 self.home_passage += '\n'
                 self.home_passage += 'このページは Category ごとに Wiki をグルーピングして一覧化しています。\n'
                 self.home_passage += '\n'
                 self.home_passage += 'Category が不明だと、保守性と検索性の悪化が発生します。  \n'
-                self.home_passage += '治安維持のため、各ページの冒頭に `Category: {カテゴリー名}` を明記して頂きますようよろしくお願いします。\n'
+                self.home_passage += '治安維持のため、各ページの冒頭に `Category: カテゴリー名` を明記して頂きますようよろしくお願いします。\n'
 
         self.home_passage += '\n'
         self.home_passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'

@@ -29,14 +29,14 @@ class Home < Application
       home_passage << "このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n"
       home_passage << "\n"
       home_passage << "Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n"
-      home_passage << "治安維持のため、各ページの冒頭に `Owner: {オーナーチーム名}` を明記して頂きますようよろしくお願いします。\n"
+      home_passage << "治安維持のため、各ページの冒頭に `Owner: @オーナーチーム` を明記して頂きますようよろしくお願いします。\n"
     when '-c', '--category'
       home_passage << "## Wiki ページの運用ルール\n"
       home_passage << "\n"
       home_passage << "このページは Category ごとに Wiki をグルーピングして一覧化しています。\n"
       home_passage << "\n"
       home_passage << "Category が不明だと、保守性と検索性の悪化が発生します。  \n"
-      home_passage << "治安維持のため、各ページの冒頭に `Category: {カテゴリー名}` を明記して頂きますようよろしくお願いします。\n"
+      home_passage << "治安維持のため、各ページの冒頭に `Category: カテゴリー名` を明記して頂きますようよろしくお願いします。\n"
     end
 
     home_passage << "\n"
