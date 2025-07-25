@@ -52,9 +52,9 @@ class Application:
     def __no_declaration__(self):
         match self.genre:
             case '-o' | '--owner':
-                return 'Owner記名なし'
+                return 'Unowned'
             case '-c' | '--category':
-                return 'Category記載なし'
+                return 'Uncategorised'
 
     # @return [dict<str => list<str>>]
     def __filter_namespace__(self):

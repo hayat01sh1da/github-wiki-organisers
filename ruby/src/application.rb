@@ -50,9 +50,9 @@ class Application
   def no_declaration
      @no_declaration ||= case genre
     when '-o', '--owner'
-      'Owner記名なし'
+      'Unowned'
     when '-c', '--category'
-      'Category記載なし'
+      'Uncategorised'
     end
   end
 
