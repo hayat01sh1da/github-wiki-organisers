@@ -8,7 +8,7 @@ from application import Application
 HOME_URL = f'https://github.com/{os.environ.get('USERNAME', 'hayat01sh1da')}/github-wiki-organisers/wiki'
 
 class Home(Application):
-    def __init__(self, base_path, genre, template_lang = 'ja'):
+    def __init__(self, base_path, genre, template_lang = 'en'):
         super().__init__(base_path, genre)
         self.base_owner_url = f'https://github.com/orgs/{os.environ.get('USERNAME', 'hayat01sh1da')}/teams/'
         self.__validate__(genre, template_lang)

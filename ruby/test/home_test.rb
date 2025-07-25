@@ -2,7 +2,7 @@ require_relative './application_test'
 require_relative '../src/home'
 
 class HomeTest < ApplicationTest
-  def setup(genre: '-o', template_lang: 'ja')
+  def setup(genre: '-o', template_lang: 'en')
     super(genre:)
     Home.run(base_path:, genre:, template_lang:)
     @path_to_home = File.join(base_path, 'Home.md')
@@ -23,6 +23,10 @@ end
 
 module Japanese
   class OwnedHomeTest < HomeTest
+    def setup
+      super(genre: '-o', template_lang: 'ja')
+    end
+
     def test_self_run
       assert_equal(home_passage.join, home)
     end
@@ -62,7 +66,7 @@ module Japanese
 
   class PlainHomeTest < HomeTest
     def setup
-      super(genre: '-c')
+      super(genre: '-c', template_lang: 'ja')
     end
 
     def test_self_run
@@ -97,10 +101,6 @@ end
 
 module English
   class OwnedHomeTest < HomeTest
-    def setup
-      super(template_lang: 'en')
-    end
-
     def test_self_run
       assert_equal(home_passage.join, home)
     end
@@ -140,7 +140,7 @@ module English
 
   class PlainHomeTest < HomeTest
     def setup
-      super(genre: '-c', template_lang: 'en')
+      super(genre: '-c')
     end
 
     def test_self_run

@@ -3,7 +3,7 @@ require_relative './application'
 class Home < Application
   HOME_URL = "https://github.com/#{ENV.fetch('USERNAME', 'hayat01sh1da')}/github-wiki-organisers/wiki".freeze
 
-  def self.run(base_path: File.join('..', '..'), genre: '-o', template_lang: 'ja')
+  def self.run(base_path: File.join('..', '..'), genre: '-o', template_lang: 'en')
     instance = new(base_path:, genre:, template_lang:)
     instance.validate!
     instance.run
