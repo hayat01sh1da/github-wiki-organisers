@@ -20,13 +20,13 @@ class UnknownWikiCountListExporter < Application
     case genre
     when '-o', '--owner'
       case language
-      when 'en'
+      when '-en'
         [
           'Unknown Owner nor Necessity',
           'Unowned but Necessary',
           'Unowned'
         ]
-      when 'ja'
+      when '-ja'
         [
           'Ownerチームが不明だが必要なページ群',
           'Ownerチーム・要or不要が不明なページ群',
@@ -35,11 +35,11 @@ class UnknownWikiCountListExporter < Application
       end
     when '-c', '--category'
       case language
-      when 'en'
+      when '-en'
         [
           'Uncategorised'
         ]
-      when 'ja'
+      when '-ja'
         [
           'Category記載なし'
         ]

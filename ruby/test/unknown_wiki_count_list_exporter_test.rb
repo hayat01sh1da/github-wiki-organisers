@@ -2,7 +2,7 @@ require_relative './application_test'
 require_relative '../src/unknown_wiki_count_list_exporter'
 
 class UnknownWikiCountListExporterTest < ApplicationTest
-  def setup(genre: '-o', language: 'en')
+  def setup(genre: '-o', language: '-en')
     super(genre:, language:)
     UnknownWikiCountListExporter.run(base_path:, genre:, language:)
     @path_to_unknown_wiki_count_list = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
@@ -180,7 +180,7 @@ end
 module Japanese
   class OwnershipTest < UnknownWikiCountListExporterTest
     def setup
-      super(language: 'ja')
+      super(language: '-ja')
     end
 
     class RegularCase1 < OwnershipTest
@@ -301,7 +301,7 @@ module Japanese
 
   class CategoryTest < UnknownWikiCountListExporterTest
     def setup
-      super(genre: '-c', language: 'ja')
+      super(genre: '-c', language: '-ja')
     end
 
     class RegularCase < CategoryTest

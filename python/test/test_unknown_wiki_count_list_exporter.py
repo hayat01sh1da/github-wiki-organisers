@@ -8,7 +8,7 @@ from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
 from test_application import TestApplication
 
 class TestUnknownWikiCountListExporter(TestApplication):
-    def setUp(self, genre = '-o', language = 'en'):
+    def setUp(self, genre = '-o', language = '-en'):
         super().setUp(genre = genre, language = language)
         UnknownWikiCountListExporter(self.base_path, genre = genre, language = language).run()
         path_to_unknown_wiki_count_list = os.path.join(self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
@@ -153,7 +153,7 @@ class Japanese(TestUnknownWikiCountListExporter):
     class OwnershipTest(TestUnknownWikiCountListExporter):
         class RegularCase1(TestUnknownWikiCountListExporter):
             def setUp(self):
-                super().setUp(language = 'ja')
+                super().setUp(language = '-ja')
 
             def test_run(self):
                 self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -169,7 +169,7 @@ class Japanese(TestUnknownWikiCountListExporter):
 
         class RegularCase2(TestUnknownWikiCountListExporter):
             def setUp(self):
-                super().setUp(language = 'ja')
+                super().setUp(language = '-ja')
 
             def test_run(self):
                 self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -193,7 +193,7 @@ class Japanese(TestUnknownWikiCountListExporter):
 
         class IrregularCase1(TestUnknownWikiCountListExporter):
             def setUp(self):
-                super().setUp(language = 'ja')
+                super().setUp(language = '-ja')
 
             def test_run(self):
                 self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -217,7 +217,7 @@ class Japanese(TestUnknownWikiCountListExporter):
 
         class IrregularCase2(TestUnknownWikiCountListExporter):
             def setUp(self):
-                super().setUp(language = 'ja')
+                super().setUp(language = '-ja')
 
             def test_run(self):
                 self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -241,7 +241,7 @@ class Japanese(TestUnknownWikiCountListExporter):
 
         class IrregularCase3(TestUnknownWikiCountListExporter):
             def setUp(self):
-                super().setUp(language = 'ja')
+                super().setUp(language = '-ja')
 
             def test_run(self):
                 self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -265,7 +265,7 @@ class Japanese(TestUnknownWikiCountListExporter):
     class CategoryTest(TestUnknownWikiCountListExporter):
         class RegularCase(TestUnknownWikiCountListExporter):
             def setUp(self):
-                super().setUp(genre = 'c', language = 'ja')
+                super().setUp(genre = 'c', language = '-ja')
 
             def test_run(self):
                 self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -277,7 +277,7 @@ class Japanese(TestUnknownWikiCountListExporter):
 
         class IrregularCase(TestUnknownWikiCountListExporter):
             def setUp(self):
-                super().setUp(genre = 'c', language = 'ja')
+                super().setUp(genre = 'c', language = '-ja')
 
             def test_run(self):
                 self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())

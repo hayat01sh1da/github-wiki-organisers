@@ -8,7 +8,7 @@ from home import Home
 from test_application import TestApplication
 
 class TestHome(TestApplication):
-    def setUp(self, genre = '-o', language = 'en'):
+    def setUp(self, genre = '-o', language = '-en'):
         super().setUp(genre = genre, language = language)
         Home(base_path = self.base_path, genre = genre, language = language).run()
         path_to_home = os.path.join(self.base_path, 'Home.md')
@@ -84,7 +84,7 @@ class English(TestHome):
 class Japanese(TestHome):
     class OwnedHomeTest(TestHome):
         def setUp(self):
-            super().setUp(language = 'ja')
+            super().setUp(language = '-ja')
 
         def test_run(self):
             self.assertEqual(self.home, self.__home_passage__())
@@ -122,7 +122,7 @@ class Japanese(TestHome):
 
     class PlainHomeTest(TestHome):
         def setUp(self):
-            super().setUp(genre = '-c', language = 'ja')
+            super().setUp(genre = '-c', language = '-ja')
 
         def test_run(self):
             self.assertEqual(self.home, self.__home_passage__())

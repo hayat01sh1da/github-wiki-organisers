@@ -30,7 +30,7 @@ class Home < Application
 
   # @return [String]
   def path_to_home_template
-    File.join('..', 'home_template', template_genre, "#{language}.md")
+    File.join('..', 'home_template', template_genre, "#{language.gsub(/^\-/, '')}.md")
   end
 
   # @return [Array<String>]
