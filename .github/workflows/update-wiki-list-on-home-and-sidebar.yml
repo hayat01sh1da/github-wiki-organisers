@@ -62,7 +62,7 @@ jobs:
               - type: "header"
                 text:
                   type: "plain_text"
-                  text: "【github-wiki-organisers Wiki 自動整理スクリプト実行通知】"
+                  text: "【github-wiki-organisers Daily Wiki List on Home and Sidebar Update Report】"
               - type: "section"
                 text:
                   type: "mrkdwn"

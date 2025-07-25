@@ -47,8 +47,8 @@ jobs:
               - type: "header"
                 text:
                   type: "plain_text"
-                  text: "【github-wiki-organisers Wiki Category 不明ページ件数週次レポート】"
+                  text: "【github-wiki-organisers Weekly Uncategorised Wiki Count by Namespace Report】"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#category記載なし|${{ env.UNCATEGORISED }}>"
+                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#uncategorised|${{ env.UNCATEGORISED }}>"
