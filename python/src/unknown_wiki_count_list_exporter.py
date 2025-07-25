@@ -20,28 +20,28 @@ class UnknownWikiCountListExporter(Application):
 
     # @return [list<str>]
     def __namespace_list__(self):
-        match self.language:
-            case 'en':
-                match self.genre:
-                    case '-o' | '--owner':
+        match self.genre:
+            case '-o' | '--owner':
+                 match self.language:
+                    case 'en':
                         return [
                             'Unowned but Necessary',
                             'Unknown Owner nor Necessity',
                             'Unowned'
                         ]
-                    case '-c' | '--category':
-                        return [
-                            'Uncategorised'
-                        ]
-            case 'ja':
-                match self.genre:
-                    case '-o' | '--owner':
+                    case 'ja':
                         return [
                             'Ownerチームが不明だが必要なページ群',
                             'Ownerチーム・要or不要が不明なページ群',
                             'Owner記名なし'
                         ]
-                    case '-c' | '--category':
+            case '-c' | '--category':
+                match self.language:
+                    case 'en':
+                        return [
+                            'Uncategorised'
+                        ]
+                    case 'ja':
                         return [
                             'Category記載なし'
                         ]

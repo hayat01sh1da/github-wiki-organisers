@@ -17,29 +17,29 @@ class UnknownWikiCountListExporter < Application
 
   # @return [Array<String>]
   def namespace_list
-    case language
-    when 'en'
-      case genre
-      when '-o', '--owner'
+    case genre
+    when '-o', '--owner'
+      case language
+      when 'en'
         [
           'Unknown Owner nor Necessity',
           'Unowned but Necessary',
           'Unowned'
         ]
-      when '-c', '--category'
-        [
-          'Uncategorised'
-        ]
-      end
-    when 'ja'
-      case genre
-      when '-o', '--owner'
+      when 'ja'
         [
           'Ownerチームが不明だが必要なページ群',
           'Ownerチーム・要or不要が不明なページ群',
           'Owner記名なし'
         ]
-      when '-c', '--category'
+      end
+    when '-c', '--category'
+      case language
+      when 'en'
+        [
+          'Uncategorised'
+        ]
+      when 'ja'
         [
           'Category記載なし'
         ]

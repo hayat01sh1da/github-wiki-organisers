@@ -53,18 +53,18 @@ class Application:
 
     # @return [str]
     def __no_declaration__(self):
-        match self.language:
-            case 'en':
-                match self.genre:
-                    case '-o' | '--owner':
+        match self.genre:
+            case '-o' | '--owner':
+                match self.language:
+                    case 'en':
                         return 'Unowned'
-                    case '-c' | '--category':
-                        return 'Uncategorised'
-            case 'ja':
-                match self.genre:
-                    case '-o' | '--owner':
+                    case 'ja':
                         return 'Owner記名なし'
-                    case '-c' | '--category':
+            case '-c' | '--category':
+                match self.genre:
+                    case 'en':
+                        return 'Unowned'
+                    case 'ja':
                         return 'Category記載なし'
 
     # @return [dict<str => list<str>>]
