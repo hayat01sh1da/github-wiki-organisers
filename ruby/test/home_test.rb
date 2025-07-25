@@ -2,9 +2,9 @@ require_relative './application_test'
 require_relative '../src/home'
 
 class HomeTest < ApplicationTest
-  def setup(genre: '-o')
+  def setup(genre: '-o', template_lang: 'ja')
     super(genre:)
-    Home.run(base_path:, genre:)
+    Home.run(base_path:, genre:, template_lang:)
     @path_to_home = File.join(base_path, 'Home.md')
     @home         = File.read(path_to_home)
   end
@@ -15,6 +15,13 @@ class HomeTest < ApplicationTest
 end
 
 class OwnedHomeTest < HomeTest
+  def test_validate!
+    error = assert_raises ArgumentError do
+      Home.new(base_path:, genre: '-o', template_lang: 'spa').validate!
+    end
+    assert_equal('Unknown template_lang: `spa`', error.message)
+  end
+
   def test_self_run
     assert_equal(home_passage.join, home)
   end
@@ -55,6 +62,13 @@ end
 class PlainHomeTest < HomeTest
   def setup
     super(genre: '-c')
+  end
+
+  def test_validate!
+    error = assert_raises ArgumentError do
+      Home.new(base_path:, genre: '-c', template_lang: 'spa').validate!
+    end
+    assert_equal('Unknown template_lang: `spa`', error.message)
   end
 
   def test_self_run

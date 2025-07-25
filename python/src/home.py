@@ -8,13 +8,14 @@ from application import Application
 HOME_URL = f'https://github.com/{os.environ.get('USERNAME', 'hayat01sh1da')}/github-wiki-organisers/wiki'
 
 class Home(Application):
-    def __init__(self, base_path, genre):
+    def __init__(self, base_path, genre, template_lang = 'ja'):
         super().__init__(base_path, genre)
         self.base_owner_url = f'https://github.com/orgs/{os.environ.get('USERNAME', 'hayat01sh1da')}/teams/'
-        self.home_passage   = ''
+        self.__validate__(genre, template_lang)
+        self.template_lang = template_lang
+        self.home_passage  = self.__home_passage__()
 
     def run(self):
-        self.__write_home_template__()
         self.__update_home_template__()
         with open(self.path_to_home, 'w') as f:
             f.write(self.home_passage.rstrip() + '\n')
@@ -22,27 +23,28 @@ class Home(Application):
 
     # private
 
+    # @raises [ValueError]
+    def __validate__(self, genre, template_lang = 'ja'):
+        super().__validate__(genre)
+        if template_lang not in ['ja', 'en']:
+            raise ValueError(f'Unknown template_lang: `{template_lang}`')
+
     # @return [str]
-    def __write_home_template__(self):
+    def __template_genre__(self):
         match self.genre:
             case '-o' | '--owner':
-                self.home_passage += '## Wiki ページの運用ルール\n'
-                self.home_passage += '\n'
-                self.home_passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
-                self.home_passage += '\n'
-                self.home_passage += 'Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n'
-                self.home_passage += '治安維持のため、各ページの冒頭に `Owner: @オーナーチーム` を明記して頂きますようよろしくお願いします。\n'
+                return 'owner'
             case '-c' | '--category':
-                self.home_passage += '## Wiki ページの運用ルール\n'
-                self.home_passage += '\n'
-                self.home_passage += 'このページは Category ごとに Wiki をグルーピングして一覧化しています。\n'
-                self.home_passage += '\n'
-                self.home_passage += 'Category が不明だと、保守性と検索性の悪化が発生します。  \n'
-                self.home_passage += '治安維持のため、各ページの冒頭に `Category: カテゴリー名` を明記して頂きますようよろしくお願いします。\n'
+                return 'category'
 
-        self.home_passage += '\n'
-        self.home_passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
-        self.home_passage += '\n'
+    # @return [str]
+    def __path_to_home_template__(self):
+        return os.path.join('..', 'home_template', self.__template_genre__(), f'{self.template_lang}.md')
+
+    # @return [list<str>]
+    def __home_passage__(self):
+        with open(self.__path_to_home_template__()) as f:
+            return f.read() + '\n'
 
     # @return [str]
     def __update_home_template__(self):

@@ -8,14 +8,18 @@ from home import Home
 from test_application import TestApplication
 
 class TestHome(TestApplication):
-    def setUp(self, genre = '-o'):
+    def setUp(self, genre = '-o', template_lang = 'ja'):
         super().setUp(genre = genre)
-        Home(base_path = self.base_path, genre = genre).run()
+        Home(base_path = self.base_path, genre = genre, template_lang = template_lang).run()
         path_to_home = os.path.join(self.base_path, 'Home.md')
         with open(path_to_home) as f:
             self.home = f.read()
-
 class OwnedHomeTest(TestHome):
+    def test_validate(self):
+        with self.assertRaises(ValueError) as e:
+            Home(base_path = self.base_path, genre = '-o', template_lang = 'spa')
+        self.assertEqual(str(e.exception), 'Unknown template_lang: `spa`')
+
     def test_run(self):
         self.assertEqual(self.home, self.__home_passage__())
 
@@ -53,6 +57,10 @@ class OwnedHomeTest(TestHome):
 class PlainHomeTest(TestHome):
     def setUp(self):
         super().setUp(genre = '-c')
+
+    def test_validate(self):
+        with self.assertRaises(ValueError, msg = 'Unknown template_lang: `spa`'):
+            Home(base_path = self.base_path, genre = '-c', template_lang = '')
 
     def test_run(self):
         self.assertEqual(self.home, self.__home_passage__())
