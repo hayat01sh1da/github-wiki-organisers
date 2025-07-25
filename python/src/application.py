@@ -6,7 +6,7 @@ from collections import defaultdict
 class Application:
     def __init__(self, base_path = os.path.join('..', '..'), genre = '-o'):
         self.base_path = base_path
-        self.validate(genre)
+        self.__validate__(genre)
         self.genre                                 = genre
         self.path_to_home                          = os.path.join(base_path, 'Home.md')
         self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
@@ -14,14 +14,15 @@ class Application:
         self.wiki_maps_with_namespace              = self.__wiki_maps_with_namespace__()
         self.owned_wiki_maps, self.plain_wiki_maps = self.__filter_namespace__()
 
-    def validate(self, genre):
-        if genre not in ['-o', '--owner', '-c', '--category']:
-            raise ValueError(f'Unknown genre: `{genre}`')
-
     def run(self):
         raise NotImplementedError('This method must be implemented in each subclass.')
 
     # private
+
+    # @raises [ValueError]
+    def __validate__(self, genre):
+        if genre not in ['-o', '--owner', '-c', '--category']:
+            raise ValueError(f'Unknown genre: `{genre}`')
 
     # @return [str]
     def __target_paths__(self):

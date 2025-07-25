@@ -26,8 +26,9 @@ class TestApplication(unittest.TestCase):
                 shutil.rmtree(pycache)
 
     def test_validate(self):
-        with self.assertRaises(ValueError, msg = 'Unknown genre: `-x`'):
-            Application(base_path = self.base_path, genre = '-x').validate()
+        with self.assertRaises(ValueError) as e:
+            Application(base_path = self.base_path, genre = '-x')
+        self.assertEqual(str(e.exception), 'Unknown genre: `-x`')
 
     def test_run(self):
         with self.assertRaises(NotImplementedError, msg = 'This method must be implemented in each subclass.'):
