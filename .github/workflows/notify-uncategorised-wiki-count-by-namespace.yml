@@ -1,4 +1,4 @@
-name: Notify Unknown Wiki List
+name: Notify Uncategorised Wiki Count by Namespace
 
 on:
   schedule:
@@ -34,9 +34,7 @@ jobs:
           while IFS= read -r line; do
             unknown_wiki_count_list+=($line)
           done < ./unknown_wiki_count_list_by_namespace.txt
-          echo UNKNOWN_BUT_NECESSARY=${unknown_wiki_count_list[@]:0:2} >> $GITHUB_ENV
-          echo UNKNOWN_AND_NECESSITY_UNKNOWN=${unknown_wiki_count_list[@]:2:2} >> $GITHUB_ENV
-          echo OWNERSHIP_UNDECLARED=${unknown_wiki_count_list[@]:4:5} >> $GITHUB_ENV
+          echo UNCATEGORISED=${unknown_wiki_count_list[@]:0:2} >> $GITHUB_ENV
           rm unknown_wiki_count_list_by_namespace.txt
       - name: Slack Notification
         uses: slackapi/slack-github-action@v2
@@ -49,16 +47,8 @@ jobs:
               - type: "header"
                 text:
                   type: "plain_text"
-                  text: "【github-wiki-organisers Wiki Ownership 不明ページ件数週次レポート】"
+                  text: "【github-wiki-organisers Wiki Category 不明ページ件数週次レポート】"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチームが不明だが必要なページ群|${{ env.UNKNOWN_BUT_NECESSARY }}>"
-              - type: "section"
-                text:
-                  type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#ownerチーム要or不要が不明なページ群|${{ env.UNKNOWN_AND_NECESSITY_UNKNOWN }}>"
-              - type: "section"
-                text:
-                  type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#owner記名なし|${{ env.OWNERSHIP_UNDECLARED }}>"
+                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#category記載なし|${{ env.UNCATEGORISED }}>"
