@@ -20,44 +20,72 @@ class TestHome(TestApplication):
             Home(base_path = self.base_path, genre = '-o', template_lang = 'spa')
         self.assertEqual(str(e.exception), 'Unknown template_lang: `spa`')
 
-class OwnedHomeTest(TestHome):
-    def test_run(self):
-        self.assertEqual(self.home, self.__home_passage__())
+class Japanese(TestHome):
+    class OwnedHomeTest(TestHome):
+        def test_run(self):
+            self.assertEqual(self.home, self.__home_passage__())
 
-    # private
+        # private
 
-    def __home_passage__(self):
-        passage  = '## Wiki ページの運用ルール\n'
-        passage += '\n'
-        passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
-        passage += '\n'
-        passage += 'Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n'
-        passage += '治安維持のため、各ページの冒頭に `Owner: @オーナーチーム` を明記して頂きますようよろしくお願いします。\n'
-        passage += '\n'
-        passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
-        passage += '\n'
-        passage += '## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
-        passage += '\n'
-        passage += '- [[Owner記名ありページ]]\n'
-        passage += '\n'
-        passage += '## Ownerチームが不明だが必要なページ群\n'
-        passage += '\n'
-        passage += '- [[Ownerチームが不明だが必要なページ]]\n'
-        passage += '\n'
-        passage += '## Ownerチーム・要or不要が不明なページ群\n'
-        passage += '\n'
-        passage += '- [[Ownerチーム・要or不要が不明なページ]]\n'
-        passage += '\n'
-        passage += '## Owner記名なし\n'
-        passage += '\n'
-        passage += '- [[Owner記名なしページ1]]\n'
-        passage += '- [[Owner記名なしページ2]]\n'
+        def __home_passage__(self):
+            passage  = '## Wiki ページの運用ルール\n'
+            passage += '\n'
+            passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
+            passage += '\n'
+            passage += 'Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n'
+            passage += '治安維持のため、各ページの冒頭に `Owner: @オーナーチーム` を明記して頂きますようよろしくお願いします。\n'
+            passage += '\n'
+            passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
+            passage += '\n'
+            passage += '## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
+            passage += '\n'
+            passage += '- [[Owner記名ありページ]]\n'
+            passage += '\n'
+            passage += '## Ownerチームが不明だが必要なページ群\n'
+            passage += '\n'
+            passage += '- [[Ownerチームが不明だが必要なページ]]\n'
+            passage += '\n'
+            passage += '## Ownerチーム・要or不要が不明なページ群\n'
+            passage += '\n'
+            passage += '- [[Ownerチーム・要or不要が不明なページ]]\n'
+            passage += '\n'
+            passage += '## Owner記名なし\n'
+            passage += '\n'
+            passage += '- [[Owner記名なしページ1]]\n'
+            passage += '- [[Owner記名なしページ2]]\n'
 
-        return passage
+            return passage
 
-class PlainHomeTest(TestHome):
-    def setUp(self):
-        super().setUp(genre = '-c')
+    class PlainHomeTest(TestHome):
+        def setUp(self):
+            super().setUp(genre = '-c')
+
+        def test_run(self):
+            self.assertEqual(self.home, self.__home_passage__())
+
+        # private
+
+        def __home_passage__(self):
+            passage  = '## Wiki ページの運用ルール\n'
+            passage += '\n'
+            passage += 'このページは Category ごとに Wiki をグルーピングして一覧化しています。\n'
+            passage += '\n'
+            passage += 'Category が不明だと、保守性と検索性の悪化が発生します。  \n'
+            passage += '治安維持のため、各ページの冒頭に `Category: カテゴリー名` を明記して頂きますようよろしくお願いします。\n'
+            passage += '\n'
+            passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
+            passage += '\n'
+            passage += '## test-category\n'
+            passage += '\n'
+            passage += '- [[Category記載ありページ]]\n'
+            passage += '\n'
+            passage += '## Category記載なし\n'
+            passage += '\n'
+            passage += '- [[Category記載なしページ1]]\n'
+            passage += '- [[Category記載なしページ2]]\n'
+
+            return passage
+
 
     def test_run(self):
         self.assertEqual(self.home, self.__home_passage__())
