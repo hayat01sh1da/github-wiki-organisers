@@ -30,9 +30,7 @@ Check out an Up-to-date Wiki List on Sidebar at 'https://github.com/hayat01sh1da
 -------------------- Done Categorising the Entire github-wiki-organisers Wiki Pages 🎉 --------------------
 ```
 
-## 2-3. Export Unknown Wiki List
-
-### 2-3-1. Owner
+## 2-3. Export Unknown Wiki Count List by Namespace
 
 ```command
 $ ruby exec/export_unknown_wiki_count_list_by_namespace.rb -o -en
