@@ -4,10 +4,11 @@ import re
 from collections import defaultdict
 
 class Application:
-    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o'):
+    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = 'en'):
         self.base_path = base_path
-        self.__validate__(genre)
-        self.genre                                 = genre
+        self.genre     = genre
+        self.language  = language
+        self.__validate__()
         self.path_to_home                          = os.path.join(base_path, 'Home.md')
         self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
         self.target_paths                          = self.__target_paths__()
@@ -20,9 +21,11 @@ class Application:
     # private
 
     # @raises [ValueError]
-    def __validate__(self, genre):
-        if genre not in ['-o', '--owner', '-c', '--category']:
-            raise ValueError(f'Unknown genre: `{genre}`')
+    def __validate__(self):
+        if self.genre not in ['-o', '--owner', '-c', '--category']:
+            raise ValueError(f'Unknown genre: `{self.genre}`')
+        if self.language not in ['en', 'ja']:
+            raise ValueError(f'Unknown language: `{self.language}`')
 
     # @return [str]
     def __target_paths__(self):
@@ -50,11 +53,19 @@ class Application:
 
     # @return [str]
     def __no_declaration__(self):
-        match self.genre:
-            case '-o' | '--owner':
-                return 'Unowned'
-            case '-c' | '--category':
-                return 'Uncategorised'
+        match self.language:
+            case 'en':
+                match self.genre:
+                    case '-o' | '--owner':
+                        return 'Unowned'
+                    case '-c' | '--category':
+                        return 'Uncategorised'
+            case 'ja':
+                match self.genre:
+                    case '-o' | '--owner':
+                        return 'Owner記名なし'
+                    case '-c' | '--category':
+                        return 'Category記載なし'
 
     # @return [dict<str => list<str>>]
     def __filter_namespace__(self):

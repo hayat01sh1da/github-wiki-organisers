@@ -1,8 +1,8 @@
 require_relative './application'
 
 class UnknownWikiCountListExporter < Application
-  def initialize(base_path:, genre:)
-    super(base_path:, genre:)
+  def initialize(base_path:, genre:, language:)
+    super(base_path:, genre:, language:)
     @path_to_export = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
   end
 
@@ -17,17 +17,33 @@ class UnknownWikiCountListExporter < Application
 
   # @return [Array<String>]
   def namespace_list
-    case genre
-    when '-o', '--owner'
-      [
-        'Unowned but Necessary',
-        'Unknown Owner nor Necessity',
-        'Unowned'
-      ]
-    when '-c', '--category'
-      [
-        'Uncategorised'
-      ]
+    case language
+    when 'en'
+      case genre
+      when '-o', '--owner'
+        [
+          'Unknown Owner nor Necessity',
+          'Unowned but Necessary',
+          'Unowned'
+        ]
+      when '-c', '--category'
+        [
+          'Uncategorised'
+        ]
+      end
+    when 'ja'
+      case genre
+      when '-o', '--owner'
+        [
+          'Ownerチームが不明だが必要なページ群',
+          'Ownerチーム・要or不要が不明なページ群',
+          'Owner記名なし'
+        ]
+      when '-c', '--category'
+        [
+          'Category記載なし'
+        ]
+      end
     end
   end
 

@@ -2,18 +2,11 @@ require_relative './application_test'
 require_relative '../src/home'
 
 class HomeTest < ApplicationTest
-  def setup(genre: '-o', template_lang: 'en')
-    super(genre:)
-    Home.run(base_path:, genre:, template_lang:)
+  def setup(genre: '-o', language: 'en')
+    super(genre:, language:)
+    Home.run(base_path:, genre:, language:)
     @path_to_home = File.join(base_path, 'Home.md')
     @home         = File.read(path_to_home)
-  end
-
-  def test_validate!
-    error = assert_raises ArgumentError do
-      Home.new(base_path:, genre: '-o', template_lang: 'spa').validate!
-    end
-    assert_equal('Unknown template_lang: `spa`', error.message)
   end
 
   private
@@ -98,7 +91,7 @@ end
 module Japanese
   class OwnedHomeTest < HomeTest
     def setup
-      super(genre: '-o', template_lang: 'ja')
+      super(genre: '-o', language: 'ja')
     end
 
     def test_self_run
@@ -120,27 +113,27 @@ module Japanese
         "\n",
         "## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n",
         "\n",
-        "- [[Owned Wiki]]\n",
+        "- [[Owner記名ありページ]]\n",
         "\n",
-        "## Unknown Owner nor Necessity\n",
+        "## Ownerチームが不明だが必要なページ群\n",
         "\n",
-        "- [[Unknown Owner nor Necessity Wiki]]\n",
+        "- [[Ownerチームが不明だが必要なページ]]\n",
         "\n",
-        "## Unowned but Necessary\n",
+        "## Ownerチーム・要or不要が不明なページ群\n",
         "\n",
-        "- [[Unowned but Necessary Wiki]]\n",
+        "- [[Ownerチーム・要or不要が不明なページ]]\n",
         "\n",
-        "## Unowned\n",
+        "## Owner記名なし\n",
         "\n",
-        "- [[Unowned Wiki 1]]\n",
-        "- [[Unowned Wiki 2]]\n"
+        "- [[Owner記名なしページ1]]\n",
+        "- [[Owner記名なしページ2]]\n"
       ]
     end
   end
 
   class PlainHomeTest < HomeTest
     def setup
-      super(genre: '-c', template_lang: 'ja')
+      super(genre: '-c', language: 'ja')
     end
 
     def test_self_run
@@ -162,12 +155,12 @@ module Japanese
         "\n",
         "## test-category\n",
         "\n",
-        "- [[Categorised Wiki]]\n",
+        "- [[Category記載ありページ]]\n",
         "\n",
-        "## Uncategorised\n",
+        "## Category記載なし\n",
         "\n",
-        "- [[Uncategorised Wiki1]]\n",
-        "- [[Uncategorised Wiki2]]\n"
+        "- [[Category記載なしページ1]]\n",
+        "- [[Category記載なしページ2]]\n"
       ]
     end
   end

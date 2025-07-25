@@ -2,9 +2,9 @@ require_relative './application_test'
 require_relative '../src/unknown_wiki_count_list_exporter'
 
 class UnknownWikiCountListExporterTest < ApplicationTest
-  def setup(genre: '-o')
-    super(genre:)
-    UnknownWikiCountListExporter.run(base_path:, genre:)
+  def setup(genre: '-o', language: 'en')
+    super(genre:, language:)
+    UnknownWikiCountListExporter.run(base_path:, genre:, language:)
     @path_to_unknown_wiki_count_list = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
     @unknown_wiki_count_list         = File.read(path_to_unknown_wiki_count_list)
   end
@@ -14,162 +14,164 @@ class UnknownWikiCountListExporterTest < ApplicationTest
   attr_reader :path_to_unknown_wiki_count_list, :unknown_wiki_count_list
 end
 
-class OwnershipTest < UnknownWikiCountListExporterTest
-  class RegularCase1 < OwnershipTest
-    def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+module English
+  class OwnershipTest < UnknownWikiCountListExporterTest
+    class RegularCase1 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
+
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Unknown Owner nor Necessity: 1\n",
+          "Unowned but Necessary: 1\n",
+          "Unowned: 2\n"
+        ]
+      end
     end
 
-    private
+    class RegularCase2 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
 
-    def unknown_wiki_count_list_by_namespace
-      [
-        "Unknown Owner nor Necessity: 1\n",
-        "Unowned but Necessary: 1\n",
-        "Unowned: 2\n"
-      ]
-    end
-  end
+      private
 
-  class RegularCase2 < OwnershipTest
-    def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
-    end
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Unknown Owner nor Necessity: 1\n",
+          "Unowned but Necessary: 1\n",
+          "Unowned: 2\n"
+        ]
+      end
 
-    private
-
-    def unknown_wiki_count_list_by_namespace
-      [
-        "Unknown Owner nor Necessity: 1\n",
-        "Unowned but Necessary: 1\n",
-        "Unowned: 2\n"
-      ]
-    end
-
-    def test_file_maps
-      {
-        'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
-        'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
-        'Unowned Wiki 1.md' => '',
-        'Unowned Wiki 2.md' => 'This is a sample Wiki'
-      }
-    end
-  end
-
-  class IrregularCase1 < OwnershipTest
-    def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      def test_file_maps
+        {
+          'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
+          'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
+          'Unowned Wiki 1.md' => '',
+          'Unowned Wiki 2.md' => 'This is a sample Wiki'
+        }
+      end
     end
 
-    private
+    class IrregularCase1 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
 
-    def unknown_wiki_count_list_by_namespace
-      [
-        "Unknown Owner nor Necessity: 1\n",
-        "Unowned but Necessary: 0\n",
-        "Unowned: 2\n"
-      ]
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Unknown Owner nor Necessity: 1\n",
+          "Unowned but Necessary: 0\n",
+          "Unowned: 2\n"
+        ]
+      end
+
+      def test_file_maps
+        {
+          'Owned Wiki.md' => 'Owner: @test-owner',
+          'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
+          'Unowned Wiki 1.md' => '',
+          'Unowned Wiki 2.md' => 'This is a sample Wiki'
+        }
+      end
     end
 
-    def test_file_maps
-      {
-        'Owned Wiki.md' => 'Owner: @test-owner',
-        'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
-        'Unowned Wiki 1.md' => '',
-        'Unowned Wiki 2.md' => 'This is a sample Wiki'
-      }
-    end
-  end
+    class IrregularCase2 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
 
-  class IrregularCase2 < OwnershipTest
-    def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
-    end
+      private
 
-    private
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Unknown Owner nor Necessity: 0\n",
+          "Unowned but Necessary: 1\n",
+          "Unowned: 2\n"
+        ]
+      end
 
-    def unknown_wiki_count_list_by_namespace
-      [
-        "Unknown Owner nor Necessity: 0\n",
-        "Unowned but Necessary: 1\n",
-        "Unowned: 2\n"
-      ]
-    end
-
-    def test_file_maps
-      {
-        'Owned Wiki.md' => 'Owner: @test-owner',
-        'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
-        'Unowned Wiki 1.md' => '',
-        'Unowned Wiki 2.md' => 'This is a sample Wiki'
-      }
-    end
-  end
-
-  class IrregularCase3 < OwnershipTest
-    def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      def test_file_maps
+        {
+          'Owned Wiki.md' => 'Owner: @test-owner',
+          'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
+          'Unowned Wiki 1.md' => '',
+          'Unowned Wiki 2.md' => 'This is a sample Wiki'
+        }
+      end
     end
 
-    private
+    class IrregularCase3 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
 
-    def unknown_wiki_count_list_by_namespace
-      [
-        "Unknown Owner nor Necessity: 1\n",
-        "Unowned but Necessary: 1\n",
-        "Unowned: 0\n"
-      ]
-    end
+      private
 
-    def test_file_maps
-      {
-        'Owned Wiki.md' => 'Owner: @test-owner',
-        'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
-        'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity'
-      }
-    end
-  end
-end
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Unknown Owner nor Necessity: 1\n",
+          "Unowned but Necessary: 1\n",
+          "Unowned: 0\n"
+        ]
+      end
 
-class CategoryTest < UnknownWikiCountListExporterTest
-  def setup
-    super(genre: '-c')
-  end
-
-  class RegularCase < CategoryTest
-    def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
-    end
-
-    private
-
-    def unknown_wiki_count_list_by_namespace
-      [
-        "Uncategorised: 2\n"
-      ]
+      def test_file_maps
+        {
+          'Owned Wiki.md' => 'Owner: @test-owner',
+          'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
+          'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity'
+        }
+      end
     end
   end
 
-  class IrregularCase < CategoryTest
-    def test_self_run
-      assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+  class CategoryTest < UnknownWikiCountListExporterTest
+    def setup
+      super(genre: '-c')
     end
 
-    private
+    class RegularCase < CategoryTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
 
-    def unknown_wiki_count_list_by_namespace
-      [
-        "Uncategorised: 4\n"
-      ]
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Uncategorised: 2\n"
+        ]
+      end
     end
 
-    def test_file_maps
-      {
-        'Owned Wiki.md' => 'Owner: @test-owner',
-        'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
-        'Unowned Wiki 1.md' => '',
-        'Unowned Wiki 2.md' => 'This is a sample Wiki'
-      }
+    class IrregularCase < CategoryTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
+
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Uncategorised: 4\n"
+        ]
+      end
+
+      def test_file_maps
+        {
+          'Owned Wiki.md' => 'Owner: @test-owner',
+          'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
+          'Unowned Wiki 1.md' => '',
+          'Unowned Wiki 2.md' => 'This is a sample Wiki'
+        }
+      end
     end
   end
 end
