@@ -23,13 +23,13 @@ class UnknownWikiCountListExporter(Application):
         match self.genre:
             case '-o' | '--owner':
                 return [
-                    'Ownerチームが不明だが必要なページ群',
-                    'Ownerチーム・要or不要が不明なページ群',
-                    'Owner記名なし'
+                    'Unowned but Necessary',
+                    'Unknown Owner nor Necessity',
+                    'Unowned'
                 ]
             case '-c' | '--category':
                 return [
-                    'Category記載なし'
+                    'Uncategorised'
                 ]
 
     # @return [list<str>]
@@ -42,9 +42,9 @@ class UnknownWikiCountListExporter(Application):
                 filtered_count_list_by_namespace[namespace] = wikis
 
         for namespace in (self.__namespace_list__() - filtered_count_list_by_namespace.keys()):
-            count_list_by_namespace.append(f'{namespace}: 0件\n')
+            count_list_by_namespace.append(f'{namespace}: 0\n')
 
         for namespace, wikis in filtered_count_list_by_namespace.items():
-            count_list_by_namespace.append(f'{namespace}: {len(wikis)}件\n')
+            count_list_by_namespace.append(f'{namespace}: {len(wikis)}\n')
 
         return count_list_by_namespace

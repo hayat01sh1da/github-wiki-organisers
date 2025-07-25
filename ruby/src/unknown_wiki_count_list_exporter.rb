@@ -20,20 +20,20 @@ class UnknownWikiCountListExporter < Application
     case genre
     when '-o', '--owner'
       [
-        'Ownerチームが不明だが必要なページ群',
-        'Ownerチーム・要or不要が不明なページ群',
-        'Owner記名なし'
+        'Unowned but Necessary',
+        'Unknown Owner nor Necessity',
+        'Unowned'
       ]
     when '-c', '--category'
       [
-        'Category記載なし'
+        'Uncategorised'
       ]
     end
   end
 
   # @return [Array<String>]
   def missing_count_list_by_namespace
-    (namespace_list - plain_wiki_maps.keys).map { |namespace| "#{namespace}: 0件" }
+    (namespace_list - plain_wiki_maps.keys).map { |namespace| "#{namespace}: 0" }
   end
 
   # @return [Array<String>]
@@ -41,7 +41,7 @@ class UnknownWikiCountListExporter < Application
     @count_list_by_namespace ||= plain_wiki_maps.select { |namespace, _|
       namespace_list.include?(namespace)
     }.map { |namespace, wikis|
-      "#{namespace}: #{wikis.length}件"
+      "#{namespace}: #{wikis.length}"
     }.then {
       it + missing_count_list_by_namespace
     }.sort

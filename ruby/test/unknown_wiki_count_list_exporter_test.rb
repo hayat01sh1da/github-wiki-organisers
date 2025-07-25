@@ -24,9 +24,9 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
     def unknown_wiki_count_list_by_namespace
       [
-        "Ownerチームが不明だが必要なページ群: 1件\n",
-        "Ownerチーム・要or不要が不明なページ群: 1件\n",
-        "Owner記名なし: 2件\n"
+        "Unknown Owner nor Necessity: 1\n",
+        "Unowned but Necessary: 1\n",
+        "Unowned: 2\n"
       ]
     end
   end
@@ -40,18 +40,18 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
     def unknown_wiki_count_list_by_namespace
       [
-        "Ownerチームが不明だが必要なページ群: 1件\n",
-        "Ownerチーム・要or不要が不明なページ群: 1件\n",
-        "Owner記名なし: 2件\n"
+        "Unknown Owner nor Necessity: 1\n",
+        "Unowned but Necessary: 1\n",
+        "Unowned: 2\n"
       ]
     end
 
     def test_file_maps
       {
-        'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
-        'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
-        'Owner記名なしページ1.md' => '',
-        'Owner記名なしページ2.md' => 'This is a sample Wiki'
+        'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
+        'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
+        'Unowned Wiki 1.md' => '',
+        'Unowned Wiki 2.md' => 'This is a sample Wiki'
       }
     end
   end
@@ -65,18 +65,18 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
     def unknown_wiki_count_list_by_namespace
       [
-        "Ownerチームが不明だが必要なページ群: 0件\n",
-        "Ownerチーム・要or不要が不明なページ群: 1件\n",
-        "Owner記名なし: 2件\n"
+        "Unknown Owner nor Necessity: 1\n",
+        "Unowned but Necessary: 0\n",
+        "Unowned: 2\n"
       ]
     end
 
     def test_file_maps
       {
-        'Owner記名ありページ.md' => 'Owner: @test-owner',
-        'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
-        'Owner記名なしページ1.md' => '',
-        'Owner記名なしページ2.md' => 'This is a sample Wiki'
+        'Owned Wiki.md' => 'Owner: @test-owner',
+        'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
+        'Unowned Wiki 1.md' => '',
+        'Unowned Wiki 2.md' => 'This is a sample Wiki'
       }
     end
   end
@@ -90,18 +90,18 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
     def unknown_wiki_count_list_by_namespace
       [
-        "Ownerチームが不明だが必要なページ群: 1件\n",
-        "Ownerチーム・要or不要が不明なページ群: 0件\n",
-        "Owner記名なし: 2件\n"
+        "Unknown Owner nor Necessity: 0\n",
+        "Unowned but Necessary: 1\n",
+        "Unowned: 2\n"
       ]
     end
 
     def test_file_maps
       {
-        'Owner記名ありページ.md' => 'Owner: @test-owner',
-        'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
-        'Owner記名なしページ1.md' => '',
-        'Owner記名なしページ2.md' => 'This is a sample Wiki'
+        'Owned Wiki.md' => 'Owner: @test-owner',
+        'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
+        'Unowned Wiki 1.md' => '',
+        'Unowned Wiki 2.md' => 'This is a sample Wiki'
       }
     end
   end
@@ -115,17 +115,17 @@ class OwnershipTest < UnknownWikiCountListExporterTest
 
     def unknown_wiki_count_list_by_namespace
       [
-        "Ownerチームが不明だが必要なページ群: 1件\n",
-        "Ownerチーム・要or不要が不明なページ群: 1件\n",
-        "Owner記名なし: 0件\n"
+        "Unknown Owner nor Necessity: 1\n",
+        "Unowned but Necessary: 1\n",
+        "Unowned: 0\n"
       ]
     end
 
     def test_file_maps
       {
-        'Owner記名ありページ.md' => 'Owner: @test-owner',
-        'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
-        'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群'
+        'Owned Wiki.md' => 'Owner: @test-owner',
+        'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
+        'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity'
       }
     end
   end
@@ -145,7 +145,7 @@ class CategoryTest < UnknownWikiCountListExporterTest
 
     def unknown_wiki_count_list_by_namespace
       [
-        "Category記載なし: 2件\n"
+        "Uncategorised: 2\n"
       ]
     end
   end
@@ -159,16 +159,16 @@ class CategoryTest < UnknownWikiCountListExporterTest
 
     def unknown_wiki_count_list_by_namespace
       [
-        "Category記載なし: 4件\n"
+        "Uncategorised: 4\n"
       ]
     end
 
     def test_file_maps
       {
-        'Owner記名ありページ.md' => 'Owner: @test-owner',
-        'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
-        'Owner記名なしページ1.md' => '',
-        'Owner記名なしページ2.md' => 'This is a sample Wiki'
+        'Owned Wiki.md' => 'Owner: @test-owner',
+        'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
+        'Unowned Wiki 1.md' => '',
+        'Unowned Wiki 2.md' => 'This is a sample Wiki'
       }
     end
   end

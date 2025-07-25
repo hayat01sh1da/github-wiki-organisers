@@ -25,9 +25,9 @@ class RegularCase1(OwnershipTest):
     # private
 
     def __unknown_wiki_count_list_by_namespace__(self):
-        lst  = 'Ownerチームが不明だが必要なページ群: 1件\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 1件\n'
-        lst += 'Owner記名なし: 2件\n'
+        lst  = 'Unknown Owner nor Necessity: 1\n'
+        lst += 'Unowned but Necessary: 1\n'
+        lst += 'Unowned: 2\n'
 
         return lst
 
@@ -38,18 +38,18 @@ class RegularCase2(OwnershipTest):
     # private
 
     def __unknown_wiki_count_list_by_namespace__(self):
-        lst  = 'Ownerチームが不明だが必要なページ群: 1件\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 1件\n'
-        lst += 'Owner記名なし: 2件\n'
+        lst  = 'Unknown Owner nor Necessity: 1\n'
+        lst += 'Unowned but Necessary: 1\n'
+        lst += 'Unowned: 2\n'
 
         return lst
 
     def __test_file_maps__(self):
         return {
-            'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
-            'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
-            'Owner記名なしページ1.md': '',
-            'Owner記名なしページ2.md': 'This is a sample Wiki'
+            'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
+            'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
+            'Unowned Wiki 1.md': '',
+            'Unowned Wiki 2.md': 'This is a sample Wiki'
         }
 
 class IrregularCase1(OwnershipTest):
@@ -59,18 +59,18 @@ class IrregularCase1(OwnershipTest):
     # private
 
     def __unknown_wiki_count_list_by_namespace__(self):
-        lst  = 'Ownerチームが不明だが必要なページ群: 0件\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 1件\n'
-        lst += 'Owner記名なし: 2件\n'
+        lst  = 'Unknown Owner nor Necessity: 1\n'
+        lst += 'Unowned but Necessary: 0\n'
+        lst += 'Unowned: 2\n'
 
         return lst
 
     def __test_file_maps__(self):
         return {
-            'Owner記名ありページ.md': 'Owner: @test-owner',
-            'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
-            'Owner記名なしページ1.md': '',
-            'Owner記名なしページ2.md': 'This is a sample Wiki'
+            'Owned Wiki.md': 'Owner: @test-owner',
+            'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
+            'Unowned Wiki 1.md': '',
+            'Unowned Wiki 2.md': 'This is a sample Wiki'
         }
 
 class IrregularCase2(OwnershipTest):
@@ -80,18 +80,18 @@ class IrregularCase2(OwnershipTest):
     # private
 
     def __unknown_wiki_count_list_by_namespace__(self):
-        lst  = 'Ownerチームが不明だが必要なページ群: 1件\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 0件\n'
-        lst += 'Owner記名なし: 2件\n'
+        lst  = 'Unknown Owner nor Necessity: 0\n'
+        lst += 'Unowned but Necessary: 1\n'
+        lst += 'Unowned: 2\n'
 
         return lst
 
     def __test_file_maps__(self):
         return {
-            'Owner記名ありページ.md': 'Owner: @test-owner',
-            'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
-            'Owner記名なしページ1.md': '',
-            'Owner記名なしページ2.md': 'This is a sample Wiki'
+            'Owned Wiki.md': 'Owner: @test-owner',
+            'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
+            'Unowned Wiki 1.md': '',
+            'Unowned Wiki 2.md': 'This is a sample Wiki'
         }
 
 class IrregularCase3(OwnershipTest):
@@ -101,17 +101,17 @@ class IrregularCase3(OwnershipTest):
     # private
 
     def __unknown_wiki_count_list_by_namespace__(self):
-        lst  = 'Ownerチームが不明だが必要なページ群: 1件\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 1件\n'
-        lst += 'Owner記名なし: 0件\n'
+        lst  = 'Unknown Owner nor Necessity: 1\n'
+        lst += 'Unowned but Necessary: 1\n'
+        lst += 'Unowned: 0\n'
 
         return lst
 
     def __test_file_maps__(self):
         return {
-            'Owner記名ありページ.md': 'Owner: @test-owner',
-            'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
-            'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
+            'Owned Wiki.md': 'Owner: @test-owner',
+            'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
+            'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
         }
 
 class CategoryTest(TestUnknownWikiCountListExporter):
@@ -125,7 +125,7 @@ class RegularCase(CategoryTest):
     # private
 
     def __unknown_wiki_count_list_by_namespace__(self):
-        return 'Category記載なし: 2件\n'
+        return 'Uncategorised: 2\n'
 
 class IrregularCase(CategoryTest):
     def test_run(self):
@@ -134,16 +134,16 @@ class IrregularCase(CategoryTest):
     # private
 
     def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Category記載なし: 4件\n'
+        lst = 'Uncategorised: 4\n'
 
         return lst
 
     def __test_file_maps__(self):
         return {
-            'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
-            'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
-            'Owner記名なしページ1.md': '',
-            'Owner記名なしページ2.md': 'This is a sample Wiki'
+            'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
+            'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
+            'Unowned Wiki 1.md': '',
+            'Unowned Wiki 2.md': 'This is a sample Wiki'
         }
 
 if __name__ == '__main__':
