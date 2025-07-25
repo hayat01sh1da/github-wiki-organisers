@@ -3,14 +3,24 @@ require_relative './application'
 class Home < Application
   HOME_URL = "https://github.com/#{ENV.fetch('USERNAME', 'hayat01sh1da')}/github-wiki-organisers/wiki".freeze
 
-  def initialize(base_path:, genre:)
+  def self.run(base_path: File.join('..', '..'), genre: '-o', template_lang: 'ja')
+    instance = new(base_path:, genre:, template_lang:)
+    instance.validate!
+    instance.run
+  end
+
+  def initialize(base_path:, genre:, template_lang:)
     super(base_path:, genre:)
     @base_owner_url = "https://github.com/orgs/#{ENV.fetch('USERNAME', 'hayat01sh1da')}/teams/"
-    @home_passage   = []
+    @template_lang  = template_lang
+  end
+
+  def validate!
+    super
+    raise ArgumentError, "Unknown template_lang: `#{template_lang}`" unless ['ja', 'en'].include?(template_lang)
   end
 
   def run
-    write_home_template
     update_home_passage
     File.write(path_to_home, home_passage.join.chomp)
     HOME_URL
@@ -18,30 +28,33 @@ class Home < Application
 
   private
 
-  attr_reader :base_owner_url, :home_passage
+  attr_reader :base_owner_url, :template_lang
 
   # @return [String]
-  def write_home_template
+  def template_genre
     case genre
     when '-o', '--owner'
-      home_passage << "このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n\n"
-      home_passage << "## Wiki ページの運用ルール\n\n"
-      home_passage << "Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n"
-      home_passage << "治安維持のため、各ページの冒頭に `Owner: {オーナーチーム名}` を明記して頂きますようよろしくお願いします。  \n"
+      'owner'
     when '-c', '--category'
-      home_passage << "このページは Category ごとに Wiki をグルーピングして一覧化しています。\n\n"
-      home_passage << "## Wiki ページの運用ルール\n\n"
-      home_passage << "Category が不明だと、保守性と検索性の悪化が発生します。  \n"
-      home_passage << "治安維持のため、各ページの冒頭に `Category: {カテゴリー名}` を明記して頂きますようよろしくお願いします。  \n"
+      'category'
     end
+  end
 
-    home_passage << "なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n\n"
+  # @return [String]
+  def path_to_home_template
+    File.join('..', 'home_template', template_genre, "#{template_lang}.md")
+  end
+
+  # @return [Array<String>]
+  def home_passage
+    @home_passage ||= File.readlines(path_to_home_template).append("\n")
   end
 
   # @return nil
   def update_home_passage
     owned_wiki_maps.each { |namespace, wikis|
-      home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n\n"
+      home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"
+      home_passage << "\n"
       wikis.each { |wiki|
         home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
       }
@@ -49,7 +62,8 @@ class Home < Application
     }
 
     plain_wiki_maps.each { |namespace, wikis|
-      home_passage << "## #{namespace}\n\n"
+      home_passage << "## #{namespace}\n"
+      home_passage << "\n"
       wikis.each { |wiki|
         home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
       }

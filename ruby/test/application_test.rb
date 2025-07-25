@@ -32,8 +32,7 @@ class ApplicationTest < Minitest::Test
 
   private
 
-  attr_reader :base_path
-  attr_accessor :genre
+  attr_reader :base_path, :genre
 
   def test_file_maps
     case genre
