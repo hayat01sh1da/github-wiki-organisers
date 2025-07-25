@@ -5,7 +5,7 @@ sys.path.append('./src')
 from application import Application
 
 class UnknownWikiCountListExporter(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = 'en'):
+    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = '-en'):
         super().__init__(base_path, genre, language)
         self.path_to_export          = os.path.join(self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
         self.count_list_by_namespace = ''.join(sorted(self.__count_list_by_namespace__()))
@@ -20,28 +20,28 @@ class UnknownWikiCountListExporter(Application):
 
     # @return [list<str>]
     def __namespace_list__(self):
-        match self.language:
-            case 'en':
-                match self.genre:
-                    case '-o' | '--owner':
+        match self.genre:
+            case '-o' | '--owner':
+                 match self.language:
+                    case '-en':
                         return [
                             'Unowned but Necessary',
                             'Unknown Owner nor Necessity',
                             'Unowned'
                         ]
-                    case '-c' | '--category':
-                        return [
-                            'Uncategorised'
-                        ]
-            case 'ja':
-                match self.genre:
-                    case '-o' | '--owner':
+                    case '-ja':
                         return [
                             'Ownerチームが不明だが必要なページ群',
                             'Ownerチーム・要or不要が不明なページ群',
                             'Owner記名なし'
                         ]
-                    case '-c' | '--category':
+            case '-c' | '--category':
+                match self.language:
+                    case '-en':
+                        return [
+                            'Uncategorised'
+                        ]
+                    case '-ja':
                         return [
                             'Category記載なし'
                         ]

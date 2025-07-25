@@ -1,7 +1,7 @@
 class Application
   class NotImplementedError < StandardError; end
 
-  def self.run(base_path: File.join('..', '..'), genre: '-o', language: 'en')
+  def self.run(base_path: File.join('..', '..'), genre: '-o', language: '-en')
     instance = new(base_path:, genre:, language:)
     instance.validate!
     instance.run
@@ -18,7 +18,7 @@ class Application
 
   def validate!
     raise ArgumentError, "Unknown genre: `#{genre}`" unless ['-o', '--owner', '-c', '--category'].include?(genre)
-    raise ArgumentError, "Unknown language: `#{language}`" unless ['en', 'ja'].include?(language)
+    raise ArgumentError, "Unknown language: `#{language}`" unless ['-en', '-ja'].include?(language)
   end
 
   def run
@@ -50,19 +50,19 @@ class Application
 
   # @return [String]
   def no_declaration
-     @no_declaration ||= case language
-    when 'en'
-      case genre
-      when '-o', '--owner'
+    @no_declaration ||= case genre
+    when '-o', '--owner'
+      case language
+      when '-en'
         'Unowned'
-      when '-c', '--category'
-        'Uncategorised'
-      end
-    when 'ja'
-      case genre
-      when '-o', '--owner'
+      when '-ja'
         'Owner記名なし'
-      when '-c', '--category'
+      end
+    when '-c', '--category'
+      case language
+      when '-en'
+        'Uncategorised'
+      when '-ja'
         'Category記載なし'
       end
     end

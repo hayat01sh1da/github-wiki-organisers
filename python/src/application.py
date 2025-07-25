@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 
 class Application:
-    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = 'en'):
+    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = '-en'):
         self.base_path = base_path
         self.genre     = genre
         self.language  = language
@@ -24,7 +24,7 @@ class Application:
     def __validate__(self):
         if self.genre not in ['-o', '--owner', '-c', '--category']:
             raise ValueError(f'Unknown genre: `{self.genre}`')
-        if self.language not in ['en', 'ja']:
+        if self.language not in ['-en', '-ja']:
             raise ValueError(f'Unknown language: `{self.language}`')
 
     # @return [str]
@@ -53,18 +53,18 @@ class Application:
 
     # @return [str]
     def __no_declaration__(self):
-        match self.language:
-            case 'en':
-                match self.genre:
-                    case '-o' | '--owner':
+        match self.genre:
+            case '-o' | '--owner':
+                match self.language:
+                    case '-en':
                         return 'Unowned'
-                    case '-c' | '--category':
-                        return 'Uncategorised'
-            case 'ja':
-                match self.genre:
-                    case '-o' | '--owner':
+                    case '-ja':
                         return 'Owner記名なし'
-                    case '-c' | '--category':
+            case '-c' | '--category':
+                match self.language:
+                    case '-en':
+                        return 'Uncategorised'
+                    case '-ja':
                         return 'Category記載なし'
 
     # @return [dict<str => list<str>>]
