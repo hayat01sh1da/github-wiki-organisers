@@ -25,10 +25,10 @@ class OwnedSidebarTest < SidebarTest
     [
       "- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n",
       "  - [[Owned Wiki]]\n",
-      "- Unowned but Necessary\n",
-      "  - [[Unowned but Necessary Wiki]]\n",
       "- Unknown Owner nor Necessity\n",
       "  - [[Unknown Owner nor Necessity Wiki]]\n",
+      "- Unowned but Necessary\n",
+      "  - [[Unowned but Necessary Wiki]]\n",
       "- Unowned\n",
       "  - [[Unowned Wiki 1]]\n",
       "  - [[Unowned Wiki 2]]\n"
