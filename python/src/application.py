@@ -5,7 +5,8 @@ from collections import defaultdict
 
 class Application:
     def __init__(self, base_path = os.path.join('..', '..'), genre = '-o'):
-        self.base_path                             = base_path
+        self.base_path = base_path
+        self.validate(genre)
         self.genre                                 = genre
         self.path_to_home                          = os.path.join(base_path, 'Home.md')
         self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
@@ -13,9 +14,9 @@ class Application:
         self.wiki_maps_with_namespace              = self.__wiki_maps_with_namespace__()
         self.owned_wiki_maps, self.plain_wiki_maps = self.__filter_namespace__()
 
-    def validate(self):
-        if self.genre not in ['-o', '--owner', '-c', '--category']:
-            raise ValueError(f'Unknown genre: `{self.genre}`')
+    def validate(self, genre):
+        if genre not in ['-o', '--owner', '-c', '--category']:
+            raise ValueError(f'Unknown genre: `{genre}`')
 
     def run(self):
         raise NotImplementedError('This method must be implemented in each subclass.')
@@ -45,8 +46,6 @@ class Application:
                 return re.compile(r'[Oo]wner:\s?')
             case '-c' | '--category':
                 return re.compile(r'[Cc]ategory:\s?')
-            case _:
-                raise ValueError(f'Unknown genre: `{self.genre}`')
 
     # @return [str]
     def __no_declaration__(self):
@@ -55,8 +54,6 @@ class Application:
                 return 'Owner記名なし'
             case '-c' | '--category':
                 return 'Category記載なし'
-            case _:
-                raise ValueError(f'Unknown genre: `{self.genre}`')
 
     # @return [dict<str => list<str>>]
     def __filter_namespace__(self):
