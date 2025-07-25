@@ -75,8 +75,8 @@ class EnglishPlainHomeTest(TestHome):
         passage += '\n'
         passage += '## Uncategorised\n'
         passage += '\n'
-        passage += '- [[Uncategorised Wiki1]]\n'
-        passage += '- [[Uncategorised Wiki2]]\n'
+        passage += '- [[Uncategorised Wiki 1]]\n'
+        passage += '- [[Uncategorised Wiki 2]]\n'
 
         return passage
 

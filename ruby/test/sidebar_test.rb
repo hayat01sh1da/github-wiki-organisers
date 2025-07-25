@@ -53,8 +53,8 @@ module English
         "- test-category\n",
         "  - [[Categorised Wiki]]\n",
         "- Uncategorised\n",
-        "  - [[Uncategorised Wiki1]]\n",
-        "  - [[Uncategorised Wiki2]]\n"
+        "  - [[Uncategorised Wiki 1]]\n",
+        "  - [[Uncategorised Wiki 2]]\n"
       ]
     end
   end

@@ -46,8 +46,8 @@ class EnglishPlainSidebarTest(TestSidebar):
         lst  = '- test-category\n'
         lst += '  - [[Categorised Wiki]]\n'
         lst += '- Uncategorised\n'
-        lst += '  - [[Uncategorised Wiki1]]\n'
-        lst += '  - [[Uncategorised Wiki2]]\n'
+        lst += '  - [[Uncategorised Wiki 1]]\n'
+        lst += '  - [[Uncategorised Wiki 2]]\n'
 
         return lst
 

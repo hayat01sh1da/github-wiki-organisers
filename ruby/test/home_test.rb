@@ -81,8 +81,8 @@ module English
         "\n",
         "## Uncategorised\n",
         "\n",
-        "- [[Uncategorised Wiki1]]\n",
-        "- [[Uncategorised Wiki2]]\n"
+        "- [[Uncategorised Wiki 1]]\n",
+        "- [[Uncategorised Wiki 2]]\n"
       ]
     end
   end

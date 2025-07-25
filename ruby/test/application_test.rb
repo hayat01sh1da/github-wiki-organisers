@@ -68,8 +68,8 @@ class ApplicationTest < Minitest::Test
       when '-en'
         {
           'Categorised Wiki.md' => 'Category: test-category',
-          'Uncategorised Wiki1.md' => '',
-          'Uncategorised Wiki2.md' => 'This is a sample Wiki'
+          'Uncategorised Wiki 1.md' => '',
+          'Uncategorised Wiki 2.md' => 'This is a sample Wiki'
         }
       when '-ja'
         {

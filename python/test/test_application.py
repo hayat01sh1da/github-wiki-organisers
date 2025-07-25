@@ -67,8 +67,8 @@ class TestApplication(unittest.TestCase):
                     case '-en':
                         return {
                             'Categorised Wiki.md': 'Category: test-category',
-                            'Uncategorised Wiki1.md': '',
-                            'Uncategorised Wiki2.md': 'This is a sample Wiki',
+                            'Uncategorised Wiki 1.md': '',
+                            'Uncategorised Wiki 2.md': 'This is a sample Wiki',
                         }
                     case '-ja':
                         return {
