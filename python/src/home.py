@@ -26,7 +26,7 @@ class Home(Application):
     # @raises [ValueError]
     def __validate__(self, genre, template_lang = 'ja'):
         super().__validate__(genre)
-        if template_lang not in ['ja', 'en']:
+        if template_lang not in ['en', 'ja']:
             raise ValueError(f'Unknown template_lang: `{template_lang}`')
 
     # @return [str]

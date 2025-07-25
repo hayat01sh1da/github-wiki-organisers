@@ -17,7 +17,7 @@ class Home < Application
 
   def validate!
     super
-    raise ArgumentError, "Unknown template_lang: `#{template_lang}`" unless ['ja', 'en'].include?(template_lang)
+    raise ArgumentError, "Unknown template_lang: `#{template_lang}`" unless ['en', 'ja'].include?(template_lang)
   end
 
   def run
