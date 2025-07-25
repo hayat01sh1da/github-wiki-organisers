@@ -175,3 +175,170 @@ module English
     end
   end
 end
+
+module Japanese
+  class OwnershipTest < UnknownWikiCountListExporterTest
+    def setup
+      super(language: 'ja')
+    end
+
+    class RegularCase1 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
+
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Ownerチームが不明だが必要なページ群: 1\n",
+          "Ownerチーム・要or不要が不明なページ群: 1\n",
+          "Owner記名なし: 2\n"
+        ]
+      end
+    end
+
+    class RegularCase2 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
+
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Ownerチームが不明だが必要なページ群: 1\n",
+          "Ownerチーム・要or不要が不明なページ群: 1\n",
+          "Owner記名なし: 2\n"
+        ]
+      end
+
+      def test_file_maps
+        {
+          'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
+          'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
+          'Owner記名なしページ1.md' => '',
+          'Owner記名なしページ2.md' => 'サンプル Wiki'
+        }
+      end
+    end
+
+    class IrregularCase1 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
+
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Ownerチームが不明だが必要なページ群: 1\n",
+          "Ownerチーム・要or不要が不明なページ群: 0\n",
+          "Owner記名なし: 2\n"
+        ]
+      end
+
+      def test_file_maps
+        {
+          'Owner記名ありページ.md' => 'Owner: @test-owner',
+          'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
+          'Owner記名なしページ1.md' => '',
+          'Owner記名なしページ2.md' => 'サンプル Wiki'
+        }
+      end
+    end
+
+    class IrregularCase2 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
+
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Ownerチームが不明だが必要なページ群: 0\n",
+          "Ownerチーム・要or不要が不明なページ群: 1\n",
+          "Owner記名なし: 2\n"
+        ]
+      end
+
+      def test_file_maps
+        {
+          'Owner記名ありページ.md' => 'Owner: @test-owner',
+          'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
+          'Owner記名なしページ1.md' => '',
+          'Owner記名なしページ2.md' => 'サンプル Wiki'
+        }
+      end
+    end
+
+    class IrregularCase3 < OwnershipTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
+
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Ownerチームが不明だが必要なページ群: 1\n",
+          "Ownerチーム・要or不要が不明なページ群: 1\n",
+          "Owner記名なし: 0\n"
+        ]
+      end
+
+      def test_file_maps
+        {
+          'Owner記名ありページ.md' => 'Owner: @test-owner',
+          'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
+          'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
+        }
+      end
+    end
+  end
+
+  class CategoryTest < UnknownWikiCountListExporterTest
+    def setup
+      super(genre: '-c', language: 'ja')
+    end
+
+    class RegularCase < CategoryTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
+
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Category記載なし: 2\n"
+        ]
+      end
+    end
+
+    class IrregularCase < CategoryTest
+      def test_self_run
+        assert_equal(unknown_wiki_count_list_by_namespace.join, unknown_wiki_count_list)
+      end
+
+      private
+
+      def unknown_wiki_count_list_by_namespace
+        [
+          "Category記載なし: 5\n"
+        ]
+      end
+
+      def test_file_maps
+        {
+          'Owner記名ありページ.md' => 'Owner: @test-owner',
+          'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
+          'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
+          'Owner記名なしページ1.md' => '',
+          'Owner記名なしページ2.md' => 'サンプル Wiki'
+        }
+      end
+    end
+  end
+end
