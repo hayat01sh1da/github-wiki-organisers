@@ -68,7 +68,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 -------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
 ```
 
-### 2-3-2. Owner
+### 2-3-2. Category
 
 ```command
 $ python exec/export_unknown_wiki_count_list_by_namespace.py -c -en
