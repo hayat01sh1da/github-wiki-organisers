@@ -42,20 +42,20 @@ module English
         "\n",
         "## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n",
         "\n",
-        "- [[Owner記名ありページ]]\n",
+        "- [[Owned Wiki]]\n",
         "\n",
-        "## Ownerチームが不明だが必要なページ群\n",
+        "## Unowned but Necessary\n",
         "\n",
-        "- [[Ownerチームが不明だが必要なページ]]\n",
+        "- [[Unowned but Necessary Wiki]]\n",
         "\n",
-        "## Ownerチーム・要or不要が不明なページ群\n",
+        "## Unknown Owner nor Necessity\n",
         "\n",
-        "- [[Ownerチーム・要or不要が不明なページ]]\n",
+        "- [[Unknown Owner nor Necessity Wiki]]\n",
         "\n",
-        "## Owner記名なし\n",
+        "## Unowned\n",
         "\n",
-        "- [[Owner記名なしページ1]]\n",
-        "- [[Owner記名なしページ2]]\n"
+        "- [[Unowned Wiki 1]]\n",
+        "- [[Unowned Wiki 2]]\n"
       ]
     end
   end
@@ -84,12 +84,12 @@ module English
         "\n",
         "## test-category\n",
         "\n",
-        "- [[Category記載ありページ]]\n",
+        "- [[Categorised Wiki]]\n",
         "\n",
-        "## Category記載なし\n",
+        "## Uncategorised\n",
         "\n",
-        "- [[Category記載なしページ1]]\n",
-        "- [[Category記載なしページ2]]\n"
+        "- [[Uncategorised Wiki1]]\n",
+        "- [[Uncategorised Wiki2]]\n"
       ]
     end
   end
@@ -120,20 +120,20 @@ module Japanese
         "\n",
         "## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n",
         "\n",
-        "- [[Owner記名ありページ]]\n",
+        "- [[Owned Wiki]]\n",
         "\n",
-        "## Ownerチームが不明だが必要なページ群\n",
+        "## Unowned but Necessary\n",
         "\n",
-        "- [[Ownerチームが不明だが必要なページ]]\n",
+        "- [[Unowned but Necessary Wiki]]\n",
         "\n",
-        "## Ownerチーム・要or不要が不明なページ群\n",
+        "## Unknown Owner nor Necessity\n",
         "\n",
-        "- [[Ownerチーム・要or不要が不明なページ]]\n",
+        "- [[Unknown Owner nor Necessity Wiki]]\n",
         "\n",
-        "## Owner記名なし\n",
+        "## Unowned\n",
         "\n",
-        "- [[Owner記名なしページ1]]\n",
-        "- [[Owner記名なしページ2]]\n"
+        "- [[Unowned Wiki 1]]\n",
+        "- [[Unowned Wiki 2]]\n"
       ]
     end
   end
@@ -162,12 +162,12 @@ module Japanese
         "\n",
         "## test-category\n",
         "\n",
-        "- [[Category記載ありページ]]\n",
+        "- [[Categorised Wiki]]\n",
         "\n",
-        "## Category記載なし\n",
+        "## Uncategorised\n",
         "\n",
-        "- [[Category記載なしページ1]]\n",
-        "- [[Category記載なしページ2]]\n"
+        "- [[Uncategorised Wiki1]]\n",
+        "- [[Uncategorised Wiki2]]\n"
       ]
     end
   end
