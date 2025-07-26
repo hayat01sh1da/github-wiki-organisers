@@ -22,7 +22,7 @@ class UnknownWikiCountListExporter(Application):
     def __namespace_list__(self):
         match self.genre:
             case '-o' | '--owner':
-                 match self.language:
+                match self.language:
                     case '-en':
                         return [
                             'Unowned but Necessary',
