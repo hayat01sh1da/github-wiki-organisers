@@ -1,0 +1,74 @@
+name: Export Unknown Wiki List for LLM
+
+on:
+  schedule:
+    # 00:00 JST every weekday
+    # ⚠️ The timing is somehow not accurate at all
+    - cron: "0 15 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout the Main Repository
+        uses: actions/checkout@v2
+        with:
+          repository: "${{ github.repository }}"
+          ref: master
+          path: ./github-wiki-organisers
+      - name: Checkout the Wiki Repository
+        uses: actions/checkout@v2
+        with:
+          repository: "${{ github.repository }}.wiki"
+          ref: master
+          path: ./github-wiki-organisers/wiki
+      - name: Configure Git Identity
+        working-directory: ./github-wiki-organisers/wiki
+        run: |
+          set -xe
+          git config --global user.name  "GitHub Actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4.5
+      - name: Export Unknown Wiki List for LLM
+        working-directory: ./github-wiki-organisers/wiki
+        run: |
+          set -xe
+          git pull origin master
+          bash export_unknown_wiki_list_for_llm.sh
+          git add -A
+          current_time=$(TZ=Asia/Tokyo date "+%Y-%m-%d %H:%M:%S")
+          git commit -m "Commit unknown_wiki_list_for_llm.txt by GitHub Actions[bot] at $current_time" || true
+          git push origin master || true
+          echo COMMIT_MESSAGE=$(git log --oneline -1) >> $GITHUB_ENV
+          echo CURRENT_TIME=$current_time >> $GITHUB_ENV
+      - name: Slack Notification
+        uses: slackapi/slack-github-action@v2
+        if: contains(env.COMMIT_MESSAGE, env.CURRENT_TIME)
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_APP_TOKEN }}
+          payload: |
+            channel: "C06S7N0Q2HE"
+            blocks:
+              - type: "header"
+                text:
+                  type: "plain_text"
+                  text: "【github-wiki-organisers Wiki LLM 取込み除外リスト出力通知】"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "Message: 最新の LLM 取込み除外リストを出力しました！${{ github.repository }}.wiki を Clone してご確認ください。"
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "Workflows: <https://github.com/quipper/github-wiki-organisers/actions/workflows/export-unknown-wiki-list-for-llm.yml|Export Unknown Wiki List for LLM>"
