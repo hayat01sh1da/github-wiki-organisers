@@ -9,7 +9,7 @@ class ApplicationTest < Minitest::Test
     @language  = language
     FileUtils.mkdir_p(base_path) unless Dir.exist?(base_path)
     test_file_maps.each { |wiki, namespace|
-      IO.write(File.join(base_path, wiki), namespace)
+      File.write(File.join(base_path, wiki), namespace)
     }
   end
 
