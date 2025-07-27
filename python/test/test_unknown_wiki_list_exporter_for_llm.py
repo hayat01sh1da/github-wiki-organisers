@@ -42,7 +42,7 @@ class EnglishCategoryTest(TestUnknownWikiListExporterForLLM):
 
 class JapaneseOwnershipTest(TestUnknownWikiListExporterForLLM):
     def setUp(self):
-        super().setUp(genre = '-o', language = '-ja')
+        super().setUp(language = '-ja')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_list_for_llm, self.__unknown_wiki_list_for_llm__())
