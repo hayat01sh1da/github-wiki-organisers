@@ -98,6 +98,17 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 -------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
 ```
 
+## 2-4. Export Unknown Wiki List for LLM 
+
+```command
+$ ruby exec/export_unknown_wiki_list_for_llm.rb
+-------------------- Exporting Unknown Wiki List... --------------------
+
+Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
+
+-------------------- Done Exporting Unknown Wiki List 🎉 --------------------
+```
+
 ## 3. Bulk Execution of Unit Tests
 
 ```command
