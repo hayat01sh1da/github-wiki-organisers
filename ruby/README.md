@@ -117,9 +117,9 @@ Run options: --seed 33318
 
 # Running:
 
-..........................................................................................
+.........................................................................................................
 
-Finished in 5.241463s, 17.1708 runs/s, 30.1443 assertions/s.
+Finished in 0.579480s, 181.1969 runs/s, 317.5261 assertions/s.
 
-90 runs, 158 assertions, 0 failures, 0 errors, 0 skips
+105 runs, 184 assertions, 0 failures, 0 errors, 0 skips
 ```
