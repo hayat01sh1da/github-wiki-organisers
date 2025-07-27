@@ -6,7 +6,7 @@ class UnknownWikiListExporterForLLMTest < ApplicationTest
     super(genre:, language:)
     UnknownWikiListExporterForLLM.run(base_path:, genre:, language:)
     @path_to_unknown_wiki_list_for_llm = File.join(base_path, 'unknown_wiki_list_for_llm.txt')
-    @unknown_wiki_list_for_llm         = IO.read(path_to_unknown_wiki_list_for_llm)
+    @unknown_wiki_list_for_llm         = File.read(path_to_unknown_wiki_list_for_llm)
   end
 
   private
