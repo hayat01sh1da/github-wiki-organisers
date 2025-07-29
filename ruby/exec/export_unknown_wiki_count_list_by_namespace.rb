@@ -5,6 +5,8 @@ genre, language, *_ = ARGV
 puts '-------------------- Exporting Unknown Wiki Count List... --------------------'
 count_list_by_namespace, path_to_export = case genre
 when '-o', '--owner', '-c', '--category'
+  UnknownWikiCountListExporter.run(genre:)
+
   case language
   when '-en', '-ja'
     UnknownWikiCountListExporter.run(genre:, language:)

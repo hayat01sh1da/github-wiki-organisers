@@ -11,6 +11,8 @@ _, genre, language, *_ = sys.argv
 print('-------------------- Exporting Unknown Wiki Count List... --------------------')
 match genre:
     case '-o' | '--owner' | '-c' | '--category':
+        count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(genre = genre).run()
+
         match language:
             case '-en' | '-ja':
                 count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(genre = genre, language = language).run()

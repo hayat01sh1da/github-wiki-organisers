@@ -8,6 +8,8 @@ puts "\n"
 puts '-------------------- Organising Home... --------------------'
 home_url = case genre
 when '-o', '--owner', '-c', '--category'
+  Home.run(genre:)
+
   case language
   when '-en', '-ja'
     Home.run(genre:, language:)
@@ -21,6 +23,8 @@ puts "\n"
 puts '-------------------- Organising Sidebar... --------------------'
 case genre
 when '-o', '--owner', '-c', '--category'
+  Sidebar.run(genre:)
+
   case language
   when '-en', '-ja'
     Sidebar.run(genre:, language:)

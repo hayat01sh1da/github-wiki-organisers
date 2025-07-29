@@ -14,6 +14,8 @@ print()
 print('-------------------- Organising Home... --------------------')
 match genre:
     case '-o' | '--owner' | '-c' | '--category':
+        home_url = Home(genre = genre).run()
+
         match language:
             case '-en' | '-ja':
                 home_url = Home(genre = genre, language = language).run()
@@ -25,6 +27,8 @@ print()
 print('-------------------- Organising Sidebar... --------------------')
 match genre:
     case '-o' | '--owner' | '-c' | '--category':
+        Sidebar(genre = genre).run()
+
         match language:
             case '-en' | '-ja':
                 Sidebar(genre = genre, language = language).run()

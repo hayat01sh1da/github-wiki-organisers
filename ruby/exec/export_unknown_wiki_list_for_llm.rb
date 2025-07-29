@@ -5,6 +5,8 @@ genre, language, *_ = ARGV
 puts '-------------------- Exporting Unknown Wiki List... --------------------'
 path_to_export = case genre
 when '-o', '--owner', '-c', '--category'
+  UnknownWikiListExporterForLLM.run(genre:)
+
   case language
   when '-en', '-ja'
     UnknownWikiListExporterForLLM.run(genre:, language:)

@@ -11,6 +11,8 @@ _, genre, language, *_ = sys.argv
 print('-------------------- Exporting Unknown Wiki List... --------------------')
 match genre:
     case '-o' | '--owner' | '-c' | '--category':
+        path_to_export = UnknownWikiListExporterForLLM(genre = genre).run()
+
         match language:
             case '-en' | '-ja':
                 path_to_export = UnknownWikiListExporterForLLM(genre = genre, language = language).run()
