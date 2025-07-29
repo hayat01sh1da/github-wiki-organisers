@@ -3,7 +3,7 @@ require_relative './application'
 class Sidebar < Application
   def initialize(base_path:, genre:, language:)
     super(base_path:, genre:, language:)
-    @base_owner_url = "https://github.com/orgs/#{ENV.fetch('USERNAME', 'hayat01sh1da')}/teams/"
+    @base_owner_url = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
     @wiki_list      = []
   end
 
