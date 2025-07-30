@@ -5,10 +5,10 @@ from collections import defaultdict
 
 class Application:
     def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = '-en'):
-        self.base_path = base_path
-        self.genre     = genre
-        self.language  = language
-        self.__validate__()
+        self.__validate__(genre = genre, language = language)
+        self.base_path                             = base_path
+        self.genre                                 = genre
+        self.language                              = language
         self.path_to_home                          = os.path.join(base_path, 'Home.md')
         self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
         self.target_paths                          = self.__target_paths__()
@@ -21,11 +21,11 @@ class Application:
     # private
 
     # @raises [ValueError]
-    def __validate__(self):
-        if self.genre not in ['-o', '--owner', '-c', '--category']:
-            raise ValueError(f'Unknown genre: `{self.genre}`')
-        if self.language not in ['-en', '-ja']:
-            raise ValueError(f'Unknown language: `{self.language}`')
+    def __validate__(self, genre, language):
+        if genre not in ['-o', '--owner', '-c', '--category']:
+            raise ValueError(f'Unknown genre: `{genre}`')
+        if language not in ['-en', '-ja']:
+            raise ValueError(f'Unknown language: `{language}`')
 
     # @return [str]
     def __target_paths__(self):
