@@ -33,6 +33,7 @@ class EnglishOwnedSidebarTest(TestSidebar):
         lst += '  - [[Unowned Wiki 2]]\n'
 
         return lst
+
 class EnglishPlainSidebarTest(TestSidebar):
     def setUp(self):
         super().setUp(genre = '-c')
