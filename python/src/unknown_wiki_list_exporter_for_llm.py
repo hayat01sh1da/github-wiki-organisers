@@ -4,8 +4,8 @@ sys.path.append('./src')
 from application import Application
 
 class UnknownWikiListExporterForLLM(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = '-en'):
-        super().__init__(base_path, genre, language)
+    def __init__(self, base_path = os.path.join('..', '..'), group_by = '-o', language = '-en'):
+        super().__init__(base_path, group_by, language)
         self.path_to_export               = os.path.join(self.base_path, 'unknown_wiki_list_for_llm.txt')
         self.unknown_wiki_list_for_llm = ''.join(sorted(self.__unknown_wiki_list_for_llm__()))
 
@@ -19,7 +19,7 @@ class UnknownWikiListExporterForLLM(Application):
 
     # @return [str]
     def __target_namespace__(self):
-        match self.genre:
+        match self.group_by:
             case '-o' | '--owner':
                 match self.language:
                     case '-en':

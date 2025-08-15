@@ -6,16 +6,16 @@ sys.path.append('./src')
 
 from unknown_wiki_list_exporter_for_llm import UnknownWikiListExporterForLLM
 
-_, genre, language, *_ = sys.argv
+_, group_by, language, *_ = sys.argv
 
 print('-------------------- Exporting Unknown Wiki List... --------------------')
-match genre:
+match group_by:
     case '-o' | '--owner' | '-c' | '--category':
-        path_to_export = UnknownWikiListExporterForLLM(genre = genre).run()
+        path_to_export = UnknownWikiListExporterForLLM(group_by = group_by).run()
 
         match language:
             case '-en' | '-ja':
-                path_to_export = UnknownWikiListExporterForLLM(genre = genre, language = language).run()
+                path_to_export = UnknownWikiListExporterForLLM(group_by = group_by, language = language).run()
     case _:
         path_to_export = UnknownWikiListExporterForLLM().run()
 print()

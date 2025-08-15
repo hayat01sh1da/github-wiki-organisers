@@ -3,9 +3,9 @@ require 'fileutils'
 require_relative '../src/application'
 
 class ApplicationTest < Minitest::Test
-  def setup(base_path: File.join('.', 'test', 'wiki'), genre: '-o', language: '-en')
+  def setup(base_path: File.join('.', 'test', 'wiki'), group_by: '-o', language: '-en')
     @base_path = base_path
-    @genre     = genre
+    @group_by  = group_by
     @language  = language
     FileUtils.mkdir_p(base_path) unless Dir.exist?(base_path)
     test_file_maps.each { |wiki, namespace|
@@ -17,33 +17,33 @@ class ApplicationTest < Minitest::Test
     FileUtils.rm_rf(base_path) if Dir.exist?(base_path)
   end
 
-  def test_validate_genre!
+  def test_validate_group_by!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, genre: '-x', language:).validate!
+      Application.new(base_path:, group_by: '-x', language:).validate!
     end
-    assert_equal('Unknown genre: `-x`', error.message)
+    assert_equal('Unknown group_by: `-x`', error.message)
   end
 
   def test_validate_language!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, genre: '-o', language: '-spa').validate!
+      Application.new(base_path:, group_by: '-o', language: '-spa').validate!
     end
     assert_equal('Unknown language: `-spa`', error.message)
   end
 
   def test_self_run
     error = assert_raises Application::NotImplementedError do
-      Application.run(base_path:, genre:)
+      Application.run(base_path:, group_by:)
     end
     assert_equal('This method must be implemented in each subclass.', error.message)
   end
 
   private
 
-  attr_reader :base_path, :genre, :language
+  attr_reader :base_path, :group_by, :language
 
   def test_file_maps
-    case genre
+    case group_by
     when '-o', '--owner'
       case language
       when '-en'

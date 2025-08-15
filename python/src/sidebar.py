@@ -6,8 +6,8 @@ sys.path.append('./src')
 from application import Application
 
 class Sidebar(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = '-en'):
-        super().__init__(base_path, genre, language)
+    def __init__(self, base_path = os.path.join('..', '..'), group_by = '-o', language = '-en'):
+        super().__init__(base_path, group_by, language)
         self.base_owner_url = f'https://github.com/orgs/{os.environ.get('ORGANISATION_NAME', 'hayat01sh1da')}/teams/'
         self.wiki_list      = self.__write_wiki_list__()
 

@@ -1,14 +1,14 @@
 class Application
   class NotImplementedError < StandardError; end
 
-  def self.run(base_path: File.join('..', '..'), genre: '-o', language: '-en')
-    instance = new(base_path:, genre:, language:)
+  def self.run(base_path: File.join('..', '..'), group_by: '-o', language: '-en')
+    instance = new(base_path:, group_by:, language:)
     instance.validate!
     instance.run
   end
 
-  def initialize(base_path:, genre:, language:)
-    @genre           = genre
+  def initialize(base_path:, group_by:, language:)
+    @group_by        = group_by
     @language        = language
     @base_path       = base_path
     @path_to_home    = File.join(base_path, 'Home.md')
@@ -17,7 +17,7 @@ class Application
   end
 
   def validate!
-    raise ArgumentError, "Unknown genre: `#{genre}`" unless ['-o', '--owner', '-c', '--category'].include?(genre)
+    raise ArgumentError, "Unknown group_by: `#{group_by}`" unless ['-o', '--owner', '-c', '--category'].include?(group_by)
     raise ArgumentError, "Unknown language: `#{language}`" unless ['-en', '-ja'].include?(language)
   end
 
@@ -27,7 +27,7 @@ class Application
 
   private
 
-  attr_reader :genre, :language, :base_path, :path_to_home, :path_to_sidebar, :paths_to_wikis
+  attr_reader :group_by, :language, :base_path, :path_to_home, :path_to_sidebar, :paths_to_wikis
 
   # @return [String]
   def target_paths
@@ -40,7 +40,7 @@ class Application
 
   # @return [Regexp]
   def target_regexp
-    @target_regexp ||= case genre
+    @target_regexp ||= case group_by
     when '-o', '--owner'
       /[Oo]wner:\s?/
     when '-c', '--category'
@@ -50,7 +50,7 @@ class Application
 
   # @return [String]
   def no_declaration
-    @no_declaration ||= case genre
+    @no_declaration ||= case group_by
     when '-o', '--owner'
       case language
       when '-en'

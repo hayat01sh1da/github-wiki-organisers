@@ -2,9 +2,9 @@ require_relative './application_test'
 require_relative '../src/unknown_wiki_count_list_exporter'
 
 class UnknownWikiCountListExporterTest < ApplicationTest
-  def setup(genre: '-o', language: '-en')
-    super(genre:, language:)
-    UnknownWikiCountListExporter.run(base_path:, genre:, language:)
+  def setup(group_by: '-o', language: '-en')
+    super(group_by:, language:)
+    UnknownWikiCountListExporter.run(base_path:, group_by:, language:)
     @path_to_unknown_wiki_count_list = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
     @unknown_wiki_count_list         = File.read(path_to_unknown_wiki_count_list)
   end
@@ -133,7 +133,7 @@ class UnknownWikiCountListExporterTest < ApplicationTest
 
     class CategoryTest < UnknownWikiCountListExporterTest
       def setup
-        super(genre: '-c')
+        super(group_by: '-c')
       end
 
       class RegularCase < CategoryTest
@@ -300,7 +300,7 @@ class UnknownWikiCountListExporterTest < ApplicationTest
 
     class CategoryTest < UnknownWikiCountListExporterTest
       def setup
-        super(genre: '-c', language: '-ja')
+        super(group_by: '-c', language: '-ja')
       end
 
       class RegularCase < CategoryTest

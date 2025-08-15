@@ -3,8 +3,8 @@ require_relative './application'
 class Home < Application
   HOME_URL = "https://github.com/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/github-wiki-organisers/wiki".freeze
 
-  def initialize(base_path:, genre:, language:)
-    super(base_path:, genre:, language:)
+  def initialize(base_path:, group_by:, language:)
+    super(base_path:, group_by:, language:)
     @base_owner_url = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
   end
 
@@ -19,8 +19,8 @@ class Home < Application
   attr_reader :base_owner_url
 
   # @return [String]
-  def template_genre
-    case genre
+  def template_group_by
+    case group_by
     when '-o', '--owner'
       'owner'
     when '-c', '--category'
@@ -30,7 +30,7 @@ class Home < Application
 
   # @return [String]
   def path_to_home_template
-    File.join('..', 'home_template', template_genre, "#{language.gsub(/^\-/, '')}.md")
+    File.join('..', 'home_template', template_group_by, "#{language.gsub(/^\-/, '')}.md")
   end
 
   # @return [Array<String>]

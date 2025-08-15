@@ -1,8 +1,8 @@
 require_relative './application'
 
 class UnknownWikiListExporterForLLM < Application
-  def initialize(base_path:, genre:, language:)
-    super(base_path:, genre:, language:)
+  def initialize(base_path:, group_by:, language:)
+    super(base_path:, group_by:, language:)
     @path_to_export = File.join(base_path, 'unknown_wiki_list_for_llm.txt')
   end
 
@@ -17,7 +17,7 @@ class UnknownWikiListExporterForLLM < Application
 
   # @return [Array<String>]
   def target_namespace
-    case genre
+    case group_by
     when '-o', '--owner'
       case language
       when '-en'

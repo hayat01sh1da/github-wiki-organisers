@@ -7,9 +7,9 @@ from unknown_wiki_list_exporter_for_llm import UnknownWikiListExporterForLLM
 from test_application import TestApplication
 
 class TestUnknownWikiListExporterForLLM(TestApplication):
-    def setUp(self, genre = '-o', language = '-en'):
-        super().setUp(genre = genre, language = language)
-        UnknownWikiListExporterForLLM(base_path = self.base_path, genre = genre, language = language).run()
+    def setUp(self, group_by = '-o', language = '-en'):
+        super().setUp(group_by = group_by, language = language)
+        UnknownWikiListExporterForLLM(base_path = self.base_path, group_by = group_by, language = language).run()
         path_to_unknown_wiki_list_for_llm = os.path.join(self.base_path, 'unknown_wiki_list_for_llm.txt')
         with open(path_to_unknown_wiki_list_for_llm) as f:
             self.unknown_wiki_list_for_llm = f.read()
@@ -25,7 +25,7 @@ class EnglishOwnershipTest(TestUnknownWikiListExporterForLLM):
 
 class EnglishCategoryTest(TestUnknownWikiListExporterForLLM):
     def setUp(self):
-        super().setUp(genre = '-c')
+        super().setUp(group_by = '-c')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_list_for_llm, ''.join(self.__unknown_wiki_list_for_llm__()))
@@ -54,7 +54,7 @@ class JapaneseOwnershipTest(TestUnknownWikiListExporterForLLM):
 
 class JapaneseCategoryTest(TestUnknownWikiListExporterForLLM):
     def setUp(self):
-        super().setUp(genre = '-c', language = '-ja')
+        super().setUp(group_by = '-c', language = '-ja')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_list_for_llm, ''.join(self.__unknown_wiki_list_for_llm__()))

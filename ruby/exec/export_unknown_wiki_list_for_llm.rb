@@ -1,15 +1,15 @@
 require_relative '../src/unknown_wiki_list_exporter_for_llm'
 
-genre, language, *_ = ARGV
+group_by, language, *_ = ARGV
 
 puts '-------------------- Exporting Unknown Wiki List... --------------------'
-path_to_export = case genre
+path_to_export = case group_by
 when '-o', '--owner', '-c', '--category'
-  UnknownWikiListExporterForLLM.run(genre:)
+  UnknownWikiListExporterForLLM.run(group_by:)
 
   case language
   when '-en', '-ja'
-    UnknownWikiListExporterForLLM.run(genre:, language:)
+    UnknownWikiListExporterForLLM.run(group_by:, language:)
   end
 else
   UnknownWikiListExporterForLLM.run

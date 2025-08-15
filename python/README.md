@@ -10,7 +10,7 @@ Run the commands under `./python`
 
 |Order |Option   |Command-line Argument               |
 |:-----|:--------|:-----------------------------------|
-|1     |genre    |`-o` `--owner` or `-c` `--category` |
+|1     |group_by |`-o` `--owner` or `-c` `--category` |
 |2     |language |`-en` or `-ja`                      |
 
 ### 2-2. Update Wiki List on Home and Sidebar
