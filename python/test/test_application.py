@@ -28,13 +28,13 @@ class TestApplication(unittest.TestCase):
 
     def test_validate_group_by(self):
         with self.assertRaises(ValueError) as e:
-            Application(base_path = self.base_path, group_by = '-x', language = self.language)
-        self.assertEqual(str(e.exception), 'Unknown group_by: `-x`')
+            Application(base_path = self.base_path, group_by = 'Group', language = self.language)
+        self.assertEqual(str(e.exception), 'Invalid group_by: `Group`')
 
     def test_validate_language(self):
         with self.assertRaises(ValueError) as e:
-            Application(base_path = self.base_path, group_by = self.group_by, language = '-spa')
-        self.assertEqual(str(e.exception), 'Unknown language: `-spa`')
+            Application(base_path = self.base_path, group_by = self.group_by, language = 'Spanish')
+        self.assertEqual(str(e.exception), 'Invalid language: `Spanish`')
 
     def test_run(self):
         with self.assertRaises(NotImplementedError, msg = 'This method must be implemented in each subclass.'):

@@ -19,16 +19,16 @@ class ApplicationTest < Minitest::Test
 
   def test_validate_group_by!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, group_by: '-x', language:).validate!
+      Application.new(base_path:, group_by: 'Group', language:).validate!
     end
-    assert_equal('Unknown group_by: `-x`', error.message)
+    assert_equal('Invalid group_by: `Group`', error.message)
   end
 
   def test_validate_language!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, group_by: 'Owner', language: '-spa').validate!
+      Application.new(base_path:, group_by: 'Owner', language: 'Spanish').validate!
     end
-    assert_equal('Unknown language: `-spa`', error.message)
+    assert_equal('Invalid language: `Spanish`', error.message)
   end
 
   def test_self_run

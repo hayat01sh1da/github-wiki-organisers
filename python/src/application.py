@@ -23,9 +23,9 @@ class Application:
     # @raises [ValueError]
     def __validate__(self, group_by, language):
         if group_by not in ['Owner', 'Category']:
-            raise ValueError(f'Unknown group_by: `{group_by}`')
+            raise ValueError(f'Invalid group_by: `{group_by}`')
         if language not in ['English', 'Japanese']:
-            raise ValueError(f'Unknown language: `{language}`')
+            raise ValueError(f'Invalid language: `{language}`')
 
     # @return [str]
     def __target_paths__(self):

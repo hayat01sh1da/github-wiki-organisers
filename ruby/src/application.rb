@@ -17,8 +17,8 @@ class Application
   end
 
   def validate!
-    raise ArgumentError, "Unknown group_by: `#{group_by}`" unless ['Owner', 'Category'].include?(group_by)
-    raise ArgumentError, "Unknown language: `#{language}`" unless ['English', 'Japanese'].include?(language)
+    raise ArgumentError, "Invalid group_by: `#{group_by}`" unless ['Owner', 'Category'].include?(group_by)
+    raise ArgumentError, "Invalid language: `#{language}`" unless ['English', 'Japanese'].include?(language)
   end
 
   def run
