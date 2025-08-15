@@ -13,11 +13,11 @@ print('-------------------- Categorising the Entire github-wiki-organisers Wiki 
 print()
 print('-------------------- Organising Home... --------------------')
 match group_by:
-    case '-o' | '--owner' | '-c' | '--category':
+    case 'Owner' | 'Category':
         home_url = Home(group_by = group_by).run()
 
         match language:
-            case '-en' | '-ja':
+            case 'English' | 'Japanese':
                 home_url = Home(group_by = group_by, language = language).run()
     case _:
         home_url = Home().run()
@@ -26,11 +26,11 @@ print('-------------------- Done Organising Home 🎉 --------------------')
 print()
 print('-------------------- Organising Sidebar... --------------------')
 match group_by:
-    case '-o' | '--owner' | '-c' | '--category':
+    case 'Owner' | 'Category':
         Sidebar(group_by = group_by).run()
 
         match language:
-            case '-en' | '-ja':
+            case 'English' | 'Japanese':
                 Sidebar(group_by = group_by, language = language).run()
     case _:
         Sidebar().run()

@@ -8,15 +8,15 @@ Run the commands under `./python`
 
 ### 2-1. Options
 
-|Order |Option   |Command-line Argument               |
-|:-----|:--------|:-----------------------------------|
-|1     |group_by |`-o` `--owner` or `-c` `--category` |
-|2     |language |`-en` or `-ja`                      |
+|Order |Option   |Command-line Argument   |
+|:-----|:--------|:-----------------------|
+|1     |group_by |`Owner` or `Category`   |
+|2     |language |`English` or `Japanese` |
 
 ### 2-2. Update Wiki List on Home and Sidebar
 
 ```command
-$ python exec/update_wiki_list_on_home_and_sidebar.py -o -en
+$ python exec/update_wiki_list_on_home_and_sidebar.py Owner English
 -------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------
 
 -------------------- Organising Home... --------------------
@@ -35,7 +35,7 @@ Check out an Up-to-date Wiki List on Sidebar at 'https://github.com/hayat01sh1da
 ### 2-3-1. Owner
 
 ```command
-$ python exec/export_unknown_wiki_count_list_by_namespace.py -o -en
+$ python exec/export_unknown_wiki_count_list_by_namespace.py Owner English
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -52,7 +52,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ```
 
 ```command
-$ python exec/export_unknown_wiki_count_list_by_namespace.py -o -ja
+$ python exec/export_unknown_wiki_count_list_by_namespace.py Owner Japanese
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -71,7 +71,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ### 2-3-2. Category
 
 ```command
-$ python exec/export_unknown_wiki_count_list_by_namespace.py -c -en
+$ python exec/export_unknown_wiki_count_list_by_namespace.py Category English
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -86,7 +86,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ```
 
 ```command
-$ python exec/export_unknown_wiki_count_list_by_namespace.py -c -ja
+$ python exec/export_unknown_wiki_count_list_by_namespace.py Category Japanese
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:

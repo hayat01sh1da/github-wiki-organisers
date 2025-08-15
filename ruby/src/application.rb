@@ -1,7 +1,7 @@
 class Application
   class NotImplementedError < StandardError; end
 
-  def self.run(base_path: File.join('..', '..'), group_by: '-o', language: '-en')
+  def self.run(base_path: File.join('..', '..'), group_by: 'Owner', language: 'English')
     instance = new(base_path:, group_by:, language:)
     instance.validate!
     instance.run
@@ -17,8 +17,8 @@ class Application
   end
 
   def validate!
-    raise ArgumentError, "Unknown group_by: `#{group_by}`" unless ['-o', '--owner', '-c', '--category'].include?(group_by)
-    raise ArgumentError, "Unknown language: `#{language}`" unless ['-en', '-ja'].include?(language)
+    raise ArgumentError, "Unknown group_by: `#{group_by}`" unless ['Owner', 'Category'].include?(group_by)
+    raise ArgumentError, "Unknown language: `#{language}`" unless ['English', 'Japanese'].include?(language)
   end
 
   def run
@@ -41,9 +41,9 @@ class Application
   # @return [Regexp]
   def target_regexp
     @target_regexp ||= case group_by
-    when '-o', '--owner'
+    when 'Owner'
       /[Oo]wner:\s?/
-    when '-c', '--category'
+    when 'Category'
       /[Cc]ategory:\s?/
     end
   end
@@ -51,18 +51,18 @@ class Application
   # @return [String]
   def no_declaration
     @no_declaration ||= case group_by
-    when '-o', '--owner'
+    when 'Owner'
       case language
-      when '-en'
+      when 'English'
         'Unowned'
-      when '-ja'
+      when 'Japanese'
         'Owner記名なし'
       end
-    when '-c', '--category'
+    when 'Category'
       case language
-      when '-en'
+      when 'English'
         'Uncategorised'
-      when '-ja'
+      when 'Japanese'
         'Category記載なし'
       end
     end

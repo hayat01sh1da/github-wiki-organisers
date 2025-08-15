@@ -8,7 +8,7 @@ from application import Application
 HOME_URL = f'https://github.com/{os.environ.get('ORGANISATION_NAME', 'hayat01sh1da')}/github-wiki-organisers/wiki'
 
 class Home(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = '-o', language = '-en'):
+    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English'):
         super().__init__(base_path, group_by, language)
         self.base_owner_url = f'https://github.com/orgs/{os.environ.get('ORGANISATION_NAME', 'hayat01sh1da')}/teams/'
         self.home_passage   = self.__home_passage__()
@@ -22,16 +22,8 @@ class Home(Application):
     # private
 
     # @return [str]
-    def __template_group_by__(self):
-        match self.group_by:
-            case '-o' | '--owner':
-                return 'owner'
-            case '-c' | '--category':
-                return 'category'
-
-    # @return [str]
     def __path_to_home_template__(self):
-        return os.path.join('..', 'home_template', self.__template_group_by__(), f'{ re.sub(r'^-', '', self.language)}.md')
+        return os.path.join('..', 'home_template', self.group_by.lower(), f'{self.language.lower()}.md')
 
     # @return [list<str>]
     def __home_passage__(self):

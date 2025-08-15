@@ -10,11 +10,11 @@ _, group_by, language, *_ = sys.argv
 
 print('-------------------- Exporting Unknown Wiki List... --------------------')
 match group_by:
-    case '-o' | '--owner' | '-c' | '--category':
+    case 'Owner' | 'Category':
         path_to_export = UnknownWikiListExporterForLLM(group_by = group_by).run()
 
         match language:
-            case '-en' | '-ja':
+            case 'English' | 'Japanese':
                 path_to_export = UnknownWikiListExporterForLLM(group_by = group_by, language = language).run()
     case _:
         path_to_export = UnknownWikiListExporterForLLM().run()

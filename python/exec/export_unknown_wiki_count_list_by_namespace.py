@@ -10,11 +10,11 @@ _, group_by, language, *_ = sys.argv
 
 print('-------------------- Exporting Unknown Wiki Count List... --------------------')
 match group_by:
-    case '-o' | '--owner' | '-c' | '--category':
+    case 'Owner' | 'Category':
         count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(group_by = group_by).run()
 
         match language:
-            case '-en' | '-ja':
+            case 'English' | 'Japanese':
                 count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(group_by = group_by, language = language).run()
     case _:
         count_list_by_namespace, path_to_export = UnknownWikiCountListExporter().run()

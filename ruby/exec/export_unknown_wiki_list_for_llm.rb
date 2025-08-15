@@ -4,11 +4,11 @@ group_by, language, *_ = ARGV
 
 puts '-------------------- Exporting Unknown Wiki List... --------------------'
 path_to_export = case group_by
-when '-o', '--owner', '-c', '--category'
+when 'Owner', 'Category'
   UnknownWikiListExporterForLLM.run(group_by:)
 
   case language
-  when '-en', '-ja'
+  when 'English', 'Japanese'
     UnknownWikiListExporterForLLM.run(group_by:, language:)
   end
 else

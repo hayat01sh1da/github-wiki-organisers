@@ -19,18 +19,8 @@ class Home < Application
   attr_reader :base_owner_url
 
   # @return [String]
-  def template_group_by
-    case group_by
-    when '-o', '--owner'
-      'owner'
-    when '-c', '--category'
-      'category'
-    end
-  end
-
-  # @return [String]
   def path_to_home_template
-    File.join('..', 'home_template', template_group_by, "#{language.gsub(/^\-/, '')}.md")
+    File.join('..', 'home_template', group_by.downcase, "#{language.downcase}.md")
   end
 
   # @return [Array<String>]

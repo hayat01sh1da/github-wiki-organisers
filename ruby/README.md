@@ -8,10 +8,10 @@ Run the commands under `./ruby`
 
 ### 2-1. Options
 
-|Order |Option   |Command-line Argument               |
-|:-----|:--------|:-----------------------------------|
-|1     |group_by |`-o` `--owner` or `-c` `--category` |
-|2     |language |`-en` or `-ja`                      |
+|Order |Option   |Command-line Argument   |
+|:-----|:--------|:-----------------------|
+|1     |group_by |`Owner` or `Category`   |
+|2     |language |`English` or `Japanese` |
 
 ### 2-2. Update Wiki List on Home and Sidebar
 
@@ -33,7 +33,7 @@ Check out an Up-to-date Wiki List on Sidebar at 'https://github.com/hayat01sh1da
 ## 2-3. Export Unknown Wiki Count List by Namespace
 
 ```command
-$ ruby exec/export_unknown_wiki_count_list_by_namespace.rb -o -en
+$ ruby exec/export_unknown_wiki_count_list_by_namespace.rb Owner English
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -50,7 +50,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ```
 
 ```command
-$ ruby exec/export_unknown_wiki_count_list_by_namespace.rb -o -ja
+$ ruby exec/export_unknown_wiki_count_list_by_namespace.rb Owner Japanese
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -69,7 +69,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ### 2-3-2. Category
 
 ```command
-$ ruby exec/export_unknown_wiki_count_list_by_namespace.rb -c -en
+$ ruby exec/export_unknown_wiki_count_list_by_namespace.rb Category English
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -84,7 +84,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ```
 
 ```command
-$ ruby exec/export_unknown_wiki_count_list_by_namespace.rb -c -ja
+$ ruby exec/export_unknown_wiki_count_list_by_namespace.rb Category Japanese
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:

@@ -5,7 +5,7 @@ sys.path.append('./src')
 from application import Application
 
 class UnknownWikiCountListExporter(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = '-o', language = '-en'):
+    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English'):
         super().__init__(base_path, group_by, language)
         self.path_to_export          = os.path.join(self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
         self.count_list_by_namespace = ''.join(sorted(self.__count_list_by_namespace__()))
@@ -21,27 +21,27 @@ class UnknownWikiCountListExporter(Application):
     # @return [list<str>]
     def __namespace_list__(self):
         match self.group_by:
-            case '-o' | '--owner':
+            case 'Owner':
                 match self.language:
-                    case '-en':
+                    case 'English':
                         return [
                             'Unowned but Necessary',
                             'Unknown Owner nor Necessity',
                             'Unowned'
                         ]
-                    case '-ja':
+                    case 'Japanese':
                         return [
                             'Ownerチームが不明だが必要なページ群',
                             'Ownerチーム・要or不要が不明なページ群',
                             'Owner記名なし'
                         ]
-            case '-c' | '--category':
+            case 'Category':
                 match self.language:
-                    case '-en':
+                    case 'English':
                         return [
                             'Uncategorised'
                         ]
-                    case '-ja':
+                    case 'Japanese':
                         return [
                             'Category記載なし'
                         ]

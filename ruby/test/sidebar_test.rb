@@ -2,7 +2,7 @@ require_relative './application_test'
 require_relative '../src/sidebar'
 
 class SidebarTest < ApplicationTest
-  def setup(group_by: '-o', language: '-en')
+  def setup(group_by: 'Owner', language: 'English')
     super(group_by:, language:)
     Sidebar.run(base_path:, group_by:, language:)
     @path_to_sidebar = File.join(base_path, '_Sidebar.md')
@@ -38,7 +38,7 @@ class SidebarTest < ApplicationTest
 
     class PlainSidebarTest < SidebarTest
       def setup
-        super(group_by: '-c')
+        super(group_by: 'Category')
       end
 
       def test_self_run
@@ -62,7 +62,7 @@ class SidebarTest < ApplicationTest
   module Japanese
     class OwnedSidebarTest < SidebarTest
       def setup
-        super(language: '-ja')
+        super(language: 'Japanese')
       end
 
       def test_self_run
@@ -88,7 +88,7 @@ class SidebarTest < ApplicationTest
 
     class PlainSidebarTest < SidebarTest
       def setup
-        super(group_by: '-c', language: '-ja')
+        super(group_by: 'Category', language: 'Japanese')
       end
 
       def test_self_run

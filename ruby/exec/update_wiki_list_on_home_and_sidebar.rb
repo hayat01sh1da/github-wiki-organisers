@@ -7,11 +7,11 @@ puts '-------------------- Categorising the Entire github-wiki-organisers Wiki P
 puts "\n"
 puts '-------------------- Organising Home... --------------------'
 home_url = case group_by
-when '-o', '--owner', '-c', '--category'
+when 'Owner', 'Category'
   Home.run(group_by:)
 
   case language
-  when '-en', '-ja'
+  when 'English', 'Japanese'
     Home.run(group_by:, language:)
   end
 else
@@ -22,11 +22,11 @@ puts '-------------------- Done Organising Home 🎉 --------------------'
 puts "\n"
 puts '-------------------- Organising Sidebar... --------------------'
 case group_by
-when '-o', '--owner', '-c', '--category'
+when 'Owner', 'Category'
   Sidebar.run(group_by:)
 
   case language
-  when '-en', '-ja'
+  when 'English', 'Japanese'
     Sidebar.run(group_by:, language:)
   end
 else

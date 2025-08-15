@@ -8,7 +8,7 @@ sys.path.append('./src')
 from application import Application
 
 class TestApplication(unittest.TestCase):
-    def setUp(self, base_path = os.path.join('.', 'test', 'wiki'), group_by = '-o', language = '-en'):
+    def setUp(self, base_path = os.path.join('.', 'test', 'wiki'), group_by = 'Owner', language = 'English'):
         self.base_path = base_path
         self.group_by  = group_by
         self.language  = language
@@ -44,9 +44,9 @@ class TestApplication(unittest.TestCase):
 
     def __test_file_maps__(self):
         match self.group_by:
-            case '-o' | '--owner':
+            case 'Owner':
                 match self.language:
-                    case '-en':
+                    case 'English':
                         return {
                             'Owned Wiki.md': 'Owner: @test-owner',
                             'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
@@ -54,7 +54,7 @@ class TestApplication(unittest.TestCase):
                             'Unowned Wiki 1.md': '',
                             'Unowned Wiki 2.md': 'This is a sample Wiki'
                         }
-                    case '-ja':
+                    case 'Japanese':
                         return {
                             'Owner記名ありページ.md': 'Owner: @test-owner',
                             'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
@@ -62,15 +62,15 @@ class TestApplication(unittest.TestCase):
                             'Owner記名なしページ1.md': '',
                             'Owner記名なしページ2.md': 'サンプル Wiki'
                         }
-            case '-c' | '--category':
+            case 'Category':
                 match self.language:
-                    case '-en':
+                    case 'English':
                         return {
                             'Categorised Wiki.md': 'Category: test-category',
                             'Uncategorised Wiki 1.md': '',
                             'Uncategorised Wiki 2.md': 'This is a sample Wiki',
                         }
-                    case '-ja':
+                    case 'Japanese':
                         return {
                             'Category記載ありページ.md': 'Category: test-category',
                             'Category記載なしページ1.md': '',

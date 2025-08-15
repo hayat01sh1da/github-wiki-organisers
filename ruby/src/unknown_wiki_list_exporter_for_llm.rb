@@ -18,18 +18,18 @@ class UnknownWikiListExporterForLLM < Application
   # @return [Array<String>]
   def target_namespace
     case group_by
-    when '-o', '--owner'
+    when 'Owner'
       case language
-      when '-en'
+      when 'English'
         'Unknown Owner nor Necessity'
-      when '-ja'
+      when 'Japanese'
         'Ownerチーム・要or不要が不明なページ群'
       end
-    when '-c', '--category'
+    when 'Category'
       case language
-      when '-en'
+      when 'English'
         'Uncategorised'
-      when '-ja'
+      when 'Japanese'
         'Category記載なし'
       end
     end
