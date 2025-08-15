@@ -69,13 +69,11 @@ jobs:
       - name: Slack Notification
         uses: slackapi/slack-github-action@v2
         if: contains(env.COMMIT_MESSAGE, env.CURRENT_TIME)
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_APP_TOKEN }}
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_APP_TOKEN }}
           payload: |
-            channel: "C06S7N0Q2HE"
+            channel: ${{ secrets.SLACK_CHANNEL_ID }}
             blocks:
               - type: "header"
                 text:
