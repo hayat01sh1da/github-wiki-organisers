@@ -17,13 +17,18 @@ on:
           - Owner
           - Category
       language:
-        description: "Specify the language used for the wiki pages"
+        description: Specify the language used for the wiki pages
         required: true
         default: English
         type: choice
         options:
           - English
           - Japanese
+      home_overflow:
+        description: ⚠️ The wiki page took too long to render
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -60,7 +65,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash update_wiki_list_on_home_and_sidebar.sh "${{ github.event.inputs.group_by }}" "${{ github.event.inputs.language }}"
+          bash update_wiki_list_on_home_and_sidebar.sh "${{ github.event.inputs.group_by }}" "${{ github.event.inputs.language }}" "${{ github.event.inputs.home_overflow }}"
           git add -A
           current_time=$(TZ=Asia/Tokyo date "+%Y-%m-%d %H:%M:%S")
           git commit -m "Update Wiki list on Home and Sidebar by GitHub Actions[bot] at $current_time" || true
