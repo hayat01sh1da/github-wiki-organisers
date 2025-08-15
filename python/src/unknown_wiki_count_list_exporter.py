@@ -5,8 +5,8 @@ sys.path.append('./src')
 from application import Application
 
 class UnknownWikiCountListExporter(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English'):
-        super().__init__(base_path, group_by, language)
+    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = False):
+        super().__init__(base_path, group_by, language, home_overflow)
         self.path_to_export          = os.path.join(self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
         self.count_list_by_namespace = ''.join(sorted(self.__count_list_by_namespace__()))
 

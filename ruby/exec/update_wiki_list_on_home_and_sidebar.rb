@@ -1,13 +1,16 @@
 require_relative '../src/home'
 require_relative '../src/sidebar'
 
-group_by, language, *_ = ARGV
+group_by, language, home_overflow, *_ = ARGV
 
 puts '-------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------'
 puts "\n"
 puts '-------------------- Organising Home... --------------------'
 home_url = case group_by
-when 'Owner', 'Category'
+when 'Owner'
+  if home_overflow
+    Home.run(group_by:, home_overflow:)
+when 'Category'
   Home.run(group_by:)
 
   case language

@@ -8,10 +8,11 @@ Run the commands under `./ruby`
 
 ### 2-1. Options
 
-|Order |Option   |Command-line Argument   |
-|:-----|:--------|:-----------------------|
-|1     |group_by |`Owner` or `Category`   |
-|2     |language |`English` or `Japanese` |
+|Order |Option        |Command-line Argument   |
+|:-----|:-------------|:-----------------------|
+|1     |group_by      |`Owner` or `Category`   |
+|2     |language      |`English` or `Japanese` |
+|3     |home_overflow |`true` or `false`       |
 
 ### 2-2. Update Wiki List on Home and Sidebar
 

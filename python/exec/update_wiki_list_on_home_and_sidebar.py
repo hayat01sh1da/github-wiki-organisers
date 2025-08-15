@@ -7,13 +7,16 @@ sys.path.append('./src')
 from home import Home
 from sidebar import Sidebar
 
-_, group_by, language, *_ = sys.argv
+_, group_by, language, home_overflow, *_ = sys.argv
 
 print('-------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------')
 print()
 print('-------------------- Organising Home... --------------------')
 match group_by:
-    case 'Owner' | 'Category':
+    case 'Owner':
+        if home_overflow == 'true':
+            home_url = Home(group_by = group_by, home_overflow = True).run()
+    case 'Category':
         home_url = Home(group_by = group_by).run()
 
         match language:

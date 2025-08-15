@@ -1,16 +1,17 @@
 class Application
   class NotImplementedError < StandardError; end
 
-  def self.run(base_path: File.join('..', '..'), group_by: 'Owner', language: 'English')
-    instance = new(base_path:, group_by:, language:)
+  def self.run(base_path: File.join('..', '..'), group_by: 'Owner', language: 'English', home_overflow: false)
+    instance = new(base_path:, group_by:, language:, home_overflow:)
     instance.validate!
     instance.run
   end
 
-  def initialize(base_path:, group_by:, language:)
+  def initialize(base_path:, group_by:, language:, home_overflow:)
+    @base_path       = base_path
     @group_by        = group_by
     @language        = language
-    @base_path       = base_path
+    @home_overflow   = home_overflow
     @path_to_home    = File.join(base_path, 'Home.md')
     @path_to_sidebar = File.join(base_path, '_Sidebar.md')
     @paths_to_wikis  = Dir[File.join(base_path, '**', '*.md')].sort
@@ -27,7 +28,7 @@ class Application
 
   private
 
-  attr_reader :group_by, :language, :base_path, :path_to_home, :path_to_sidebar, :paths_to_wikis
+  attr_reader :base_path, :group_by, :language, :home_overflow, :path_to_home, :path_to_sidebar, :paths_to_wikis
 
   # @return [String]
   def target_paths

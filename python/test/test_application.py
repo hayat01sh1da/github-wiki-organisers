@@ -8,10 +8,11 @@ sys.path.append('./src')
 from application import Application
 
 class TestApplication(unittest.TestCase):
-    def setUp(self, base_path = os.path.join('.', 'test', 'wiki'), group_by = 'Owner', language = 'English'):
-        self.base_path = base_path
-        self.group_by  = group_by
-        self.language  = language
+    def setUp(self, base_path = os.path.join('.', 'test', 'wiki'), group_by = 'Owner', language = 'English', home_overflow = False):
+        self.base_path      = base_path
+        self.group_by       = group_by
+        self.language       = language
+        self.home_overflow  = home_overflow
         self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
         if not os.path.exists(self.base_path):
             os.makedirs(self.base_path)
@@ -28,17 +29,17 @@ class TestApplication(unittest.TestCase):
 
     def test_validate_group_by(self):
         with self.assertRaises(ValueError) as e:
-            Application(base_path = self.base_path, group_by = 'Group', language = self.language)
+            Application(base_path = self.base_path, group_by = 'Group', language = self.language, home_overflow = self.home_overflow)
         self.assertEqual(str(e.exception), 'Invalid group_by: `Group`')
 
     def test_validate_language(self):
         with self.assertRaises(ValueError) as e:
-            Application(base_path = self.base_path, group_by = self.group_by, language = 'Spanish')
+            Application(base_path = self.base_path, group_by = self.group_by, language = 'Spanish', home_overflow = self.home_overflow)
         self.assertEqual(str(e.exception), 'Invalid language: `Spanish`')
 
     def test_run(self):
         with self.assertRaises(NotImplementedError, msg = 'This method must be implemented in each subclass.'):
-            Application(base_path = self.base_path, group_by = self.group_by, language = self.language).run()
+            Application(base_path = self.base_path, group_by = self.group_by, language = self.language, home_overflow = self.home_overflow).run()
 
     # private
 
