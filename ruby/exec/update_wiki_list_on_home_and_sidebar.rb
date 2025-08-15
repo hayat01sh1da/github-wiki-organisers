@@ -10,6 +10,7 @@ home_url = case group_by
 when 'Owner'
   if home_overflow
     Home.run(group_by:, home_overflow:)
+  end
 when 'Category'
   Home.run(group_by:)
 
