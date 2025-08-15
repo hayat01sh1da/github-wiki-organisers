@@ -50,7 +50,7 @@ class EnglishOwnedHomeTest(TestHome):
 
         return passage
 
-class EnglishPlainHomeTest(TestHome):
+class EnglishCategorisedHomeTest(TestHome):
     def setUp(self):
         super().setUp(group_by = 'Category')
 
@@ -118,7 +118,7 @@ class JapaneseOwnedHomeTest(TestHome):
 
         return passage
 
-class JapanesePlainHomeTest(TestHome):
+class JapaneseCategorisedHomeTest(TestHome):
     def setUp(self):
         super().setUp(group_by = 'Category', language = 'Japanese')
 

@@ -52,7 +52,7 @@ class HomeTest < ApplicationTest
       end
     end
 
-    class PlainHomeTest < HomeTest
+    class CategorisedHomeTest < HomeTest
       def setup
         super(group_by: 'Category')
       end
@@ -130,7 +130,7 @@ class HomeTest < ApplicationTest
       end
     end
 
-    class PlainHomeTest < HomeTest
+    class CategorisedHomeTest < HomeTest
       def setup
         super(group_by: 'Category', language: 'Japanese')
       end
