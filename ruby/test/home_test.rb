@@ -5,18 +5,20 @@ class HomeTest < ApplicationTest
   def setup(group_by: 'Owner', language: 'English', home_overflow: false)
     super(group_by:, language:, home_overflow:)
     Home.run(base_path:, group_by:, language:, home_overflow:)
-    @path_to_home = File.join(base_path, 'Home.md')
-    @home         = File.read(path_to_home)
+    @path_to_home            = File.join(base_path, 'Home.md')
+    @home                    = File.read(path_to_home)
+    @path_to_wikis_by_owners = File.join(base_path, 'wikis_by_owners')
   end
 
   private
 
-  attr_reader :path_to_home, :home
+  attr_reader :path_to_home, :home, :path_to_wikis_by_owners
 
   module English
     class OwnedHomeTest < HomeTest
-      class NonOverflowTest < HomeTest
+      class NonOverflowTest < OwnedHomeTest
         def test_self_run
+          refute(Dir.exist?(path_to_wikis_by_owners))
           assert_equal(home_passage.join, home)
         end
 
@@ -53,12 +55,13 @@ class HomeTest < ApplicationTest
         end
       end
 
-      class OverflowTest < HomeTest
+      class OverflowTest < OwnedHomeTest
         def setup
           super(home_overflow: true)
         end
 
         def test_self_run
+          assert(Dir.exist?(path_to_wikis_by_owners))
           assert_equal(home_passage.join, home)
         end
 
@@ -121,12 +124,13 @@ class HomeTest < ApplicationTest
 
   module Japanese
     class OwnedHomeTest < HomeTest
-      class NonOverflowTest < HomeTest
+      class NonOverflowTest < OwnedHomeTest
         def setup
           super(language: 'Japanese')
         end
 
         def test_self_run
+          refute(Dir.exist?(path_to_wikis_by_owners))
           assert_equal(home_passage.join, home)
         end
 
@@ -163,12 +167,13 @@ class HomeTest < ApplicationTest
         end
       end
 
-      class OverflowTest < HomeTest
+      class OverflowTest < OwnedHomeTest
         def setup
           super(language: 'Japanese', home_overflow: true)
         end
 
         def test_self_run
+          assert(Dir.exist?(path_to_wikis_by_owners))
           assert_equal(home_passage.join, home)
         end
 

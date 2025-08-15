@@ -14,9 +14,11 @@ class TestHome(TestApplication):
         path_to_home = os.path.join(self.base_path, 'Home.md')
         with open(path_to_home) as f:
             self.home = f.read()
+        self.path_to_wikis_by_owners = os.path.join(self.base_path, 'wikis_by_owners')
 
 class EnglishOwnedHomeWithoutOverflowTest(TestHome):
     def test_run(self):
+        self.assertFalse(os.path.exists(self.path_to_wikis_by_owners))
         self.assertEqual(self.home, self.__home_passage__())
 
     # private
@@ -55,6 +57,7 @@ class EnglishOwnedHomeWithOverflowTest(TestHome):
         super().setUp(home_overflow = True)
 
     def test_run(self):
+        self.assertTrue(os.path.exists(self.path_to_wikis_by_owners))
         self.assertEqual(self.home, self.__home_passage__())
 
     # private
@@ -111,6 +114,7 @@ class JapaneseOwnedHomeWithoutOverflowTest(TestHome):
         super().setUp(language = 'Japanese')
 
     def test_run(self):
+        self.assertFalse(os.path.exists(self.path_to_wikis_by_owners))
         self.assertEqual(self.home, self.__home_passage__())
 
     # private
@@ -149,6 +153,7 @@ class JapaneseOwnedHomeWihOverflowTest(TestHome):
         super().setUp(language = 'Japanese', home_overflow = True)
 
     def test_run(self):
+        self.assertTrue(os.path.exists(self.path_to_wikis_by_owners))
         self.assertEqual(self.home, self.__home_passage__())
 
     # private

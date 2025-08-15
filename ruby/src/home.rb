@@ -1,11 +1,13 @@
 require_relative './application'
+require 'fileutils'
 
 class Home < Application
   HOME_URL = "https://github.com/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/github-wiki-organisers/wiki".freeze
 
   def initialize(base_path:, group_by:, language:, home_overflow:)
     super(base_path:, group_by:, language:, home_overflow:)
-    @base_owner_url = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
+    @base_owner_url          = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
+    @path_to_wikis_by_owners = File.join(base_path, 'wikis_by_owners')
   end
 
   def run
@@ -15,7 +17,7 @@ class Home < Application
 
   private
 
-  attr_reader :base_owner_url
+  attr_reader :base_owner_url, :path_to_wikis_by_owners
 
   # @return [String]
   def path_to_home_template
@@ -30,7 +32,6 @@ class Home < Application
   # @return nil
   def write_home_passage
     if group_by == 'Owner' && home_overflow
-      path_to_wikis_by_owners = File.join(base_path, 'wikis_by_owners')
       FileUtils.mkdir_p(path_to_wikis_by_owners) unless Dir.exist?(path_to_wikis_by_owners)
 
       owned_wiki_maps.each { |namespace, wikis|
@@ -61,6 +62,8 @@ class Home < Application
       home_passage << "\n"
       File.write(path_to_home, home_passage.join.chomp)
     else
+      FileUtils.rm_rf(path_to_wikis_by_owners) if Dir.exist?(path_to_wikis_by_owners)
+
       owned_wiki_maps.each { |namespace, wikis|
         home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"
         home_passage << "\n"
