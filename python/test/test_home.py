@@ -8,9 +8,9 @@ from home import Home
 from test_application import TestApplication
 
 class TestHome(TestApplication):
-    def setUp(self, group_by = 'Owner', language = 'English'):
-        super().setUp(group_by = group_by, language = language)
-        Home(base_path = self.base_path, group_by = group_by, language = language).run()
+    def setUp(self, group_by = 'Owner', language = 'English', home_overflow = False):
+        super().setUp(group_by = group_by, language = language, home_overflow = home_overflow)
+        Home(base_path = self.base_path, group_by = group_by, language = language, home_overflow = home_overflow).run()
         path_to_home = os.path.join(self.base_path, 'Home.md')
         with open(path_to_home) as f:
             self.home = f.read()

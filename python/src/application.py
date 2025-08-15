@@ -4,11 +4,12 @@ import re
 from collections import defaultdict
 
 class Application:
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English'):
+    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = False):
         self.__validate__(group_by = group_by, language = language)
         self.base_path                             = base_path
         self.group_by                              = group_by
         self.language                              = language
+        self.home_overflow                         = home_overflow
         self.path_to_home                          = os.path.join(base_path, 'Home.md')
         self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
         self.target_paths                          = self.__target_paths__()
