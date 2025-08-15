@@ -2,9 +2,9 @@ require_relative './application_test'
 require_relative '../src/home'
 
 class HomeTest < ApplicationTest
-  def setup(group_by: 'Owner', language: 'English')
-    super(group_by:, language:)
-    Home.run(base_path:, group_by:, language:)
+  def setup(group_by: 'Owner', language: 'English', home_overflow: false)
+    super(group_by:, language:, home_overflow:)
+    Home.run(base_path:, group_by:, language:, home_overflow:)
     @path_to_home = File.join(base_path, 'Home.md')
     @home         = File.read(path_to_home)
   end

@@ -3,10 +3,11 @@ require 'fileutils'
 require_relative '../src/application'
 
 class ApplicationTest < Minitest::Test
-  def setup(base_path: File.join('.', 'test', 'wiki'), group_by: 'Owner', language: 'English')
-    @base_path = base_path
-    @group_by  = group_by
-    @language  = language
+  def setup(base_path: File.join('.', 'test', 'wiki'), group_by: 'Owner', language: 'English', home_overflow: false)
+    @base_path     = base_path
+    @group_by      = group_by
+    @language      = language
+    @home_overflow = home_overflow
     FileUtils.mkdir_p(base_path) unless Dir.exist?(base_path)
     test_file_maps.each { |wiki, namespace|
       File.write(File.join(base_path, wiki), namespace)
@@ -19,28 +20,28 @@ class ApplicationTest < Minitest::Test
 
   def test_validate_group_by!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, group_by: 'Group', language:).validate!
+      Application.new(base_path:, group_by: 'Group', language:, home_overflow:).validate!
     end
     assert_equal('Invalid group_by: `Group`', error.message)
   end
 
   def test_validate_language!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, group_by: 'Owner', language: 'Spanish').validate!
+      Application.new(base_path:, group_by: 'Owner', language: 'Spanish', home_overflow:).validate!
     end
     assert_equal('Invalid language: `Spanish`', error.message)
   end
 
   def test_self_run
     error = assert_raises Application::NotImplementedError do
-      Application.run(base_path:, group_by:)
+      Application.run(base_path:)
     end
     assert_equal('This method must be implemented in each subclass.', error.message)
   end
 
   private
 
-  attr_reader :base_path, :group_by, :language
+  attr_reader :base_path, :group_by, :language, :home_overflow
 
   def test_file_maps
     case group_by
