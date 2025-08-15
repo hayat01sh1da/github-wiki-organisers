@@ -70,12 +70,12 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#unowned-but-necessary-wiki|${{ env.UNKNOWN_BUT_NECESSARY }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#unowned-but-necessary-wiki|${{ env.UNKNOWN_BUT_NECESSARY }}>"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#unknown-owner-nor-necessity-wiki|${{ env.UNKNOWN_OWNER_NOR_NECESSITY }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#unknown-owner-nor-necessity-wiki|${{ env.UNKNOWN_OWNER_NOR_NECESSITY }}>"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#unowned|${{ env.UNOWNED }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#unowned|${{ env.UNOWNED }}>"

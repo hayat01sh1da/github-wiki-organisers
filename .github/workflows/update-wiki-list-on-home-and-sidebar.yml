@@ -83,7 +83,7 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "Workflows: <https://github.com/hayat01sh1da/github-wiki-organisers/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml|Update Wiki List on Home and Sidebar>"
+                  text: "Workflows: <https://github.com/${{ github.repository }}/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml|Update Wiki List on Home and Sidebar>"
               - type: "section"
                 text:
                   type: "mrkdwn"
@@ -91,4 +91,4 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "Source: <https://github.com/hayat01sh1da/github-wiki-organisers/wiki|github-wiki-organisers Wiki>"
+                  text: "Source: <https://github.com/${{ github.repository }}/wiki|github-wiki-organisers Wiki>"

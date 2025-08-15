@@ -68,4 +68,4 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#uncategorised|${{ env.UNCATEGORISED }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#uncategorised|${{ env.UNCATEGORISED }}>"
