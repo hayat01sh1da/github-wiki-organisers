@@ -6,6 +6,23 @@ on:
     # ⚠️ The timing is somehow not accurate at all
     - cron: '0 0 * * 1'
   workflow_dispatch:
+    inputs:
+      group_by:
+        description: "Specify the grouping criteria for the wiki pages"
+        required: true
+        default: Owner
+        type: choice
+        options:
+          - Owner
+          - Category
+      language:
+        description: "Specify the language used for the wiki pages"
+        required: true
+        default: English
+        type: choice
+        options:
+          - English
+          - Japanese
 
 permissions:
   contents: write
@@ -30,7 +47,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash export_unknown_wiki_count_list_by_namespace.sh
+          bash export_unknown_wiki_count_list_by_namespace.sh "${{ github.event.inputs.group_by }}" "${{ github.event.inputs.language }}"
           while IFS= read -r line; do
             unknown_wiki_count_list+=($line)
           done < ./unknown_wiki_count_list_by_namespace.txt
@@ -53,12 +70,12 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#unowned-but-necessary-wiki|${{ env.UNKNOWN_BUT_NECESSARY }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#unowned-but-necessary-wiki|${{ env.UNKNOWN_BUT_NECESSARY }}>"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#unknown-owner-nor-necessity-wiki|${{ env.UNKNOWN_OWNER_NOR_NECESSITY }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#unknown-owner-nor-necessity-wiki|${{ env.UNKNOWN_OWNER_NOR_NECESSITY }}>"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/hayat01sh1da/github-wiki-organisers/wiki#unowned|${{ env.UNOWNED }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#unowned|${{ env.UNOWNED }}>"

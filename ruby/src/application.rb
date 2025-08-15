@@ -1,14 +1,14 @@
 class Application
   class NotImplementedError < StandardError; end
 
-  def self.run(base_path: File.join('..', '..'), genre: '-o', language: '-en')
-    instance = new(base_path:, genre:, language:)
+  def self.run(base_path: File.join('..', '..'), group_by: 'Owner', language: 'English')
+    instance = new(base_path:, group_by:, language:)
     instance.validate!
     instance.run
   end
 
-  def initialize(base_path:, genre:, language:)
-    @genre           = genre
+  def initialize(base_path:, group_by:, language:)
+    @group_by        = group_by
     @language        = language
     @base_path       = base_path
     @path_to_home    = File.join(base_path, 'Home.md')
@@ -17,8 +17,8 @@ class Application
   end
 
   def validate!
-    raise ArgumentError, "Unknown genre: `#{genre}`" unless ['-o', '--owner', '-c', '--category'].include?(genre)
-    raise ArgumentError, "Unknown language: `#{language}`" unless ['-en', '-ja'].include?(language)
+    raise ArgumentError, "Unknown group_by: `#{group_by}`" unless ['Owner', 'Category'].include?(group_by)
+    raise ArgumentError, "Unknown language: `#{language}`" unless ['English', 'Japanese'].include?(language)
   end
 
   def run
@@ -27,7 +27,7 @@ class Application
 
   private
 
-  attr_reader :genre, :language, :base_path, :path_to_home, :path_to_sidebar, :paths_to_wikis
+  attr_reader :group_by, :language, :base_path, :path_to_home, :path_to_sidebar, :paths_to_wikis
 
   # @return [String]
   def target_paths
@@ -40,29 +40,29 @@ class Application
 
   # @return [Regexp]
   def target_regexp
-    @target_regexp ||= case genre
-    when '-o', '--owner'
+    @target_regexp ||= case group_by
+    when 'Owner'
       /[Oo]wner:\s?/
-    when '-c', '--category'
+    when 'Category'
       /[Cc]ategory:\s?/
     end
   end
 
   # @return [String]
   def no_declaration
-    @no_declaration ||= case genre
-    when '-o', '--owner'
+    @no_declaration ||= case group_by
+    when 'Owner'
       case language
-      when '-en'
+      when 'English'
         'Unowned'
-      when '-ja'
+      when 'Japanese'
         'Owner記名なし'
       end
-    when '-c', '--category'
+    when 'Category'
       case language
-      when '-en'
+      when 'English'
         'Uncategorised'
-      when '-ja'
+      when 'Japanese'
         'Category記載なし'
       end
     end

@@ -6,16 +6,16 @@ sys.path.append('./src')
 
 from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
 
-_, genre, language, *_ = sys.argv
+_, group_by, language, *_ = sys.argv
 
 print('-------------------- Exporting Unknown Wiki Count List... --------------------')
-match genre:
-    case '-o' | '--owner' | '-c' | '--category':
-        count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(genre = genre).run()
+match group_by:
+    case 'Owner' | 'Category':
+        count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(group_by = group_by).run()
 
         match language:
-            case '-en' | '-ja':
-                count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(genre = genre, language = language).run()
+            case 'English' | 'Japanese':
+                count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(group_by = group_by, language = language).run()
     case _:
         count_list_by_namespace, path_to_export = UnknownWikiCountListExporter().run()
 print()

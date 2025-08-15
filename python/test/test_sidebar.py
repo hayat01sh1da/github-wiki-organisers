@@ -8,9 +8,9 @@ from sidebar import Sidebar
 from test_application import TestApplication
 
 class TestSidebar(TestApplication):
-    def setUp(self, genre = '-o', language = '-en'):
-        super().setUp(genre = genre, language = language)
-        Sidebar(self.base_path, genre = genre, language = language).run()
+    def setUp(self, group_by = 'Owner', language = 'English'):
+        super().setUp(group_by = group_by, language = language)
+        Sidebar(self.base_path, group_by = group_by, language = language).run()
         path_to_sidebar = os.path.join(self.base_path, '_Sidebar.md')
         with open(path_to_sidebar) as f:
             self.sidebar = f.read()
@@ -36,7 +36,7 @@ class EnglishOwnedSidebarTest(TestSidebar):
 
 class EnglishPlainSidebarTest(TestSidebar):
     def setUp(self):
-        super().setUp(genre = '-c')
+        super().setUp(group_by = 'Category')
 
     def test_run(self):
         self.assertEqual(self.sidebar, self.__wiki_list__())
@@ -54,7 +54,7 @@ class EnglishPlainSidebarTest(TestSidebar):
 
 class JapaneseOwnedSidebarTest(TestSidebar):
     def setUp(self):
-        super().setUp(language = '-ja')
+        super().setUp(language = 'Japanese')
 
     def test_run(self):
         self.assertEqual(self.sidebar, self.__wiki_list__())
@@ -75,7 +75,7 @@ class JapaneseOwnedSidebarTest(TestSidebar):
         return lst
 class JapanesePlainSidebarTest(TestSidebar):
     def setUp(self):
-        super().setUp(genre = '-c', language = '-ja')
+        super().setUp(group_by = 'Category', language = 'Japanese')
 
     def test_run(self):
         self.assertEqual(self.sidebar, self.__wiki_list__())

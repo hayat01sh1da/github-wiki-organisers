@@ -6,6 +6,23 @@ on:
     # ⚠️ The timing is somehow not accurate at all
     - cron: "0 15 * * 1-5"
   workflow_dispatch:
+    inputs:
+      group_by:
+        description: "Specify the grouping criteria for the wiki pages"
+        required: true
+        default: Owner
+        type: choice
+        options:
+          - Owner
+          - Category
+      language:
+        description: "Specify the language used for the wiki pages"
+        required: true
+        default: English
+        type: choice
+        options:
+          - English
+          - Japanese
 
 permissions:
   contents: write
@@ -42,7 +59,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash export_unknown_wiki_list_for_llm.sh
+          bash export_unknown_wiki_list_for_llm.sh "${{ github.event.inputs.group_by }}" "${{ github.event.inputs.language }}"
           git add -A
           current_time=$(TZ=Asia/Tokyo date "+%Y-%m-%d %H:%M:%S")
           git commit -m "Commit unknown_wiki_list_for_llm.txt by GitHub Actions[bot] at $current_time" || true

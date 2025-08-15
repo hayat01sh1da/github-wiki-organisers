@@ -8,9 +8,9 @@ from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
 from test_application import TestApplication
 
 class TestUnknownWikiCountListExporter(TestApplication):
-    def setUp(self, genre = '-o', language = '-en'):
-        super().setUp(genre = genre, language = language)
-        UnknownWikiCountListExporter(self.base_path, genre = genre, language = language).run()
+    def setUp(self, group_by = 'Owner', language = 'English'):
+        super().setUp(group_by = group_by, language = language)
+        UnknownWikiCountListExporter(self.base_path, group_by = group_by, language = language).run()
         path_to_unknown_wiki_count_list = os.path.join(self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
         with open(path_to_unknown_wiki_count_list) as f:
             self.unknown_wiki_count_list = f.read()
@@ -113,7 +113,7 @@ class EnglishOwnerTestIrregularCase3(TestUnknownWikiCountListExporter):
 
 class EnglishCategoryTestRegularCase(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(genre = '-c')
+        super().setUp(group_by = 'Category')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -125,7 +125,7 @@ class EnglishCategoryTestRegularCase(TestUnknownWikiCountListExporter):
 
 class EnglishCategoryTestIrregularCase(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(genre = '-c')
+        super().setUp(group_by = 'Category')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -148,7 +148,7 @@ class EnglishCategoryTestIrregularCase(TestUnknownWikiCountListExporter):
 
 class JapaneseOwnerTestRegularCase1(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(language = '-ja')
+        super().setUp(language = 'Japanese')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -164,7 +164,7 @@ class JapaneseOwnerTestRegularCase1(TestUnknownWikiCountListExporter):
 
 class JapaneseOwnerTestRegularCase2(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(language = '-ja')
+        super().setUp(language = 'Japanese')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -188,7 +188,7 @@ class JapaneseOwnerTestRegularCase2(TestUnknownWikiCountListExporter):
 
 class JapaneseOwnerTestIrregularCase1(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(language = '-ja')
+        super().setUp(language = 'Japanese')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -212,7 +212,7 @@ class JapaneseOwnerTestIrregularCase1(TestUnknownWikiCountListExporter):
 
 class JapaneseOwnerTestIrregularCase2(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(language = '-ja')
+        super().setUp(language = 'Japanese')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -236,7 +236,7 @@ class JapaneseOwnerTestIrregularCase2(TestUnknownWikiCountListExporter):
 
 class JapaneseOwnerTestIrregularCase3(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(language = '-ja')
+        super().setUp(language = 'Japanese')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -259,7 +259,7 @@ class JapaneseOwnerTestIrregularCase3(TestUnknownWikiCountListExporter):
 
 class JapaneseCategoryTestRegularCase(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(genre = '-c', language = '-ja')
+        super().setUp(group_by = 'Category', language = 'Japanese')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())
@@ -271,7 +271,7 @@ class JapaneseCategoryTestRegularCase(TestUnknownWikiCountListExporter):
 
 class JapaneseCategoryTestIrregularCase(TestUnknownWikiCountListExporter):
     def setUp(self):
-        super().setUp(genre = '-c', language = '-ja')
+        super().setUp(group_by = 'Category', language = 'Japanese')
 
     def test_run(self):
         self.assertEqual(self.unknown_wiki_count_list, self.__unknown_wiki_count_list_by_namespace__())

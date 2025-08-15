@@ -7,31 +7,31 @@ sys.path.append('./src')
 from home import Home
 from sidebar import Sidebar
 
-_, genre, language, *_ = sys.argv
+_, group_by, language, *_ = sys.argv
 
 print('-------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------')
 print()
 print('-------------------- Organising Home... --------------------')
-match genre:
-    case '-o' | '--owner' | '-c' | '--category':
-        home_url = Home(genre = genre).run()
+match group_by:
+    case 'Owner' | 'Category':
+        home_url = Home(group_by = group_by).run()
 
         match language:
-            case '-en' | '-ja':
-                home_url = Home(genre = genre, language = language).run()
+            case 'English' | 'Japanese':
+                home_url = Home(group_by = group_by, language = language).run()
     case _:
         home_url = Home().run()
 print(f"Check out an Up-to-date Wiki List on Home at '{home_url}' !!")
 print('-------------------- Done Organising Home 🎉 --------------------')
 print()
 print('-------------------- Organising Sidebar... --------------------')
-match genre:
-    case '-o' | '--owner' | '-c' | '--category':
-        Sidebar(genre = genre).run()
+match group_by:
+    case 'Owner' | 'Category':
+        Sidebar(group_by = group_by).run()
 
         match language:
-            case '-en' | '-ja':
-                Sidebar(genre = genre, language = language).run()
+            case 'English' | 'Japanese':
+                Sidebar(group_by = group_by, language = language).run()
     case _:
         Sidebar().run()
 print(f"Check out an Up-to-date Wiki List on Sidebar at '{home_url}' !!")

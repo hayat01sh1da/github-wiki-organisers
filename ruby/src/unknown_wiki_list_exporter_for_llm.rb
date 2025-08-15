@@ -1,8 +1,8 @@
 require_relative './application'
 
 class UnknownWikiListExporterForLLM < Application
-  def initialize(base_path:, genre:, language:)
-    super(base_path:, genre:, language:)
+  def initialize(base_path:, group_by:, language:)
+    super(base_path:, group_by:, language:)
     @path_to_export = File.join(base_path, 'unknown_wiki_list_for_llm.txt')
   end
 
@@ -17,19 +17,19 @@ class UnknownWikiListExporterForLLM < Application
 
   # @return [Array<String>]
   def target_namespace
-    case genre
-    when '-o', '--owner'
+    case group_by
+    when 'Owner'
       case language
-      when '-en'
+      when 'English'
         'Unknown Owner nor Necessity'
-      when '-ja'
+      when 'Japanese'
         'Ownerチーム・要or不要が不明なページ群'
       end
-    when '-c', '--category'
+    when 'Category'
       case language
-      when '-en'
+      when 'English'
         'Uncategorised'
-      when '-ja'
+      when 'Japanese'
         'Category記載なし'
       end
     end

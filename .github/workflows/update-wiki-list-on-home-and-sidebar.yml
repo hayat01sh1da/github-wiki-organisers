@@ -7,6 +7,23 @@ on:
     - cron: "0 3 * * 1-5"
     - cron: "0 13 * * 1-5"
   workflow_dispatch:
+    inputs:
+      group_by:
+        description: "Specify the grouping criteria for the wiki pages"
+        required: true
+        default: Owner
+        type: choice
+        options:
+          - Owner
+          - Category
+      language:
+        description: "Specify the language used for the wiki pages"
+        required: true
+        default: English
+        type: choice
+        options:
+          - English
+          - Japanese
 
 permissions:
   contents: write
@@ -43,7 +60,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash update_wiki_list_on_home_and_sidebar.sh
+          bash update_wiki_list_on_home_and_sidebar.sh "${{ github.event.inputs.group_by }}" "${{ github.event.inputs.language }}"
           git add -A
           current_time=$(TZ=Asia/Tokyo date "+%Y-%m-%d %H:%M:%S")
           git commit -m "Update Wiki list on Home and Sidebar by GitHub Actions[bot] at $current_time" || true
@@ -66,7 +83,7 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "Workflows: <https://github.com/hayat01sh1da/github-wiki-organisers/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml|Update Wiki List on Home and Sidebar>"
+                  text: "Workflows: <https://github.com/${{ github.repository }}/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml|Update Wiki List on Home and Sidebar>"
               - type: "section"
                 text:
                   type: "mrkdwn"
@@ -74,4 +91,4 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "Source: <https://github.com/hayat01sh1da/github-wiki-organisers/wiki|github-wiki-organisers Wiki>"
+                  text: "Source: <https://github.com/${{ github.repository }}/wiki|github-wiki-organisers Wiki>"

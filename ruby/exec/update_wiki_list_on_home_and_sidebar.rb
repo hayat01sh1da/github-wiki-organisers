@@ -1,18 +1,18 @@
 require_relative '../src/home'
 require_relative '../src/sidebar'
 
-genre, language, *_ = ARGV
+group_by, language, *_ = ARGV
 
 puts '-------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------'
 puts "\n"
 puts '-------------------- Organising Home... --------------------'
-home_url = case genre
-when '-o', '--owner', '-c', '--category'
-  Home.run(genre:)
+home_url = case group_by
+when 'Owner', 'Category'
+  Home.run(group_by:)
 
   case language
-  when '-en', '-ja'
-    Home.run(genre:, language:)
+  when 'English', 'Japanese'
+    Home.run(group_by:, language:)
   end
 else
   Home.run
@@ -21,13 +21,13 @@ puts "Check out an Up-to-date Wiki List on Home at '#{home_url}' !!"
 puts '-------------------- Done Organising Home 🎉 --------------------'
 puts "\n"
 puts '-------------------- Organising Sidebar... --------------------'
-case genre
-when '-o', '--owner', '-c', '--category'
-  Sidebar.run(genre:)
+case group_by
+when 'Owner', 'Category'
+  Sidebar.run(group_by:)
 
   case language
-  when '-en', '-ja'
-    Sidebar.run(genre:, language:)
+  when 'English', 'Japanese'
+    Sidebar.run(group_by:, language:)
   end
 else
   Sidebar.run

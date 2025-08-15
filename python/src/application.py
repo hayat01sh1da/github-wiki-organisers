@@ -4,10 +4,10 @@ import re
 from collections import defaultdict
 
 class Application:
-    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = '-en'):
-        self.__validate__(genre = genre, language = language)
+    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English'):
+        self.__validate__(group_by = group_by, language = language)
         self.base_path                             = base_path
-        self.genre                                 = genre
+        self.group_by                              = group_by
         self.language                              = language
         self.path_to_home                          = os.path.join(base_path, 'Home.md')
         self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
@@ -21,10 +21,10 @@ class Application:
     # private
 
     # @raises [ValueError]
-    def __validate__(self, genre, language):
-        if genre not in ['-o', '--owner', '-c', '--category']:
-            raise ValueError(f'Unknown genre: `{genre}`')
-        if language not in ['-en', '-ja']:
+    def __validate__(self, group_by, language):
+        if group_by not in ['Owner', 'Category']:
+            raise ValueError(f'Unknown group_by: `{group_by}`')
+        if language not in ['English', 'Japanese']:
             raise ValueError(f'Unknown language: `{language}`')
 
     # @return [str]
@@ -45,26 +45,26 @@ class Application:
 
     # @return [regex]
     def __target_regexp__(self):
-        match self.genre:
-            case '-o' | '--owner':
+        match self.group_by:
+            case 'Owner':
                 return re.compile(r'[Oo]wner:\s?')
-            case '-c' | '--category':
+            case 'Category':
                 return re.compile(r'[Cc]ategory:\s?')
 
     # @return [str]
     def __no_declaration__(self):
-        match self.genre:
-            case '-o' | '--owner':
+        match self.group_by:
+            case 'Owner':
                 match self.language:
-                    case '-en':
+                    case 'English':
                         return 'Unowned'
-                    case '-ja':
+                    case 'Japanese':
                         return 'Owner記名なし'
-            case '-c' | '--category':
+            case 'Category':
                 match self.language:
-                    case '-en':
+                    case 'English':
                         return 'Uncategorised'
-                    case '-ja':
+                    case 'Japanese':
                         return 'Category記載なし'
 
     # @return [dict<str => list<str>>]

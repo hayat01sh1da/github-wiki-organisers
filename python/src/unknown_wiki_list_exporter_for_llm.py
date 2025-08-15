@@ -4,8 +4,8 @@ sys.path.append('./src')
 from application import Application
 
 class UnknownWikiListExporterForLLM(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), genre = '-o', language = '-en'):
-        super().__init__(base_path, genre, language)
+    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English'):
+        super().__init__(base_path, group_by, language)
         self.path_to_export               = os.path.join(self.base_path, 'unknown_wiki_list_for_llm.txt')
         self.unknown_wiki_list_for_llm = ''.join(sorted(self.__unknown_wiki_list_for_llm__()))
 
@@ -19,18 +19,18 @@ class UnknownWikiListExporterForLLM(Application):
 
     # @return [str]
     def __target_namespace__(self):
-        match self.genre:
-            case '-o' | '--owner':
+        match self.group_by:
+            case 'Owner':
                 match self.language:
-                    case '-en':
+                    case 'English':
                         return 'Unknown Owner nor Necessity'
-                    case '-ja':
+                    case 'Japanese':
                         return 'Ownerチーム・要or不要が不明なページ群'
-            case '-c' | '--category':
+            case 'Category':
                 match self.language:
-                    case '-en':
+                    case 'English':
                         return 'Uncategorised'
-                    case '-ja':
+                    case 'Japanese':
                         return 'Category記載なし'
 
     # @return [list<str>]

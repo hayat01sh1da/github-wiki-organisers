@@ -2,9 +2,9 @@ require_relative './application_test'
 require_relative '../src/unknown_wiki_list_exporter_for_llm'
 
 class UnknownWikiListExporterForLLMTest < ApplicationTest
-  def setup(genre: '-o', language: '-en')
-    super(genre:, language:)
-    UnknownWikiListExporterForLLM.run(base_path:, genre:, language:)
+  def setup(group_by: 'Owner', language: 'English')
+    super(group_by:, language:)
+    UnknownWikiListExporterForLLM.run(base_path:, group_by:, language:)
     @path_to_unknown_wiki_list_for_llm = File.join(base_path, 'unknown_wiki_list_for_llm.txt')
     @unknown_wiki_list_for_llm         = File.read(path_to_unknown_wiki_list_for_llm)
   end
@@ -30,7 +30,7 @@ class UnknownWikiListExporterForLLMTest < ApplicationTest
 
     class CategoryTest < UnknownWikiListExporterForLLMTest
       def setup
-        super(genre: '-c')
+        super(group_by: 'Category')
       end
 
       def test_self_run
@@ -51,7 +51,7 @@ class UnknownWikiListExporterForLLMTest < ApplicationTest
   module Japanese
     class OwnershipTest < UnknownWikiListExporterForLLMTest
       def setup
-        super(language: '-ja')
+        super(language: 'Japanese')
       end
 
       def test_self_run
@@ -69,7 +69,7 @@ class UnknownWikiListExporterForLLMTest < ApplicationTest
 
     class CategoryTest < UnknownWikiListExporterForLLMTest
       def setup
-        super(genre: '-c', language: '-ja')
+        super(group_by: 'Category', language: 'Japanese')
       end
 
       def test_self_run
