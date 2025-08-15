@@ -69,16 +69,6 @@ class Application
   end
 
   # @return [Hash<String => Array<String>>]
-  def owned_wiki_maps
-    @owned_wiki_maps ||= wiki_maps_with_namespace.select { |namespace, _| namespace.include?('@') }
-  end
-
-  # @return [Hash<String => Array<String>>]
-  def plain_wiki_maps
-    @plain_wiki_maps ||= wiki_maps_with_namespace.reject { |namespace, _| namespace.include?('@') }
-  end
-
-  # @return [Hash<String => Array<String>>]
   def wiki_maps_with_namespace
     hash                   = Hash.new { |hash, namespace| hash[namespace] = [] }
     uncategrised_wiki_maps = Hash.new { |hash, namespace| hash[namespace] = [] }
@@ -98,5 +88,15 @@ class Application
         uncategrised_wiki_maps[namespace] << wiki if namespace == no_declaration
       }
     }.sort.to_h.merge(uncategrised_wiki_maps)
+  end
+
+  # @return [Hash<String => Array<String>>]
+  def owned_wiki_maps
+    @owned_wiki_maps ||= wiki_maps_with_namespace.select { |namespace, _| namespace.include?('@') }
+  end
+
+  # @return [Hash<String => Array<String>>]
+  def plain_wiki_maps
+    @plain_wiki_maps ||= wiki_maps_with_namespace.reject { |namespace, _| namespace.include?('@') }
   end
 end

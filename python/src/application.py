@@ -68,19 +68,6 @@ class Application:
                         return 'Category記載なし'
 
     # @return [dict<str => list<str>>]
-    def __filter_namespace__(self):
-        owned_wiki_maps = {}
-        plain_wiki_maps = {}
-
-        for namespace, wikis in self.wiki_maps_with_namespace.items():
-            if re.search(r'@', namespace):
-                owned_wiki_maps[namespace] = wikis
-            else:
-                plain_wiki_maps[namespace] = wikis
-
-        return owned_wiki_maps, plain_wiki_maps
-
-    # @return [dict<str => list<str>>]
     def __wiki_maps_with_namespace__(self):
         hash                     = defaultdict(list)
         uncategrised_wiki_maps   = defaultdict(list)
@@ -106,3 +93,16 @@ class Application:
         wiki_maps_with_namespace.update(uncategrised_wiki_maps)
 
         return wiki_maps_with_namespace
+
+    # @return [dict<str => list<str>>]
+    def __filter_namespace__(self):
+        owned_wiki_maps = {}
+        plain_wiki_maps = {}
+
+        for namespace, wikis in self.wiki_maps_with_namespace.items():
+            if re.search(r'@', namespace):
+                owned_wiki_maps[namespace] = wikis
+            else:
+                plain_wiki_maps[namespace] = wikis
+
+        return owned_wiki_maps, plain_wiki_maps
