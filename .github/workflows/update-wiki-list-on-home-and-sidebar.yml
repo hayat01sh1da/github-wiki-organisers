@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       group_by:
-        description: "Specify the grouping criteria for the wiki pages"
+        description: Specify the grouping criteria for the wiki pages
         required: true
         default: Owner
         type: choice
