@@ -15,7 +15,7 @@ class TestHome(TestApplication):
         with open(path_to_home) as f:
             self.home = f.read()
 
-class EnglishOwnedHomeTest(TestHome):
+class EnglishOwnedHomeWithoutOverflowTest(TestHome):
     def test_run(self):
         self.assertEqual(self.home, self.__home_passage__())
 
@@ -50,6 +50,32 @@ class EnglishOwnedHomeTest(TestHome):
 
         return passage
 
+class EnglishOwnedHomeWithOverflowTest(TestHome):
+    def setUp(self):
+        super().setUp(home_overflow = True)
+
+    def test_run(self):
+        self.assertEqual(self.home, self.__home_passage__())
+
+    # private
+
+    def __home_passage__(self):
+        passage  = '## How to Manage Wiki Pages\n'
+        passage += '\n'
+        passage += 'This Home page manage wikis by owner group.\n'
+        passage += '\n'
+        passage += 'Absence of ownership declaration worsens maintainability and searchability because it makes ambiguous which team the responsibility belongs to.  \n'
+        passage += 'Kindly make sure to articulate `Owner: @OWNER_TEAM` of the top of each of your wiki page to avoid it.\n'
+        passage += '\n'
+        passage += 'Also, please keep in mind that you do not have to edit Home and Sidebar by yourself, which are automatically updated by a GitHub Actions cron job.\n'
+        passage += '\n'
+        passage += '- [[@test-owner]]\n'
+        passage += '- [[Unknown Owner nor Necessity]]\n'
+        passage += '- [[Unowned but Necessary]]\n'
+        passage += '- [[Unowned]]\n'
+
+        return passage
+
 class EnglishCategorisedHomeTest(TestHome):
     def setUp(self):
         super().setUp(group_by = 'Category')
@@ -80,7 +106,7 @@ class EnglishCategorisedHomeTest(TestHome):
 
         return passage
 
-class JapaneseOwnedHomeTest(TestHome):
+class JapaneseOwnedHomeWithoutOverflowTest(TestHome):
     def setUp(self):
         super().setUp(language = 'Japanese')
 
@@ -115,6 +141,32 @@ class JapaneseOwnedHomeTest(TestHome):
         passage += '\n'
         passage += '- [[Owner記名なしページ1]]\n'
         passage += '- [[Owner記名なしページ2]]\n'
+
+        return passage
+
+class JapaneseOwnedHomeWihOverflowTest(TestHome):
+    def setUp(self):
+        super().setUp(language = 'Japanese', home_overflow = True)
+
+    def test_run(self):
+        self.assertEqual(self.home, self.__home_passage__())
+
+    # private
+
+    def __home_passage__(self):
+        passage  = '## Wiki ページの運用ルール\n'
+        passage += '\n'
+        passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
+        passage += '\n'
+        passage += 'Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n'
+        passage += '治安維持のため、各ページの冒頭に `Owner: @オーナーチーム` を明記して頂きますようよろしくお願いします。\n'
+        passage += '\n'
+        passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
+        passage += '\n'
+        passage += '- [[@test-owner]]\n'
+        passage += '- [[Ownerチームが不明だが必要なページ群]]\n'
+        passage += '- [[Ownerチーム・要or不要が不明なページ群]]\n'
+        passage += '- [[Owner記名なし]]\n'
 
         return passage
 

@@ -30,7 +30,7 @@ class Home(Application):
 
     # @return [str]
     def __write_home_passage__(self):
-        if self.home_overflow:
+        if self.group_by == 'Owner' and self.home_overflow:
             path_to_wikis_by_owners = os.path.join(self.base_path, 'wikis_by_owners')
             if not os.path.exists(self.base_path):
                 os.makedirs(path_to_wikis_by_owners)
@@ -55,11 +55,13 @@ class Home(Application):
                 with open(path_to_wikis_by_owners, 'w') as f:
                     f.write(home_passage.rstrip() + '\n')
 
-            for namespace in self.owned_wiki_maps.keys():
-                self.home_passage += f'[[{namespace}]]'
+            for namespace in (list(self.owned_wiki_maps.keys()) + list(self.plain_wiki_maps.keys())):
+                self.home_passage += f'- [[{namespace}]]\n'
 
-            for namespace in self.plain_wiki_maps.keys():
-                self.home_passage += f'[[{namespace}]]'
+            self.home_passage += '\n'
+
+            with open(self.path_to_home, 'w') as f:
+                f.write(self.home_passage.rstrip() + '\n')
 
         else:
             for namespace, wikis in self.owned_wiki_maps.items():

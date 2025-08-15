@@ -29,7 +29,7 @@ class Home < Application
 
   # @return nil
   def write_home_passage
-    if home_overflow
+    if group_by == 'Owner' && home_overflow
       path_to_wikis_by_owners = File.join(base_path, 'wikis_by_owners')
       FileUtils.mkdir_p(path_to_wikis_by_owners) unless Dir.exist?(path_to_wikis_by_owners)
 
@@ -57,14 +57,8 @@ class Home < Application
         File.write(File.join(path_to_wikis_by_owners,"#{namespace}.md"), home_passage.join.chomp)
       }
 
-      owned_wiki_maps.keys.each { |namespace|
-        home_passage << - "[[#{namespace}]]"
-      }
-
-      plain_wiki_maps.keys.each { |namespace|
-        home_passage << - "[[#{namespace}]]"
-      }
-
+      (owned_wiki_maps.keys + plain_wiki_maps.keys).each { |namespace| home_passage << "- [[#{namespace}]]\n" }
+      home_passage << "\n"
       File.write(path_to_home, home_passage.join.chomp)
     else
       owned_wiki_maps.each { |namespace, wikis|
