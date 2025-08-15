@@ -86,4 +86,4 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "Workflows: <https://github.com/quipper/github-wiki-organisers/actions/workflows/export-unknown-wiki-list-for-llm.yml|Export Unknown Wiki List for LLM>"
+                  text: "Workflows: <https://github.com/${{ github.repository }}/actions/workflows/export-unknown-wiki-list-for-llm.yml|Export Unknown Wiki List for LLM>"
