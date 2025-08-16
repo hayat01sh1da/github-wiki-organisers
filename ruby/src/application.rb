@@ -36,7 +36,8 @@ class Application
     @target_paths ||= paths_to_wikis.delete_if {
       it == path_to_home ||
       it == path_to_sidebar ||
-      it =~ /github\-wiki\-organisers/
+      it =~ /github\-wiki\-organisers/ ||
+      it =~ /wikis\-by\-owner/
     }
   end
 

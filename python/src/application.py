@@ -39,7 +39,7 @@ class Application:
                 case self.path_to_home | self.path_to_sidebar:
                     target_paths.remove(target_path)
                 case _:
-                    if re.search(r'github\-wiki\-organisers', target_path):
+                    if re.search(r'github\-wiki\-organisers', target_path) or re.search(r'wikis\-by\-owner', target_path):
                         target_paths.remove(target_path)
                     else:
                         continue
