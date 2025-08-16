@@ -14,7 +14,7 @@ class TestHome(TestApplication):
         path_to_home = os.path.join(self.base_path, 'Home.md')
         with open(path_to_home) as f:
             self.home = f.read()
-        self.path_to_wikis_by_owners = os.path.join(self.base_path, 'wikis_by_owners')
+        self.path_to_wikis_by_owners = os.path.join(self.base_path, 'wikis-by-owners')
 
 class EnglishOwnedHomeWithoutOverflowTest(TestHome):
     def test_run(self):

@@ -7,7 +7,7 @@ class HomeTest < ApplicationTest
     Home.run(base_path:, group_by:, language:, home_overflow:)
     @path_to_home            = File.join(base_path, 'Home.md')
     @home                    = File.read(path_to_home)
-    @path_to_wikis_by_owners = File.join(base_path, 'wikis_by_owners')
+    @path_to_wikis_by_owners = File.join(base_path, 'wikis-by-owners')
   end
 
   private

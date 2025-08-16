@@ -7,7 +7,7 @@ class Home < Application
   def initialize(base_path:, group_by:, language:, home_overflow:)
     super(base_path:, group_by:, language:, home_overflow:)
     @base_owner_url          = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
-    @path_to_wikis_by_owners = File.join(base_path, 'wikis_by_owners')
+    @path_to_wikis_by_owners = File.join(base_path, 'wikis-by-owners')
   end
 
   def run

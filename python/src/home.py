@@ -13,7 +13,7 @@ class Home(Application):
         super().__init__(base_path, group_by, language, home_overflow)
         self.base_owner_url          = f'https://github.com/orgs/{os.environ.get('ORGANISATION_NAME', 'hayat01sh1da')}/teams/'
         self.home_passage            = self.__home_passage__()
-        self.path_to_wikis_by_owners = os.path.join(self.base_path, 'wikis_by_owners')
+        self.path_to_wikis_by_owners = os.path.join(self.base_path, 'wikis-by-owners')
 
     def run(self):
         self.__write_home_passage__()
