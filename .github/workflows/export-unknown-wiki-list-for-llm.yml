@@ -78,11 +78,11 @@ jobs:
               - type: "header"
                 text:
                   type: "plain_text"
-                  text: "【github-wiki-organisers Wiki LLM 取込み除外リスト出力通知】"
+                  text: "【github-wiki-organisers Wiki LLM Notification for Ignored Page List Export】"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "Message: 最新の LLM 取込み除外リストを出力しました！${{ github.repository }}.wiki を Clone してご確認ください。"
+                  text: "Message: The latest ignored page list for LLM has been exported! Make sure if it is as you expect by cloning ${{ github.repository }}.wiki !"
               - type: "section"
                 text:
                   type: "mrkdwn"
