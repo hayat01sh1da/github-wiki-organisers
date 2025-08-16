@@ -20,6 +20,7 @@ class Application
   def validate!
     raise ArgumentError, "Invalid group_by: `#{group_by}`" unless ['Owner', 'Category'].include?(group_by)
     raise ArgumentError, "Invalid language: `#{language}`" unless ['English', 'Japanese'].include?(language)
+    raise ArgumentError, "Invalid home_overflow: `#{home_overflow}` must be boolean" unless [true, false].include?(home_overflow)
   end
 
   def run
