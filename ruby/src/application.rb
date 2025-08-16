@@ -8,13 +8,15 @@ class Application
   end
 
   def initialize(base_path:, group_by:, language:, home_overflow:)
-    @base_path       = base_path
-    @group_by        = group_by
-    @language        = language
-    @home_overflow   = home_overflow
-    @path_to_home    = File.join(base_path, 'Home.md')
-    @path_to_sidebar = File.join(base_path, '_Sidebar.md')
-    @paths_to_wikis  = Dir[File.join(base_path, '**', '*.md')].sort
+    @base_path                      = base_path
+    @group_by                       = group_by
+    @language                       = language
+    @home_overflow                  = home_overflow
+    @path_to_home                   = File.join(base_path, 'Home.md')
+    @path_to_sidebar                = File.join(base_path, '_Sidebar.md')
+    @path_to_github_wiki_organisers = Dir[File.join(base_path, 'github-wiki-organisers', '**', '*.md')].sort
+    @path_to_wikis_by_owner         = Dir[File.join(base_path, 'wikis-by-owner', '*.md')].sort
+    @paths_to_wikis                 = Dir[File.join(base_path, '**', '*.md')].sort
   end
 
   def validate!
@@ -29,15 +31,23 @@ class Application
 
   private
 
-  attr_reader :base_path, :group_by, :language, :home_overflow, :path_to_home, :path_to_sidebar, :paths_to_wikis
+  attr_reader :base_path,
+              :group_by,
+              :language,
+              :home_overflow,
+              :path_to_home,
+              :path_to_sidebar,
+              :path_to_github_wiki_organisers,
+              :path_to_wikis_by_owner,
+              :paths_to_wikis
 
   # @return [String]
   def target_paths
     @target_paths ||= paths_to_wikis.delete_if {
       it == path_to_home ||
       it == path_to_sidebar ||
-      it =~ /github\-wiki\-organisers/ ||
-      it =~ /wikis\-by\-owner/
+      path_to_github_wiki_organisers.include?(it) ||
+      path_to_wikis_by_owner.include?(it)
     }
   end
 

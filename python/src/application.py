@@ -12,6 +12,8 @@ class Application:
         self.home_overflow                         = home_overflow
         self.path_to_home                          = os.path.join(base_path, 'Home.md')
         self.path_to_sidebar                       = os.path.join(base_path, '_Sidebar.md')
+        self.path_to_github_wiki_organisers        = sorted(glob.glob(os.path.join(base_path, 'github-wiki-organisers', '**', '*.md')))
+        self.path_to_wikis_by_owner                = sorted(glob.glob(os.path.join(base_path, 'wikis-by-owner', '*.md')))
         self.target_paths                          = self.__target_paths__()
         self.wiki_maps_with_namespace              = self.__wiki_maps_with_namespace__()
         self.owned_wiki_maps, self.plain_wiki_maps = self.__filter_namespace__()
@@ -36,13 +38,10 @@ class Application:
 
         for target_path in target_paths:
             match target_path:
-                case self.path_to_home | self.path_to_sidebar:
+                case self.path_to_home | self.path_to_sidebar | self.path_to_github_wiki_organisers | self.path_to_wikis_by_owner:
                     target_paths.remove(target_path)
                 case _:
-                    if re.search(r'github\-wiki\-organisers', target_path) or re.search(r'wikis\-by\-owner', target_path):
-                        target_paths.remove(target_path)
-                    else:
-                        continue
+                    continue
 
         return target_paths
 
