@@ -31,7 +31,7 @@ class Home < Application
 
   # @return nil
   def write_home_passage
-    if group_by == 'Owner' && home_overflow
+    if home_overflow
       FileUtils.mkdir_p(path_to_wikis_by_owner) unless Dir.exist?(path_to_wikis_by_owner)
 
       owned_wiki_maps.each { |namespace, wikis|
@@ -62,7 +62,7 @@ class Home < Application
       home_passage << "\n"
       File.write(path_to_home, home_passage.join.chomp)
     else
-      FileUtils.rm_rf(path_to_wikis_by_owner) if Dir.exist?(path_to_wikis_by_owner)
+      FileUtils.rm_rf(path_to_wikis_by_owner) if Dir.exist?(path_to_wikis_by_owner) && home_overflow
 
       owned_wiki_maps.each { |namespace, wikis|
         home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"

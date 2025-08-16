@@ -32,7 +32,7 @@ class Home(Application):
 
     # @return [str]
     def __write_home_passage__(self):
-        if self.group_by == 'Owner' and self.home_overflow:
+        if self.home_overflow:
             if not os.path.exists(self.base_path):
                 os.makedirs(self.path_to_wikis_by_owner)
 
