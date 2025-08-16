@@ -13,15 +13,13 @@ print('-------------------- Categorising the Entire github-wiki-organisers Wiki 
 print()
 print('-------------------- Organising Home... --------------------')
 match group_by:
-    case 'Owner':
-        if home_overflow == 'true':
-            home_url = Home(group_by = group_by, home_overflow = True).run()
-    case 'Category':
-        home_url = Home(group_by = group_by).run()
-
+    case 'Owner' | 'Category':
         match language:
             case 'English' | 'Japanese':
-                home_url = Home(group_by = group_by, language = language).run()
+                if home_overflow == 'true':
+                    home_url = Home(group_by = group_by, language = language, home_overflow = True).run()
+                else:
+                    home_url = Home(group_by = group_by, language = language).run()
     case _:
         home_url = Home().run()
 print(f"Check out an Up-to-date Wiki List on Home at '{home_url}' !!")
