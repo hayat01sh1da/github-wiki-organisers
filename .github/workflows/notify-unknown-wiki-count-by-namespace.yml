@@ -7,14 +7,6 @@ on:
     - cron: '0 0 * * 1'
   workflow_dispatch:
     inputs:
-      group_by:
-        description: Specify the grouping criteria for the wiki pages
-        required: true
-        default: Owner
-        type: choice
-        options:
-          - Owner
-          - Category
       language:
         description: Specify the language used for the wiki pages
         required: true
@@ -47,7 +39,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash export_unknown_wiki_count_list_by_namespace.sh "${{ github.event.inputs.group_by }}" "${{ github.event.inputs.language }}"
+          bash export_unknown_wiki_count_list_by_namespace.sh Owner "${{ github.event.inputs.language }}"
           export UNKNOWN_BUT_NECESSARY=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
           export UNKNOWN_OWNER_NOR_NECESSITY=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[1]")
           export UNOWNED=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[2]")
