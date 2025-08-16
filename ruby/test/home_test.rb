@@ -5,20 +5,20 @@ class HomeTest < ApplicationTest
   def setup(group_by: 'Owner', language: 'English', home_overflow: false)
     super(group_by:, language:, home_overflow:)
     Home.run(base_path:, group_by:, language:, home_overflow:)
-    @path_to_home            = File.join(base_path, 'Home.md')
-    @home                    = File.read(path_to_home)
-    @path_to_wikis_by_owners = File.join(base_path, 'wikis-by-owners')
+    @path_to_home           = File.join(base_path, 'Home.md')
+    @home                   = File.read(path_to_home)
+    @path_to_wikis_by_owner = File.join(base_path, 'wikis-by-owner')
   end
 
   private
 
-  attr_reader :path_to_home, :home, :path_to_wikis_by_owners
+  attr_reader :path_to_home, :home, :path_to_wikis_by_owner
 
   module English
     class OwnedHomeTest < HomeTest
       class NonOverflowTest < OwnedHomeTest
         def test_self_run
-          refute(Dir.exist?(path_to_wikis_by_owners))
+          refute(Dir.exist?(path_to_wikis_by_owner))
           assert_equal(home_passage.join, home)
         end
 
@@ -61,7 +61,7 @@ class HomeTest < ApplicationTest
         end
 
         def test_self_run
-          assert(Dir.exist?(path_to_wikis_by_owners))
+          assert(Dir.exist?(path_to_wikis_by_owner))
           assert_equal(home_passage.join, home)
         end
 
@@ -130,7 +130,7 @@ class HomeTest < ApplicationTest
         end
 
         def test_self_run
-          refute(Dir.exist?(path_to_wikis_by_owners))
+          refute(Dir.exist?(path_to_wikis_by_owner))
           assert_equal(home_passage.join, home)
         end
 
@@ -173,7 +173,7 @@ class HomeTest < ApplicationTest
         end
 
         def test_self_run
-          assert(Dir.exist?(path_to_wikis_by_owners))
+          assert(Dir.exist?(path_to_wikis_by_owner))
           assert_equal(home_passage.join, home)
         end
 
