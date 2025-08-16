@@ -48,12 +48,12 @@ jobs:
           set -xe
           git pull origin master
           bash export_unknown_wiki_count_list_by_namespace.sh "${{ github.event.inputs.group_by }}" "${{ github.event.inputs.language }}"
-          while IFS= read -r line; do
-            unknown_wiki_count_list+=($line)
-          done < ./unknown_wiki_count_list_by_namespace.txt
-          echo UNKNOWN_BUT_NECESSARY=${unknown_wiki_count_list[@]:0:2} >> $GITHUB_ENV
-          echo UNKNOWN_OWNER_NOR_NECESSITY=${unknown_wiki_count_list[@]:2:2} >> $GITHUB_ENV
-          echo UNOWNED=${unknown_wiki_count_list[@]:4:5} >> $GITHUB_ENV
+          export UNKNOWN_BUT_NECESSARY=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
+          export UNKNOWN_OWNER_NOR_NECESSITY=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[1]")
+          export UNOWNED=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[2]")
+          echo $UNKNOWN_BUT_NECESSARY >> $GITHUB_ENV
+          echo $UNKNOWN_OWNER_NOR_NECESSITY >> $GITHUB_ENV
+          echo $UNOWNED >> $GITHUB_ENV
           rm unknown_wiki_count_list_by_namespace.txt
       - name: Slack Notification
         uses: slackapi/slack-github-action@v2

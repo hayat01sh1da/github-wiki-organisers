@@ -5,7 +5,7 @@ from collections import defaultdict
 
 class Application:
     def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = False):
-        self.__validate__(group_by = group_by, language = language)
+        self.__validate__(group_by = group_by, language = language, home_overflow = home_overflow)
         self.base_path                             = base_path
         self.group_by                              = group_by
         self.language                              = language
@@ -22,11 +22,13 @@ class Application:
     # private
 
     # @raises [ValueError]
-    def __validate__(self, group_by, language):
+    def __validate__(self, group_by, language, home_overflow):
         if group_by not in ['Owner', 'Category']:
             raise ValueError(f'Invalid group_by: `{group_by}`')
         if language not in ['English', 'Japanese']:
             raise ValueError(f'Invalid language: `{language}`')
+        if home_overflow not in [True, False]:
+            raise ValueError(f'Invalid home_overflow: `{home_overflow}` must be boolean')
 
     # @return [str]
     def __target_paths__(self):
@@ -37,7 +39,7 @@ class Application:
                 case self.path_to_home | self.path_to_sidebar:
                     target_paths.remove(target_path)
                 case _:
-                    if re.search(r'github\-wiki\-organisers', target_path):
+                    if re.search(r'github\-wiki\-organisers', target_path) or re.search(r'wikis\-by\-owner', target_path):
                         target_paths.remove(target_path)
                     else:
                         continue

@@ -6,8 +6,8 @@ class Home < Application
 
   def initialize(base_path:, group_by:, language:, home_overflow:)
     super(base_path:, group_by:, language:, home_overflow:)
-    @base_owner_url          = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
-    @path_to_wikis_by_owners = File.join(base_path, 'wikis_by_owners')
+    @base_owner_url         = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
+    @path_to_wikis_by_owner = File.join(base_path, 'wikis-by-owner')
   end
 
   def run
@@ -17,7 +17,7 @@ class Home < Application
 
   private
 
-  attr_reader :base_owner_url, :path_to_wikis_by_owners
+  attr_reader :base_owner_url, :path_to_wikis_by_owner
 
   # @return [String]
   def path_to_home_template
@@ -32,7 +32,7 @@ class Home < Application
   # @return nil
   def write_home_passage
     if group_by == 'Owner' && home_overflow
-      FileUtils.mkdir_p(path_to_wikis_by_owners) unless Dir.exist?(path_to_wikis_by_owners)
+      FileUtils.mkdir_p(path_to_wikis_by_owner) unless Dir.exist?(path_to_wikis_by_owner)
 
       owned_wiki_maps.each { |namespace, wikis|
         home_passage  = []
@@ -43,7 +43,7 @@ class Home < Application
         }
         home_passage << "\n"
 
-        File.write(File.join(path_to_wikis_by_owners,"#{namespace}.md"), home_passage.join.chomp)
+        File.write(File.join(path_to_wikis_by_owner,"#{namespace}.md"), home_passage.join.chomp)
       }
 
       plain_wiki_maps.each { |namespace, wikis|
@@ -55,14 +55,14 @@ class Home < Application
         }
         home_passage << "\n"
 
-        File.write(File.join(path_to_wikis_by_owners,"#{namespace}.md"), home_passage.join.chomp)
+        File.write(File.join(path_to_wikis_by_owner,"#{namespace}.md"), home_passage.join.chomp)
       }
 
       (owned_wiki_maps.keys + plain_wiki_maps.keys).each { |namespace| home_passage << "- [[#{namespace}]]\n" }
       home_passage << "\n"
       File.write(path_to_home, home_passage.join.chomp)
     else
-      FileUtils.rm_rf(path_to_wikis_by_owners) if Dir.exist?(path_to_wikis_by_owners)
+      FileUtils.rm_rf(path_to_wikis_by_owner) if Dir.exist?(path_to_wikis_by_owner)
 
       owned_wiki_maps.each { |namespace, wikis|
         home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"

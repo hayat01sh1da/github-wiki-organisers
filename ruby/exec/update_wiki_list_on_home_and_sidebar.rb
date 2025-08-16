@@ -7,16 +7,15 @@ puts '-------------------- Categorising the Entire github-wiki-organisers Wiki P
 puts "\n"
 puts '-------------------- Organising Home... --------------------'
 home_url = case group_by
-when 'Owner'
-  if home_overflow
-    Home.run(group_by:, home_overflow:)
-  end
-when 'Category'
+when 'Owner', 'Category'
   Home.run(group_by:)
-
   case language
   when 'English', 'Japanese'
-    Home.run(group_by:, language:)
+    if home_overflow == 'true'
+      Home.run(group_by:, language:, home_overflow: true)
+    else
+      Home.run(group_by:, language:)
+    end
   end
 else
   Home.run
