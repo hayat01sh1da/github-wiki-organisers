@@ -36,7 +36,7 @@ This is a sample Wiki.
 
 #### 4-1-1. GUI
 
-You can directly create, update and delete wiki pages on [github-wiki-organisers Wiki](https://github.com/quipper/aya-issues/wiki).  
+You can directly create, update and delete wiki pages on [github-wiki-organisers Wiki](https://github.com/hayat01sh1da/github-wiki-organisers/wiki).  
 These actions are managed as git commits.
 
 #### 4-1-2. On Your Machine
@@ -52,7 +52,7 @@ Follow the instructions below to edit wiki pages.
 ⚠️ Make sure that you must not rename and move markdown file on CLI or change the title on GUI in case you lost the revisions.
 
 You can also freely configure Home header passage.  
-Edit it on [https://github.com/hayat01sh1da/github-wiki-organisers/blob/master/home_template] based on the mode you are in.
+Edit it on [./home_template/](https://github.com/hayat01sh1da/github-wiki-organisers/blob/master/home_template) based on the mode you are in.
 
 ### 4-2. Cron Jobs
 
@@ -71,7 +71,7 @@ As a sample, [#github-actions-notifications - hayat01sh1da](https://hayat01sh1da
 
 #### 4-2-2. Notify Unknown Wiki Count by Namespace
 
-[Notify Unknown Wiki Count by Namespace](https://github.com/hayat01sh1da/github-wiki-organisers/actions/workflows/notify-uncategorised-wiki-count-by-namespace.yml) runs to notify unknown wikis in terms of ownership at 10:00 every Monday.  
+[Notify Unknown Wiki Count by Namespace](https://github.com/hayat01sh1da/github-wiki-organisers/actions/workflows/notify-uncategorised-wiki-count-by-namespace.yml) runs to notify unknown wikis in terms of ownership at 09:00 every Monday.  
 If there is any difference, it pushes a commit to the remote repository and send a notification to a Slack channel you would like to get information on.  
 As a sample, [#github-actions-notifications - hayat01sh1da](https://hayat01sh1da.slack.com/archives/C09BBHZPD5E) is set as the target channel.
 
@@ -84,7 +84,7 @@ As a sample, [#github-actions-notifications - hayat01sh1da](https://hayat01sh1da
 
 #### 4-2-3. Notify Uncategorised Wiki Count by Namespace
 
-[Notify Uncategorised Wiki Count by Namespace](https://github.com/hayat01sh1da/github-wiki-organisers/actions/workflows/notify-uncategorised-wiki-count-by-namespace.yml) runs to notify unknown wikis in terms of category at 10:00 every Monday.  
+[Notify Uncategorised Wiki Count by Namespace](https://github.com/hayat01sh1da/github-wiki-organisers/actions/workflows/notify-uncategorised-wiki-count-by-namespace.yml) runs to notify unknown wikis in terms of category at 09:00 every Monday.  
 If there is any difference, it pushes a commit to the remote repository and send a notification to a Slack channel you would like to get information on.  
 As a sample, [#github-actions-notifications - hayat01sh1da](https://hayat01sh1da.slack.com/archives/C09BBHZPD5E) is set as the target channel.
 
@@ -95,7 +95,7 @@ As a sample, [#github-actions-notifications - hayat01sh1da](https://hayat01sh1da
 
 #### 4-2-4. Export Unknown Wiki List for LLM
 
-[Export Unknown Wiki List for LLM](https://github.com/hayat01sh1da/github-wiki-organisers/actions/workflows/export-unknown-wiki-list-for-llm.yml) runs to notify export of ignored wiki page list for LLM in terms of noise canceling at 0:00 every weekday.  
+[Export Unknown Wiki List for LLM](https://github.com/hayat01sh1da/github-wiki-organisers/actions/workflows/export-unknown-wiki-list-for-llm.yml) runs to notify export of ignored wiki page list for LLM in terms of noise canceling at 00:00 every weekday.  
 If there is any difference, it pushes a commit to the remote repository and send a notification to a Slack channel you would like to get information on.  
 As a sample, [#github-actions-notifications - hayat01sh1da](https://hayat01sh1da.slack.com/archives/C09BBHZPD5E) is set as the target channel.
 
