@@ -33,6 +33,11 @@ on:
 permissions:
   contents: write
 
+env:
+  group_by: ${{ github.event.inputs.group_by || 'Owner' }}
+  language: ${{ github.event.inputs.language || 'English' }}
+  home_overflow: ${{ github.event.inputs.home_overflow || false }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -65,7 +70,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash update_wiki_list_on_home_and_sidebar.sh "${{ github.event.inputs.group_by }}" "${{ github.event.inputs.language }}" "${{ github.event.inputs.home_overflow }}"
+          bash update_wiki_list_on_home_and_sidebar.sh "${{ env.group_by }}" "${{ env.language }}" "${{ env.home_overflow }}"
           git add -A
           current_time=$(TZ=Asia/Tokyo date "+%Y-%m-%d %H:%M:%S")
           git commit -m "Update Wiki list on Home and Sidebar by GitHub Actions[bot] at $current_time" || true

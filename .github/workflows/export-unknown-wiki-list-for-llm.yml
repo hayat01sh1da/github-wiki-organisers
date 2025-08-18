@@ -27,6 +27,10 @@ on:
 permissions:
   contents: write
 
+env:
+  group_by: ${{ github.event.inputs.group_by || 'Owner' }}
+  language: ${{ github.event.inputs.language || 'English' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -59,7 +63,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash export_unknown_wiki_list_for_llm.sh "${{ github.event.inputs.group_by }}" "${{ github.event.inputs.language }}"
+          bash export_unknown_wiki_list_for_llm.sh "${{ env.group_by }}" "${{ env.language }}"
           git add -A
           current_time=$(TZ=Asia/Tokyo date "+%Y-%m-%d %H:%M:%S")
           git commit -m "Commit unknown_wiki_list_for_llm.txt by GitHub Actions[bot] at $current_time" || true

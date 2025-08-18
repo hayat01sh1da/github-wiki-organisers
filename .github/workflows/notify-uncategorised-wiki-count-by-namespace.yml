@@ -19,6 +19,9 @@ on:
 permissions:
   contents: write
 
+env:
+  language: ${{ github.event.inputs.language || 'English' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -39,7 +42,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          bash export_unknown_wiki_count_list_by_namespace.sh Category "${{ github.event.inputs.language }}"
+          bash export_unknown_wiki_count_list_by_namespace.sh Category "${{ env.language }}"
           echo UNCATEGORISED=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]") >> $GITHUB_ENV
           rm unknown_wiki_count_list_by_namespace.txt
       - name: Slack Notification
