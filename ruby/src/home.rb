@@ -62,7 +62,7 @@ class Home < Application
       home_passage << "\n"
       File.write(path_to_home, home_passage.join.chomp)
     else
-      FileUtils.rm_rf(path_to_wikis_by_owner) if Dir.exist?(path_to_wikis_by_owner) && home_overflow
+      FileUtils.rm_rf(path_to_wikis_by_owner) if Dir.exist?(path_to_wikis_by_owner)
 
       owned_wiki_maps.each { |namespace, wikis|
         home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"
