@@ -87,6 +87,8 @@ class Application
     uncategrised_wiki_maps = Hash.new { |hash, namespace| hash[namespace] = [] }
 
     @wiki_maps_with_namespace ||= target_paths.each.with_object(hash) { |target_path, hash|
+      next unless File.exist?(target_path)
+
       File.open(target_path) { |file|
         wiki = File.basename(file)
 

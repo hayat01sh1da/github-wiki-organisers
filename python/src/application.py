@@ -76,6 +76,9 @@ class Application:
         wiki_maps_with_namespace = defaultdict(list)
 
         for target_path in self.target_paths:
+            if not os.path.isfile(target_path):
+                continue
+
             with open(target_path) as f:
                 wiki                   = os.path.basename(target_path)
                 _namespace_declaration = f.readlines()
