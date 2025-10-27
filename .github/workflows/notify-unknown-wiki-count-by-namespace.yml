@@ -19,9 +19,6 @@ on:
 permissions:
   contents: write
 
-env:
-  language: ${{ github.event.inputs.language || 'English' }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,15 +34,19 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.4.7
-      - name: Set ENV
+      - name: Format Unknown Wiki Count by Namespace
+        id: format-unknown-wiki-count
         working-directory: .wiki
         run: |
           set -xe
           git pull origin master
-          bash export_unknown_wiki_count_list_by_namespace.sh Owner "${{ env.language }}"
-          echo UNKNOWN_BUT_NECESSARY=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]") >> $GITHUB_ENV
-          echo UNKNOWN_OWNER_NOR_NECESSITY=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[1]") >> $GITHUB_ENV
-          echo UNOWNED=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[2]") >> $GITHUB_ENV
+          bash export_unknown_wiki_count_list_by_namespace.sh Owner "${{ github.event.inputs.language || 'English' }}"
+          unknown_but_necessary=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
+          unknown_owner_nor_necessity=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[1]")
+          unowned=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[2]")
+          echo "unknown_but_necessary=$unknown_but_necessary" >> $GITHUB_OUTPUT
+          echo "unknown_owner_nor_necessity=$unknown_owner_nor_necessity" >> $GITHUB_OUTPUT
+          echo "unowned=$unowned" >> $GITHUB_OUTPUT
           rm unknown_wiki_count_list_by_namespace.txt
       - name: Slack Notification
         uses: slackapi/slack-github-action@v2
@@ -62,12 +63,12 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/${{ github.repository }}/wiki#unowned-but-necessary-wiki|${{ env.UNKNOWN_BUT_NECESSARY }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#unowned-but-necessary-wiki|${{ steps.format-unknown-wiki-count.outputs.unknown_but_necessary }}>"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/${{ github.repository }}/wiki#unknown-owner-nor-necessity-wiki|${{ env.UNKNOWN_OWNER_NOR_NECESSITY }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#unknown-owner-nor-necessity-wiki|${{ steps.format-unknown-wiki-count.outputs.unknown_owner_nor_necessity }}>"
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/${{ github.repository }}/wiki#unowned|${{ env.UNOWNED }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#unowned|${{ steps.format-unknown-wiki-count.outputs.unowned }}>"

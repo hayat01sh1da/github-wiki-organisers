@@ -19,9 +19,6 @@ on:
 permissions:
   contents: write
 
-env:
-  language: ${{ github.event.inputs.language || 'English' }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,13 +34,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.4.7
-      - name: Set ENV
+      - name: Format Uncategorised Wiki Count by Namespace
+        id: format-uncategorised-wiki-count
         working-directory: .wiki
         run: |
           set -xe
           git pull origin master
-          bash export_unknown_wiki_count_list_by_namespace.sh Category "${{ env.language }}"
-          echo UNCATEGORISED=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]") >> $GITHUB_ENV
+          bash export_unknown_wiki_count_list_by_namespace.sh Category "${{ github.event.inputs.language || 'English' }}"
+          uncategorised_wiki_count=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
+          echo "uncategorised_wiki_count=$uncategorised_wiki_count" >> $GITHUB_OUTPUT
           rm unknown_wiki_count_list_by_namespace.txt
       - name: Slack Notification
         uses: slackapi/slack-github-action@v2
@@ -60,4 +59,4 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "<https://github.com/${{ github.repository }}/wiki#uncategorised|${{ env.UNCATEGORISED }}>"
+                  text: "<https://github.com/${{ github.repository }}/wiki#uncategorised|${{ steps.format-uncategorised-wiki-count.outputs.uncategorised_wiki_count }}>"

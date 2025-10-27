@@ -33,11 +33,6 @@ on:
 permissions:
   contents: write
 
-env:
-  group_by: ${{ github.event.inputs.group_by || 'Owner' }}
-  language: ${{ github.event.inputs.language || 'English' }}
-  home_overflow: ${{ github.event.inputs.home_overflow || false }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -66,20 +61,21 @@ jobs:
         with:
           ruby-version: 3.4.7
       - name: Update github-wiki-organisers Wiki
+        id: update-github-wiki-organisers-wiki
         working-directory: ./github-wiki-organisers/wiki
         run: |
           set -xe
           git pull origin master
-          bash update_wiki_list_on_home_and_sidebar.sh "${{ env.group_by }}" "${{ env.language }}" "${{ env.home_overflow }}"
+          bash update_wiki_list_on_home_and_sidebar.sh "${{ github.event.inputs.group_by || 'Owner' }}" "${{ github.event.inputs.language || 'English' }}" "${{ github.event.inputs.home_overflow || false }}"
           git add -A
-          current_time=$(TZ=Asia/Tokyo date "+%Y-%m-%d %H:%M:%S")
-          git commit -m "Update Wiki list on Home and Sidebar by GitHub Actions[bot] at $current_time" || true
+          jst_current_datetime=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S JST')
+          echo "jst_current_datetime=$jst_current_datetime" >> $GITHUB_OUTPUT
+          git commit -m "Update Wiki list on Home and Sidebar by GitHub Actions[bot] at $jst_current_datetime" || true
           git push origin master || true
-          echo COMMIT_MESSAGE=$(git log --oneline -1) >> $GITHUB_ENV
-          echo CURRENT_TIME=$current_time >> $GITHUB_ENV
+          echo "commit_message=$(git log --oneline -1)" >> $GITHUB_OUTPUT
       - name: Slack Notification
         uses: slackapi/slack-github-action@v2
-        if: contains(env.COMMIT_MESSAGE, env.CURRENT_TIME)
+        if: contains(steps.update-github-wiki-organisers-wiki.outputs.commit_message, steps.update-github-wiki-organisers-wiki.outputs.jst_current_datetime)
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_APP_TOKEN }}
@@ -97,7 +93,7 @@ jobs:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "Commit: ${{ env.COMMIT_MESSAGE }}"
+                  text: "Commit: ${{ steps.update-github-wiki-organisers-wiki.outputs.commit_message }}"
               - type: "section"
                 text:
                   type: "mrkdwn"
