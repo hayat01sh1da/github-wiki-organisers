@@ -33,7 +33,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.7
+          ruby-version: 3.4.8
       - name: Format Unknown Wiki Count by Namespace
         id: format-unknown-wiki-count
         working-directory: .wiki
