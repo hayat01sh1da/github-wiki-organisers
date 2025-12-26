@@ -59,7 +59,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.8
+          ruby-version: 4.0.0
       - name: Update github-wiki-organisers Wiki
         id: update-github-wiki-organisers-wiki
         working-directory: ./github-wiki-organisers/wiki
