@@ -7,17 +7,13 @@ sys.path.append('./src')
 from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
 
 _, group_by, language, *_ = sys.argv
+params = dict()
+for key, value in { 'group_by': group_by, 'language': language }.items():
+    if value:
+        params[key] = value
 
 print('-------------------- Exporting Unknown Wiki Count List... --------------------')
-match group_by:
-    case 'Owner' | 'Category':
-        count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(group_by = group_by).run()
-
-        match language:
-            case 'English' | 'Japanese':
-                count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(group_by = group_by, language = language).run()
-    case _:
-        count_list_by_namespace, path_to_export = UnknownWikiCountListExporter().run()
+count_list_by_namespace, path_to_export = UnknownWikiCountListExporter(**params).run()
 print()
 print('Here is the result:')
 print()

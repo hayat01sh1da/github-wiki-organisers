@@ -1,19 +1,10 @@
 require_relative '../src/unknown_wiki_count_list_exporter'
 
 group_by, language, *_ = ARGV
+params = { group_by:, language: }.reject { |_, value| value.empty? }
 
 puts '-------------------- Exporting Unknown Wiki Count List... --------------------'
-count_list_by_namespace, path_to_export = case group_by
-when 'Owner', 'Category'
-  UnknownWikiCountListExporter.run(group_by:)
-
-  case language
-  when 'English', 'Japanese'
-    UnknownWikiCountListExporter.run(group_by:, language:)
-  end
-else
-  UnknownWikiCountListExporter.run
-end
+count_list_by_namespace, path_to_export = UnknownWikiCountListExporter.run(**params)
 puts "\n"
 puts 'Here is the result:'
 puts "\n"

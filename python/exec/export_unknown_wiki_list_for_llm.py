@@ -7,19 +7,15 @@ sys.path.append('./src')
 from unknown_wiki_list_exporter_for_llm import UnknownWikiListExporterForLLM
 
 _, group_by, language, *_ = sys.argv
+params = dict()
+for key, value in { 'group_by': group_by, 'language': language }.items():
+    if value:
+        params[key] = value
 
 print('-------------------- Exporting Unknown Wiki List... --------------------')
-match group_by:
-    case 'Owner' | 'Category':
-        path_to_export = UnknownWikiListExporterForLLM(group_by = group_by).run()
-
-        match language:
-            case 'English' | 'Japanese':
-                path_to_export = UnknownWikiListExporterForLLM(group_by = group_by, language = language).run()
-    case _:
-        path_to_export = UnknownWikiListExporterForLLM().run()
+path_to_export = UnknownWikiListExporterForLLM(**params).run()
 print()
-print("Check it out result on '#{path_to_export}' !!")
+print(f"Check it out result on '{path_to_export}' !!")
 print()
 print('-------------------- Done Exporting Unknown Wiki List 🎉 --------------------')
 
