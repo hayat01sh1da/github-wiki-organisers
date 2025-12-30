@@ -36,24 +36,10 @@ class Home(Application):
             os.makedirs(self.path_to_wikis_by_owner, exist_ok = True)
 
             for namespace, wikis in self.owned_wiki_maps.items():
-                home_passage  = ''
-                home_passage += f'## [{namespace}]({self.base_owner_url + re.sub(r'@', '', namespace)})\n'
-                home_passage += '\n'
-                for wiki in wikis:
-                    home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
-                home_passage += '\n'
-                with open(self.path_to_wikis_by_owner, 'w') as f:
-                    f.write(home_passage.rstrip() + '\n')
+                self.__write_wikis_by_owner_file__(namespace = namespace, wikis = wikis, owned = True)
 
             for namespace, wikis in self.plain_wiki_maps.items():
-                home_passage  = ''
-                home_passage += f'## {namespace}\n'
-                home_passage += '\n'
-                for wiki in wikis:
-                    home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
-                home_passage += '\n'
-                with open(self.path_to_wikis_by_owner, 'w') as f:
-                    f.write(home_passage.rstrip() + '\n')
+                self.__write_wikis_by_owner_file__(namespace = namespace, wikis = wikis, owned = False)
 
             for namespace in (list(self.owned_wiki_maps.keys()) + list(self.plain_wiki_maps.keys())):
                 self.home_passage += f'- [[{namespace}]]\n'
@@ -82,3 +68,18 @@ class Home(Application):
 
             with open(self.path_to_home, 'w') as f:
                 f.write(self.home_passage.rstrip() + '\n')
+
+    def __write_wikis_by_owner_file__(self, namespace, wikis, owned):
+        home_passage  = ''
+        if owned:
+            home_passage += f'## [{namespace}]({self.base_owner_url + re.sub(r'@', '', namespace)})\n'
+        else:
+            home_passage += f'## {namespace}\n'
+        home_passage += '\n'
+        for wiki in wikis:
+            home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
+        home_passage += '\n'
+
+        file_path = os.path.join(self.path_to_wikis_by_owner, f'{namespace}.md')
+        with open(file_path, 'w') as f:
+            f.write(home_passage.rstrip() + '\n')
