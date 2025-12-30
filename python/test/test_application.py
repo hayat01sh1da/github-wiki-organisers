@@ -43,8 +43,14 @@ class TestApplication(unittest.TestCase):
         self.assertEqual(str(e.exception), 'Invalid home_overflow: `true` must be boolean')
 
     def test_run(self):
-        with self.assertRaises(NotImplementedError, msg = 'This method must be implemented in each subclass.'):
-            Application(base_path = self.base_path, group_by = self.group_by, language = self.language, home_overflow = self.home_overflow).run()
+        with self.assertRaises(NotImplementedError) as cm:
+            Application(
+                base_path     = self.base_path,
+                group_by      = self.group_by,
+                language      = self.language,
+                home_overflow = self.home_overflow,
+            ).run()
+        self.assertEqual('This method must be implemented in each subclass.', str(cm.exception))
 
     # private
 
