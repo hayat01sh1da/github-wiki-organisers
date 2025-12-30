@@ -14,8 +14,7 @@ class TestApplication(unittest.TestCase):
         self.language       = language
         self.home_overflow  = home_overflow
         self.pycaches  = glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True)
-        if not os.path.exists(self.base_path):
-            os.makedirs(self.base_path)
+        os.makedirs(self.base_path, exist_ok = True)
         for wiki, namespace in self.__test_file_maps__().items():
             with open(os.path.join(self.base_path, wiki), 'w') as f:
                 f.write(namespace)

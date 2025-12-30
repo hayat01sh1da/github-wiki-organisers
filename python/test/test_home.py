@@ -1,5 +1,6 @@
 import sys
 import os
+import glob
 import unittest
 sys.path.append('./src')
 sys.path.append('./test')
@@ -15,6 +16,10 @@ class TestHome(TestApplication):
         with open(path_to_home) as f:
             self.home = f.read()
         self.path_to_wikis_by_owner = os.path.join(self.base_path, 'wikis-by-owner')
+        self.overflow_files         = sorted(glob.glob(os.path.join(self.path_to_wikis_by_owner, '*.md')))
+
+    def __expected_wikis_by_owner__(self, namespaces):
+        return sorted([os.path.join(self.path_to_wikis_by_owner, f'{namespace}.md') for namespace in namespaces])
 
 class EnglishOwnedHomeWithoutOverflowTest(TestHome):
     def test_run(self):
@@ -59,6 +64,8 @@ class EnglishOwnedHomeWithOverflowTest(TestHome):
     def test_run(self):
         self.assertTrue(os.path.exists(self.path_to_wikis_by_owner))
         self.assertEqual(self.home, self.__home_passage__())
+        expected_files = self.__expected_wikis_by_owner__(['@test-owner', 'Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'])
+        self.assertEqual(self.overflow_files, expected_files)
 
     # private
 
@@ -155,6 +162,8 @@ class JapaneseOwnedHomeWihOverflowTest(TestHome):
     def test_run(self):
         self.assertTrue(os.path.exists(self.path_to_wikis_by_owner))
         self.assertEqual(self.home, self.__home_passage__())
+        expected_files = self.__expected_wikis_by_owner__(['@test-owner', 'Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'])
+        self.assertEqual(self.overflow_files, expected_files)
 
     # private
 
