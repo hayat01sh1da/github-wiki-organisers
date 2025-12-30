@@ -1,7 +1,15 @@
 class Application
   class NotImplementedError < StandardError; end
 
-  def self.run(base_path: File.join('..', '..'), group_by: 'Owner', language: 'English', home_overflow: false)
+  def self.run(base_path: File.join('..', '..'), group_by: 'Owner', language: 'English', home_overflow: 'false')
+    home_overflow = case home_overflow
+    when 'true'
+      true
+    when 'false'
+      false
+    else
+      home_overflow
+    end
     instance = new(base_path:, group_by:, language:, home_overflow:)
     instance.validate!
     instance.run

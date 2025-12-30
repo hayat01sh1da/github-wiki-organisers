@@ -27,19 +27,19 @@ class TestApplication(unittest.TestCase):
                 shutil.rmtree(pycache)
 
     def test_validate_group_by(self):
-        with self.assertRaises(ValueError) as e:
+        with self.assertRaises(ValueError) as cm:
             Application(base_path = self.base_path, group_by = 'Group', language = self.language, home_overflow = self.home_overflow)
-        self.assertEqual(str(e.exception), 'Invalid group_by: `Group`')
+        self.assertEqual(str(cm.exception), 'Invalid group_by: `Group`')
 
     def test_validate_language(self):
-        with self.assertRaises(ValueError) as e:
+        with self.assertRaises(ValueError) as cm:
             Application(base_path = self.base_path, group_by = self.group_by, language = 'Spanish', home_overflow = self.home_overflow)
-        self.assertEqual(str(e.exception), 'Invalid language: `Spanish`')
+        self.assertEqual(str(cm.exception), 'Invalid language: `Spanish`')
 
     def test_validate_home_overflow(self):
-        with self.assertRaises(ValueError) as e:
-            Application(base_path = self.base_path, group_by = self.group_by, language = self.language, home_overflow = 'true')
-        self.assertEqual(str(e.exception), 'Invalid home_overflow: `true` must be boolean')
+        with self.assertRaises(ValueError) as cm:
+            Application(base_path = self.base_path, group_by = self.group_by, language = self.language, home_overflow = 'foo')
+        self.assertEqual(str(cm.exception), 'Invalid home_overflow: `foo` must be boolean')
 
     def test_run(self):
         with self.assertRaises(NotImplementedError) as cm:

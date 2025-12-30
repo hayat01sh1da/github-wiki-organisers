@@ -34,9 +34,9 @@ class ApplicationTest < Minitest::Test
 
   def test_validate_home_overflow!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, group_by:, language:, home_overflow: 'true').validate!
+      Application.new(base_path:, group_by:, language:, home_overflow: 'foo').validate!
     end
-    assert_equal('Invalid home_overflow: `true` must be boolean', error.message)
+    assert_equal('Invalid home_overflow: `foo` must be boolean', error.message)
   end
 
   def test_self_run
