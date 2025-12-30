@@ -4,7 +4,12 @@ import re
 from collections import defaultdict
 
 class Application:
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = False):
+    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = 'False'):
+        match home_overflow:
+            case 'True':
+                home_overflow = True
+            case 'False':
+                home_overflow = False
         self.__validate__(group_by = group_by, language = language, home_overflow = home_overflow)
         self.base_path                             = base_path
         self.group_by                              = group_by
