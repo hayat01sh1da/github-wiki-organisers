@@ -23,7 +23,7 @@
 
 Report vulnerabilities privately:
 
-1. Open a GitHub Security Advisory via **Security → Report a vulnerability**  (preferred), referencing the affected automation or script.
+1. Open a GitHub Security Advisory via **Security → Report a vulnerability** (preferred), referencing the affected automation or script.
 2. Or email `security@example.com` with reproduction steps, workflow run IDs,  and any relevant wiki samples.
 
 We acknowledge within **3 business days**, provide updates every **7 business days**, and coordinate disclosure once a fix or mitigation is ready.  
