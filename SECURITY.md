@@ -2,56 +2,29 @@
 
 ## Supported Versions
 
-The table below lists the language/runtime versions that are currently
-supported with security updates for this project.
+- We patch only the latest content on `master`, including automation under `.github/workflows`.
+- Historical wiki exports or generated artifacts are snapshots and are not retroactively secured.
 
-| Language | Version | Supported          |
-| -------- | ------- | ------------------ |
-| Ruby     | 4.0.0   | :white_check_mark: |
-| Python   | 3.14.2  | :white_check_mark: |
-| Ruby     | < 4.0.0 | :x:                |
-| Python   | < 3.14.2| :x:                |
+## Ecosystem & Compatibility
+
+| Component / Workflow      | Version(s) / Tooling                 | Notes |
+| ------------------------- | ----------------------------------- | ----- |
+| OS baseline               | WSL (Ubuntu 24.04.3 LTS)            | Matches the environment documented in the README. |
+| Ruby automation           | Ruby 4.0.1 (`.ruby-version`)        | Scripts rely on Bundler plus standard library; declare additional gems inside each tool. |
+| Python automation         | CPython 3.14.2 (`.python-version`)  | Python helpers currently depend on the stdlib. Add `requirements.txt` if third-party packages are required. |
+| GitHub Actions workflows  | Runs on GitHub-hosted Ubuntu images | Cron jobs send Slack notifications and mutate wiki content; keep action versions pinned. |
+
+## Backward Compatibility
+
+- CLI helpers and workflows are expected to remain compatible across Ruby 4.0.x and Python 3.14.x. When a workflow contract changes (e.g., new env vars), the corresponding README section and workflow dispatch docs will call it out.
+- Archived wiki exports remain untouched; we do not backport automation fixes to historical snapshots.
 
 ## Reporting a Vulnerability
 
-If you believe you have found a security vulnerability in this project, please
-report it privately and do **not** create a public GitHub issue or post details
-publicly.
+Report vulnerabilities privately:
 
-### How to report
+1. Open a GitHub Security Advisory via **Security → Report a vulnerability** (preferred), referencing the affected automation or script.
+2. Or email `security@example.com` with reproduction steps, workflow run IDs, and any relevant wiki samples.
 
-You can report vulnerabilities using one of the following methods:
-
-- **GitHub Security Advisories (preferred):**  
-  Go to the repository on GitHub, open the **Security** tab, and choose
-  **“Report a vulnerability”**. This will create a private security advisory
-  that is visible only to the maintainers and you.
-- **Email:**  
-  Send an email to `security@example.com` with the subject line
-  `Security report: <short description>`.
-
-When reporting, please include:
-
-- A clear description of the issue and its potential impact.
-- Steps to reproduce the vulnerability (proof-of-concept if available).
-- Any known affected versions and configuration details.
-- Any ideas you have for possible fixes or mitigations.
-
-### Response and handling process
-
-- We aim to acknowledge receipt of your report within **3 business days**.
-- We will triage the report, assess severity, and keep you informed of the
-  progress at least every **7 business days** until a resolution is available
-  or the report is closed.
-- If the vulnerability is **accepted**, we will:
-  - Work to develop and test a fix.
-  - Prepare a release and, where appropriate, a security advisory describing
-    the issue, impact, and remediation steps.
-  - Coordinate disclosure timing with you where possible, and can credit you
-    in the advisory if you wish.
-- If the report is **declined** (for example, if it is out of scope, cannot be
-  reproduced, or is considered low-risk), we will explain our reasoning and, if
-  applicable, suggest alternative mitigations.
-
-Please give us a reasonable amount of time to investigate and address the
-issue before you disclose it publicly.
+We acknowledge within **3 business days**, provide updates every **7 business days**, and coordinate disclosure once a fix or mitigation is ready.  
+If an issue is out of scope we will explain why and document any mitigations.
