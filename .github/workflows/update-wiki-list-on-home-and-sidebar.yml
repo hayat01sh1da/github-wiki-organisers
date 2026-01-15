@@ -58,8 +58,6 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 4.0.0
       - name: Update github-wiki-organisers Wiki
         id: update-github-wiki-organisers-wiki
         working-directory: ./github-wiki-organisers/wiki

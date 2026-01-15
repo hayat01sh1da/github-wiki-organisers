@@ -32,8 +32,6 @@ jobs:
           path: .wiki
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 4.0.0
       - name: Format Unknown Wiki Count by Namespace
         id: format-unknown-wiki-count
         working-directory: .wiki
