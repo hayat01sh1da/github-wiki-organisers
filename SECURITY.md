@@ -11,7 +11,7 @@
 | ------------------------- | ----------------------------------- | ----- |
 | OS baseline               | WSL (Ubuntu 24.04.3 LTS)            | Matches the environment documented in the README. |
 | Ruby automation           | Ruby 4.0.1 (`.ruby-version`)        | Scripts rely on Bundler plus standard library; declare additional gems inside each tool. |
-| Python automation         | CPython 3.14.2 (`.python-version`)  | Python helpers currently depend on the stdlib. Add `requirements.txt` if third-party packages are required. |
+| Python automation         | CPython 3.14.3 (`.python-version`)  | Python helpers currently depend on the stdlib. Add `requirements.txt` if third-party packages are required. |
 | GitHub Actions workflows  | Runs on GitHub-hosted Ubuntu images | Cron jobs send Slack notifications and mutate wiki content; keep action versions pinned. |
 
 ## Backward Compatibility
