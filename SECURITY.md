@@ -1,5 +1,3 @@
-# Security Policy
-
 ## Supported Versions
 
 - We patch only the latest content on `master`, including automation under `.github/workflows`.
@@ -21,10 +19,7 @@
 
 ## Reporting a Vulnerability
 
-Report vulnerabilities privately:
+Please report issues privately via **GitHub Security Advisory** (preferred) — open through the repository’s **Security → Report a vulnerability** workflow.
 
-1. Open a GitHub Security Advisory via **Security → Report a vulnerability** (preferred), referencing the affected automation or script.
-2. Or email `security@example.com` with reproduction steps, workflow run IDs, and any relevant wiki samples.
-
-We acknowledge within **3 business days**, provide updates every **7 business days**, and coordinate disclosure once a fix or mitigation is ready.  
-If an issue is out of scope we will explain why and document any mitigations.
+Acknowledgement occurs and status updates follow as soon as possible.  
+After remediation we publish guidance alongside required dependency updates.
