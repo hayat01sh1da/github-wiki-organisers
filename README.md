@@ -1,3 +1,10 @@
+[![Actions Status: UnitTest](https://github.com/hayat01sh1da/github-wiki-organisers/workflows/UnitTest/badge.svg)](https://github.com/hayat01sh1da/github-wiki-organisers/actions?query=workflow%3A%22UnitTest%22)
+[![Actions Status: Minitest](https://github.com/hayat01sh1da/github-wiki-organisers/workflows/Minitest/badge.svg)](https://github.com/hayat01sh1da/github-wiki-organisers/actions?query=workflow%3A%22Minitest%22)
+[![Actions Status: Export Unknown Wiki List for LLM](https://github.com/hayat01sh1da/github-wiki-organisers/workflows/Export%20Unknown%20Wiki%20List%20for%20LLM/badge.svg)](https://github.com/hayat01sh1da/github-wiki-organisers/actions?query=workflow%3A%22Export%20Unknown%20Wiki%20List%20for%20LLM%22)
+[![Actions Status: Notify Uncategorised Wiki Count by Namespace](https://github.com/hayat01sh1da/github-wiki-organisers/workflows/Notify%20Uncategorised%20Wiki%20Count%20by%20Namespace/badge.svg)](https://github.com/hayat01sh1da/github-wiki-organisers/actions?query=workflow%3A%22Notify%20Uncategorised%20Wiki%20Count%20by%20Namespace%22)
+[![Actions Status: Notify Unknown Wiki Count by Namespace](https://github.com/hayat01sh1da/github-wiki-organisers/workflows/Notify%20Unknown%20Wiki%20Count%20by%20Namespace/badge.svg)](https://github.com/hayat01sh1da/github-wiki-organisers/actions?query=workflow%3A%22Notify%20Unknown%20Wiki%20Count%20by%20Namespace%22)
+[![Actions Status: Update Wiki List on Home and Sidebar](https://github.com/hayat01sh1da/github-wiki-organisers/workflows/Update%20Wiki%20List%20on%20Home%20and%20Sidebar/badge.svg)](https://github.com/hayat01sh1da/github-wiki-organisers/actions?query=workflow%3A%22Update%20Wiki%20List%20on%20Home%20and%20Sidebar%22)
+
 ## 1. Common Environment
 
 - WSL(Ubuntu 24.04.3 LTS)
