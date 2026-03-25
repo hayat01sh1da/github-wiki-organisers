@@ -8,11 +8,11 @@ Run the commands under `./python`
 
 ### 2-1. Options
 
-|Order |Option        |Command-line Argument   |
-|:-----|:-------------|:-----------------------|
-|1     |group_by      |`Owner` or `Category`   |
-|2     |language      |`English` or `Japanese` |
-|3     |home_overflow |`True` or `False`       |
+| Order | Option        | Command-line Argument   |
+| :---- | :------------ | :---------------------- |
+| 1     | group_by      | `Owner` or `Category`   |
+| 2     | language      | `English` or `Japanese` |
+| 3     | home_overflow | `True` or `False`       |
 
 ### 2-2. Update Wiki List on Home and Sidebar
 
