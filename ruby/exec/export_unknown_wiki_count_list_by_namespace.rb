@@ -1,3 +1,5 @@
+# rbs_inline: enabled
+
 require_relative '../src/unknown_wiki_count_list_exporter'
 
 group_by, language, *_ = ARGV

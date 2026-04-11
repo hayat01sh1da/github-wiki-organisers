@@ -1,6 +1,13 @@
+# rbs_inline: enabled
+
 class Application
   class NotImplementedError < StandardError; end
 
+  # @rbs base_path: String
+  # @rbs group_by: String
+  # @rbs language: String
+  # @rbs home_overflow: String
+  # @rbs return: void
   def self.run(base_path: File.join('..', '..'), group_by: 'Owner', language: 'English', home_overflow: 'false')
     home_overflow = case home_overflow
     when 'true'
@@ -15,6 +22,11 @@ class Application
     instance.run
   end
 
+  # @rbs base_path: String
+  # @rbs group_by: String
+  # @rbs language: String
+  # @rbs home_overflow: bool
+  # @rbs return: void
   def initialize(base_path:, group_by:, language:, home_overflow:)
     @base_path                      = base_path
     @group_by                       = group_by
@@ -27,12 +39,14 @@ class Application
     @paths_to_wikis                 = Dir[File.join(base_path, '**', '*.md')].sort
   end
 
+  # @rbs return: void
   def validate!
     raise ArgumentError, "Invalid group_by: `#{group_by}`" unless ['Owner', 'Category'].include?(group_by)
     raise ArgumentError, "Invalid language: `#{language}`" unless ['English', 'Japanese'].include?(language)
     raise ArgumentError, "Invalid home_overflow: `#{home_overflow}` must be boolean" unless [true, false].include?(home_overflow)
   end
 
+  # @rbs return: void
   def run
     raise NotImplementedError, 'This method must be implemented in each subclass.'
   end
@@ -49,7 +63,7 @@ class Application
               :path_to_wikis_by_owner,
               :paths_to_wikis
 
-  # @return [String]
+  # @rbs return: String
   def target_paths
     @target_paths ||= paths_to_wikis.delete_if {
       it == path_to_home ||
@@ -59,7 +73,7 @@ class Application
     }
   end
 
-  # @return [Regexp]
+  # @rbs return: Regexp
   def target_regexp
     @target_regexp ||= case group_by
     when 'Owner'
@@ -69,7 +83,7 @@ class Application
     end
   end
 
-  # @return [String]
+  # @rbs return: String
   def no_declaration
     @no_declaration ||= case group_by
     when 'Owner'
@@ -89,7 +103,7 @@ class Application
     end
   end
 
-  # @return [Hash<String => Array<String>>]
+  # @rbs return: Hash[String, Array[String]]
   def wiki_maps_with_namespace
     hash                   = Hash.new { |hash, namespace| hash[namespace] = [] }
     uncategrised_wiki_maps = Hash.new { |hash, namespace| hash[namespace] = [] }
@@ -113,12 +127,12 @@ class Application
     }.sort.to_h.merge(uncategrised_wiki_maps)
   end
 
-  # @return [Hash<String => Array<String>>]
+  # @rbs return: Hash[String, Array[String]]
   def owned_wiki_maps
     @owned_wiki_maps ||= wiki_maps_with_namespace.select { |namespace, _| namespace.include?('@') }
   end
 
-  # @return [Hash<String => Array<String>>]
+  # @rbs return: Hash[String, Array[String]]
   def plain_wiki_maps
     @plain_wiki_maps ||= wiki_maps_with_namespace.reject { |namespace, _| namespace.include?('@') }
   end

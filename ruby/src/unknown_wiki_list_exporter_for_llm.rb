@@ -1,11 +1,19 @@
+# rbs_inline: enabled
+
 require_relative './application'
 
 class UnknownWikiListExporterForLLM < Application
+  # @rbs base_path: String
+  # @rbs group_by: String
+  # @rbs language: String
+  # @rbs home_overflow: bool
+  # @rbs return: void
   def initialize(base_path:, group_by:, language:, home_overflow: false)
     super(base_path:, group_by:, language:, home_overflow:)
     @path_to_export = File.join(base_path, 'unknown_wiki_list_for_llm.txt')
   end
 
+  # @rbs return: String
   def run
     File.open(path_to_export, 'wb') { |f| f.puts(unknown_wiki_list_for_llm) }
     path_to_export
@@ -15,7 +23,7 @@ class UnknownWikiListExporterForLLM < Application
 
   attr_reader :path_to_export
 
-  # @return [Array<String>]
+  # @rbs return: String
   def target_namespace
     case group_by
     when 'Owner'
@@ -35,7 +43,7 @@ class UnknownWikiListExporterForLLM < Application
     end
   end
 
-  # @return [Array<String>]
+  # @rbs return: Array[String]
   def unknown_wiki_list_for_llm
     @unknown_wiki_list_for_llm ||= plain_wiki_maps.select { |namespace, _|
       target_namespace.include?(namespace)

@@ -1,3 +1,5 @@
+# rbs_inline: enabled
+
 require_relative './application_test'
 require_relative '../src/home'
 
