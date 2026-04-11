@@ -1,3 +1,5 @@
+# rbs_inline: enabled
+
 require_relative './application_test'
 require_relative '../src/unknown_wiki_list_exporter_for_llm'
 

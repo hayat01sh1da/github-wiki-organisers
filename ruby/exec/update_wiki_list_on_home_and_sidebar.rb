@@ -1,3 +1,5 @@
+# rbs_inline: enabled
+
 require_relative '../src/home'
 require_relative '../src/sidebar'
 

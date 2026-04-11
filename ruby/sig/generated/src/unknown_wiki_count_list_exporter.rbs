@@ -1,0 +1,26 @@
+# Generated from src/unknown_wiki_count_list_exporter.rb with RBS::Inline
+
+class UnknownWikiCountListExporter < Application
+  # @rbs base_path: String
+  # @rbs group_by: String
+  # @rbs language: String
+  # @rbs home_overflow: bool
+  # @rbs return: void
+  def initialize: (base_path: String, group_by: String, language: String, ?home_overflow: bool) -> void
+
+  # @rbs return: Array[untyped]
+  def run: () -> Array[untyped]
+
+  private
+
+  attr_reader path_to_export: untyped
+
+  # @rbs return: Array[String]
+  def namespace_list: () -> Array[String]
+
+  # @rbs return: Array[String]
+  def missing_count_list_by_namespace: () -> Array[String]
+
+  # @rbs return: Array[String]
+  def count_list_by_namespace: () -> Array[String]
+end

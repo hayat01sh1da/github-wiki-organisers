@@ -1,3 +1,5 @@
+# rbs_inline: enabled
+
 require_relative '../src/unknown_wiki_list_exporter_for_llm'
 
 group_by, language, *_ = ARGV
