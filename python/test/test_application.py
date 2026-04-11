@@ -8,7 +8,7 @@ sys.path.append('./src')
 from application import Application
 
 class TestApplication(unittest.TestCase):
-    def setUp(self, base_path = os.path.join('.', 'test', 'wiki'), group_by = 'Owner', language = 'English', home_overflow = False):
+    def setUp(self, base_path: str = os.path.join('.', 'test', 'wiki'), group_by: str = 'Owner', language: str = 'English', home_overflow: bool = False) -> None:
         self.base_path      = base_path
         self.group_by       = group_by
         self.language       = language
@@ -19,29 +19,29 @@ class TestApplication(unittest.TestCase):
             with open(os.path.join(self.base_path, wiki), 'w') as f:
                 f.write(namespace)
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         if os.path.exists(self.base_path):
             shutil.rmtree(self.base_path)
         for pycache in self.pycaches:
             if os.path.exists(pycache):
                 shutil.rmtree(pycache)
 
-    def test_validate_group_by(self):
+    def test_validate_group_by(self) -> None:
         with self.assertRaises(ValueError) as cm:
             Application(base_path = self.base_path, group_by = 'Group', language = self.language, home_overflow = self.home_overflow)
         self.assertEqual(str(cm.exception), 'Invalid group_by: `Group`')
 
-    def test_validate_language(self):
+    def test_validate_language(self) -> None:
         with self.assertRaises(ValueError) as cm:
             Application(base_path = self.base_path, group_by = self.group_by, language = 'Spanish', home_overflow = self.home_overflow)
         self.assertEqual(str(cm.exception), 'Invalid language: `Spanish`')
 
-    def test_validate_home_overflow(self):
+    def test_validate_home_overflow(self) -> None:
         with self.assertRaises(ValueError) as cm:
             Application(base_path = self.base_path, group_by = self.group_by, language = self.language, home_overflow = 'foo')
         self.assertEqual(str(cm.exception), 'Invalid home_overflow: `foo` must be boolean')
 
-    def test_run(self):
+    def test_run(self) -> None:
         with self.assertRaises(NotImplementedError) as cm:
             Application(
                 base_path     = self.base_path,
@@ -53,7 +53,7 @@ class TestApplication(unittest.TestCase):
 
     # private
 
-    def __test_file_maps__(self):
+    def __test_file_maps__(self) -> dict[str, str]:
         match self.group_by:
             case 'Owner':
                 match self.language:

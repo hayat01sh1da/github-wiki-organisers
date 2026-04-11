@@ -9,7 +9,7 @@ from home import Home
 from test_application import TestApplication
 
 class TestHome(TestApplication):
-    def setUp(self, group_by = 'Owner', language = 'English', home_overflow = False):
+    def setUp(self, group_by: str = 'Owner', language: str = 'English', home_overflow: bool = False) -> None:
         super().setUp(group_by = group_by, language = language, home_overflow = home_overflow)
         Home(base_path = self.base_path, group_by = group_by, language = language, home_overflow = home_overflow).run()
         path_to_home = os.path.join(self.base_path, 'Home.md')
@@ -18,17 +18,17 @@ class TestHome(TestApplication):
         self.path_to_wikis_by_owner = os.path.join(self.base_path, 'wikis-by-owner')
         self.overflow_files         = sorted(glob.glob(os.path.join(self.path_to_wikis_by_owner, '*.md')))
 
-    def __expected_wikis_by_owner__(self, namespaces):
+    def __expected_wikis_by_owner__(self, namespaces: list[str]) -> list[str]:
         return sorted([os.path.join(self.path_to_wikis_by_owner, f'{namespace}.md') for namespace in namespaces])
 
 class EnglishOwnedHomeWithoutOverflowTest(TestHome):
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertFalse(os.path.exists(self.path_to_wikis_by_owner))
         self.assertEqual(self.home, self.__home_passage__())
 
     # private
 
-    def __home_passage__(self):
+    def __home_passage__(self) -> str:
         passage  = '## How to Manage Wiki Pages\n'
         passage += '\n'
         passage += 'This Home page manage wikis by owner group.\n'
@@ -58,10 +58,10 @@ class EnglishOwnedHomeWithoutOverflowTest(TestHome):
         return passage
 
 class EnglishOwnedHomeWithOverflowTest(TestHome):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp(home_overflow = True)
 
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertTrue(os.path.exists(self.path_to_wikis_by_owner))
         self.assertEqual(self.home, self.__home_passage__())
         expected_files = self.__expected_wikis_by_owner__(['@test-owner', 'Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'])
@@ -69,7 +69,7 @@ class EnglishOwnedHomeWithOverflowTest(TestHome):
 
     # private
 
-    def __home_passage__(self):
+    def __home_passage__(self) -> str:
         passage  = '## How to Manage Wiki Pages\n'
         passage += '\n'
         passage += 'This Home page manage wikis by owner group.\n'
@@ -87,15 +87,15 @@ class EnglishOwnedHomeWithOverflowTest(TestHome):
         return passage
 
 class EnglishCategorisedHomeTest(TestHome):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp(group_by = 'Category')
 
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertEqual(self.home, self.__home_passage__())
 
     # private
 
-    def __home_passage__(self):
+    def __home_passage__(self) -> str:
         passage  = '## How to Manage Wiki Pages\n'
         passage += '\n'
         passage += 'This Home page manage wikis by category group.\n'
@@ -117,16 +117,16 @@ class EnglishCategorisedHomeTest(TestHome):
         return passage
 
 class JapaneseOwnedHomeWithoutOverflowTest(TestHome):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp(language = 'Japanese')
 
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertFalse(os.path.exists(self.path_to_wikis_by_owner))
         self.assertEqual(self.home, self.__home_passage__())
 
     # private
 
-    def __home_passage__(self):
+    def __home_passage__(self) -> str:
         passage  = '## Wiki ページの運用ルール\n'
         passage += '\n'
         passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
@@ -156,10 +156,10 @@ class JapaneseOwnedHomeWithoutOverflowTest(TestHome):
         return passage
 
 class JapaneseOwnedHomeWihOverflowTest(TestHome):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp(language = 'Japanese', home_overflow = True)
 
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertTrue(os.path.exists(self.path_to_wikis_by_owner))
         self.assertEqual(self.home, self.__home_passage__())
         expected_files = self.__expected_wikis_by_owner__(['@test-owner', 'Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'])
@@ -167,7 +167,7 @@ class JapaneseOwnedHomeWihOverflowTest(TestHome):
 
     # private
 
-    def __home_passage__(self):
+    def __home_passage__(self) -> str:
         passage  = '## Wiki ページの運用ルール\n'
         passage += '\n'
         passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
@@ -185,15 +185,15 @@ class JapaneseOwnedHomeWihOverflowTest(TestHome):
         return passage
 
 class JapaneseCategorisedHomeTest(TestHome):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp(group_by = 'Category', language = 'Japanese')
 
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertEqual(self.home, self.__home_passage__())
 
     # private
 
-    def __home_passage__(self):
+    def __home_passage__(self) -> str:
         passage  = '## Wiki ページの運用ルール\n'
         passage += '\n'
         passage += 'このページは Category ごとに Wiki をグルーピングして一覧化しています。\n'
