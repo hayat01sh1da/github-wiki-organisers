@@ -6,19 +6,19 @@ sys.path.append('./src')
 from application import Application
 
 class Sidebar(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = False):
+    def __init__(self, base_path: str = os.path.join('..', '..'), group_by: str = 'Owner', language: str = 'English', home_overflow: bool = False) -> None:
         super().__init__(base_path, group_by, language, home_overflow)
         self.base_owner_url = f'https://github.com/orgs/{os.environ.get('ORGANISATION_NAME', 'hayat01sh1da')}/teams/'
         self.wiki_list      = self.__write_wiki_list__()
 
-    def run(self):
+    def run(self) -> None:
         with open(self.path_to_sidebar, 'w') as f:
             f.write(self.wiki_list)
 
     # private
 
     # @return [str]
-    def __write_wiki_list__(self):
+    def __write_wiki_list__(self) -> str:
         wiki_list = ''
 
         for namespace, wikis in self.owned_wiki_maps.items():

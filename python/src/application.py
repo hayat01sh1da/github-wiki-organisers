@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 
 class Application:
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = 'False'):
+    def __init__(self, base_path: str = os.path.join('..', '..'), group_by: str = 'Owner', language: str = 'English', home_overflow: str = 'False') -> None:
         match home_overflow:
             case 'True':
                 home_overflow = True
@@ -23,13 +23,13 @@ class Application:
         self.wiki_maps_with_namespace              = self.__wiki_maps_with_namespace__()
         self.owned_wiki_maps, self.plain_wiki_maps = self.__filter_namespace__()
 
-    def run(self):
+    def run(self) -> None:
         raise NotImplementedError('This method must be implemented in each subclass.')
 
     # private
 
     # @raises [ValueError]
-    def __validate__(self, group_by, language, home_overflow):
+    def __validate__(self, group_by: str, language: str, home_overflow: bool) -> None:
         if group_by not in ['Owner', 'Category']:
             raise ValueError(f'Invalid group_by: `{group_by}`')
         if language not in ['English', 'Japanese']:
@@ -38,7 +38,7 @@ class Application:
             raise ValueError(f'Invalid home_overflow: `{home_overflow}` must be boolean')
 
     # @return [str]
-    def __target_paths__(self):
+    def __target_paths__(self) -> list[str]:
         target_paths = sorted(glob.glob(os.path.join(self.base_path, '**', '*.md'), recursive = True))
 
         for target_path in target_paths:
@@ -51,7 +51,7 @@ class Application:
         return target_paths
 
     # @return [regex]
-    def __target_regexp__(self):
+    def __target_regexp__(self) -> re.Pattern[str]:
         match self.group_by:
             case 'Owner':
                 return re.compile(r'[Oo]wner:\s?')
@@ -59,7 +59,7 @@ class Application:
                 return re.compile(r'[Cc]ategory:\s?')
 
     # @return [str]
-    def __no_declaration__(self):
+    def __no_declaration__(self) -> str:
         match self.group_by:
             case 'Owner':
                 match self.language:
@@ -75,7 +75,7 @@ class Application:
                         return 'Category記載なし'
 
     # @return [dict<str => list<str>>]
-    def __wiki_maps_with_namespace__(self):
+    def __wiki_maps_with_namespace__(self) -> dict[str, list[str]]:
         hash                     = defaultdict(list)
         uncategrised_wiki_maps   = defaultdict(list)
         wiki_maps_with_namespace = defaultdict(list)
@@ -105,7 +105,7 @@ class Application:
         return wiki_maps_with_namespace
 
     # @return [dict<str => list<str>>]
-    def __filter_namespace__(self):
+    def __filter_namespace__(self) -> tuple[dict[str, list[str]], dict[str, list[str]]]:
         owned_wiki_maps = {}
         plain_wiki_maps = {}
 
