@@ -4,9 +4,9 @@ class UnknownWikiListExporterForLLM < Application
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String
-  # @rbs home_overflow: bool
+  # @rbs home_overflow: String
   # @rbs return: void
-  def initialize: (base_path: String, group_by: String, language: String, ?home_overflow: bool) -> void
+  def initialize: (?base_path: String, ?group_by: String, ?language: String, ?home_overflow: String) -> void
 
   # @rbs return: String
   def run: () -> String

@@ -9,14 +9,6 @@ class Application
   # @rbs home_overflow: String
   # @rbs return: void
   def self.run(base_path: File.join('..', '..'), group_by: 'Owner', language: 'English', home_overflow: 'false')
-    home_overflow = case home_overflow
-    when 'true'
-      true
-    when 'false'
-      false
-    else
-      home_overflow
-    end
     instance = new(base_path:, group_by:, language:, home_overflow:)
     instance.validate!
     instance.run
@@ -25,13 +17,20 @@ class Application
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String
-  # @rbs home_overflow: bool
+  # @rbs home_overflow: String
   # @rbs return: void
   def initialize(base_path:, group_by:, language:, home_overflow:)
-    @base_path                      = base_path
-    @group_by                       = group_by
-    @language                       = language
-    @home_overflow                  = home_overflow
+    @base_path     = base_path
+    @group_by      = group_by
+    @language      = language
+    @home_overflow = case home_overflow
+                     when 'true'
+                      true
+                      when 'false'
+                      false
+                     else
+                       home_overflow
+                     end
     @path_to_home                   = File.join(base_path, 'Home.md')
     @path_to_sidebar                = File.join(base_path, '_Sidebar.md')
     @path_to_github_wiki_organisers = Dir[File.join(base_path, 'github-wiki-organisers', '**', '*.md')].sort

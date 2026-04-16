@@ -9,9 +9,9 @@ class Home < Application
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String
-  # @rbs home_overflow: bool
+  # @rbs home_overflow: String
   # @rbs return: void
-  def initialize(base_path:, group_by:, language:, home_overflow:)
+  def initialize(base_path: '', group_by: '', language: '', home_overflow: 'false')
     super(base_path:, group_by:, language:, home_overflow:)
     @base_owner_url         = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
     @path_to_wikis_by_owner = File.join(base_path, 'wikis-by-owner')
