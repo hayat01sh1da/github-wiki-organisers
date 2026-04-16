@@ -65,11 +65,11 @@ class Application
 
   # @rbs return: String
   def target_paths
-    @target_paths ||= paths_to_wikis.delete_if {
-      it == path_to_home ||
-      it == path_to_sidebar ||
-      path_to_github_wiki_organisers.include?(it) ||
-      path_to_wikis_by_owner.include?(it)
+    @target_paths ||= paths_to_wikis.delete_if { |path_to_wiki|
+      path_to_wiki == path_to_home ||
+        path_to_wiki == path_to_sidebar ||
+        path_to_github_wiki_organisers.include?(path_to_wiki) ||
+        path_to_wikis_by_owner.include?(path_to_wiki)
     }
   end
 

@@ -47,8 +47,8 @@ class UnknownWikiListExporterForLLM < Application
   def unknown_wiki_list_for_llm
     @unknown_wiki_list_for_llm ||= plain_wiki_maps.select { |namespace, _|
       target_namespace.include?(namespace)
-    }.then {
-      it.values.flatten
+    }.then { |filtered_plain_wiki_maps|
+      filtered_plain_wiki_maps.values.flatten
     }
   end
 end

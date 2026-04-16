@@ -72,8 +72,8 @@ class UnknownWikiCountListExporter < Application
       namespace_list.include?(namespace)
     }.map { |namespace, wikis|
       "#{namespace}: #{wikis.length}"
-    }.then {
-      it + missing_count_list_by_namespace
+    }.then { |list_by_namespace|
+      list_by_namespace + missing_count_list_by_namespace
     }.sort
   end
 end
