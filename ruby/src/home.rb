@@ -43,7 +43,7 @@ class Home < Application
       FileUtils.mkdir_p(path_to_wikis_by_owner) unless Dir.exist?(path_to_wikis_by_owner)
 
       owned_wiki_maps.each { |namespace, wikis|
-        home_passage  = []
+        home_passage  = Array.new
         home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"
         home_passage << "\n"
         wikis.each { |wiki|
@@ -55,7 +55,7 @@ class Home < Application
       }
 
       plain_wiki_maps.each { |namespace, wikis|
-        home_passage  = []
+        home_passage  = Array.new
         home_passage << "## #{namespace}\n"
         home_passage << "\n"
         wikis.each { |wiki|

@@ -11,7 +11,7 @@ class Sidebar < Application
   def initialize(base_path:, group_by:, language:, home_overflow: false)
     super(base_path:, group_by:, language:, home_overflow:)
     @base_owner_url = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
-    @wiki_list      = []
+    @wiki_list      = Array.new
   end
 
   # @rbs return: void
