@@ -40,6 +40,8 @@ class UnknownWikiCountListExporter < Application
           'Ownerチーム・要or不要が不明なページ群',
           'Owner記名なし'
         ]
+      else
+        ['']
       end
     when 'Category'
       case language
@@ -51,7 +53,11 @@ class UnknownWikiCountListExporter < Application
         [
           'Category記載なし'
         ]
+      else
+        ['']
       end
+    else
+      ['']
     end
   end
 
