@@ -79,6 +79,8 @@ class Application
       /[Oo]wner:\s?/
     when 'Category'
       /[Cc]ategory:\s?/
+    else
+      //
     end
   end
 
