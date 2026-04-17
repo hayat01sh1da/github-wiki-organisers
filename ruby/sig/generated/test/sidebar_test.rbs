@@ -1,0 +1,53 @@
+# Generated from test/sidebar_test.rb with RBS::Inline
+
+class SidebarTest < ApplicationTest
+  def setup: (?group_by: untyped, ?language: untyped) -> untyped
+
+  private
+
+  attr_reader path_to_sidebar: untyped
+
+  attr_reader sidebar: untyped
+
+  module English
+    class OwnedSidebarTest < SidebarTest
+      def test_self_run: () -> untyped
+
+      private
+
+      def wiki_list: () -> untyped
+    end
+
+    class PlainSidebarTest < SidebarTest
+      def setup: () -> untyped
+
+      def test_self_run: () -> untyped
+
+      private
+
+      def wiki_list: () -> untyped
+    end
+  end
+
+  module Japanese
+    class OwnedSidebarTest < SidebarTest
+      def setup: () -> untyped
+
+      def test_self_run: () -> untyped
+
+      private
+
+      def wiki_list: () -> untyped
+    end
+
+    class PlainSidebarTest < SidebarTest
+      def setup: () -> untyped
+
+      def test_self_run: () -> untyped
+
+      private
+
+      def wiki_list: () -> untyped
+    end
+  end
+end

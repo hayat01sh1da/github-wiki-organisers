@@ -1,0 +1,23 @@
+# Generated from src/unknown_wiki_list_exporter_for_llm.rb with RBS::Inline
+
+class UnknownWikiListExporterForLLM < Application
+  # @rbs base_path: String
+  # @rbs group_by: String
+  # @rbs language: String
+  # @rbs home_overflow: String
+  # @rbs return: void
+  def initialize: (?base_path: String, ?group_by: String, ?language: String, ?home_overflow: String) -> void
+
+  # @rbs return: String
+  def run: () -> String
+
+  private
+
+  attr_reader path_to_export: untyped
+
+  # @rbs return: String
+  def target_namespace: () -> String
+
+  # @rbs return: Array[String]
+  def unknown_wiki_list_for_llm: () -> Array[String]
+end
