@@ -13,7 +13,7 @@ class UnknownWikiCountListExporter < Application
     @path_to_export = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
   end
 
-  # @rbs return: Array[untyped]
+  # @rbs return: [Array[String], String]
   def run
     File.open(path_to_export, 'wb') { |f| f.puts(count_list_by_namespace) }
     [count_list_by_namespace, path_to_export]

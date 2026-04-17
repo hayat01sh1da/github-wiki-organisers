@@ -8,8 +8,8 @@ class UnknownWikiCountListExporter < Application
   # @rbs return: void
   def initialize: (?base_path: String, ?group_by: String, ?language: String, ?home_overflow: String) -> void
 
-  # @rbs return: Array[untyped]
-  def run: () -> Array[untyped]
+  # @rbs return: [Array[String], String]
+  def run: () -> [ Array[String], String ]
 
   private
 
