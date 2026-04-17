@@ -32,6 +32,8 @@ class UnknownWikiListExporterForLLM < Application
         'Unknown Owner nor Necessity'
       when 'Japanese'
         'Ownerチーム・要or不要が不明なページ群'
+      else
+        ''
       end
     when 'Category'
       case language
@@ -39,7 +41,11 @@ class UnknownWikiListExporterForLLM < Application
         'Uncategorised'
       when 'Japanese'
         'Category記載なし'
+      else
+        ''
       end
+    else
+      ''
     end
   end
 

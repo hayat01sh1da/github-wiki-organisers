@@ -93,6 +93,8 @@ class Application
         'Unowned'
       when 'Japanese'
         'Owner記名なし'
+      else
+        ''
       end
     when 'Category'
       case language
@@ -100,7 +102,11 @@ class Application
         'Uncategorised'
       when 'Japanese'
         'Category記載なし'
+      else
+        ''
       end
+    else
+      ''
     end
   end
 
