@@ -9,29 +9,29 @@ from application import Application
 HOME_URL = f'https://github.com/{os.environ.get('ORGANISATION_NAME', 'hayat01sh1da')}/github-wiki-organisers/wiki'
 
 class Home(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = False):
+    def __init__(self, base_path: str = os.path.join('..', '..'), group_by: str = 'Owner', language: str = 'English', home_overflow: bool = False) -> None:
         super().__init__(base_path, group_by, language, home_overflow)
         self.base_owner_url         = f'https://github.com/orgs/{os.environ.get('ORGANISATION_NAME', 'hayat01sh1da')}/teams/'
         self.home_passage           = self.__home_passage__()
         self.path_to_wikis_by_owner = os.path.join(self.base_path, 'wikis-by-owner')
 
-    def run(self):
+    def run(self) -> str:
         self.__write_home_passage__()
         return HOME_URL
 
     # private
 
     # @return [str]
-    def __path_to_home_template__(self):
+    def __path_to_home_template__(self) -> str:
         return os.path.join('..', 'home_template', self.group_by.lower(), f'{self.language.lower()}.md')
 
     # @return [list<str>]
-    def __home_passage__(self):
+    def __home_passage__(self) -> str:
         with open(self.__path_to_home_template__()) as f:
             return f.read() + '\n'
 
     # @return [str]
-    def __write_home_passage__(self):
+    def __write_home_passage__(self) -> None:
         if self.home_overflow:
             os.makedirs(self.path_to_wikis_by_owner, exist_ok = True)
 
@@ -69,7 +69,7 @@ class Home(Application):
             with open(self.path_to_home, 'w') as f:
                 f.write(self.home_passage.rstrip() + '\n')
 
-    def __write_wikis_by_owner_file__(self, namespace, wikis, owned):
+    def __write_wikis_by_owner_file__(self, namespace: str, wikis: list[str], owned: bool) -> None:
         home_passage  = ''
         if owned:
             home_passage += f'## [{namespace}]({self.base_owner_url + re.sub(r'@', '', namespace)})\n'

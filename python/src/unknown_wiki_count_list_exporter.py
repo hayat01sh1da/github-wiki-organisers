@@ -5,12 +5,12 @@ sys.path.append('./src')
 from application import Application
 
 class UnknownWikiCountListExporter(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = False):
+    def __init__(self, base_path: str = os.path.join('..', '..'), group_by: str = 'Owner', language: str = 'English', home_overflow: bool = False) -> None:
         super().__init__(base_path, group_by, language, home_overflow)
         self.path_to_export          = os.path.join(self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
         self.count_list_by_namespace = ''.join(sorted(self.__count_list_by_namespace__()))
 
-    def run(self):
+    def run(self) -> tuple[str, str]:
         with open(self.path_to_export, 'w') as f:
             f.write(self.count_list_by_namespace.rstrip() + '\n')
 
@@ -19,7 +19,7 @@ class UnknownWikiCountListExporter(Application):
     # private
 
     # @return [list<str>]
-    def __namespace_list__(self):
+    def __namespace_list__(self) -> list[str]:
         match self.group_by:
             case 'Owner':
                 match self.language:
@@ -47,7 +47,7 @@ class UnknownWikiCountListExporter(Application):
                         ]
 
     # @return [list<str>]
-    def __count_list_by_namespace__(self):
+    def __count_list_by_namespace__(self) -> list[str]:
         filtered_count_list_by_namespace = {}
         count_list_by_namespace          = []
 
