@@ -62,7 +62,7 @@ class Application
               :path_to_wikis_by_owner,
               :paths_to_wikis
 
-  # @rbs return: String
+  # @rbs return: Array[String]
   def target_paths
     @target_paths ||= paths_to_wikis.delete_if { |path_to_wiki|
       path_to_wiki == path_to_home ||

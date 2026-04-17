@@ -44,8 +44,8 @@ class Application
 
   attr_reader paths_to_wikis: untyped
 
-  # @rbs return: String
-  def target_paths: () -> String
+  # @rbs return: Array[String]
+  def target_paths: () -> Array[String]
 
   # @rbs return: Regexp
   def target_regexp: () -> Regexp
