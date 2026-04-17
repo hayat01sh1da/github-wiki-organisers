@@ -110,12 +110,12 @@ class Application
     end
   end
 
+  # @rbs hash: Hash[String, Array[untyped]]
   # @rbs return: Hash[String, Array[String]]
-  def wiki_maps_with_namespace
-    hash                   = Hash.new { |hash, namespace| hash[namespace] = [] }
-    uncategrised_wiki_maps = Hash.new { |hash, namespace| hash[namespace] = [] }
+  def wiki_maps_with_namespace(hash = Hash.new { |hash, namespace| hash[namespace] = Array.new })
+    uncategrised_wiki_maps = hash
 
-    @wiki_maps_with_namespace ||= target_paths.each.with_object(hash) { |target_path, hash|
+    @wiki_maps_with_namespace ||= target_paths.each.with_object(hash.dup) { |target_path, hash|
       next unless File.exist?(target_path)
 
       File.open(target_path) { |file|
