@@ -5,8 +5,9 @@ class Sidebar < Application
   # @rbs group_by: String
   # @rbs language: String
   # @rbs home_overflow: String
+  # @rbs array: Array[untyped]
   # @rbs return: void
-  def initialize: (?base_path: String, ?group_by: String, ?language: String, ?home_overflow: String) -> void
+  def initialize: (?base_path: String, ?group_by: String, ?language: String, ?home_overflow: String, ?array: Array[untyped]) -> void
 
   # @rbs return: void
   def run: () -> void

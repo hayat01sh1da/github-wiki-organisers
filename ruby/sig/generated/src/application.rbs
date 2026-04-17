@@ -53,9 +53,10 @@ class Application
   # @rbs return: String
   def no_declaration: () -> String
 
+  # @rbs array: Array[untyped]
   # @rbs hash: Hash[String, Array[untyped]]
   # @rbs return: Hash[String, Array[String]]
-  def wiki_maps_with_namespace: (?Hash[String, Array[untyped]] hash) -> Hash[String, Array[String]]
+  def wiki_maps_with_namespace: (?Array[untyped] array, ?Hash[String, Array[untyped]] hash) -> Hash[String, Array[String]]
 
   # @rbs return: Hash[String, Array[String]]
   def owned_wiki_maps: () -> Hash[String, Array[String]]

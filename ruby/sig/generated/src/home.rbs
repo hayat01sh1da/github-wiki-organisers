@@ -25,6 +25,7 @@ class Home < Application
   # @rbs return: Array[String]
   def home_passage: () -> Array[String]
 
+  # @rbs array: Array[untyped]
   # @rbs return: void
-  def write_home_passage: () -> void
+  def write_home_passage: (?Array[untyped] array) -> void
 end

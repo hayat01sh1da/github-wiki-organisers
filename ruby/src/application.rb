@@ -110,9 +110,10 @@ class Application
     end
   end
 
+  # @rbs array: Array[untyped]
   # @rbs hash: Hash[String, Array[untyped]]
   # @rbs return: Hash[String, Array[String]]
-  def wiki_maps_with_namespace(hash = Hash.new { |hash, namespace| hash[namespace] = Array.new })
+  def wiki_maps_with_namespace(array = [], hash = Hash.new { |hash, namespace| hash[namespace] = array.dup })
     uncategrised_wiki_maps = hash
 
     @wiki_maps_with_namespace ||= target_paths.each.with_object(hash.dup) { |target_path, hash|

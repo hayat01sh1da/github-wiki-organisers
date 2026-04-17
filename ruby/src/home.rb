@@ -37,13 +37,14 @@ class Home < Application
     @home_passage ||= File.readlines(path_to_home_template).append("\n")
   end
 
+  # @rbs array: Array[untyped]
   # @rbs return: void
-  def write_home_passage
+  def write_home_passage(array = [])
     if home_overflow
       FileUtils.mkdir_p(path_to_wikis_by_owner) unless Dir.exist?(path_to_wikis_by_owner)
 
       owned_wiki_maps.each { |namespace, wikis|
-        home_passage  = Array.new
+        home_passage  = array
         home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"
         home_passage << "\n"
         wikis.each { |wiki|
@@ -55,7 +56,7 @@ class Home < Application
       }
 
       plain_wiki_maps.each { |namespace, wikis|
-        home_passage  = Array.new
+        home_passage  = array.dup
         home_passage << "## #{namespace}\n"
         home_passage << "\n"
         wikis.each { |wiki|

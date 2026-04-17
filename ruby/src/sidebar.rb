@@ -7,11 +7,12 @@ class Sidebar < Application
   # @rbs group_by: String
   # @rbs language: String
   # @rbs home_overflow: String
+  # @rbs array: Array[untyped]
   # @rbs return: void
-  def initialize(base_path: '', group_by: '', language: '', home_overflow: 'false')
+  def initialize(base_path: '', group_by: '', language: '', home_overflow: 'false', array: [])
     super(base_path:, group_by:, language:, home_overflow:)
     @base_owner_url = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
-    @wiki_list      = Array.new
+    @wiki_list      = array
   end
 
   # @rbs return: void
