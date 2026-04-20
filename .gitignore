@@ -1,3 +1,8 @@
+# Environment Variables
+.env
+
+# Ruby
+ruby/**/vendor/**
+
 # Python
 python/**/__pycache__/
-.env
