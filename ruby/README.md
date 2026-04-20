@@ -2,11 +2,20 @@
 
 - Ruby 4.0.2
 
-## 2. Execution
+## 2. Install Gems via Gemfile and Bundler
+
+```command
+$ mkdir -p vendor/bundle
+$ bundle config set path vendor/bundle
+$ bundle install
+$ bundle lock --add-checksums
+```
+
+## 3. Execution
 
 Run the commands under `./ruby`
 
-### 2-1. Options
+### 3-1. Options
 
 | Order | Option        | Command-line Argument   |
 | :---- | :------------ | :---------------------- |
@@ -14,7 +23,7 @@ Run the commands under `./ruby`
 | 2     | language      | `English` or `Japanese` |
 | 3     | home_overflow | `true` or `false`       |
 
-### 2-2. Update Wiki List on Home and Sidebar
+### 3-2. Update Wiki List on Home and Sidebar
 
 ```command
 $ ruby exec/update_wiki_list_on_home_and_sidebar.rb
@@ -31,7 +40,7 @@ Check out an Up-to-date Wiki List on Sidebar at 'https://github.com/hayat01sh1da
 -------------------- Done Categorising the Entire github-wiki-organisers Wiki Pages 🎉 --------------------
 ```
 
-## 2-3. Export Unknown Wiki Count List by Namespace
+## 3-3. Export Unknown Wiki Count List by Namespace
 
 ```command
 $ ruby exec/export_unknown_wiki_count_list_by_namespace.rb Owner English
@@ -67,7 +76,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 -------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
 ```
 
-### 2-3-2. Category
+### 3-3-2. Category
 
 ```command
 $ ruby exec/export_unknown_wiki_count_list_by_namespace.rb Category English
@@ -99,7 +108,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 -------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
 ```
 
-## 2-4. Export Unknown Wiki List for LLM 
+## 3-4. Export Unknown Wiki List for LLM 
 
 ```command
 $ ruby exec/export_unknown_wiki_list_for_llm.rb
@@ -110,7 +119,7 @@ Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
 -------------------- Done Exporting Unknown Wiki List 🎉 --------------------
 ```
 
-## 3. Bulk Execution of Unit Tests
+## 4. Bulk Execution of Unit Tests
 
 ```command
 $ rake
