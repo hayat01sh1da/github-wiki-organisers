@@ -1,8 +1,10 @@
+# rbs_inline: enabled
+
 require_relative '../src/home'
 require_relative '../src/sidebar'
 
 group_by, language, home_overflow, *_ = ARGV
-params = { group_by:, language:, home_overflow: }.reject { |_, value| value.empty? }
+params = { group_by:, language:, home_overflow: }.reject { |_, value| value&.empty? }
 
 puts '-------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------'
 puts "\n"

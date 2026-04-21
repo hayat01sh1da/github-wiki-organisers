@@ -1,9 +1,11 @@
+# rbs_inline: enabled
+
 require 'minitest/autorun'
 require 'fileutils'
 require_relative '../src/application'
 
 class ApplicationTest < Minitest::Test
-  def setup(base_path: File.join('.', 'test', 'wiki'), group_by: 'Owner', language: 'English', home_overflow: false)
+  def setup(base_path: File.join('.', 'test', 'wiki'), group_by: 'Owner', language: 'English', home_overflow: 'false')
     @base_path     = base_path
     @group_by      = group_by
     @language      = language

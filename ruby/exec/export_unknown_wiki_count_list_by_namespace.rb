@@ -1,7 +1,9 @@
+# rbs_inline: enabled
+
 require_relative '../src/unknown_wiki_count_list_exporter'
 
 group_by, language, *_ = ARGV
-params = { group_by:, language: }.reject { |_, value| value.empty? }
+params = { group_by:, language: }.reject { |_, value| value&.empty? }
 
 puts '-------------------- Exporting Unknown Wiki Count List... --------------------'
 count_list_by_namespace, path_to_export = UnknownWikiCountListExporter.run(**params)

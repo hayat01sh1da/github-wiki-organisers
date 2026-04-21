@@ -1,7 +1,9 @@
+# rbs_inline: enabled
+
 require_relative '../src/unknown_wiki_list_exporter_for_llm'
 
 group_by, language, *_ = ARGV
-params = { group_by:, language: }.reject { |_, value| value.empty? }
+params = { group_by:, language: }.reject { |_, value| value&.empty? }
 
 puts '-------------------- Exporting Unknown Wiki List... --------------------'
 path_to_export = UnknownWikiListExporterForLLM.run(**params)

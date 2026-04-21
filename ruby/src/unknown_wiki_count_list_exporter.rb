@@ -1,11 +1,19 @@
+# rbs_inline: enabled
+
 require_relative './application'
 
 class UnknownWikiCountListExporter < Application
-  def initialize(base_path:, group_by:, language:, home_overflow: false)
+  # @rbs base_path: String
+  # @rbs group_by: String
+  # @rbs language: String
+  # @rbs home_overflow: String
+  # @rbs return: void
+  def initialize(base_path: '', group_by: '', language: '', home_overflow: 'false')
     super(base_path:, group_by:, language:, home_overflow:)
     @path_to_export = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
   end
 
+  # @rbs return: [Array[String], String]
   def run
     File.open(path_to_export, 'wb') { |f| f.puts(count_list_by_namespace) }
     [count_list_by_namespace, path_to_export]
@@ -15,7 +23,7 @@ class UnknownWikiCountListExporter < Application
 
   attr_reader :path_to_export
 
-  # @return [Array<String>]
+  # @rbs return: Array[String]
   def namespace_list
     case group_by
     when 'Owner'
@@ -32,6 +40,8 @@ class UnknownWikiCountListExporter < Application
           'Ownerチーム・要or不要が不明なページ群',
           'Owner記名なし'
         ]
+      else
+        ['']
       end
     when 'Category'
       case language
@@ -43,23 +53,27 @@ class UnknownWikiCountListExporter < Application
         [
           'Category記載なし'
         ]
+      else
+        ['']
       end
+    else
+      ['']
     end
   end
 
-  # @return [Array<String>]
+  # @rbs return: Array[String]
   def missing_count_list_by_namespace
     (namespace_list - plain_wiki_maps.keys).map { |namespace| "#{namespace}: 0" }
   end
 
-  # @return [Array<String>]
+  # @rbs return: Array[String]
   def count_list_by_namespace
     @count_list_by_namespace ||= plain_wiki_maps.select { |namespace, _|
       namespace_list.include?(namespace)
     }.map { |namespace, wikis|
       "#{namespace}: #{wikis.length}"
-    }.then {
-      it + missing_count_list_by_namespace
+    }.then { |list_by_namespace|
+      list_by_namespace + missing_count_list_by_namespace
     }.sort
   end
 end

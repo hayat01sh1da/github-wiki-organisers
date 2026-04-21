@@ -1,25 +1,36 @@
+# rbs_inline: enabled
+
 class Application
   class NotImplementedError < StandardError; end
 
+  # @rbs base_path: String
+  # @rbs group_by: String
+  # @rbs language: String
+  # @rbs home_overflow: String
+  # @rbs return: void
   def self.run(base_path: File.join('..', '..'), group_by: 'Owner', language: 'English', home_overflow: 'false')
-    home_overflow = case home_overflow
-    when 'true'
-      true
-    when 'false'
-      false
-    else
-      home_overflow
-    end
     instance = new(base_path:, group_by:, language:, home_overflow:)
     instance.validate!
     instance.run
   end
 
+  # @rbs base_path: String
+  # @rbs group_by: String
+  # @rbs language: String
+  # @rbs home_overflow: String
+  # @rbs return: void
   def initialize(base_path:, group_by:, language:, home_overflow:)
-    @base_path                      = base_path
-    @group_by                       = group_by
-    @language                       = language
-    @home_overflow                  = home_overflow
+    @base_path     = base_path
+    @group_by      = group_by
+    @language      = language
+    @home_overflow = case home_overflow
+                     when 'true'
+                      true
+                      when 'false'
+                      false
+                     else
+                       home_overflow
+                     end
     @path_to_home                   = File.join(base_path, 'Home.md')
     @path_to_sidebar                = File.join(base_path, '_Sidebar.md')
     @path_to_github_wiki_organisers = Dir[File.join(base_path, 'github-wiki-organisers', '**', '*.md')].sort
@@ -27,12 +38,14 @@ class Application
     @paths_to_wikis                 = Dir[File.join(base_path, '**', '*.md')].sort
   end
 
+  # @rbs return: void
   def validate!
     raise ArgumentError, "Invalid group_by: `#{group_by}`" unless ['Owner', 'Category'].include?(group_by)
     raise ArgumentError, "Invalid language: `#{language}`" unless ['English', 'Japanese'].include?(language)
     raise ArgumentError, "Invalid home_overflow: `#{home_overflow}` must be boolean" unless [true, false].include?(home_overflow)
   end
 
+  # @rbs return: void
   def run
     raise NotImplementedError, 'This method must be implemented in each subclass.'
   end
@@ -49,27 +62,29 @@ class Application
               :path_to_wikis_by_owner,
               :paths_to_wikis
 
-  # @return [String]
+  # @rbs return: Array[String]
   def target_paths
-    @target_paths ||= paths_to_wikis.delete_if {
-      it == path_to_home ||
-      it == path_to_sidebar ||
-      path_to_github_wiki_organisers.include?(it) ||
-      path_to_wikis_by_owner.include?(it)
+    @target_paths ||= paths_to_wikis.delete_if { |path_to_wiki|
+      path_to_wiki == path_to_home ||
+        path_to_wiki == path_to_sidebar ||
+        path_to_github_wiki_organisers.include?(path_to_wiki) ||
+        path_to_wikis_by_owner.include?(path_to_wiki)
     }
   end
 
-  # @return [Regexp]
+  # @rbs return: Regexp
   def target_regexp
     @target_regexp ||= case group_by
     when 'Owner'
       /[Oo]wner:\s?/
     when 'Category'
       /[Cc]ategory:\s?/
+    else
+      //
     end
   end
 
-  # @return [String]
+  # @rbs return: String
   def no_declaration
     @no_declaration ||= case group_by
     when 'Owner'
@@ -78,6 +93,8 @@ class Application
         'Unowned'
       when 'Japanese'
         'Owner記名なし'
+      else
+        ''
       end
     when 'Category'
       case language
@@ -85,16 +102,21 @@ class Application
         'Uncategorised'
       when 'Japanese'
         'Category記載なし'
+      else
+        ''
       end
+    else
+      ''
     end
   end
 
-  # @return [Hash<String => Array<String>>]
-  def wiki_maps_with_namespace
-    hash                   = Hash.new { |hash, namespace| hash[namespace] = [] }
-    uncategrised_wiki_maps = Hash.new { |hash, namespace| hash[namespace] = [] }
+  # @rbs array: Array[untyped]
+  # @rbs hash: Hash[String, Array[untyped]]
+  # @rbs return: Hash[String, Array[String]]
+  def wiki_maps_with_namespace(array = [], hash = Hash.new { |hash, namespace| hash[namespace] = array.dup })
+    uncategrised_wiki_maps = hash
 
-    @wiki_maps_with_namespace ||= target_paths.each.with_object(hash) { |target_path, hash|
+    @wiki_maps_with_namespace ||= target_paths.each.with_object(hash.dup) { |target_path, hash|
       next unless File.exist?(target_path)
 
       File.open(target_path) { |file|
@@ -113,12 +135,12 @@ class Application
     }.sort.to_h.merge(uncategrised_wiki_maps)
   end
 
-  # @return [Hash<String => Array<String>>]
+  # @rbs return: Hash[String, Array[String]]
   def owned_wiki_maps
     @owned_wiki_maps ||= wiki_maps_with_namespace.select { |namespace, _| namespace.include?('@') }
   end
 
-  # @return [Hash<String => Array<String>>]
+  # @rbs return: Hash[String, Array[String]]
   def plain_wiki_maps
     @plain_wiki_maps ||= wiki_maps_with_namespace.reject { |namespace, _| namespace.include?('@') }
   end
