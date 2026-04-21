@@ -2,7 +2,7 @@
 .env
 
 # Ruby
-ruby/**/vendor/**
+ruby/**/vendor/bundle/**
 
 # Python
 python/**/__pycache__/
