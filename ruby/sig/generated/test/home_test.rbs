@@ -1,0 +1,79 @@
+# Generated from test/home_test.rb with RBS::Inline
+
+class HomeTest < ApplicationTest
+  def setup: (?group_by: untyped, ?language: untyped, ?home_overflow: untyped) -> untyped
+
+  private
+
+  attr_reader path_to_home: untyped
+
+  attr_reader home: untyped
+
+  attr_reader path_to_wikis_by_owner: untyped
+
+  module English
+    class OwnedHomeTest < HomeTest
+      class NonOverflowTest < OwnedHomeTest
+        def test_self_run: () -> untyped
+
+        private
+
+        def home_passage: () -> untyped
+      end
+
+      class OverflowTest < OwnedHomeTest
+        def setup: () -> untyped
+
+        def test_self_run: () -> untyped
+
+        private
+
+        def home_passage: () -> untyped
+      end
+    end
+
+    class CategorisedHomeTest < HomeTest
+      def setup: () -> untyped
+
+      def test_self_run: () -> untyped
+
+      private
+
+      def home_passage: () -> untyped
+    end
+  end
+
+  module Japanese
+    class OwnedHomeTest < HomeTest
+      class NonOverflowTest < OwnedHomeTest
+        def setup: () -> untyped
+
+        def test_self_run: () -> untyped
+
+        private
+
+        def home_passage: () -> untyped
+      end
+
+      class OverflowTest < OwnedHomeTest
+        def setup: () -> untyped
+
+        def test_self_run: () -> untyped
+
+        private
+
+        def home_passage: () -> untyped
+      end
+    end
+
+    class CategorisedHomeTest < HomeTest
+      def setup: () -> untyped
+
+      def test_self_run: () -> untyped
+
+      private
+
+      def home_passage: () -> untyped
+    end
+  end
+end

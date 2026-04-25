@@ -1,0 +1,53 @@
+# Generated from test/unknown_wiki_list_exporter_for_llm_test.rb with RBS::Inline
+
+class UnknownWikiListExporterForLLMTest < ApplicationTest
+  def setup: (?group_by: untyped, ?language: untyped) -> untyped
+
+  private
+
+  attr_reader path_to_unknown_wiki_list_for_llm: untyped
+
+  attr_reader unknown_wiki_list_for_llm: untyped
+
+  module English
+    class OwnershipTest < UnknownWikiListExporterForLLMTest
+      def test_self_run: () -> untyped
+
+      private
+
+      def unknown_wiki_list: () -> untyped
+    end
+
+    class CategoryTest < UnknownWikiListExporterForLLMTest
+      def setup: () -> untyped
+
+      def test_self_run: () -> untyped
+
+      private
+
+      def unknown_wiki_list: () -> untyped
+    end
+  end
+
+  module Japanese
+    class OwnershipTest < UnknownWikiListExporterForLLMTest
+      def setup: () -> untyped
+
+      def test_self_run: () -> untyped
+
+      private
+
+      def unknown_wiki_list: () -> untyped
+    end
+
+    class CategoryTest < UnknownWikiListExporterForLLMTest
+      def setup: () -> untyped
+
+      def test_self_run: () -> untyped
+
+      private
+
+      def unknown_wiki_list: () -> untyped
+    end
+  end
+end
