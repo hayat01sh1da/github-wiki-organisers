@@ -1,0 +1,34 @@
+# Generated from src/home.rb with RBS::Inline
+
+class Home < Application
+  HOME_URL: untyped
+
+  # @rbs base_path: String
+  # @rbs group_by: String
+  # @rbs language: String
+  # @rbs home_overflow: String
+  # @rbs return: void
+  def initialize: (?base_path: String, ?group_by: String, ?language: String, ?home_overflow: String) -> void
+
+  # @rbs return: String
+  def run: () -> String
+
+  private
+
+  attr_reader base_owner_url: untyped
+
+  attr_reader path_to_wikis_by_owner: untyped
+
+  # @rbs return: String
+  def path_to_home_template: () -> String
+
+  # @rbs return: Array[String]
+  def home_passage: () -> Array[String]
+
+  # @rbs return: void
+  def write_home_passage: () -> void
+
+  # @rbs array: Array[untyped]
+  # @rbs return: void
+  def write_concise_home_passage: (?Array[untyped] array) -> void
+end
