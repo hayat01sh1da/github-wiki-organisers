@@ -1,7 +1,6 @@
 # rbs_inline: enabled
 
 require_relative './application'
-require 'fileutils'
 
 class Home < Application
   HOME_URL = "https://github.com/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/github-wiki-organisers/wiki".freeze
