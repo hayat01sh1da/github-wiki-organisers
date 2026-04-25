@@ -3,18 +3,28 @@
 D = Steep::Diagnostic
 
 target :app do
+  check 'exec'
   # ⚠️ FIXME: Steep temporarily ignores `exec/export_unknown_wiki_count_list_by_namespace.rb` due to the following unsolvable error.
-  # ⚠️ Uncomment `check 'exec'` once solved.
+  # ⚠️ Delete `ignore 'exec/export_unknown_wiki_count_list_by_namespace.rb'` once solved.
   # ```log
   # exec/export_unknown_wiki_count_list_by_namespace.rb:15:24: [error] Type `void` does not have method `each`
   # │ Diagnostic ID: Ruby::NoMethod
   # │
   # └ count_list_by_namespace.each { |count_list|  # check 'exec/export_unknown_wiki_count_list_by_namespace.rb'
   # ```
-  # check 'exec'
-  check 'exec/export_unknown_wiki_list_for_llm.rb'
-  check 'exec/update_wiki_list_on_home_and_sidebar.rb'
+  ignore 'exec/export_unknown_wiki_count_list_by_namespace.rb'
   check 'src'
+  ignore 'test'
+  signature 'sig'
+
+  library 'fileutils'
+
+  configure_code_diagnostics(D::Ruby.default)
+end
+
+target :test do
+  ignore 'exec'
+  ignore 'src'
   check 'test'
   signature 'sig'
 
