@@ -8,7 +8,7 @@ from sidebar import Sidebar
 from test_application import TestApplication
 
 class TestSidebar(TestApplication):
-    def setUp(self, group_by = 'Owner', language = 'English'):
+    def setUp(self, group_by: str = 'Owner', language: str = 'English') -> None:
         super().setUp(group_by = group_by, language = language)
         Sidebar(self.base_path, group_by = group_by, language = language).run()
         path_to_sidebar = os.path.join(self.base_path, '_Sidebar.md')
@@ -16,12 +16,12 @@ class TestSidebar(TestApplication):
             self.sidebar = f.read()
 
 class EnglishOwnedSidebarTest(TestSidebar):
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertEqual(self.sidebar, self.__wiki_list__())
 
     # private
 
-    def __wiki_list__(self):
+    def __wiki_list__(self) -> str:
         lst  = '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
         lst += '  - [[Owned Wiki]]\n'
         lst += '- Unknown Owner nor Necessity\n'
@@ -35,15 +35,15 @@ class EnglishOwnedSidebarTest(TestSidebar):
         return lst
 
 class EnglishPlainSidebarTest(TestSidebar):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp(group_by = 'Category')
 
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertEqual(self.sidebar, self.__wiki_list__())
 
     # private
 
-    def __wiki_list__(self):
+    def __wiki_list__(self) -> str:
         lst  = '- test-category\n'
         lst += '  - [[Categorised Wiki]]\n'
         lst += '- Uncategorised\n'
@@ -53,15 +53,15 @@ class EnglishPlainSidebarTest(TestSidebar):
         return lst
 
 class JapaneseOwnedSidebarTest(TestSidebar):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp(language = 'Japanese')
 
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertEqual(self.sidebar, self.__wiki_list__())
 
     # private
 
-    def __wiki_list__(self):
+    def __wiki_list__(self) -> str:
         lst  = '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
         lst += '  - [[Owner記名ありページ]]\n'
         lst += '- Ownerチームが不明だが必要なページ群\n'
@@ -74,15 +74,15 @@ class JapaneseOwnedSidebarTest(TestSidebar):
 
         return lst
 class JapanesePlainSidebarTest(TestSidebar):
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp(group_by = 'Category', language = 'Japanese')
 
-    def test_run(self):
+    def test_run(self) -> None:
         self.assertEqual(self.sidebar, self.__wiki_list__())
 
     # private
 
-    def __wiki_list__(self):
+    def __wiki_list__(self) -> str:
         lst  = '- test-category\n'
         lst += '  - [[Category記載ありページ]]\n'
         lst += '- Category記載なし\n'
