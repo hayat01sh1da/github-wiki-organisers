@@ -117,7 +117,7 @@ Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
 -------------------- Done Exporting Unknown Wiki List 🎉 --------------------
 ```
 
-## 4. Bulk Execution of Unit Tests
+## 4. Unit Tests
 
 ```command
 $ rake
@@ -130,4 +130,26 @@ Run options: --seed 63409
 Finished in 8.858870s, 17.6095 runs/s, 32.5098 assertions/s.
 
 156 runs, 288 assertions, 0 failures, 0 errors, 0 skips
+```
+
+## 5. Static Code Analysis
+
+```command
+$ rubocop
+Inspecting 16 files
+................
+
+16 files inspected, no offenses detected
+```
+
+## 6. Type Checks
+
+```command
+$ rbs-inline --output sig/generated/ .
+🎉 Generated 13 RBS files under sig/generated
+# Type checking files:
+
+.........................
+
+No type error detected. 🫖
 ```
