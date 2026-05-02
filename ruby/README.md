@@ -121,13 +121,13 @@ Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
 
 ```command
 $ rake
-Run options: --seed 63409
+Run options: --seed 33975
 
 # Running:
 
 ............................................................................................................................................................
 
-Finished in 8.858870s, 17.6095 runs/s, 32.5098 assertions/s.
+Finished in 32.985576s, 4.7293 runs/s, 8.7311 assertions/s.
 
 156 runs, 288 assertions, 0 failures, 0 errors, 0 skips
 ```
