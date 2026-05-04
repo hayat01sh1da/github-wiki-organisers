@@ -2,11 +2,17 @@
 
 - Python 3.14.4
 
-## 2. Execution
+## 2. Install Libraries via requirements.txt
+
+```command
+$ pip install -r requirements.txt
+```
+
+## 3. Execution
 
 Run the commands under `./python`
 
-### 2-1. Options
+### 3-1. Options
 
 | Order | Option        | Command-line Argument   |
 | :---- | :------------ | :---------------------- |
@@ -14,7 +20,7 @@ Run the commands under `./python`
 | 2     | language      | `English` or `Japanese` |
 | 3     | home_overflow | `True` or `False`       |
 
-### 2-2. Update Wiki List on Home and Sidebar
+### 3-2. Update Wiki List on Home and Sidebar
 
 ```command
 $ python exec/update_wiki_list_on_home_and_sidebar.py Owner English
@@ -31,9 +37,9 @@ Check out an Up-to-date Wiki List on Sidebar at 'https://github.com/hayat01sh1da
 -------------------- Done Categorising the Entire github-wiki-organisers Wiki Pages 🎉 ---------------------
 ```
 
-## 2-3. Export Unknown Wiki Count List by Namespace
+## 3-3. Export Unknown Wiki Count List by Namespace
 
-### 2-3-1. Owner
+### 3-3-1. Owner
 
 ```command
 $ python exec/export_unknown_wiki_count_list_by_namespace.py Owner English
@@ -69,7 +75,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 -------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
 ```
 
-### 2-3-2. Category
+### 3-3-2. Category
 
 ```command
 $ python exec/export_unknown_wiki_count_list_by_namespace.py Category English
@@ -101,7 +107,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 -------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
 ```
 
-## 2-4. Export Unknown Wiki List for LLM 
+## 3-4. Export Unknown Wiki List for LLM
 
 ```command
 $ python exec/export_unknown_wiki_list_for_llm.py
@@ -112,13 +118,20 @@ Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
 -------------------- Done Exporting Unknown Wiki List 🎉 --------------------
 ```
 
-## 3. Bulk Execution of Unit Tests
+## 4. Bulk Execution of Unit Tests
 
 ```command
-$ python -m unittest discover ./test
-....................................................................................................................................................
-----------------------------------------------------------------------
-Ran 148 tests in 8.722s
+$ pytest
+====================================================================== test session starts =======================================================================
+platform linux -- Python 3.14.4, pytest-9.0.3, pluggy-1.6.0
+rootdir: /mnt/c/Users/binlh/Documents/development/github-wiki-organisers/python
+collected 148 items                                                                                                                                              
 
-OK
+test/test_application.py ....                                                                                                                              [  2%]
+test/test_home.py ................................                                                                                                         [ 24%]
+test/test_sidebar.py ........................                                                                                                              [ 40%]
+test/test_unknown_wiki_count_list_exporter.py ................................................................                                             [ 83%]
+test/test_unknown_wiki_list_exporter_for_llm.py ........................                                                                                   [100%]
+
+====================================================================== 148 passed in 12.44s ======================================================================
 ```
