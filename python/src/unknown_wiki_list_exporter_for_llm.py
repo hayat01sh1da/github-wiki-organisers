@@ -1,13 +1,23 @@
+from application import Application
 import sys
 import os
 sys.path.append('./src')
-from application import Application
+
 
 class UnknownWikiListExporterForLLM(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = False):
+    def __init__(
+            self,
+            base_path=os.path.join(
+                '..',
+                '..'),
+            group_by='Owner',
+            language='English',
+            home_overflow=False):
         super().__init__(base_path, group_by, language, home_overflow)
-        self.path_to_export               = os.path.join(self.base_path, 'unknown_wiki_list_for_llm.txt')
-        self.unknown_wiki_list_for_llm = ''.join(sorted(self.__unknown_wiki_list_for_llm__()))
+        self.path_to_export = os.path.join(
+            self.base_path, 'unknown_wiki_list_for_llm.txt')
+        self.unknown_wiki_list_for_llm = ''.join(
+            sorted(self.__unknown_wiki_list_for_llm__()))
 
     def run(self):
         with open(self.path_to_export, 'w') as f:

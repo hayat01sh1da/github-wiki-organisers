@@ -1,14 +1,23 @@
+from application import Application
 import sys
 import os
 sys.path.append('./src')
 
-from application import Application
 
 class UnknownWikiCountListExporter(Application):
-    def __init__(self, base_path = os.path.join('..', '..'), group_by = 'Owner', language = 'English', home_overflow = False):
+    def __init__(
+            self,
+            base_path=os.path.join(
+                '..',
+                '..'),
+            group_by='Owner',
+            language='English',
+            home_overflow=False):
         super().__init__(base_path, group_by, language, home_overflow)
-        self.path_to_export          = os.path.join(self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
-        self.count_list_by_namespace = ''.join(sorted(self.__count_list_by_namespace__()))
+        self.path_to_export = os.path.join(
+            self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
+        self.count_list_by_namespace = ''.join(
+            sorted(self.__count_list_by_namespace__()))
 
     def run(self):
         with open(self.path_to_export, 'w') as f:
@@ -49,13 +58,15 @@ class UnknownWikiCountListExporter(Application):
     # @return [list<str>]
     def __count_list_by_namespace__(self):
         filtered_count_list_by_namespace = {}
-        count_list_by_namespace          = []
+        count_list_by_namespace = []
 
         for namespace, wikis in self.plain_wiki_maps.items():
             if namespace in self.__namespace_list__():
                 filtered_count_list_by_namespace[namespace] = wikis
 
-        for namespace in (self.__namespace_list__() - filtered_count_list_by_namespace.keys()):
+        for namespace in (
+                self.__namespace_list__() -
+                filtered_count_list_by_namespace.keys()):
             count_list_by_namespace.append(f'{namespace}: 0\n')
 
         for namespace, wikis in filtered_count_list_by_namespace.items():

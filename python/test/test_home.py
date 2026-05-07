@@ -1,3 +1,5 @@
+from test_application import TestApplication
+from home import Home
 import sys
 import os
 import glob
@@ -5,21 +7,30 @@ import unittest
 sys.path.append('./src')
 sys.path.append('./test')
 
-from home import Home
-from test_application import TestApplication
 
 class TestHome(TestApplication):
-    def setUp(self, group_by = 'Owner', language = 'English', home_overflow = False):
-        super().setUp(group_by = group_by, language = language, home_overflow = home_overflow)
-        Home(base_path = self.base_path, group_by = group_by, language = language, home_overflow = home_overflow).run()
+    def setUp(self, group_by='Owner', language='English', home_overflow=False):
+        super().setUp(group_by=group_by, language=language, home_overflow=home_overflow)
+        Home(
+            base_path=self.base_path,
+            group_by=group_by,
+            language=language,
+            home_overflow=home_overflow).run()
         path_to_home = os.path.join(self.base_path, 'Home.md')
         with open(path_to_home) as f:
             self.home = f.read()
-        self.path_to_wikis_by_owner = os.path.join(self.base_path, 'wikis-by-owner')
-        self.overflow_files         = sorted(glob.glob(os.path.join(self.path_to_wikis_by_owner, '*.md')))
+        self.path_to_wikis_by_owner = os.path.join(
+            self.base_path, 'wikis-by-owner')
+        self.overflow_files = sorted(
+            glob.glob(
+                os.path.join(
+                    self.path_to_wikis_by_owner,
+                    '*.md')))
 
     def __expected_wikis_by_owner__(self, namespaces):
-        return sorted([os.path.join(self.path_to_wikis_by_owner, f'{namespace}.md') for namespace in namespaces])
+        return sorted([os.path.join(self.path_to_wikis_by_owner,
+                      f'{namespace}.md') for namespace in namespaces])
+
 
 class EnglishOwnedHomeWithoutOverflowTest(TestHome):
     def test_run(self):
@@ -29,7 +40,7 @@ class EnglishOwnedHomeWithoutOverflowTest(TestHome):
     # private
 
     def __home_passage__(self):
-        passage  = '## How to Manage Wiki Pages\n'
+        passage = '## How to Manage Wiki Pages\n'
         passage += '\n'
         passage += 'This Home page manage wikis by owner group.\n'
         passage += '\n'
@@ -57,20 +68,22 @@ class EnglishOwnedHomeWithoutOverflowTest(TestHome):
 
         return passage
 
+
 class EnglishOwnedHomeWithOverflowTest(TestHome):
     def setUp(self):
-        super().setUp(home_overflow = True)
+        super().setUp(home_overflow=True)
 
     def test_run(self):
         self.assertTrue(os.path.exists(self.path_to_wikis_by_owner))
         self.assertEqual(self.home, self.__home_passage__())
-        expected_files = self.__expected_wikis_by_owner__(['@test-owner', 'Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'])
+        expected_files = self.__expected_wikis_by_owner__(
+            ['@test-owner', 'Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'])
         self.assertEqual(self.overflow_files, expected_files)
 
     # private
 
     def __home_passage__(self):
-        passage  = '## How to Manage Wiki Pages\n'
+        passage = '## How to Manage Wiki Pages\n'
         passage += '\n'
         passage += 'This Home page manage wikis by owner group.\n'
         passage += '\n'
@@ -86,9 +99,10 @@ class EnglishOwnedHomeWithOverflowTest(TestHome):
 
         return passage
 
+
 class EnglishCategorisedHomeTest(TestHome):
     def setUp(self):
-        super().setUp(group_by = 'Category')
+        super().setUp(group_by='Category')
 
     def test_run(self):
         self.assertEqual(self.home, self.__home_passage__())
@@ -96,7 +110,7 @@ class EnglishCategorisedHomeTest(TestHome):
     # private
 
     def __home_passage__(self):
-        passage  = '## How to Manage Wiki Pages\n'
+        passage = '## How to Manage Wiki Pages\n'
         passage += '\n'
         passage += 'This Home page manage wikis by category group.\n'
         passage += '\n'
@@ -116,9 +130,10 @@ class EnglishCategorisedHomeTest(TestHome):
 
         return passage
 
+
 class JapaneseOwnedHomeWithoutOverflowTest(TestHome):
     def setUp(self):
-        super().setUp(language = 'Japanese')
+        super().setUp(language='Japanese')
 
     def test_run(self):
         self.assertFalse(os.path.exists(self.path_to_wikis_by_owner))
@@ -127,7 +142,7 @@ class JapaneseOwnedHomeWithoutOverflowTest(TestHome):
     # private
 
     def __home_passage__(self):
-        passage  = '## Wiki ページの運用ルール\n'
+        passage = '## Wiki ページの運用ルール\n'
         passage += '\n'
         passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
         passage += '\n'
@@ -155,20 +170,22 @@ class JapaneseOwnedHomeWithoutOverflowTest(TestHome):
 
         return passage
 
+
 class JapaneseOwnedHomeWihOverflowTest(TestHome):
     def setUp(self):
-        super().setUp(language = 'Japanese', home_overflow = True)
+        super().setUp(language='Japanese', home_overflow=True)
 
     def test_run(self):
         self.assertTrue(os.path.exists(self.path_to_wikis_by_owner))
         self.assertEqual(self.home, self.__home_passage__())
-        expected_files = self.__expected_wikis_by_owner__(['@test-owner', 'Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'])
+        expected_files = self.__expected_wikis_by_owner__(
+            ['@test-owner', 'Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'])
         self.assertEqual(self.overflow_files, expected_files)
 
     # private
 
     def __home_passage__(self):
-        passage  = '## Wiki ページの運用ルール\n'
+        passage = '## Wiki ページの運用ルール\n'
         passage += '\n'
         passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
         passage += '\n'
@@ -184,9 +201,10 @@ class JapaneseOwnedHomeWihOverflowTest(TestHome):
 
         return passage
 
+
 class JapaneseCategorisedHomeTest(TestHome):
     def setUp(self):
-        super().setUp(group_by = 'Category', language = 'Japanese')
+        super().setUp(group_by='Category', language='Japanese')
 
     def test_run(self):
         self.assertEqual(self.home, self.__home_passage__())
@@ -194,7 +212,7 @@ class JapaneseCategorisedHomeTest(TestHome):
     # private
 
     def __home_passage__(self):
-        passage  = '## Wiki ページの運用ルール\n'
+        passage = '## Wiki ページの運用ルール\n'
         passage += '\n'
         passage += 'このページは Category ごとに Wiki をグルーピングして一覧化しています。\n'
         passage += '\n'
@@ -213,6 +231,7 @@ class JapaneseCategorisedHomeTest(TestHome):
         passage += '- [[Category記載なしページ2]]\n'
 
         return passage
+
 
 if __name__ == '__main__':
     unittest.main()

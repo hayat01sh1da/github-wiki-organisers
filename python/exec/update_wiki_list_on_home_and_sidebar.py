@@ -1,15 +1,16 @@
+from sidebar import Sidebar
+from home import Home
 import sys
 import os
 import shutil
 import glob
 sys.path.append('./src')
 
-from home import Home
-from sidebar import Sidebar
 
 _, group_by, language, home_overflow, *_ = sys.argv
 params = dict()
-for key, value in { 'group_by': group_by, 'language': language, 'home_overflow': home_overflow }.items():
+for key, value in {'group_by': group_by, 'language': language,
+                   'home_overflow': home_overflow}.items():
     if value:
         params[key] = value
 
@@ -27,6 +28,11 @@ print('-------------------- Done Organising Sidebar 🎉 --------------------')
 print()
 print('-------------------- Done Categorising the Entire github-wiki-organisers Wiki Pages 🎉 --------------------')
 
-for pycache in glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True):
+for pycache in glob.glob(
+        os.path.join(
+            '.',
+            '**',
+            '__pycache__'),
+        recursive=True):
     if os.path.exists(pycache):
         shutil.rmtree(pycache)
