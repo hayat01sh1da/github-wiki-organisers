@@ -1,10 +1,10 @@
-from test_application import TestApplication
 from sidebar import Sidebar
 import sys
 import os
 import unittest
 sys.path.append('./src')
 sys.path.append('./test')
+from test_application import TestApplication
 
 
 class TestSidebar(TestApplication):

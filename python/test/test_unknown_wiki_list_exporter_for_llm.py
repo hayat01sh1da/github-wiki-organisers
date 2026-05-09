@@ -1,10 +1,10 @@
-from test_application import TestApplication
 from unknown_wiki_list_exporter_for_llm import UnknownWikiListExporterForLLM
 import sys
 import os
 import unittest
 sys.path.append('./src')
 sys.path.append('./test')
+from test_application import TestApplication
 
 
 class TestUnknownWikiListExporterForLLM(TestApplication):

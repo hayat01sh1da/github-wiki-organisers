@@ -1,4 +1,3 @@
-from test_application import TestApplication
 from home import Home
 import sys
 import os
@@ -6,6 +5,7 @@ import glob
 import unittest
 sys.path.append('./src')
 sys.path.append('./test')
+from test_application import TestApplication
 
 
 class TestHome(TestApplication):
