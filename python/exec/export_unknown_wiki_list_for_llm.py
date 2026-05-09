@@ -1,14 +1,14 @@
+from unknown_wiki_list_exporter_for_llm import UnknownWikiListExporterForLLM
 import sys
 import os
 import shutil
 import glob
 sys.path.append('./src')
 
-from unknown_wiki_list_exporter_for_llm import UnknownWikiListExporterForLLM
 
 _, group_by, language, *_ = sys.argv
 params = dict()
-for key, value in { 'group_by': group_by, 'language': language }.items():
+for key, value in {'group_by': group_by, 'language': language}.items():
     if value:
         params[key] = value
 
@@ -19,6 +19,11 @@ print(f"Check it out result on '{path_to_export}' !!")
 print()
 print('-------------------- Done Exporting Unknown Wiki List 🎉 --------------------')
 
-for pycache in glob.glob(os.path.join('.', '**', '__pycache__'), recursive = True):
+for pycache in glob.glob(
+        os.path.join(
+            '.',
+            '**',
+            '__pycache__'),
+        recursive=True):
     if os.path.exists(pycache):
         shutil.rmtree(pycache)
