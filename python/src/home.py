@@ -1,19 +1,34 @@
+from application import Application
 import sys
 import os
 import re
 import shutil
 sys.path.append('./src')
 
-from application import Application
 
-HOME_URL = f'https://github.com/{os.environ.get('ORGANISATION_NAME', 'hayat01sh1da')}/github-wiki-organisers/wiki'
+HOME_URL = f'https://github.com/{
+    os.environ.get(
+        'ORGANISATION_NAME',
+        'hayat01sh1da')}/github-wiki-organisers/wiki'
+
 
 class Home(Application):
-    def __init__(self, base_path: str = os.path.join('..', '..'), group_by: str = 'Owner', language: str = 'English', home_overflow: bool = False) -> None:
+    def __init__(
+            self,
+            base_path: str = os.path.join(
+                '..',
+                '..'),
+            group_by: str = 'Owner',
+            language: str = 'English',
+            home_overflow: bool = False) -> None:
         super().__init__(base_path, group_by, language, home_overflow)
-        self.base_owner_url         = f'https://github.com/orgs/{os.environ.get('ORGANISATION_NAME', 'hayat01sh1da')}/teams/'
-        self.home_passage           = self.__home_passage__()
-        self.path_to_wikis_by_owner = os.path.join(self.base_path, 'wikis-by-owner')
+        self.base_owner_url = f'https://github.com/orgs/{
+            os.environ.get(
+                'ORGANISATION_NAME',
+                'hayat01sh1da')}/teams/'
+        self.home_passage = self.__home_passage__()
+        self.path_to_wikis_by_owner = os.path.join(
+            self.base_path, 'wikis-by-owner')
 
     def run(self) -> str:
         self.__write_home_passage__()
@@ -23,7 +38,9 @@ class Home(Application):
 
     # @return [str]
     def __path_to_home_template__(self) -> str:
-        return os.path.join('..', 'home_template', self.group_by.lower(), f'{self.language.lower()}.md')
+        return os.path.join(
+            '..', 'home_template', self.group_by.lower(), f'{
+                self.language.lower()}.md')
 
     # @return [list<str>]
     def __home_passage__(self) -> str:
@@ -33,15 +50,21 @@ class Home(Application):
     # @return [str]
     def __write_home_passage__(self) -> None:
         if self.home_overflow:
-            os.makedirs(self.path_to_wikis_by_owner, exist_ok = True)
+            os.makedirs(self.path_to_wikis_by_owner, exist_ok=True)
 
             for namespace, wikis in self.owned_wiki_maps.items():
-                self.__write_wikis_by_owner_file__(namespace = namespace, wikis = wikis, owned = True)
+                self.__write_wikis_by_owner_file__(
+                    namespace=namespace, wikis=wikis, owned=True)
 
             for namespace, wikis in self.plain_wiki_maps.items():
-                self.__write_wikis_by_owner_file__(namespace = namespace, wikis = wikis, owned = False)
+                self.__write_wikis_by_owner_file__(
+                    namespace=namespace, wikis=wikis, owned=False)
 
-            for namespace in (list(self.owned_wiki_maps.keys()) + list(self.plain_wiki_maps.keys())):
+            for namespace in (
+                list(
+                    self.owned_wiki_maps.keys()) +
+                list(
+                    self.plain_wiki_maps.keys())):
                 self.home_passage += f'- [[{namespace}]]\n'
 
             self.home_passage += '\n'
@@ -53,7 +76,12 @@ class Home(Application):
             if os.path.exists(self.path_to_wikis_by_owner):
                 shutil.rmtree(self.path_to_wikis_by_owner)
             for namespace, wikis in self.owned_wiki_maps.items():
-                self.home_passage += f'## [{namespace}]({self.base_owner_url + re.sub(r'@', '', namespace)})\n'
+                self.home_passage += f'## [{namespace}]({
+                    self.base_owner_url +
+                    re.sub(
+                        r'@',
+                        '',
+                        namespace)})\n'
                 self.home_passage += '\n'
                 for wiki in wikis:
                     self.home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
@@ -69,10 +97,19 @@ class Home(Application):
             with open(self.path_to_home, 'w') as f:
                 f.write(self.home_passage.rstrip() + '\n')
 
-    def __write_wikis_by_owner_file__(self, namespace: str, wikis: list[str], owned: bool) -> None:
-        home_passage  = ''
+    def __write_wikis_by_owner_file__(
+            self,
+            namespace: str,
+            wikis: list[str],
+            owned: bool) -> None:
+        home_passage = ''
         if owned:
-            home_passage += f'## [{namespace}]({self.base_owner_url + re.sub(r'@', '', namespace)})\n'
+            home_passage += f'## [{namespace}]({
+                self.base_owner_url +
+                re.sub(
+                    r'@',
+                    '',
+                    namespace)})\n'
         else:
             home_passage += f'## {namespace}\n'
         home_passage += '\n'
@@ -80,6 +117,8 @@ class Home(Application):
             home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
         home_passage += '\n'
 
-        file_path = os.path.join(self.path_to_wikis_by_owner, f'{namespace}.md')
+        file_path = os.path.join(
+            self.path_to_wikis_by_owner,
+            f'{namespace}.md')
         with open(file_path, 'w') as f:
             f.write(home_passage.rstrip() + '\n')
