@@ -1,326 +1,148 @@
-from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
-import sys
 import os
-import unittest
-sys.path.append('./src')
-sys.path.append('./test')
-from test_application import TestApplication
 
-
-class TestUnknownWikiCountListExporter(TestApplication):
-    def setUp(self, group_by='Owner', language='English'):
-        super().setUp(group_by=group_by, language=language)
-        UnknownWikiCountListExporter(
-            self.base_path,
-            group_by=group_by,
-            language=language).run()
-        path_to_unknown_wiki_count_list = os.path.join(
-            self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
-        with open(path_to_unknown_wiki_count_list) as f:
-            self.unknown_wiki_count_list = f.read()
-
-
-class EnglishOwnerTestRegularCase1(TestUnknownWikiCountListExporter):
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Unknown Owner nor Necessity: 1\n'
-        lst += 'Unowned but Necessary: 1\n'
-        lst += 'Unowned: 2\n'
-
-        return lst
-
-
-class EnglishOwnerTestRegularCase2(TestUnknownWikiCountListExporter):
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Unknown Owner nor Necessity: 1\n'
-        lst += 'Unowned but Necessary: 1\n'
-        lst += 'Unowned: 2\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
-            'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
-            'Unowned Wiki 1.md': '',
-            'Unowned Wiki 2.md': 'This is a sample Wiki'}
-
-
-class EnglishOwnerTestIrregularCase1(TestUnknownWikiCountListExporter):
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Unknown Owner nor Necessity: 0\n'
-        lst += 'Unowned but Necessary: 1\n'
-        lst += 'Unowned: 2\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Owned Wiki.md': 'Owner: @test-owner',
-            'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
-            'Unowned Wiki 1.md': '',
-            'Unowned Wiki 2.md': 'This is a sample Wiki'
-        }
-
-
-class EnglishOwnerTestIrregularCase2(TestUnknownWikiCountListExporter):
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Unknown Owner nor Necessity: 1\n'
-        lst += 'Unowned but Necessary: 0\n'
-        lst += 'Unowned: 2\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Owned Wiki.md': 'Owner: @test-owner',
-            'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
-            'Unowned Wiki 1.md': '',
-            'Unowned Wiki 2.md': 'This is a sample Wiki'}
-
-
-class EnglishOwnerTestIrregularCase3(TestUnknownWikiCountListExporter):
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Unknown Owner nor Necessity: 1\n'
-        lst += 'Unowned but Necessary: 1\n'
-        lst += 'Unowned: 0\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Owned Wiki.md': 'Owner: @test-owner',
-            'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
-            'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
-        }
-
-
-class EnglishCategoryTestRegularCase(TestUnknownWikiCountListExporter):
-    def setUp(self):
-        super().setUp(group_by='Category')
-
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        return 'Uncategorised: 2\n'
-
-
-class EnglishCategoryTestIrregularCase(TestUnknownWikiCountListExporter):
-    def setUp(self):
-        super().setUp(group_by='Category')
-
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Uncategorised: 5\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Owned Wiki.md': 'Owner: @test-owner',
-            'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
-            'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
-            'Unowned Wiki 1.md': '',
-            'Unowned Wiki 2.md': 'This is a sample Wiki'}
-
-
-class JapaneseOwnerTestRegularCase1(TestUnknownWikiCountListExporter):
-    def setUp(self):
-        super().setUp(language='Japanese')
-
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Ownerチームが不明だが必要なページ群: 1\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 1\n'
-        lst += 'Owner記名なし: 2\n'
-
-        return lst
-
-
-class JapaneseOwnerTestRegularCase2(TestUnknownWikiCountListExporter):
-    def setUp(self):
-        super().setUp(language='Japanese')
-
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Ownerチームが不明だが必要なページ群: 1\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 1\n'
-        lst += 'Owner記名なし: 2\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
-            'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
-            'Owner記名なしページ1.md': '',
-            'Owner記名なしページ2.md': 'サンプル Wiki'
-        }
-
-
-class JapaneseOwnerTestIrregularCase1(TestUnknownWikiCountListExporter):
-    def setUp(self):
-        super().setUp(language='Japanese')
-
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Ownerチームが不明だが必要なページ群: 1\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 0\n'
-        lst += 'Owner記名なし: 2\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Owner記名ありページ.md': 'Owner: @test-owner',
-            'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
-            'Owner記名なしページ1.md': '',
-            'Owner記名なしページ2.md': 'サンプル Wiki'
-        }
-
-
-class JapaneseOwnerTestIrregularCase2(TestUnknownWikiCountListExporter):
-    def setUp(self):
-        super().setUp(language='Japanese')
-
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Ownerチームが不明だが必要なページ群: 0\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 1\n'
-        lst += 'Owner記名なし: 2\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Owner記名ありページ.md': 'Owner: @test-owner',
-            'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
-            'Owner記名なしページ1.md': '',
-            'Owner記名なしページ2.md': 'サンプル Wiki'
-        }
-
-
-class JapaneseOwnerTestIrregularCase3(TestUnknownWikiCountListExporter):
-    def setUp(self):
-        super().setUp(language='Japanese')
-
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Ownerチームが不明だが必要なページ群: 1\n'
-        lst += 'Ownerチーム・要or不要が不明なページ群: 1\n'
-        lst += 'Owner記名なし: 0\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Owner記名ありページ.md': 'Owner: @test-owner',
-            'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
-            'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
-        }
-
-
-class JapaneseCategoryTestRegularCase(TestUnknownWikiCountListExporter):
-    def setUp(self):
-        super().setUp(group_by='Category', language='Japanese')
-
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        return 'Category記載なし: 2\n'
-
-
-class JapaneseCategoryTestIrregularCase(TestUnknownWikiCountListExporter):
-    def setUp(self):
-        super().setUp(group_by='Category', language='Japanese')
-
-    def test_run(self):
-        self.assertEqual(self.unknown_wiki_count_list,
-                         self.__unknown_wiki_count_list_by_namespace__())
-
-    # private
-
-    def __unknown_wiki_count_list_by_namespace__(self):
-        lst = 'Category記載なし: 5\n'
-
-        return lst
-
-    def __test_file_maps__(self):
-        return {
-            'Owner記名ありページ.md': 'Owner: @test-owner',
-            'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
-            'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
-            'Owner記名なしページ1.md': '',
-            'Owner記名なしページ2.md': 'サンプル Wiki'
-        }
-
-
-if __name__ == '__main__':
-    unittest.main()
+import pytest
+
+from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
+
+
+def _run(wiki_workspace, group_by='Owner', language='English', file_maps=None):
+    base_path = wiki_workspace(group_by=group_by, language=language, file_maps=file_maps)
+    UnknownWikiCountListExporter(base_path, group_by=group_by, language=language).run()
+    with open(os.path.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')) as f:
+        return f.read()
+
+
+@pytest.mark.parametrize(
+    ('file_maps', 'expected'),
+    [
+        (
+            None,
+            'Unknown Owner nor Necessity: 1\nUnowned but Necessary: 1\nUnowned: 2\n',
+        ),
+        (
+            {
+                'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
+                'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
+                'Unowned Wiki 1.md': '',
+                'Unowned Wiki 2.md': 'This is a sample Wiki',
+            },
+            'Unknown Owner nor Necessity: 1\nUnowned but Necessary: 1\nUnowned: 2\n',
+        ),
+        (
+            {
+                'Owned Wiki.md': 'Owner: @test-owner',
+                'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
+                'Unowned Wiki 1.md': '',
+                'Unowned Wiki 2.md': 'This is a sample Wiki',
+            },
+            'Unknown Owner nor Necessity: 0\nUnowned but Necessary: 1\nUnowned: 2\n',
+        ),
+        (
+            {
+                'Owned Wiki.md': 'Owner: @test-owner',
+                'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
+                'Unowned Wiki 1.md': '',
+                'Unowned Wiki 2.md': 'This is a sample Wiki',
+            },
+            'Unknown Owner nor Necessity: 1\nUnowned but Necessary: 0\nUnowned: 2\n',
+        ),
+        (
+            {
+                'Owned Wiki.md': 'Owner: @test-owner',
+                'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
+                'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
+            },
+            'Unknown Owner nor Necessity: 1\nUnowned but Necessary: 1\nUnowned: 0\n',
+        ),
+    ],
+)
+def test_english_owner(wiki_workspace, file_maps, expected):
+    assert _run(wiki_workspace, file_maps=file_maps) == expected
+
+
+@pytest.mark.parametrize(
+    ('file_maps', 'expected'),
+    [
+        (None, 'Uncategorised: 2\n'),
+        (
+            {
+                'Owned Wiki.md': 'Owner: @test-owner',
+                'Unowned but Necessary Wiki.md': 'Owner: Unowned but Necessary',
+                'Unknown Owner nor Necessity Wiki.md': 'Owner: Unknown Owner nor Necessity',
+                'Unowned Wiki 1.md': '',
+                'Unowned Wiki 2.md': 'This is a sample Wiki',
+            },
+            'Uncategorised: 5\n',
+        ),
+    ],
+)
+def test_english_category(wiki_workspace, file_maps, expected):
+    assert _run(wiki_workspace, group_by='Category', file_maps=file_maps) == expected
+
+
+@pytest.mark.parametrize(
+    ('file_maps', 'expected'),
+    [
+        (
+            None,
+            'Ownerチームが不明だが必要なページ群: 1\nOwnerチーム・要or不要が不明なページ群: 1\nOwner記名なし: 2\n',
+        ),
+        (
+            {
+                'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
+                'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
+                'Owner記名なしページ1.md': '',
+                'Owner記名なしページ2.md': 'サンプル Wiki',
+            },
+            'Ownerチームが不明だが必要なページ群: 1\nOwnerチーム・要or不要が不明なページ群: 1\nOwner記名なし: 2\n',
+        ),
+        (
+            {
+                'Owner記名ありページ.md': 'Owner: @test-owner',
+                'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
+                'Owner記名なしページ1.md': '',
+                'Owner記名なしページ2.md': 'サンプル Wiki',
+            },
+            'Ownerチームが不明だが必要なページ群: 1\nOwnerチーム・要or不要が不明なページ群: 0\nOwner記名なし: 2\n',
+        ),
+        (
+            {
+                'Owner記名ありページ.md': 'Owner: @test-owner',
+                'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
+                'Owner記名なしページ1.md': '',
+                'Owner記名なしページ2.md': 'サンプル Wiki',
+            },
+            'Ownerチームが不明だが必要なページ群: 0\nOwnerチーム・要or不要が不明なページ群: 1\nOwner記名なし: 2\n',
+        ),
+        (
+            {
+                'Owner記名ありページ.md': 'Owner: @test-owner',
+                'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
+                'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
+            },
+            'Ownerチームが不明だが必要なページ群: 1\nOwnerチーム・要or不要が不明なページ群: 1\nOwner記名なし: 0\n',
+        ),
+    ],
+)
+def test_japanese_owner(wiki_workspace, file_maps, expected):
+    assert _run(wiki_workspace, language='Japanese', file_maps=file_maps) == expected
+
+
+@pytest.mark.parametrize(
+    ('file_maps', 'expected'),
+    [
+        (None, 'Category記載なし: 2\n'),
+        (
+            {
+                'Owner記名ありページ.md': 'Owner: @test-owner',
+                'Ownerチームが不明だが必要なページ.md': 'Owner: Ownerチームが不明だが必要なページ群',
+                'Ownerチーム・要or不要が不明なページ.md': 'Owner: Ownerチーム・要or不要が不明なページ群',
+                'Owner記名なしページ1.md': '',
+                'Owner記名なしページ2.md': 'サンプル Wiki',
+            },
+            'Category記載なし: 5\n',
+        ),
+    ],
+)
+def test_japanese_category(wiki_workspace, file_maps, expected):
+    assert _run(wiki_workspace, group_by='Category', language='Japanese', file_maps=file_maps) == expected
