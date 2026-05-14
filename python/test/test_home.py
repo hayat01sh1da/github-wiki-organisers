@@ -1,237 +1,172 @@
-from home import Home
-import sys
-import os
 import glob
-import unittest
-sys.path.append('./src')
-sys.path.append('./test')
-from test_application import TestApplication
+import os
+
+from home import Home
 
 
-class TestHome(TestApplication):
-    def setUp(self, group_by='Owner', language='English', home_overflow=False):
-        super().setUp(group_by=group_by, language=language, home_overflow=home_overflow)
-        Home(
-            base_path=self.base_path,
-            group_by=group_by,
-            language=language,
-            home_overflow=home_overflow).run()
-        path_to_home = os.path.join(self.base_path, 'Home.md')
-        with open(path_to_home) as f:
-            self.home = f.read()
-        self.path_to_wikis_by_owner = os.path.join(
-            self.base_path, 'wikis-by-owner')
-        self.overflow_files = sorted(
-            glob.glob(
-                os.path.join(
-                    self.path_to_wikis_by_owner,
-                    '*.md')))
-
-    def __expected_wikis_by_owner__(self, namespaces):
-        return sorted([os.path.join(self.path_to_wikis_by_owner,
-                      f'{namespace}.md') for namespace in namespaces])
+def _run_home(wiki_workspace, group_by='Owner', language='English', home_overflow=False):
+    base_path = wiki_workspace(group_by=group_by, language=language)
+    Home(base_path=base_path, group_by=group_by, language=language, home_overflow=home_overflow).run()
+    with open(os.path.join(base_path, 'Home.md')) as f:
+        home = f.read()
+    path_to_wikis_by_owner = os.path.join(base_path, 'wikis-by-owner')
+    overflow_files = sorted(glob.glob(os.path.join(path_to_wikis_by_owner, '*.md')))
+    return home, path_to_wikis_by_owner, overflow_files
 
 
-class EnglishOwnedHomeWithoutOverflowTest(TestHome):
-    def test_run(self):
-        self.assertFalse(os.path.exists(self.path_to_wikis_by_owner))
-        self.assertEqual(self.home, self.__home_passage__())
-
-    # private
-
-    def __home_passage__(self):
-        passage = '## How to Manage Wiki Pages\n'
-        passage += '\n'
-        passage += 'This Home page manage wikis by owner group.\n'
-        passage += '\n'
-        passage += 'Absence of ownership declaration worsens maintainability and searchability because it makes ambiguous which team the responsibility belongs to.  \n'
-        passage += 'Kindly make sure to articulate `Owner: @OWNER_TEAM` of the top of each of your wiki page to avoid it.\n'
-        passage += '\n'
-        passage += 'Also, please keep in mind that you do not have to edit Home and Sidebar by yourself, which are automatically updated by a GitHub Actions cron job.\n'
-        passage += '\n'
-        passage += '## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
-        passage += '\n'
-        passage += '- [[Owned Wiki]]\n'
-        passage += '\n'
-        passage += '## Unknown Owner nor Necessity\n'
-        passage += '\n'
-        passage += '- [[Unknown Owner nor Necessity Wiki]]\n'
-        passage += '\n'
-        passage += '## Unowned but Necessary\n'
-        passage += '\n'
-        passage += '- [[Unowned but Necessary Wiki]]\n'
-        passage += '\n'
-        passage += '## Unowned\n'
-        passage += '\n'
-        passage += '- [[Unowned Wiki 1]]\n'
-        passage += '- [[Unowned Wiki 2]]\n'
-
-        return passage
+def _expected_wikis_by_owner(path_to_wikis_by_owner, namespaces):
+    return sorted(os.path.join(path_to_wikis_by_owner, f'{namespace}.md') for namespace in namespaces)
 
 
-class EnglishOwnedHomeWithOverflowTest(TestHome):
-    def setUp(self):
-        super().setUp(home_overflow=True)
-
-    def test_run(self):
-        self.assertTrue(os.path.exists(self.path_to_wikis_by_owner))
-        self.assertEqual(self.home, self.__home_passage__())
-        expected_files = self.__expected_wikis_by_owner__(
-            ['@test-owner', 'Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'])
-        self.assertEqual(self.overflow_files, expected_files)
-
-    # private
-
-    def __home_passage__(self):
-        passage = '## How to Manage Wiki Pages\n'
-        passage += '\n'
-        passage += 'This Home page manage wikis by owner group.\n'
-        passage += '\n'
-        passage += 'Absence of ownership declaration worsens maintainability and searchability because it makes ambiguous which team the responsibility belongs to.  \n'
-        passage += 'Kindly make sure to articulate `Owner: @OWNER_TEAM` of the top of each of your wiki page to avoid it.\n'
-        passage += '\n'
-        passage += 'Also, please keep in mind that you do not have to edit Home and Sidebar by yourself, which are automatically updated by a GitHub Actions cron job.\n'
-        passage += '\n'
-        passage += '- [[@test-owner]]\n'
-        passage += '- [[Unknown Owner nor Necessity]]\n'
-        passage += '- [[Unowned but Necessary]]\n'
-        passage += '- [[Unowned]]\n'
-
-        return passage
-
-
-class EnglishCategorisedHomeTest(TestHome):
-    def setUp(self):
-        super().setUp(group_by='Category')
-
-    def test_run(self):
-        self.assertEqual(self.home, self.__home_passage__())
-
-    # private
-
-    def __home_passage__(self):
-        passage = '## How to Manage Wiki Pages\n'
-        passage += '\n'
-        passage += 'This Home page manage wikis by category group.\n'
-        passage += '\n'
-        passage += 'Absence of category declaration worsens maintainability and searchability.  \n'
-        passage += 'Kindly make sure to articulate `Category: CATEGORY_NAME` of the top of each of your wiki page to avoid it.\n'
-        passage += '\n'
-        passage += 'Also, please keep in mind that you do not have to edit Home and Sidebar by yourself, which are automatically updated by a GitHub Actions cron job.\n'
-        passage += '\n'
-        passage += '## test-category\n'
-        passage += '\n'
-        passage += '- [[Categorised Wiki]]\n'
-        passage += '\n'
-        passage += '## Uncategorised\n'
-        passage += '\n'
-        passage += '- [[Uncategorised Wiki 1]]\n'
-        passage += '- [[Uncategorised Wiki 2]]\n'
-
-        return passage
-
-
-class JapaneseOwnedHomeWithoutOverflowTest(TestHome):
-    def setUp(self):
-        super().setUp(language='Japanese')
-
-    def test_run(self):
-        self.assertFalse(os.path.exists(self.path_to_wikis_by_owner))
-        self.assertEqual(self.home, self.__home_passage__())
-
-    # private
-
-    def __home_passage__(self):
-        passage = '## Wiki ページの運用ルール\n'
-        passage += '\n'
-        passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
-        passage += '\n'
-        passage += 'Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n'
-        passage += '治安維持のため、各ページの冒頭に `Owner: @オーナーチーム` を明記して頂きますようよろしくお願いします。\n'
-        passage += '\n'
-        passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
-        passage += '\n'
-        passage += '## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
-        passage += '\n'
-        passage += '- [[Owner記名ありページ]]\n'
-        passage += '\n'
-        passage += '## Ownerチームが不明だが必要なページ群\n'
-        passage += '\n'
-        passage += '- [[Ownerチームが不明だが必要なページ]]\n'
-        passage += '\n'
-        passage += '## Ownerチーム・要or不要が不明なページ群\n'
-        passage += '\n'
-        passage += '- [[Ownerチーム・要or不要が不明なページ]]\n'
-        passage += '\n'
-        passage += '## Owner記名なし\n'
-        passage += '\n'
-        passage += '- [[Owner記名なしページ1]]\n'
-        passage += '- [[Owner記名なしページ2]]\n'
-
-        return passage
-
-
-class JapaneseOwnedHomeWihOverflowTest(TestHome):
-    def setUp(self):
-        super().setUp(language='Japanese', home_overflow=True)
-
-    def test_run(self):
-        self.assertTrue(os.path.exists(self.path_to_wikis_by_owner))
-        self.assertEqual(self.home, self.__home_passage__())
-        expected_files = self.__expected_wikis_by_owner__(
-            ['@test-owner', 'Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'])
-        self.assertEqual(self.overflow_files, expected_files)
-
-    # private
-
-    def __home_passage__(self):
-        passage = '## Wiki ページの運用ルール\n'
-        passage += '\n'
-        passage += 'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
-        passage += '\n'
-        passage += 'Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n'
-        passage += '治安維持のため、各ページの冒頭に `Owner: @オーナーチーム` を明記して頂きますようよろしくお願いします。\n'
-        passage += '\n'
-        passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
-        passage += '\n'
-        passage += '- [[@test-owner]]\n'
-        passage += '- [[Ownerチームが不明だが必要なページ群]]\n'
-        passage += '- [[Ownerチーム・要or不要が不明なページ群]]\n'
-        passage += '- [[Owner記名なし]]\n'
-
-        return passage
+_ENGLISH_OWNED_HOME = (
+    '## How to Manage Wiki Pages\n'
+    '\n'
+    'This Home page manage wikis by owner group.\n'
+    '\n'
+    'Absence of ownership declaration worsens maintainability and searchability because it makes ambiguous which team the responsibility belongs to.  \n'
+    'Kindly make sure to articulate `Owner: @OWNER_TEAM` of the top of each of your wiki page to avoid it.\n'
+    '\n'
+    'Also, please keep in mind that you do not have to edit Home and Sidebar by yourself, which are automatically updated by a GitHub Actions cron job.\n'
+    '\n'
+)
+_ENGLISH_OWNED_HOME_WITHOUT_OVERFLOW = _ENGLISH_OWNED_HOME + (
+    '## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
+    '\n'
+    '- [[Owned Wiki]]\n'
+    '\n'
+    '## Unknown Owner nor Necessity\n'
+    '\n'
+    '- [[Unknown Owner nor Necessity Wiki]]\n'
+    '\n'
+    '## Unowned but Necessary\n'
+    '\n'
+    '- [[Unowned but Necessary Wiki]]\n'
+    '\n'
+    '## Unowned\n'
+    '\n'
+    '- [[Unowned Wiki 1]]\n'
+    '- [[Unowned Wiki 2]]\n'
+)
+_ENGLISH_OWNED_HOME_WITH_OVERFLOW = _ENGLISH_OWNED_HOME + (
+    '- [[@test-owner]]\n'
+    '- [[Unknown Owner nor Necessity]]\n'
+    '- [[Unowned but Necessary]]\n'
+    '- [[Unowned]]\n'
+)
+_ENGLISH_CATEGORISED_HOME = (
+    '## How to Manage Wiki Pages\n'
+    '\n'
+    'This Home page manage wikis by category group.\n'
+    '\n'
+    'Absence of category declaration worsens maintainability and searchability.  \n'
+    'Kindly make sure to articulate `Category: CATEGORY_NAME` of the top of each of your wiki page to avoid it.\n'
+    '\n'
+    'Also, please keep in mind that you do not have to edit Home and Sidebar by yourself, which are automatically updated by a GitHub Actions cron job.\n'
+    '\n'
+    '## test-category\n'
+    '\n'
+    '- [[Categorised Wiki]]\n'
+    '\n'
+    '## Uncategorised\n'
+    '\n'
+    '- [[Uncategorised Wiki 1]]\n'
+    '- [[Uncategorised Wiki 2]]\n'
+)
+_JAPANESE_OWNED_HOME = (
+    '## Wiki ページの運用ルール\n'
+    '\n'
+    'このページは Owner チームごとに Wiki をグルーピングして一覧化しています。\n'
+    '\n'
+    'Ownership をどのチームが持つのかが不明だと、責任の所在が不明瞭になり、保守性の悪化に伴うノイズの増加と検索性の悪化が発生します。  \n'
+    '治安維持のため、各ページの冒頭に `Owner: @オーナーチーム` を明記して頂きますようよろしくお願いします。\n'
+    '\n'
+    'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
+    '\n'
+)
+_JAPANESE_OWNED_HOME_WITHOUT_OVERFLOW = _JAPANESE_OWNED_HOME + (
+    '## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
+    '\n'
+    '- [[Owner記名ありページ]]\n'
+    '\n'
+    '## Ownerチームが不明だが必要なページ群\n'
+    '\n'
+    '- [[Ownerチームが不明だが必要なページ]]\n'
+    '\n'
+    '## Ownerチーム・要or不要が不明なページ群\n'
+    '\n'
+    '- [[Ownerチーム・要or不要が不明なページ]]\n'
+    '\n'
+    '## Owner記名なし\n'
+    '\n'
+    '- [[Owner記名なしページ1]]\n'
+    '- [[Owner記名なしページ2]]\n'
+)
+_JAPANESE_OWNED_HOME_WITH_OVERFLOW = _JAPANESE_OWNED_HOME + (
+    '- [[@test-owner]]\n'
+    '- [[Ownerチームが不明だが必要なページ群]]\n'
+    '- [[Ownerチーム・要or不要が不明なページ群]]\n'
+    '- [[Owner記名なし]]\n'
+)
+_JAPANESE_CATEGORISED_HOME = (
+    '## Wiki ページの運用ルール\n'
+    '\n'
+    'このページは Category ごとに Wiki をグルーピングして一覧化しています。\n'
+    '\n'
+    'Category が不明だと、保守性と検索性の悪化が発生します。  \n'
+    '治安維持のため、各ページの冒頭に `Category: カテゴリー名` を明記して頂きますようよろしくお願いします。\n'
+    '\n'
+    'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
+    '\n'
+    '## test-category\n'
+    '\n'
+    '- [[Category記載ありページ]]\n'
+    '\n'
+    '## Category記載なし\n'
+    '\n'
+    '- [[Category記載なしページ1]]\n'
+    '- [[Category記載なしページ2]]\n'
+)
 
 
-class JapaneseCategorisedHomeTest(TestHome):
-    def setUp(self):
-        super().setUp(group_by='Category', language='Japanese')
-
-    def test_run(self):
-        self.assertEqual(self.home, self.__home_passage__())
-
-    # private
-
-    def __home_passage__(self):
-        passage = '## Wiki ページの運用ルール\n'
-        passage += '\n'
-        passage += 'このページは Category ごとに Wiki をグルーピングして一覧化しています。\n'
-        passage += '\n'
-        passage += 'Category が不明だと、保守性と検索性の悪化が発生します。  \n'
-        passage += '治安維持のため、各ページの冒頭に `Category: カテゴリー名` を明記して頂きますようよろしくお願いします。\n'
-        passage += '\n'
-        passage += 'なお、Home・Sidebar は専用の定期実行ジョブで自動更新しますので編集は不要です。\n'
-        passage += '\n'
-        passage += '## test-category\n'
-        passage += '\n'
-        passage += '- [[Category記載ありページ]]\n'
-        passage += '\n'
-        passage += '## Category記載なし\n'
-        passage += '\n'
-        passage += '- [[Category記載なしページ1]]\n'
-        passage += '- [[Category記載なしページ2]]\n'
-
-        return passage
+def test_english_owned_home_without_overflow(wiki_workspace):
+    home, path_to_wikis_by_owner, _ = _run_home(wiki_workspace)
+    assert not os.path.exists(path_to_wikis_by_owner)
+    assert home == _ENGLISH_OWNED_HOME_WITHOUT_OVERFLOW
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_english_owned_home_with_overflow(wiki_workspace):
+    home, path_to_wikis_by_owner, overflow_files = _run_home(wiki_workspace, home_overflow=True)
+    assert os.path.exists(path_to_wikis_by_owner)
+    assert home == _ENGLISH_OWNED_HOME_WITH_OVERFLOW
+    assert overflow_files == _expected_wikis_by_owner(
+        path_to_wikis_by_owner,
+        ['@test-owner', 'Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'],
+    )
+
+
+def test_english_categorised_home(wiki_workspace):
+    home, _, _ = _run_home(wiki_workspace, group_by='Category')
+    assert home == _ENGLISH_CATEGORISED_HOME
+
+
+def test_japanese_owned_home_without_overflow(wiki_workspace):
+    home, path_to_wikis_by_owner, _ = _run_home(wiki_workspace, language='Japanese')
+    assert not os.path.exists(path_to_wikis_by_owner)
+    assert home == _JAPANESE_OWNED_HOME_WITHOUT_OVERFLOW
+
+
+def test_japanese_owned_home_with_overflow(wiki_workspace):
+    home, path_to_wikis_by_owner, overflow_files = _run_home(
+        wiki_workspace, language='Japanese', home_overflow=True,
+    )
+    assert os.path.exists(path_to_wikis_by_owner)
+    assert home == _JAPANESE_OWNED_HOME_WITH_OVERFLOW
+    assert overflow_files == _expected_wikis_by_owner(
+        path_to_wikis_by_owner,
+        ['@test-owner', 'Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'],
+    )
+
+
+def test_japanese_categorised_home(wiki_workspace):
+    home, _, _ = _run_home(wiki_workspace, group_by='Category', language='Japanese')
+    assert home == _JAPANESE_CATEGORISED_HOME
