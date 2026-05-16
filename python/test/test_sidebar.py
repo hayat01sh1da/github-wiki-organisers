@@ -1,102 +1,64 @@
-import sys
 import os
-import unittest
-sys.path.append('./src')
-sys.path.append('./test')
+
 from sidebar import Sidebar
-from test_application import TestApplication
 
 
-class TestSidebar(TestApplication):
-    def setUp(self, group_by: str = 'Owner',
-              language: str = 'English') -> None:
-        super().setUp(group_by=group_by, language=language)
-        Sidebar(self.base_path, group_by=group_by, language=language).run()
-        path_to_sidebar = os.path.join(self.base_path, '_Sidebar.md')
-        with open(path_to_sidebar) as f:
-            self.sidebar = f.read()
+def _run_sidebar(wiki_workspace, group_by='Owner', language='English'):
+    base_path = wiki_workspace(group_by=group_by, language=language)
+    Sidebar(base_path, group_by=group_by, language=language).run()
+    with open(os.path.join(base_path, '_Sidebar.md')) as f:
+        return f.read()
 
 
-class EnglishOwnedSidebarTest(TestSidebar):
-    def test_run(self) -> None:
-        self.assertEqual(self.sidebar, self.__wiki_list__())
-
-    # private
-
-    def __wiki_list__(self) -> str:
-        lst = '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
-        lst += '  - [[Owned Wiki]]\n'
-        lst += '- Unknown Owner nor Necessity\n'
-        lst += '  - [[Unknown Owner nor Necessity Wiki]]\n'
-        lst += '- Unowned but Necessary\n'
-        lst += '  - [[Unowned but Necessary Wiki]]\n'
-        lst += '- Unowned\n'
-        lst += '  - [[Unowned Wiki 1]]\n'
-        lst += '  - [[Unowned Wiki 2]]\n'
-
-        return lst
-
-
-class EnglishPlainSidebarTest(TestSidebar):
-    def setUp(self) -> None:
-        super().setUp(group_by='Category')
-
-    def test_run(self) -> None:
-        self.assertEqual(self.sidebar, self.__wiki_list__())
-
-    # private
-
-    def __wiki_list__(self) -> str:
-        lst = '- test-category\n'
-        lst += '  - [[Categorised Wiki]]\n'
-        lst += '- Uncategorised\n'
-        lst += '  - [[Uncategorised Wiki 1]]\n'
-        lst += '  - [[Uncategorised Wiki 2]]\n'
-
-        return lst
-
-
-class JapaneseOwnedSidebarTest(TestSidebar):
-    def setUp(self) -> None:
-        super().setUp(language='Japanese')
-
-    def test_run(self) -> None:
-        self.assertEqual(self.sidebar, self.__wiki_list__())
-
-    # private
-
-    def __wiki_list__(self) -> str:
-        lst = '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
-        lst += '  - [[Owner記名ありページ]]\n'
-        lst += '- Ownerチームが不明だが必要なページ群\n'
-        lst += '  - [[Ownerチームが不明だが必要なページ]]\n'
-        lst += '- Ownerチーム・要or不要が不明なページ群\n'
-        lst += '  - [[Ownerチーム・要or不要が不明なページ]]\n'
-        lst += '- Owner記名なし\n'
-        lst += '  - [[Owner記名なしページ1]]\n'
-        lst += '  - [[Owner記名なしページ2]]\n'
-
-        return lst
+_ENGLISH_OWNED = (
+    '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
+    '  - [[Owned Wiki]]\n'
+    '- Unknown Owner nor Necessity\n'
+    '  - [[Unknown Owner nor Necessity Wiki]]\n'
+    '- Unowned but Necessary\n'
+    '  - [[Unowned but Necessary Wiki]]\n'
+    '- Unowned\n'
+    '  - [[Unowned Wiki 1]]\n'
+    '  - [[Unowned Wiki 2]]\n'
+)
+_ENGLISH_PLAIN = (
+    '- test-category\n'
+    '  - [[Categorised Wiki]]\n'
+    '- Uncategorised\n'
+    '  - [[Uncategorised Wiki 1]]\n'
+    '  - [[Uncategorised Wiki 2]]\n'
+)
+_JAPANESE_OWNED = (
+    '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
+    '  - [[Owner記名ありページ]]\n'
+    '- Ownerチームが不明だが必要なページ群\n'
+    '  - [[Ownerチームが不明だが必要なページ]]\n'
+    '- Ownerチーム・要or不要が不明なページ群\n'
+    '  - [[Ownerチーム・要or不要が不明なページ]]\n'
+    '- Owner記名なし\n'
+    '  - [[Owner記名なしページ1]]\n'
+    '  - [[Owner記名なしページ2]]\n'
+)
+_JAPANESE_PLAIN = (
+    '- test-category\n'
+    '  - [[Category記載ありページ]]\n'
+    '- Category記載なし\n'
+    '  - [[Category記載なしページ1]]\n'
+    '  - [[Category記載なしページ2]]\n'
+)
 
 
-class JapanesePlainSidebarTest(TestSidebar):
-    def setUp(self) -> None:
-        super().setUp(group_by='Category', language='Japanese')
-
-    def test_run(self) -> None:
-        self.assertEqual(self.sidebar, self.__wiki_list__())
-
-    # private
-
-    def __wiki_list__(self) -> str:
-        lst = '- test-category\n'
-        lst += '  - [[Category記載ありページ]]\n'
-        lst += '- Category記載なし\n'
-        lst += '  - [[Category記載なしページ1]]\n'
-        lst += '  - [[Category記載なしページ2]]\n'
-
-        return lst
+def test_english_owned_sidebar(wiki_workspace):
+    assert _run_sidebar(wiki_workspace) == _ENGLISH_OWNED
 
 
-if __name__ == '__main__':
-    unittest.main()
+def test_english_plain_sidebar(wiki_workspace):
+    assert _run_sidebar(wiki_workspace, group_by='Category') == _ENGLISH_PLAIN
+
+
+def test_japanese_owned_sidebar(wiki_workspace):
+    assert _run_sidebar(wiki_workspace, language='Japanese') == _JAPANESE_OWNED
+
+
+def test_japanese_plain_sidebar(wiki_workspace):
+    assert _run_sidebar(wiki_workspace, group_by='Category', language='Japanese') == _JAPANESE_PLAIN
