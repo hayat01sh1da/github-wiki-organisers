@@ -2,17 +2,18 @@ import os
 import glob
 import re
 from collections import defaultdict
+from typing import Any
 
 
 class Application:
     def __init__(
             self,
-            base_path=os.path.join(
+            base_path: str = os.path.join(
                 '..',
                 '..'),
-            group_by='Owner',
-            language='English',
-            home_overflow='False'):
+            group_by: str = 'Owner',
+            language: str = 'English',
+            home_overflow: str | bool = 'False') -> None:
         match home_overflow:
             case 'True':
                 home_overflow = True
@@ -22,37 +23,41 @@ class Application:
             group_by=group_by,
             language=language,
             home_overflow=home_overflow)
-        self.base_path = base_path
-        self.group_by = group_by
-        self.language = language
-        self.home_overflow = home_overflow
-        self.path_to_home = os.path.join(base_path, 'Home.md')
-        self.path_to_sidebar = os.path.join(base_path, '_Sidebar.md')
-        self.path_to_github_wiki_organisers = sorted(
+        self.base_path: str = base_path
+        self.group_by: str = group_by
+        self.language: str = language
+        self.home_overflow: str | bool = home_overflow
+        self.path_to_home: str = os.path.join(base_path, 'Home.md')
+        self.path_to_sidebar: str = os.path.join(base_path, '_Sidebar.md')
+        self.path_to_github_wiki_organisers: list[str] = sorted(
             glob.glob(
                 os.path.join(
                     base_path,
                     'github-wiki-organisers',
                     '**',
                     '*.md')))
-        self.path_to_wikis_by_owner = sorted(
+        self.path_to_wikis_by_owner: list[str] = sorted(
             glob.glob(
                 os.path.join(
                     base_path,
                     'wikis-by-owner',
                     '*.md')))
-        self.target_paths = self.__target_paths__()
-        self.wiki_maps_with_namespace = self.__wiki_maps_with_namespace__()
+        self.target_paths: list[str] = self.__target_paths__()
+        self.wiki_maps_with_namespace: dict[str, list[str]] = \
+            self.__wiki_maps_with_namespace__()
+        self.owned_wiki_maps: dict[str, list[str]]
+        self.plain_wiki_maps: dict[str, list[str]]
         self.owned_wiki_maps, self.plain_wiki_maps = self.__filter_namespace__()
 
-    def run(self):
+    def run(self) -> Any:
         raise NotImplementedError(
             'This method must be implemented in each subclass.')
 
     # private
 
     # @raises [ValueError]
-    def __validate__(self, group_by, language, home_overflow):
+    def __validate__(self, group_by: str, language: str,
+                     home_overflow: str | bool) -> None:
         if group_by not in ['Owner', 'Category']:
             raise ValueError(f'Invalid group_by: `{group_by}`')
         if language not in ['English', 'Japanese']:
@@ -62,7 +67,7 @@ class Application:
                 f'Invalid home_overflow: `{home_overflow}` must be boolean')
 
     # @return [str]
-    def __target_paths__(self):
+    def __target_paths__(self) -> list[str]:
         target_paths = sorted(
             glob.glob(
                 os.path.join(
@@ -73,7 +78,12 @@ class Application:
 
         for target_path in target_paths:
             match target_path:
-                case self.path_to_home | self.path_to_sidebar | self.path_to_github_wiki_organisers | self.path_to_wikis_by_owner:
+                case (
+                    self.path_to_home
+                    | self.path_to_sidebar
+                    | self.path_to_github_wiki_organisers
+                    | self.path_to_wikis_by_owner
+                ):
                     target_paths.remove(target_path)
                 case _:
                     continue
@@ -81,15 +91,17 @@ class Application:
         return target_paths
 
     # @return [regex]
-    def __target_regexp__(self):
+    def __target_regexp__(self) -> re.Pattern[str]:
         match self.group_by:
             case 'Owner':
                 return re.compile(r'[Oo]wner:\s?')
             case 'Category':
                 return re.compile(r'[Cc]ategory:\s?')
+            case _:
+                raise ValueError(f'Invalid group_by: `{self.group_by}`')
 
     # @return [str]
-    def __no_declaration__(self):
+    def __no_declaration__(self) -> str:
         match self.group_by:
             case 'Owner':
                 match self.language:
@@ -97,18 +109,26 @@ class Application:
                         return 'Unowned'
                     case 'Japanese':
                         return 'Owner記名なし'
+                    case _:
+                        raise ValueError(
+                            f'Invalid language: `{self.language}`')
             case 'Category':
                 match self.language:
                     case 'English':
                         return 'Uncategorised'
                     case 'Japanese':
                         return 'Category記載なし'
+                    case _:
+                        raise ValueError(
+                            f'Invalid language: `{self.language}`')
+            case _:
+                raise ValueError(f'Invalid group_by: `{self.group_by}`')
 
     # @return [dict<str => list<str>>]
-    def __wiki_maps_with_namespace__(self):
-        hash = defaultdict(list)
-        uncategrised_wiki_maps = defaultdict(list)
-        wiki_maps_with_namespace = defaultdict(list)
+    def __wiki_maps_with_namespace__(self) -> dict[str, list[str]]:
+        hash: defaultdict[str, list[str]] = defaultdict(list)
+        uncategrised_wiki_maps: defaultdict[str, list[str]] = defaultdict(list)
+        wiki_maps_with_namespace: dict[str, list[str]] = defaultdict(list)
 
         for target_path in self.target_paths:
             if not os.path.isfile(target_path):
@@ -138,9 +158,10 @@ class Application:
         return wiki_maps_with_namespace
 
     # @return [dict<str => list<str>>]
-    def __filter_namespace__(self):
-        owned_wiki_maps = {}
-        plain_wiki_maps = {}
+    def __filter_namespace__(
+            self) -> tuple[dict[str, list[str]], dict[str, list[str]]]:
+        owned_wiki_maps: dict[str, list[str]] = {}
+        plain_wiki_maps: dict[str, list[str]] = {}
 
         for namespace, wikis in self.wiki_maps_with_namespace.items():
             if re.search(r'@', namespace):

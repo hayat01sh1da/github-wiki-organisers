@@ -1,12 +1,11 @@
+import pytest
 import glob
 import os
 import shutil
 import sys
+from collections.abc import Callable, Iterator
 
 sys.path.append('./src')
-
-
-import pytest
 
 
 _DEFAULT_FILE_MAPS = {
@@ -38,8 +37,14 @@ _DEFAULT_FILE_MAPS = {
 
 
 @pytest.fixture(autouse=True)
-def _cleanup_pycaches():
-    before = set(glob.glob(os.path.join('.', '**', '__pycache__'), recursive=True))
+def __cleanup_caches__() -> Iterator[None]:
+    before = set(
+        glob.glob(
+            os.path.join(
+                '.',
+                '**',
+                '__pycache__'),
+            recursive=True))
     yield
     for pycache in before:
         if os.path.exists(pycache):
@@ -47,10 +52,11 @@ def _cleanup_pycaches():
 
 
 @pytest.fixture
-def wiki_workspace():
+def wiki_workspace() -> Iterator[Callable[..., str]]:
     base_path = os.path.join('.', 'test', 'wiki')
 
-    def _build(group_by='Owner', language='English', file_maps=None):
+    def _build(group_by: str = 'Owner', language: str = 'English',
+               file_maps: dict[str, str] | None = None) -> str:
         if file_maps is None:
             file_maps = _DEFAULT_FILE_MAPS[(group_by, language)]
         os.makedirs(base_path, exist_ok=True)

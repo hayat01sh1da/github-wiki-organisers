@@ -1,21 +1,36 @@
 import glob
 import os
+from collections.abc import Callable
 
 from home import Home
 
 
-def _run_home(wiki_workspace, group_by='Owner', language='English', home_overflow=False):
+def _run_home(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
+              language: str = 'English',
+              home_overflow: bool = False) -> tuple[str, str, list[str]]:
     base_path = wiki_workspace(group_by=group_by, language=language)
-    Home(base_path=base_path, group_by=group_by, language=language, home_overflow=home_overflow).run()
+    Home(
+        base_path=base_path,
+        group_by=group_by,
+        language=language,
+        home_overflow=home_overflow).run()
     with open(os.path.join(base_path, 'Home.md')) as f:
         home = f.read()
     path_to_wikis_by_owner = os.path.join(base_path, 'wikis-by-owner')
-    overflow_files = sorted(glob.glob(os.path.join(path_to_wikis_by_owner, '*.md')))
+    overflow_files = sorted(
+        glob.glob(
+            os.path.join(
+                path_to_wikis_by_owner,
+                '*.md')))
     return home, path_to_wikis_by_owner, overflow_files
 
 
-def _expected_wikis_by_owner(path_to_wikis_by_owner, namespaces):
-    return sorted(os.path.join(path_to_wikis_by_owner, f'{namespace}.md') for namespace in namespaces)
+def _expected_wikis_by_owner(path_to_wikis_by_owner: str,
+                             namespaces: list[str]) -> list[str]:
+    return sorted(
+        os.path.join(
+            path_to_wikis_by_owner,
+            f'{namespace}.md') for namespace in namespaces)
 
 
 _ENGLISH_OWNED_HOME = (
@@ -23,12 +38,15 @@ _ENGLISH_OWNED_HOME = (
     '\n'
     'This Home page manage wikis by owner group.\n'
     '\n'
-    'Absence of ownership declaration worsens maintainability and searchability because it makes ambiguous which team the responsibility belongs to.  \n'
+    'Absence of ownership declaration worsens maintainability and '
+    'searchability because it makes ambiguous which team the '
+    'responsibility belongs to.  \n'
     'Kindly make sure to articulate `Owner: @OWNER_TEAM` of the top of each of your wiki page to avoid it.\n'
     '\n'
-    'Also, please keep in mind that you do not have to edit Home and Sidebar by yourself, which are automatically updated by a GitHub Actions cron job.\n'
-    '\n'
-)
+    'Also, please keep in mind that you do not have to edit Home and '
+    'Sidebar by yourself, which are automatically updated by a '
+    'GitHub Actions cron job.\n'
+    '\n')
 _ENGLISH_OWNED_HOME_WITHOUT_OVERFLOW = _ENGLISH_OWNED_HOME + (
     '## [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
     '\n'
@@ -61,7 +79,9 @@ _ENGLISH_CATEGORISED_HOME = (
     'Absence of category declaration worsens maintainability and searchability.  \n'
     'Kindly make sure to articulate `Category: CATEGORY_NAME` of the top of each of your wiki page to avoid it.\n'
     '\n'
-    'Also, please keep in mind that you do not have to edit Home and Sidebar by yourself, which are automatically updated by a GitHub Actions cron job.\n'
+    'Also, please keep in mind that you do not have to edit Home and '
+    'Sidebar by yourself, which are automatically updated by a '
+    'GitHub Actions cron job.\n'
     '\n'
     '## test-category\n'
     '\n'
@@ -70,8 +90,7 @@ _ENGLISH_CATEGORISED_HOME = (
     '## Uncategorised\n'
     '\n'
     '- [[Uncategorised Wiki 1]]\n'
-    '- [[Uncategorised Wiki 2]]\n'
-)
+    '- [[Uncategorised Wiki 2]]\n')
 _JAPANESE_OWNED_HOME = (
     '## Wiki ページの運用ルール\n'
     '\n'
@@ -128,14 +147,17 @@ _JAPANESE_CATEGORISED_HOME = (
 )
 
 
-def test_english_owned_home_without_overflow(wiki_workspace):
+def test_english_owned_home_without_overflow(
+        wiki_workspace: Callable[..., str]) -> None:
     home, path_to_wikis_by_owner, _ = _run_home(wiki_workspace)
     assert not os.path.exists(path_to_wikis_by_owner)
     assert home == _ENGLISH_OWNED_HOME_WITHOUT_OVERFLOW
 
 
-def test_english_owned_home_with_overflow(wiki_workspace):
-    home, path_to_wikis_by_owner, overflow_files = _run_home(wiki_workspace, home_overflow=True)
+def test_english_owned_home_with_overflow(
+        wiki_workspace: Callable[..., str]) -> None:
+    home, path_to_wikis_by_owner, overflow_files = _run_home(
+        wiki_workspace, home_overflow=True)
     assert os.path.exists(path_to_wikis_by_owner)
     assert home == _ENGLISH_OWNED_HOME_WITH_OVERFLOW
     assert overflow_files == _expected_wikis_by_owner(
@@ -144,18 +166,22 @@ def test_english_owned_home_with_overflow(wiki_workspace):
     )
 
 
-def test_english_categorised_home(wiki_workspace):
+def test_english_categorised_home(
+        wiki_workspace: Callable[..., str]) -> None:
     home, _, _ = _run_home(wiki_workspace, group_by='Category')
     assert home == _ENGLISH_CATEGORISED_HOME
 
 
-def test_japanese_owned_home_without_overflow(wiki_workspace):
-    home, path_to_wikis_by_owner, _ = _run_home(wiki_workspace, language='Japanese')
+def test_japanese_owned_home_without_overflow(
+        wiki_workspace: Callable[..., str]) -> None:
+    home, path_to_wikis_by_owner, _ = _run_home(
+        wiki_workspace, language='Japanese')
     assert not os.path.exists(path_to_wikis_by_owner)
     assert home == _JAPANESE_OWNED_HOME_WITHOUT_OVERFLOW
 
 
-def test_japanese_owned_home_with_overflow(wiki_workspace):
+def test_japanese_owned_home_with_overflow(
+        wiki_workspace: Callable[..., str]) -> None:
     home, path_to_wikis_by_owner, overflow_files = _run_home(
         wiki_workspace, language='Japanese', home_overflow=True,
     )
@@ -167,6 +193,8 @@ def test_japanese_owned_home_with_overflow(wiki_workspace):
     )
 
 
-def test_japanese_categorised_home(wiki_workspace):
-    home, _, _ = _run_home(wiki_workspace, group_by='Category', language='Japanese')
+def test_japanese_categorised_home(
+        wiki_workspace: Callable[..., str]) -> None:
+    home, _, _ = _run_home(
+        wiki_workspace, group_by='Category', language='Japanese')
     assert home == _JAPANESE_CATEGORISED_HOME
