@@ -1,9 +1,11 @@
 import os
+from collections.abc import Callable
 
 from sidebar import Sidebar
 
 
-def _run_sidebar(wiki_workspace, group_by='Owner', language='English'):
+def _run_sidebar(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
+                 language: str = 'English') -> str:
     base_path = wiki_workspace(group_by=group_by, language=language)
     Sidebar(base_path, group_by=group_by, language=language).run()
     with open(os.path.join(base_path, '_Sidebar.md')) as f:
@@ -48,17 +50,20 @@ _JAPANESE_PLAIN = (
 )
 
 
-def test_english_owned_sidebar(wiki_workspace):
+def test_english_owned_sidebar(wiki_workspace: Callable[..., str]) -> None:
     assert _run_sidebar(wiki_workspace) == _ENGLISH_OWNED
 
 
-def test_english_plain_sidebar(wiki_workspace):
+def test_english_plain_sidebar(wiki_workspace: Callable[..., str]) -> None:
     assert _run_sidebar(wiki_workspace, group_by='Category') == _ENGLISH_PLAIN
 
 
-def test_japanese_owned_sidebar(wiki_workspace):
+def test_japanese_owned_sidebar(wiki_workspace: Callable[..., str]) -> None:
     assert _run_sidebar(wiki_workspace, language='Japanese') == _JAPANESE_OWNED
 
 
-def test_japanese_plain_sidebar(wiki_workspace):
-    assert _run_sidebar(wiki_workspace, group_by='Category', language='Japanese') == _JAPANESE_PLAIN
+def test_japanese_plain_sidebar(wiki_workspace: Callable[..., str]) -> None:
+    assert _run_sidebar(
+        wiki_workspace,
+        group_by='Category',
+        language='Japanese') == _JAPANESE_PLAIN

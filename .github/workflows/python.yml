@@ -75,14 +75,14 @@ jobs:
       - name: pytest
         working-directory: ./python
         run: pytest
-  # mypy:
-  #   timeout-minutes: 10
-  #   runs-on: ubuntu-latest
-  #   needs: change-detection
-  #   if: needs.change-detection.outputs.python-changes == 'true'
-  #   steps:
-  #     - uses: actions/checkout@v6
-  #     - uses: ./.github/actions/setup-python
-  #     - name: mypy
-  #       working-directory: ./python
-  #       run: mypy .
+  mypy:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    needs: change-detection
+    if: needs.change-detection.outputs.python-changes == 'true'
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup-python
+      - name: mypy
+        working-directory: ./python
+        run: mypy .

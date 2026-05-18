@@ -7,19 +7,19 @@ sys.path.append('./src')
 class UnknownWikiCountListExporter(Application):
     def __init__(
             self,
-            base_path=os.path.join(
+            base_path: str = os.path.join(
                 '..',
                 '..'),
-            group_by='Owner',
-            language='English',
-            home_overflow=False):
+            group_by: str = 'Owner',
+            language: str = 'English',
+            home_overflow: str | bool = False) -> None:
         super().__init__(base_path, group_by, language, home_overflow)
-        self.path_to_export = os.path.join(
+        self.path_to_export: str = os.path.join(
             self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
-        self.count_list_by_namespace = ''.join(
+        self.count_list_by_namespace: str = ''.join(
             sorted(self.__count_list_by_namespace__()))
 
-    def run(self):
+    def run(self) -> tuple[str, str]:
         with open(self.path_to_export, 'w') as f:
             f.write(self.count_list_by_namespace.rstrip() + '\n')
 
@@ -28,7 +28,7 @@ class UnknownWikiCountListExporter(Application):
     # private
 
     # @return [list<str>]
-    def __namespace_list__(self):
+    def __namespace_list__(self) -> list[str]:
         match self.group_by:
             case 'Owner':
                 match self.language:
@@ -44,6 +44,9 @@ class UnknownWikiCountListExporter(Application):
                             'Ownerチーム・要or不要が不明なページ群',
                             'Owner記名なし'
                         ]
+                    case _:
+                        raise ValueError(
+                            f'Invalid language: `{self.language}`')
             case 'Category':
                 match self.language:
                     case 'English':
@@ -54,18 +57,23 @@ class UnknownWikiCountListExporter(Application):
                         return [
                             'Category記載なし'
                         ]
+                    case _:
+                        raise ValueError(
+                            f'Invalid language: `{self.language}`')
+            case _:
+                raise ValueError(f'Invalid group_by: `{self.group_by}`')
 
     # @return [list<str>]
-    def __count_list_by_namespace__(self):
-        filtered_count_list_by_namespace = {}
-        count_list_by_namespace = []
+    def __count_list_by_namespace__(self) -> list[str]:
+        filtered_count_list_by_namespace: dict[str, list[str]] = {}
+        count_list_by_namespace: list[str] = []
 
         for namespace, wikis in self.plain_wiki_maps.items():
             if namespace in self.__namespace_list__():
                 filtered_count_list_by_namespace[namespace] = wikis
 
         for namespace in (
-                self.__namespace_list__() -
+                self.__namespace_list__() -  # type: ignore[operator]
                 filtered_count_list_by_namespace.keys()):
             count_list_by_namespace.append(f'{namespace}: 0\n')
 

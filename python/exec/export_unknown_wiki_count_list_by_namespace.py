@@ -6,7 +6,7 @@ import glob
 sys.path.append('./src')
 
 
-_, group_by, language, *_ = sys.argv
+_, group_by, language, *_rest = sys.argv
 params = dict()
 for key, value in {'group_by': group_by, 'language': language}.items():
     if value:

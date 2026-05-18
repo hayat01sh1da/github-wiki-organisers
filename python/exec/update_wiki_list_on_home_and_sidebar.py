@@ -7,7 +7,7 @@ import glob
 sys.path.append('./src')
 
 
-_, group_by, language, home_overflow, *_ = sys.argv
+_, group_by, language, home_overflow, *_rest = sys.argv
 params = dict()
 for key, value in {'group_by': group_by, 'language': language,
                    'home_overflow': home_overflow}.items():
