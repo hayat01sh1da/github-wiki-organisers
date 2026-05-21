@@ -128,7 +128,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 -------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
 ```
 
-## 3-4. Export Unknown Wiki List for LLM 
+## 3-4. Export Unknown Wiki List for LLM
 
 ```command
 $ rake export_unknown_wiki_list_for_llm
