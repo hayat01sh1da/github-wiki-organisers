@@ -13,15 +13,7 @@ $ bundle lock --add-checksums
 
 Run the commands under `./ruby`
 
-### 3-1. Options
-
-| Order | Option        | Input                   |
-| :---- | :------------ | :---------------------- |
-| 1     | group_by      | `Owner` or `Category`   |
-| 2     | language      | `English` or `Japanese` |
-| 3     | home_overflow | `true` or `false`       |
-
-### 3-2. Update Wiki List on Home and Sidebar
+### 3-1. Update Wiki List on Home and Sidebar
 
 ```command
 $ rake update_wiki_list_on_home_and_sidebar
@@ -44,7 +36,9 @@ Check out an Up-to-date Wiki List on Sidebar at 'https://github.com/hayat01sh1da
 -------------------- Done Categorising the Entire github-wiki-organisers Wiki Pages 🎉 --------------------
 ```
 
-## 3-3. Export Unknown Wiki Count List by Namespace
+## 3-2. Export Unknown Wiki Count List by Namespace
+
+### 3-2-1. Owner
 
 ```command
 $ rake export_unknown_wiki_count_list_by_namespace
@@ -88,7 +82,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 -------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
 ```
 
-### 3-3-2. Category
+### 3-2-2. Category
 
 ```command
 $ rake export_unknown_wiki_count_list_by_namespace
@@ -128,7 +122,7 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 -------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
 ```
 
-## 3-4. Export Unknown Wiki List for LLM 
+## 3-3. Export Unknown Wiki List for LLM
 
 ```command
 $ rake export_unknown_wiki_list_for_llm
