@@ -15,10 +15,13 @@ Run the commands under `./python`
 ### 3-1. Update Wiki List on Home and Sidebar
 
 ```command
-$ python ./exec/update_wiki_list_on_home_and_sidebar.py
-Provide the group_by(Owner or Category): Owner
-Provide the language(English or Japanese): English
-Provide the home_overflow(true or false): false
+$ invoke update_wiki_list_on_home_and_sidebar
+Provide the group_by(Owner or Category)
+Owner
+Provide the language(English or Japanese)
+English
+Provide the home_overflow(true or false)
+false
 -------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------
 
 -------------------- Organising Home... --------------------
@@ -37,9 +40,11 @@ Check out an Up-to-date Wiki List on Sidebar at 'https://github.com/hayat01sh1da
 ### 3-2-1. Owner
 
 ```command
-$ python ./exec/export_unknown_wiki_count_list_by_namespace.py
-Provide the group_by(Owner or Category): Owner
-Provide the language(English or Japanese): English
+$ invoke export_unknown_wiki_count_list_by_namespace
+Provide the group_by(Owner or Category)
+Owner
+Provide the language(English or Japanese)
+English
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -56,9 +61,11 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ```
 
 ```command
-$ python ./exec/export_unknown_wiki_count_list_by_namespace.py
-Provide the group_by(Owner or Category): Owner
-Provide the language(English or Japanese): Japanese
+$ invoke export_unknown_wiki_count_list_by_namespace
+Provide the group_by(Owner or Category)
+Owner
+Provide the language(English or Japanese)
+Japanese
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -77,9 +84,11 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ### 3-2-2. Category
 
 ```command
-$ python ./exec/export_unknown_wiki_count_list_by_namespace.py
-Provide the group_by(Owner or Category): Category
-Provide the language(English or Japanese): English
+$ invoke export_unknown_wiki_count_list_by_namespace
+Provide the group_by(Owner or Category)
+Category
+Provide the language(English or Japanese)
+English
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -94,9 +103,11 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ```
 
 ```command
-$ python ./exec/export_unknown_wiki_count_list_by_namespace.py
-Provide the group_by(Owner or Category): Category
-Provide the language(English or Japanese): Japanese
+$ invoke export_unknown_wiki_count_list_by_namespace
+Provide the group_by(Owner or Category)
+Category
+Provide the language(English or Japanese)
+Japanese
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -113,9 +124,11 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 ## 3-4. Export Unknown Wiki List for LLM
 
 ```command
-$ python ./exec/export_unknown_wiki_list_for_llm.py
-Provide the group_by(Owner or Category): Owner
-Provide the language(English or Japanese): English
+$ invoke export_unknown_wiki_list_for_llm
+Provide the group_by(Owner or Category)
+Owner
+Provide the language(English or Japanese)
+English
 -------------------- Exporting Unknown Wiki List... --------------------
 
 Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
@@ -126,7 +139,7 @@ Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
 ## 4. Unit Tests
 
 ```command
-$ pytest .
+$ invoke
 ============================= test session starts ==============================
 platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
 rootdir: github-wiki-organisers/python
@@ -146,12 +159,6 @@ test/test_unknown_wiki_list_exporter_for_llm.py ....                     [100%]
 
 ```command
 $ flake8 .
-./exec/export_unknown_wiki_count_list_by_namespace.py:15:80: E501 line too long (87 > 79 characters)
-./exec/export_unknown_wiki_count_list_by_namespace.py:27:80: E501 line too long (91 > 79 characters)
-./exec/export_unknown_wiki_list_for_llm.py:15:80: E501 line too long (81 > 79 characters)
-./exec/export_unknown_wiki_list_for_llm.py:20:80: E501 line too long (85 > 79 characters)
-./exec/update_wiki_list_on_home_and_sidebar.py:17:80: E501 line too long (111 > 79 characters)
-./exec/update_wiki_list_on_home_and_sidebar.py:29:80: E501 line too long (115 > 79 characters)
 ./src/application.py:50:80: E501 line too long (80 > 79 characters)
 ./src/unknown_wiki_count_list_exporter.py:26:80: E501 line too long (80 > 79 characters)
 ./test/conftest.py:15:80: E501 line too long (84 > 79 characters)
