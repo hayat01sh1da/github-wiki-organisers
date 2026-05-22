@@ -16,9 +16,12 @@ Run the commands under `./python`
 
 ```command
 $ invoke update_wiki_list_on_home_and_sidebar
-Provide the group_by(Owner or Category): Owner
-Provide the language(English or Japanese): English
-Provide the home_overflow(true or false): false
+Provide the group_by(Owner or Category)
+Owner
+Provide the language(English or Japanese)
+English
+Provide the home_overflow(true or false)
+false
 -------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------
 
 -------------------- Organising Home... --------------------
@@ -38,8 +41,10 @@ Check out an Up-to-date Wiki List on Sidebar at 'https://github.com/hayat01sh1da
 
 ```command
 $ invoke export_unknown_wiki_count_list_by_namespace
-Provide the group_by(Owner or Category): Owner
-Provide the language(English or Japanese): English
+Provide the group_by(Owner or Category)
+Owner
+Provide the language(English or Japanese)
+English
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -57,8 +62,10 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 
 ```command
 $ invoke export_unknown_wiki_count_list_by_namespace
-Provide the group_by(Owner or Category): Owner
-Provide the language(English or Japanese): Japanese
+Provide the group_by(Owner or Category)
+Owner
+Provide the language(English or Japanese)
+Japanese
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -78,8 +85,10 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 
 ```command
 $ invoke export_unknown_wiki_count_list_by_namespace
-Provide the group_by(Owner or Category): Category
-Provide the language(English or Japanese): English
+Provide the group_by(Owner or Category)
+Category
+Provide the language(English or Japanese)
+English
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -95,8 +104,10 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 
 ```command
 $ invoke export_unknown_wiki_count_list_by_namespace
-Provide the group_by(Owner or Category): Category
-Provide the language(English or Japanese): Japanese
+Provide the group_by(Owner or Category)
+Category
+Provide the language(English or Japanese)
+Japanese
 -------------------- Exporting Unknown Wiki Count List... --------------------
 
 Here is the result:
@@ -114,8 +125,10 @@ Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
 
 ```command
 $ invoke export_unknown_wiki_list_for_llm
-Provide the group_by(Owner or Category): Owner
-Provide the language(English or Japanese): English
+Provide the group_by(Owner or Category)
+Owner
+Provide the language(English or Japanese)
+English
 -------------------- Exporting Unknown Wiki List... --------------------
 
 Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
