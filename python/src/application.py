@@ -13,11 +13,11 @@ class Application:
                 '..'),
             group_by: str = 'Owner',
             language: str = 'English',
-            home_overflow: str | bool = 'False') -> None:
+            home_overflow: str | bool = 'false') -> None:
         match home_overflow:
-            case 'True':
+            case 'true':
                 home_overflow = True
-            case 'False':
+            case 'false':
                 home_overflow = False
         self.__validate__(
             group_by=group_by,
