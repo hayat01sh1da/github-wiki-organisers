@@ -26,12 +26,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 9
 
-# Offense count: 3
-Style/MultilineBlockChain:
-  Exclude:
-    - 'src/unknown_wiki_count_list_exporter.rb'
-    - 'src/unknown_wiki_list_exporter_for_llm.rb'
-
 # Offense count: 7
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowHeredoc, AllowURI, AllowQualifiedName, URISchemes, AllowRBSInlineAnnotation, AllowCopDirectives, AllowedPatterns, SplitStrings.

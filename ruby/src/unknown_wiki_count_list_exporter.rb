@@ -71,10 +71,9 @@ class UnknownWikiCountListExporter < Application
 
   # @rbs return: Array[String]
   def count_list_by_namespace
-    @count_list_by_namespace ||= plain_wiki_maps.slice(*namespace_list).map do |namespace, wikis|
-      "#{namespace}: #{wikis.length}"
-    end.then do |list_by_namespace|
-      list_by_namespace + missing_count_list_by_namespace
-    end.sort
+    @count_list_by_namespace ||= begin
+      counts = plain_wiki_maps.slice(*namespace_list).map { |namespace, wikis| "#{namespace}: #{wikis.length}" }
+      (counts + missing_count_list_by_namespace).sort
+    end
   end
 end

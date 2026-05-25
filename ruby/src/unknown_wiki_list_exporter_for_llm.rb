@@ -54,8 +54,6 @@ class UnknownWikiListExporterForLLM < Application
 
   # @rbs return: Array[String]
   def unknown_wiki_list_for_llm
-    @unknown_wiki_list_for_llm ||= plain_wiki_maps.slice(*target_namespace).then do |filtered_plain_wiki_maps|
-      filtered_plain_wiki_maps.values.flatten
-    end
+    @unknown_wiki_list_for_llm ||= plain_wiki_maps.slice(*target_namespace).values.flatten
   end
 end
