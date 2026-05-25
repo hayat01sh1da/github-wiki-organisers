@@ -1,8 +1,15 @@
 # Generated from src/application.rb with RBS::Inline
 
+# Base class for the wiki-organising commands. Loads the wiki tree under
+# base_path, groups it by Owner or Category in either English or Japanese, and
+# exposes the resulting maps to its subclasses.
 class Application
   class NotImplementedError < StandardError
   end
+
+  NO_DECLARATION: untyped
+
+  TARGET_REGEXP: untyped
 
   # @rbs base_path: String
   # @rbs group_by: String
@@ -44,6 +51,10 @@ class Application
 
   attr_reader paths_to_wikis: untyped
 
+  # @rbs raw: String
+  # @rbs return: (bool | String)
+  def parse_home_overflow: (String raw) -> (bool | String)
+
   # @rbs return: Array[String]
   def target_paths: () -> Array[String]
 
@@ -57,6 +68,16 @@ class Application
   # @rbs hash: Hash[String, Array[untyped]]
   # @rbs return: Hash[String, Array[String]]
   def wiki_maps_with_namespace: (?Array[untyped] array, ?Hash[String, Array[untyped]] hash) -> Hash[String, Array[String]]
+
+  # @rbs target_path: String
+  # @rbs hash: Hash[String, Array[String]]
+  # @rbs uncategorised: Hash[String, Array[String]]
+  # @rbs return: void
+  def populate_namespace: (String target_path, Hash[String, Array[String]] hash, Hash[String, Array[String]] uncategorised) -> void
+
+  # @rbs file: File
+  # @rbs return: String
+  def namespace_for: (File file) -> String
 
   # @rbs return: Hash[String, Array[String]]
   def owned_wiki_maps: () -> Hash[String, Array[String]]

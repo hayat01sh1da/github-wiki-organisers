@@ -1,5 +1,7 @@
 # Generated from src/home.rb with RBS::Inline
 
+# Generates the wiki Home page, optionally splitting per-owner content out into
+# `wikis-by-owner/<owner>.md` when home_overflow is enabled.
 class Home < Application
   HOME_URL: untyped
 
@@ -31,4 +33,30 @@ class Home < Application
   # @rbs array: Array[untyped]
   # @rbs return: void
   def write_concise_home_passage: (?Array[untyped] array) -> void
+
+  # @rbs array: Array[untyped]
+  # @rbs return: void
+  def write_per_namespace_files: (Array[untyped] array) -> void
+
+  # @rbs return: void
+  def write_home_table_of_contents: () -> void
+
+  # @rbs passage: Array[String]
+  # @rbs namespace: String
+  # @rbs wikis: Array[String]
+  # @rbs owned: bool
+  # @rbs return: void
+  def append_block: (Array[String] passage, String namespace, Array[String] wikis, owned: bool) -> void
+
+  # @rbs namespace: String
+  # @rbs wikis: Array[String]
+  # @rbs scratch: Array[String]
+  # @rbs owned: bool
+  # @rbs return: void
+  def write_overflow_block: (String namespace, Array[String] wikis, Array[String] scratch, owned: bool) -> void
+
+  # @rbs namespace: String
+  # @rbs owned: bool
+  # @rbs return: String
+  def heading_for: (String namespace, owned: bool) -> String
 end
