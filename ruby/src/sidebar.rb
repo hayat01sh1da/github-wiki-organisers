@@ -30,18 +30,23 @@ class Sidebar < Application
 
   # @rbs return: void
   def update_wiki_list
-    owned_wiki_maps.each do |namespace, wikis|
-      wiki_list << "- [#{namespace}](#{base_owner_url + namespace.delete('@')})\n"
-      wikis.each do |wiki|
-        wiki_list << "  - [[#{wiki.gsub('.md', '')}]]\n"
-      end
-    end
+    owned_wiki_maps.each { |namespace, wikis| append_section(namespace, wikis, owned: true) }
+    plain_wiki_maps.each { |namespace, wikis| append_section(namespace, wikis, owned: false) }
+  end
 
-    plain_wiki_maps.each do |namespace, wikis|
-      wiki_list << "- #{namespace}\n"
-      wikis.each do |wiki|
-        wiki_list << "  - [[#{wiki.gsub('.md', '')}]]\n"
-      end
-    end
+  # @rbs namespace: String
+  # @rbs wikis: Array[String]
+  # @rbs owned: bool
+  # @rbs return: void
+  def append_section(namespace, wikis, owned:)
+    wiki_list << "#{section_heading(namespace, owned:)}\n"
+    wikis.each { |wiki| wiki_list << "  - [[#{wiki.gsub('.md', '')}]]\n" }
+  end
+
+  # @rbs namespace: String
+  # @rbs owned: bool
+  # @rbs return: String
+  def section_heading(namespace, owned:)
+    owned ? "- [#{namespace}](#{base_owner_url + namespace.delete('@')})" : "- #{namespace}"
   end
 end
