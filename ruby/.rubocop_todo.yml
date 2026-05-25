@@ -26,18 +26,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 9
 
-# Offense count: 5
-# Configuration parameters: AllowedConstants.
-Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'src/application.rb'
-    - 'src/home.rb'
-    - 'src/sidebar.rb'
-    - 'src/unknown_wiki_count_list_exporter.rb'
-    - 'src/unknown_wiki_list_exporter_for_llm.rb'
-
 # Offense count: 3
 Style/MultilineBlockChain:
   Exclude:

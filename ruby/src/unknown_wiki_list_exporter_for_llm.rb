@@ -3,6 +3,8 @@
 
 require_relative 'application'
 
+# Writes a flat list of the wikis under the "unknown owner/category" namespace
+# in a form suitable for feeding to an LLM.
 class UnknownWikiListExporterForLLM < Application
   # @rbs base_path: String
   # @rbs group_by: String

@@ -3,6 +3,8 @@
 
 require_relative 'application'
 
+# Generates the wiki _Sidebar.md as a nested list of owners/categories and
+# their wiki pages.
 class Sidebar < Application
   # @rbs base_path: String
   # @rbs group_by: String

@@ -3,6 +3,8 @@
 
 require_relative 'application'
 
+# Writes a sorted text report of how many wikis exist under each of the
+# well-known "unknown owner/category" namespaces.
 class UnknownWikiCountListExporter < Application
   # @rbs base_path: String
   # @rbs group_by: String

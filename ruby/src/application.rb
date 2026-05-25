@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 # rbs_inline: enabled
 
+# Base class for the wiki-organising commands. Loads the wiki tree under
+# base_path, groups it by Owner or Category in either English or Japanese, and
+# exposes the resulting maps to its subclasses.
 class Application
   class NotImplementedError < StandardError; end
 

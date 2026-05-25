@@ -3,6 +3,8 @@
 
 require_relative 'application'
 
+# Generates the wiki Home page, optionally splitting per-owner content out into
+# `wikis-by-owner/<owner>.md` when home_overflow is enabled.
 class Home < Application
   HOME_URL = "https://github.com/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/github-wiki-organisers/wiki".freeze
 
