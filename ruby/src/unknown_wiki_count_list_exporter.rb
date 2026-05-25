@@ -1,15 +1,25 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
-require_relative './application'
+require_relative 'application'
 
+# Writes a sorted text report of how many wikis exist under each of the
+# well-known "unknown owner/category" namespaces.
 class UnknownWikiCountListExporter < Application
+  NAMESPACE_LIST = {
+    %w[Owner English] => ['Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'],
+    %w[Owner Japanese] => ['Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'],
+    %w[Category English] => ['Uncategorised'],
+    %w[Category Japanese] => ['Category記載なし']
+  }.freeze
+
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String
   # @rbs home_overflow: String
   # @rbs return: void
   def initialize(base_path: '', group_by: '', language: '', home_overflow: 'false')
-    super(base_path:, group_by:, language:, home_overflow:)
+    super
     @path_to_export = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
   end
 
@@ -25,40 +35,7 @@ class UnknownWikiCountListExporter < Application
 
   # @rbs return: Array[String]
   def namespace_list
-    case group_by
-    when 'Owner'
-      case language
-      when 'English'
-        [
-          'Unknown Owner nor Necessity',
-          'Unowned but Necessary',
-          'Unowned'
-        ]
-      when 'Japanese'
-        [
-          'Ownerチームが不明だが必要なページ群',
-          'Ownerチーム・要or不要が不明なページ群',
-          'Owner記名なし'
-        ]
-      else
-        ['']
-      end
-    when 'Category'
-      case language
-      when 'English'
-        [
-          'Uncategorised'
-        ]
-      when 'Japanese'
-        [
-          'Category記載なし'
-        ]
-      else
-        ['']
-      end
-    else
-      ['']
-    end
+    NAMESPACE_LIST.fetch([group_by, language], [''])
   end
 
   # @rbs return: Array[String]
@@ -68,12 +45,9 @@ class UnknownWikiCountListExporter < Application
 
   # @rbs return: Array[String]
   def count_list_by_namespace
-    @count_list_by_namespace ||= plain_wiki_maps.select { |namespace, _|
-      namespace_list.include?(namespace)
-    }.map { |namespace, wikis|
-      "#{namespace}: #{wikis.length}"
-    }.then { |list_by_namespace|
-      list_by_namespace + missing_count_list_by_namespace
-    }.sort
+    @count_list_by_namespace ||= begin
+      counts = plain_wiki_maps.slice(*namespace_list).map { |namespace, wikis| "#{namespace}: #{wikis.length}" }
+      (counts + missing_count_list_by_namespace).sort
+    end
   end
 end

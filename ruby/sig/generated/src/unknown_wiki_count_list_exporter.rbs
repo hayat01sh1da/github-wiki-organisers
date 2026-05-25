@@ -1,6 +1,10 @@
 # Generated from src/unknown_wiki_count_list_exporter.rb with RBS::Inline
 
+# Writes a sorted text report of how many wikis exist under each of the
+# well-known "unknown owner/category" namespaces.
 class UnknownWikiCountListExporter < Application
+  NAMESPACE_LIST: untyped
+
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String

@@ -1,15 +1,25 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
-require_relative './application'
+require_relative 'application'
 
+# Writes a flat list of the wikis under the "unknown owner/category" namespace
+# in a form suitable for feeding to an LLM.
 class UnknownWikiListExporterForLLM < Application
+  TARGET_NAMESPACE = {
+    %w[Owner English] => 'Unknown Owner nor Necessity',
+    %w[Owner Japanese] => 'Ownerチーム・要or不要が不明なページ群',
+    %w[Category English] => 'Uncategorised',
+    %w[Category Japanese] => 'Category記載なし'
+  }.freeze
+
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String
   # @rbs home_overflow: String
   # @rbs return: void
   def initialize(base_path: '', group_by: '', language: '', home_overflow: 'false')
-    super(base_path:, group_by:, language:, home_overflow:)
+    super
     @path_to_export = File.join(base_path, 'unknown_wiki_list_for_llm.txt')
   end
 
@@ -25,36 +35,11 @@ class UnknownWikiListExporterForLLM < Application
 
   # @rbs return: String
   def target_namespace
-    case group_by
-    when 'Owner'
-      case language
-      when 'English'
-        'Unknown Owner nor Necessity'
-      when 'Japanese'
-        'Ownerチーム・要or不要が不明なページ群'
-      else
-        ''
-      end
-    when 'Category'
-      case language
-      when 'English'
-        'Uncategorised'
-      when 'Japanese'
-        'Category記載なし'
-      else
-        ''
-      end
-    else
-      ''
-    end
+    TARGET_NAMESPACE.fetch([group_by, language], '')
   end
 
   # @rbs return: Array[String]
   def unknown_wiki_list_for_llm
-    @unknown_wiki_list_for_llm ||= plain_wiki_maps.select { |namespace, _|
-      target_namespace.include?(namespace)
-    }.then { |filtered_plain_wiki_maps|
-      filtered_plain_wiki_maps.values.flatten
-    }
+    @unknown_wiki_list_for_llm ||= plain_wiki_maps.slice(target_namespace).values.flatten
   end
 end

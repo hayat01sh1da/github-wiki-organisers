@@ -1,6 +1,10 @@
 # Generated from src/unknown_wiki_list_exporter_for_llm.rb with RBS::Inline
 
+# Writes a flat list of the wikis under the "unknown owner/category" namespace
+# in a form suitable for feeding to an LLM.
 class UnknownWikiListExporterForLLM < Application
+  TARGET_NAMESPACE: untyped
+
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String

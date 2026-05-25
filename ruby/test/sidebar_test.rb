@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
-require_relative './application_test'
+require_relative 'application_test'
 require_relative '../src/sidebar'
 
 class SidebarTest < ApplicationTest
   def setup(group_by: 'Owner', language: 'English')
-    super(group_by:, language:)
+    super
     Sidebar.run(base_path:, group_by:, language:)
     @path_to_sidebar = File.join(base_path, '_Sidebar.md')
     @sidebar         = File.read(path_to_sidebar)
