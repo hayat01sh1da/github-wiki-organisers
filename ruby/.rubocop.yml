@@ -12,3 +12,9 @@ AllCops:
 
 Metrics/ClassLength:
   CountAsOne: ['array', 'hash', 'method_call']
+
+# Test helpers inline long markdown fixtures, which naturally produces
+# long methods.
+Metrics/MethodLength:
+  Exclude:
+    - 'test/**/*'

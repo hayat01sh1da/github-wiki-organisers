@@ -6,6 +6,13 @@ require_relative 'application'
 # Writes a flat list of the wikis under the "unknown owner/category" namespace
 # in a form suitable for feeding to an LLM.
 class UnknownWikiListExporterForLLM < Application
+  TARGET_NAMESPACE = {
+    %w[Owner English]     => 'Unknown Owner nor Necessity',
+    %w[Owner Japanese]    => 'Ownerチーム・要or不要が不明なページ群',
+    %w[Category English]  => 'Uncategorised',
+    %w[Category Japanese] => 'Category記載なし'
+  }.freeze
+
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String
@@ -28,28 +35,7 @@ class UnknownWikiListExporterForLLM < Application
 
   # @rbs return: String
   def target_namespace
-    case group_by
-    when 'Owner'
-      case language
-      when 'English'
-        'Unknown Owner nor Necessity'
-      when 'Japanese'
-        'Ownerチーム・要or不要が不明なページ群'
-      else
-        ''
-      end
-    when 'Category'
-      case language
-      when 'English'
-        'Uncategorised'
-      when 'Japanese'
-        'Category記載なし'
-      else
-        ''
-      end
-    else
-      ''
-    end
+    TARGET_NAMESPACE.fetch([group_by, language], '')
   end
 
   # @rbs return: Array[String]

@@ -6,6 +6,13 @@ require_relative 'application'
 # Writes a sorted text report of how many wikis exist under each of the
 # well-known "unknown owner/category" namespaces.
 class UnknownWikiCountListExporter < Application
+  NAMESPACE_LIST = {
+    %w[Owner English]     => ['Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'],
+    %w[Owner Japanese]    => ['Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'],
+    %w[Category English]  => ['Uncategorised'],
+    %w[Category Japanese] => ['Category記載なし']
+  }.freeze
+
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String
@@ -28,40 +35,7 @@ class UnknownWikiCountListExporter < Application
 
   # @rbs return: Array[String]
   def namespace_list
-    case group_by
-    when 'Owner'
-      case language
-      when 'English'
-        [
-          'Unknown Owner nor Necessity',
-          'Unowned but Necessary',
-          'Unowned'
-        ]
-      when 'Japanese'
-        [
-          'Ownerチームが不明だが必要なページ群',
-          'Ownerチーム・要or不要が不明なページ群',
-          'Owner記名なし'
-        ]
-      else
-        ['']
-      end
-    when 'Category'
-      case language
-      when 'English'
-        [
-          'Uncategorised'
-        ]
-      when 'Japanese'
-        [
-          'Category記載なし'
-        ]
-      else
-        ['']
-      end
-    else
-      ['']
-    end
+    NAMESPACE_LIST.fetch([group_by, language], [''])
   end
 
   # @rbs return: Array[String]
