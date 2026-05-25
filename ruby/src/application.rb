@@ -7,6 +7,18 @@
 class Application
   class NotImplementedError < StandardError; end
 
+  NO_DECLARATION = {
+    %w[Owner English]     => 'Unowned',
+    %w[Owner Japanese]    => 'Owner記名なし',
+    %w[Category English]  => 'Uncategorised',
+    %w[Category Japanese] => 'Category記載なし'
+  }.freeze
+
+  TARGET_REGEXP = {
+    'Owner'    => /[Oo]wner:\s?/,
+    'Category' => /[Cc]ategory:\s?/
+  }.freeze
+
   # @rbs base_path: String
   # @rbs group_by: String
   # @rbs language: String
@@ -27,14 +39,7 @@ class Application
     @base_path     = base_path
     @group_by      = group_by
     @language      = language
-    @home_overflow = case home_overflow
-                     when 'true'
-                       true
-                     when 'false'
-                       false
-                     else
-                       home_overflow
-                     end
+    @home_overflow = parse_home_overflow(home_overflow)
     @path_to_home                   = File.join(base_path, 'Home.md')
     @path_to_sidebar                = File.join(base_path, '_Sidebar.md')
     @path_to_github_wiki_organisers = Dir[File.join(base_path, 'github-wiki-organisers', '**', '*.md')]
@@ -46,7 +51,10 @@ class Application
   def validate!
     raise ArgumentError, "Invalid group_by: `#{group_by}`" unless %w[Owner Category].include?(group_by)
     raise ArgumentError, "Invalid language: `#{language}`" unless %w[English Japanese].include?(language)
-    raise ArgumentError, "Invalid home_overflow: `#{home_overflow}` must be boolean" unless [true, false].include?(home_overflow)
+
+    return if [true, false].include?(home_overflow)
+
+    raise ArgumentError, "Invalid home_overflow: `#{home_overflow}` must be boolean"
   end
 
   # @rbs return: void
@@ -66,6 +74,16 @@ class Application
               :path_to_wikis_by_owner,
               :paths_to_wikis
 
+  # @rbs raw: String
+  # @rbs return: (bool | String)
+  def parse_home_overflow(raw)
+    case raw
+    when 'true'  then true
+    when 'false' then false
+    else raw
+    end
+  end
+
   # @rbs return: Array[String]
   def target_paths
     @target_paths ||= paths_to_wikis.delete_if do |path_to_wiki|
@@ -78,65 +96,48 @@ class Application
 
   # @rbs return: Regexp
   def target_regexp
-    @target_regexp ||= case group_by
-                       when 'Owner'
-                         /[Oo]wner:\s?/
-                       when 'Category'
-                         /[Cc]ategory:\s?/
-                       else
-                         //
-                       end
+    @target_regexp ||= TARGET_REGEXP.fetch(group_by, //)
   end
 
   # @rbs return: String
   def no_declaration
-    @no_declaration ||= case group_by
-                        when 'Owner'
-                          case language
-                          when 'English'
-                            'Unowned'
-                          when 'Japanese'
-                            'Owner記名なし'
-                          else
-                            ''
-                          end
-                        when 'Category'
-                          case language
-                          when 'English'
-                            'Uncategorised'
-                          when 'Japanese'
-                            'Category記載なし'
-                          else
-                            ''
-                          end
-                        else
-                          ''
-                        end
+    @no_declaration ||= NO_DECLARATION.fetch([group_by, language], '')
   end
 
   # @rbs array: Array[untyped]
   # @rbs hash: Hash[String, Array[untyped]]
   # @rbs return: Hash[String, Array[String]]
-  def wiki_maps_with_namespace(array = [], hash = Hash.new { |hash, namespace| hash[namespace] = array.dup })
-    uncategrised_wiki_maps = hash
+  def wiki_maps_with_namespace(array = [], hash = Hash.new { |h, namespace| h[namespace] = array.dup })
+    uncategorised = hash
 
-    @wiki_maps_with_namespace ||= target_paths.each.with_object(hash.dup) do |target_path, hash|
-      next unless File.exist?(target_path)
+    @wiki_maps_with_namespace ||= target_paths.each.with_object(hash.dup) do |target_path, acc|
+      populate_namespace(target_path, acc, uncategorised)
+    end.sort.to_h.merge(uncategorised)
+  end
 
-      File.open(target_path) do |file|
-        wiki = File.basename(file)
+  # @rbs target_path: String
+  # @rbs hash: Hash[String, Array[String]]
+  # @rbs uncategorised: Hash[String, Array[String]]
+  # @rbs return: void
+  def populate_namespace(target_path, hash, uncategorised)
+    return unless File.exist?(target_path)
 
-        namespace_declaration = file.readlines.first
-        namespace             = if namespace_declaration&.start_with?(target_regexp)
-                                  namespace_declaration.chomp.gsub(target_regexp, '')
-                                else
-                                  no_declaration
-                                end
+    File.open(target_path) do |file|
+      wiki      = File.basename(file)
+      namespace = namespace_for(file)
 
-        hash[namespace] << wiki unless namespace == no_declaration
-        uncategrised_wiki_maps[namespace] << wiki if namespace == no_declaration
-      end
-    end.sort.to_h.merge(uncategrised_wiki_maps)
+      target = namespace == no_declaration ? uncategorised : hash
+      target[namespace] << wiki
+    end
+  end
+
+  # @rbs file: File
+  # @rbs return: String
+  def namespace_for(file)
+    declaration = file.readlines.first
+    return no_declaration unless declaration&.start_with?(target_regexp)
+
+    declaration.chomp.gsub(target_regexp, '')
   end
 
   # @rbs return: Hash[String, Array[String]]
