@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
-require_relative './application'
+require_relative 'application'
 
 class Home < Application
   HOME_URL = "https://github.com/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/github-wiki-organisers/wiki".freeze
@@ -11,7 +12,7 @@ class Home < Application
   # @rbs home_overflow: String
   # @rbs return: void
   def initialize(base_path: '', group_by: '', language: '', home_overflow: 'false')
-    super(base_path:, group_by:, language:, home_overflow:)
+    super
     @base_owner_url         = "https://github.com/orgs/#{ENV.fetch('ORGANISATION_NAME', 'hayat01sh1da')}/teams/"
     @path_to_wikis_by_owner = File.join(base_path, 'wikis-by-owner')
   end
@@ -43,25 +44,25 @@ class Home < Application
 
   # @rbs return: void
   def write_home_passage
-    FileUtils.rm_rf(path_to_wikis_by_owner) if Dir.exist?(path_to_wikis_by_owner)
+    FileUtils.rm_rf(path_to_wikis_by_owner)
 
-    owned_wiki_maps.each { |namespace, wikis|
-      home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"
+    owned_wiki_maps.each do |namespace, wikis|
+      home_passage << "## [#{namespace}](#{base_owner_url + namespace.delete('@')})\n"
       home_passage << "\n"
-      wikis.each { |wiki|
-        home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
-      }
+      wikis.each do |wiki|
+        home_passage << "- [[#{wiki.gsub('.md', '')}]]\n"
+      end
       home_passage << "\n"
-    }
+    end
 
-    plain_wiki_maps.each { |namespace, wikis|
+    plain_wiki_maps.each do |namespace, wikis|
       home_passage << "## #{namespace}\n"
       home_passage << "\n"
-      wikis.each { |wiki|
-        home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
-      }
+      wikis.each do |wiki|
+        home_passage << "- [[#{wiki.gsub('.md', '')}]]\n"
+      end
       home_passage << "\n"
-    }
+    end
 
     File.write(path_to_home, home_passage.join.chomp)
   end
@@ -69,31 +70,31 @@ class Home < Application
   # @rbs array: Array[untyped]
   # @rbs return: void
   def write_concise_home_passage(array = [])
-    FileUtils.mkdir_p(path_to_wikis_by_owner) unless Dir.exist?(path_to_wikis_by_owner)
+    FileUtils.mkdir_p(path_to_wikis_by_owner)
 
-    owned_wiki_maps.each { |namespace, wikis|
+    owned_wiki_maps.each do |namespace, wikis|
       home_passage  = array
-      home_passage << "## [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"
+      home_passage << "## [#{namespace}](#{base_owner_url + namespace.delete('@')})\n"
       home_passage << "\n"
-      wikis.each { |wiki|
-        home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
-      }
+      wikis.each do |wiki|
+        home_passage << "- [[#{wiki.gsub('.md', '')}]]\n"
+      end
       home_passage << "\n"
 
-      File.write(File.join(path_to_wikis_by_owner,"#{namespace}.md"), home_passage.join.chomp)
-    }
+      File.write(File.join(path_to_wikis_by_owner, "#{namespace}.md"), home_passage.join.chomp)
+    end
 
-    plain_wiki_maps.each { |namespace, wikis|
+    plain_wiki_maps.each do |namespace, wikis|
       home_passage  = array.dup
       home_passage << "## #{namespace}\n"
       home_passage << "\n"
-      wikis.each { |wiki|
-        home_passage << "- [[#{wiki.gsub(/\.md/, '')}]]\n"
-      }
+      wikis.each do |wiki|
+        home_passage << "- [[#{wiki.gsub('.md', '')}]]\n"
+      end
       home_passage << "\n"
 
-      File.write(File.join(path_to_wikis_by_owner,"#{namespace}.md"), home_passage.join.chomp)
-    }
+      File.write(File.join(path_to_wikis_by_owner, "#{namespace}.md"), home_passage.join.chomp)
+    end
 
     (owned_wiki_maps.keys + plain_wiki_maps.keys).each { |namespace| home_passage << "- [[#{namespace}]]\n" }
     home_passage << "\n"

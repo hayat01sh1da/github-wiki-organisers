@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
-require_relative './application_test'
+require_relative 'application_test'
 require_relative '../src/home'
 
 class HomeTest < ApplicationTest
   def setup(group_by: 'Owner', language: 'English', home_overflow: false)
-    super(group_by:, language:, home_overflow:)
+    super
     Home.run(base_path:, group_by:, language:, home_overflow:)
     @path_to_home           = File.join(base_path, 'Home.md')
     @home                   = File.read(path_to_home)

@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
-require_relative './application'
+require_relative 'application'
 
 class Sidebar < Application
   # @rbs base_path: String
@@ -27,18 +28,18 @@ class Sidebar < Application
 
   # @rbs return: void
   def update_wiki_list
-    owned_wiki_maps.each { |namespace, wikis|
-      wiki_list << "- [#{namespace}](#{base_owner_url + namespace.gsub(/\@/, '')})\n"
-      wikis.each { |wiki|
-        wiki_list << "  - [[#{wiki.gsub(/\.md/, '')}]]\n"
-      }
-    }
+    owned_wiki_maps.each do |namespace, wikis|
+      wiki_list << "- [#{namespace}](#{base_owner_url + namespace.delete('@')})\n"
+      wikis.each do |wiki|
+        wiki_list << "  - [[#{wiki.gsub('.md', '')}]]\n"
+      end
+    end
 
-    plain_wiki_maps.each { |namespace, wikis|
+    plain_wiki_maps.each do |namespace, wikis|
       wiki_list << "- #{namespace}\n"
-      wikis.each { |wiki|
-        wiki_list << "  - [[#{wiki.gsub(/\.md/, '')}]]\n"
-      }
-    }
+      wikis.each do |wiki|
+        wiki_list << "  - [[#{wiki.gsub('.md', '')}]]\n"
+      end
+    end
   end
 end

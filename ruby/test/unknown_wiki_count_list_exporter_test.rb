@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
-require_relative './application_test'
+require_relative 'application_test'
 require_relative '../src/unknown_wiki_count_list_exporter'
 
 class UnknownWikiCountListExporterTest < ApplicationTest
   def setup(group_by: 'Owner', language: 'English')
-    super(group_by:, language:)
+    super
     UnknownWikiCountListExporter.run(base_path:, group_by:, language:)
     @path_to_unknown_wiki_count_list = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
     @unknown_wiki_count_list         = File.read(path_to_unknown_wiki_count_list)
@@ -294,7 +295,7 @@ class UnknownWikiCountListExporterTest < ApplicationTest
           {
             'Owner記名ありページ.md' => 'Owner: @test-owner',
             'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
-            'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
+            'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群'
           }
         end
       end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
 require 'minitest/autorun'
@@ -9,14 +10,14 @@ class ApplicationTest < Minitest::Test
     @group_by      = group_by
     @language      = language
     @home_overflow = home_overflow
-    FileUtils.mkdir_p(base_path) unless Dir.exist?(base_path)
-    test_file_maps.each { |wiki, namespace|
+    FileUtils.mkdir_p(base_path)
+    test_file_maps.each do |wiki, namespace|
       File.write(File.join(base_path, wiki), namespace)
-    }
+    end
   end
 
   def teardown
-    FileUtils.rm_rf(base_path) if Dir.exist?(base_path)
+    FileUtils.rm_rf(base_path)
   end
 
   def test_validate_group_by!

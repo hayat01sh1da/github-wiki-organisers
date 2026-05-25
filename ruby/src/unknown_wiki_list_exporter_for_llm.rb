@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 # rbs_inline: enabled
 
-require_relative './application'
+require_relative 'application'
 
 class UnknownWikiListExporterForLLM < Application
   # @rbs base_path: String
@@ -9,7 +10,7 @@ class UnknownWikiListExporterForLLM < Application
   # @rbs home_overflow: String
   # @rbs return: void
   def initialize(base_path: '', group_by: '', language: '', home_overflow: 'false')
-    super(base_path:, group_by:, language:, home_overflow:)
+    super
     @path_to_export = File.join(base_path, 'unknown_wiki_list_for_llm.txt')
   end
 
@@ -51,10 +52,8 @@ class UnknownWikiListExporterForLLM < Application
 
   # @rbs return: Array[String]
   def unknown_wiki_list_for_llm
-    @unknown_wiki_list_for_llm ||= plain_wiki_maps.select { |namespace, _|
-      target_namespace.include?(namespace)
-    }.then { |filtered_plain_wiki_maps|
+    @unknown_wiki_list_for_llm ||= plain_wiki_maps.slice(*target_namespace).then do |filtered_plain_wiki_maps|
       filtered_plain_wiki_maps.values.flatten
-    }
+    end
   end
 end
