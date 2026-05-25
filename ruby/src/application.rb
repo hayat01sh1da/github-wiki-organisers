@@ -8,14 +8,14 @@ class Application
   class NotImplementedError < StandardError; end
 
   NO_DECLARATION = {
-    %w[Owner English]     => 'Unowned',
-    %w[Owner Japanese]    => 'Owner記名なし',
-    %w[Category English]  => 'Uncategorised',
+    %w[Owner English] => 'Unowned',
+    %w[Owner Japanese] => 'Owner記名なし',
+    %w[Category English] => 'Uncategorised',
     %w[Category Japanese] => 'Category記載なし'
   }.freeze
 
   TARGET_REGEXP = {
-    'Owner'    => /[Oo]wner:\s?/,
+    'Owner' => /[Oo]wner:\s?/,
     'Category' => /[Cc]ategory:\s?/
   }.freeze
 

@@ -7,9 +7,9 @@ require_relative 'application'
 # well-known "unknown owner/category" namespaces.
 class UnknownWikiCountListExporter < Application
   NAMESPACE_LIST = {
-    %w[Owner English]     => ['Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'],
-    %w[Owner Japanese]    => ['Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'],
-    %w[Category English]  => ['Uncategorised'],
+    %w[Owner English] => ['Unknown Owner nor Necessity', 'Unowned but Necessary', 'Unowned'],
+    %w[Owner Japanese] => ['Ownerチームが不明だが必要なページ群', 'Ownerチーム・要or不要が不明なページ群', 'Owner記名なし'],
+    %w[Category English] => ['Uncategorised'],
     %w[Category Japanese] => ['Category記載なし']
   }.freeze
 

@@ -7,9 +7,9 @@ require_relative 'application'
 # in a form suitable for feeding to an LLM.
 class UnknownWikiListExporterForLLM < Application
   TARGET_NAMESPACE = {
-    %w[Owner English]     => 'Unknown Owner nor Necessity',
-    %w[Owner Japanese]    => 'Ownerチーム・要or不要が不明なページ群',
-    %w[Category English]  => 'Uncategorised',
+    %w[Owner English] => 'Unknown Owner nor Necessity',
+    %w[Owner Japanese] => 'Ownerチーム・要or不要が不明なページ群',
+    %w[Category English] => 'Uncategorised',
     %w[Category Japanese] => 'Category記載なし'
   }.freeze
 
