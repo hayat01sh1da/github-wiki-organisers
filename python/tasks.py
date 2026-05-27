@@ -41,14 +41,14 @@ def update_wiki_list_on_home_and_sidebar(c: Context) -> None:
           'github-wiki-organisers Wiki Pages... --------------------')
     print()
     print('-------------------- Organising Home... --------------------')
-    home_url = Home(**params).run()
+    home_url = Home.run(**params)
     print(f"Check out an Up-to-date Wiki List on Home at '{home_url}' !!")
     print('-------------------- Done Organising Home 🎉 '
           '--------------------')
     print()
     print('-------------------- Organising Sidebar... '
           '--------------------')
-    Sidebar(**params).run()
+    Sidebar.run(**params)
     print(f"Check out an Up-to-date Wiki List on Sidebar at "
           f"'{home_url}' !!")
     print('-------------------- Done Organising Sidebar 🎉 '
@@ -74,13 +74,12 @@ def export_unknown_wiki_count_list_by_namespace(c: Context) -> None:
 
     print('-------------------- Exporting Unknown Wiki Count List... '
           '--------------------')
-    count_list_by_namespace, path_to_export = \
-        UnknownWikiCountListExporter(**params).run()
+    counts, path_to_export = UnknownWikiCountListExporter.run(**params)
     print()
     print('Here is the result:')
     print()
     print('---------------------------------------')
-    print(count_list_by_namespace.rstrip())
+    print('\n'.join(counts))
     print('---------------------------------------')
     print()
     print(f"Check it out result on '{path_to_export}' !!")
@@ -105,7 +104,7 @@ def export_unknown_wiki_list_for_llm(c: Context) -> None:
 
     print('-------------------- Exporting Unknown Wiki List... '
           '--------------------')
-    path_to_export = UnknownWikiListExporterForLLM(**params).run()
+    path_to_export = UnknownWikiListExporterForLLM.run(**params)
     print()
     print(f"Check it out result on '{path_to_export}' !!")
     print()

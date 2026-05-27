@@ -7,10 +7,11 @@ from unknown_wiki_list_exporter_for_llm import UnknownWikiListExporterForLLM
 def _run(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
          language: str = 'English') -> str:
     base_path = wiki_workspace(group_by=group_by, language=language)
-    UnknownWikiListExporterForLLM(
+    UnknownWikiListExporterForLLM.run(
         base_path=base_path,
         group_by=group_by,
-        language=language).run()
+        language=language,
+    )
     with open(os.path.join(base_path, 'unknown_wiki_list_for_llm.txt')) as f:
         return f.read()
 

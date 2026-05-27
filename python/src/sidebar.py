@@ -1,45 +1,50 @@
-from application import Application
-import sys
 import os
-import re
+import sys
+
 sys.path.append('./src')
+
+from application import Application  # noqa: E402
 
 
 class Sidebar(Application):
-    def __init__(
-            self,
-            base_path: str = os.path.join(
-                '..',
-                '..'),
-            group_by: str = 'Owner',
-            language: str = 'English',
-            home_overflow: str | bool = False) -> None:
-        super().__init__(base_path, group_by, language, home_overflow)
-        self.base_owner_url: str = f'https://github.com/orgs/{
-            os.environ.get(
-                'ORGANISATION_NAME',
-                'hayat01sh1da')}/teams/'
-        self.wiki_list: str = self.__write_wiki_list__()
+    """Generates the wiki _Sidebar.md as a nested list of owners/categories
+    and their wiki pages."""
 
-    def run(self) -> None:
-        with open(self.path_to_sidebar, 'w') as f:
-            f.write(self.wiki_list)
+    def __init__(self, base_path: str = '', group_by: str = '',
+                 language: str = '',
+                 home_overflow: str | bool = 'false') -> None:
+        super().__init__(
+            base_path=base_path, group_by=group_by,
+            language=language, home_overflow=home_overflow,
+        )
+        self._base_owner_url = (
+            f'https://github.com/orgs/'
+            f'{os.environ.get("ORGANISATION_NAME", "hayat01sh1da")}/teams/'
+        )
+        self._wiki_list: list[str] = []
 
     # private
 
-    # @return [str]
-    def __write_wiki_list__(self) -> str:
-        wiki_list = ''
+    def _run(self) -> None:
+        self._update_wiki_list()
+        with open(self._path_to_sidebar, 'w') as f:
+            f.write(''.join(self._wiki_list))
 
-        for namespace, wikis in self.owned_wiki_maps.items():
-            wiki_list += f'- [{namespace}]({self.base_owner_url +
-                                            re.sub(r'@', '', namespace)})\n'
-            for wiki in wikis:
-                wiki_list += f'  - [[{re.sub(r'\.md', '', wiki)}]]\n'
+    def _update_wiki_list(self) -> None:
+        for namespace, wikis in self._owned_wiki_maps().items():
+            self._append_section(namespace, wikis, owned=True)
+        for namespace, wikis in self._plain_wiki_maps().items():
+            self._append_section(namespace, wikis, owned=False)
 
-        for namespace, wikis in self.plain_wiki_maps.items():
-            wiki_list += f'- {namespace}\n'
-            for wiki in wikis:
-                wiki_list += f'  - [[{re.sub(r'\.md', '', wiki)}]]\n'
+    def _append_section(self, namespace: str, wikis: list[str],
+                        owned: bool) -> None:
+        self._wiki_list.append(
+            f'{self._section_heading(namespace, owned=owned)}\n')
+        for wiki in wikis:
+            self._wiki_list.append(f'  - [[{wiki.replace(".md", "")}]]\n')
 
-        return wiki_list
+    def _section_heading(self, namespace: str, owned: bool) -> str:
+        if owned:
+            url = self._base_owner_url + namespace.replace('@', '')
+            return f'- [{namespace}]({url})'
+        return f'- {namespace}'

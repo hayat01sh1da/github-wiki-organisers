@@ -1,121 +1,108 @@
-from application import Application
-import sys
 import os
-import re
 import shutil
+import sys
+
 sys.path.append('./src')
 
+from application import Application  # noqa: E402
 
-HOME_URL = f'https://github.com/{
-    os.environ.get(
-        'ORGANISATION_NAME',
-        'hayat01sh1da')}/github-wiki-organisers/wiki'
+
+HOME_URL = (
+    f'https://github.com/'
+    f'{os.environ.get("ORGANISATION_NAME", "hayat01sh1da")}'
+    f'/github-wiki-organisers/wiki'
+)
 
 
 class Home(Application):
-    def __init__(
-            self,
-            base_path: str = os.path.join(
-                '..',
-                '..'),
-            group_by: str = 'Owner',
-            language: str = 'English',
-            home_overflow: str | bool = False) -> None:
-        super().__init__(base_path, group_by, language, home_overflow)
-        self.base_owner_url: str = f'https://github.com/orgs/{
-            os.environ.get(
-                'ORGANISATION_NAME',
-                'hayat01sh1da')}/teams/'
-        self.home_passage: str = self.__home_passage__()
-        self.path_to_wikis_by_owner_dir: str = os.path.join(
-            self.base_path, 'wikis-by-owner')
+    """Generates the wiki Home page, optionally splitting per-owner content
+    out into `wikis-by-owner/<owner>.md` when home_overflow is enabled."""
 
-    def run(self) -> str:
-        self.__write_home_passage__()
-        return HOME_URL
+    def __init__(self, base_path: str = '', group_by: str = '',
+                 language: str = '',
+                 home_overflow: str | bool = 'false') -> None:
+        super().__init__(
+            base_path=base_path, group_by=group_by,
+            language=language, home_overflow=home_overflow,
+        )
+        self._base_owner_url = (
+            f'https://github.com/orgs/'
+            f'{os.environ.get("ORGANISATION_NAME", "hayat01sh1da")}/teams/'
+        )
+        self._path_to_wikis_by_owner_dir = os.path.join(
+            base_path, 'wikis-by-owner')
 
     # private
 
-    # @return [str]
-    def __path_to_home_template__(self) -> str:
+    def _run(self) -> str:
+        if self._home_overflow:
+            self._write_concise_home_passage()
+        else:
+            self._write_home_passage()
+        return HOME_URL
+
+    def _path_to_home_template(self) -> str:
         return os.path.join(
-            '..', 'home_template', self.group_by.lower(), f'{
-                self.language.lower()}.md')
+            '..', 'home_template', self._group_by.lower(),
+            f'{self._language.lower()}.md',
+        )
 
-    # @return [list<str>]
-    def __home_passage__(self) -> str:
-        with open(self.__path_to_home_template__()) as f:
-            return f.read() + '\n'
+    def _home_passage(self) -> list[str]:
+        if not hasattr(self, '_cached_home_passage'):
+            with open(self._path_to_home_template()) as f:
+                self._cached_home_passage = f.readlines() + ['\n']
+        return self._cached_home_passage
 
-    # @return [str]
-    def __write_home_passage__(self) -> None:
-        if self.home_overflow:
-            os.makedirs(self.path_to_wikis_by_owner_dir, exist_ok=True)
+    def _write_home_passage(self) -> None:
+        if os.path.exists(self._path_to_wikis_by_owner_dir):
+            shutil.rmtree(self._path_to_wikis_by_owner_dir)
+        passage = self._home_passage()
+        for namespace, wikis in self._owned_wiki_maps().items():
+            self._append_block(passage, namespace, wikis, owned=True)
+        for namespace, wikis in self._plain_wiki_maps().items():
+            self._append_block(passage, namespace, wikis, owned=False)
+        with open(self._path_to_home, 'w') as f:
+            f.write(''.join(passage).rstrip('\n') + '\n')
 
-            for namespace, wikis in self.owned_wiki_maps.items():
-                self.__write_wikis_by_owner_file__(
-                    namespace=namespace, wikis=wikis, owned=True)
+    def _write_concise_home_passage(self) -> None:
+        os.makedirs(self._path_to_wikis_by_owner_dir, exist_ok=True)
+        self._write_per_namespace_files()
+        self._write_home_table_of_contents()
 
-            for namespace, wikis in self.plain_wiki_maps.items():
-                self.__write_wikis_by_owner_file__(
-                    namespace=namespace, wikis=wikis, owned=False)
+    def _write_per_namespace_files(self) -> None:
+        for namespace, wikis in self._owned_wiki_maps().items():
+            self._write_overflow_block(namespace, wikis, owned=True)
+        for namespace, wikis in self._plain_wiki_maps().items():
+            self._write_overflow_block(namespace, wikis, owned=False)
 
-            for namespace in (
-                list(
-                    self.owned_wiki_maps.keys()) +
-                list(
-                    self.plain_wiki_maps.keys())):
-                self.home_passage += f'- [[{namespace}]]\n'
+    def _write_home_table_of_contents(self) -> None:
+        passage = self._home_passage()
+        for namespace in (list(self._owned_wiki_maps().keys())
+                          + list(self._plain_wiki_maps().keys())):
+            passage.append(f'- [[{namespace}]]\n')
+        passage.append('\n')
+        with open(self._path_to_home, 'w') as f:
+            f.write(''.join(passage).rstrip('\n') + '\n')
 
-            self.home_passage += '\n'
-
-            with open(self.path_to_home, 'w') as f:
-                f.write(self.home_passage.rstrip() + '\n')
-
-        else:
-            if os.path.exists(self.path_to_wikis_by_owner_dir):
-                shutil.rmtree(self.path_to_wikis_by_owner_dir)
-            for namespace, wikis in self.owned_wiki_maps.items():
-                self.home_passage += f'## [{namespace}]({
-                    self.base_owner_url +
-                    re.sub(
-                        r'@',
-                        '',
-                        namespace)})\n'
-                self.home_passage += '\n'
-                for wiki in wikis:
-                    self.home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
-                self.home_passage += '\n'
-
-            for namespace, wikis in self.plain_wiki_maps.items():
-                self.home_passage += f'## {namespace}\n'
-                self.home_passage += '\n'
-                for wiki in wikis:
-                    self.home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
-                self.home_passage += '\n'
-
-            with open(self.path_to_home, 'w') as f:
-                f.write(self.home_passage.rstrip() + '\n')
-
-    def __write_wikis_by_owner_file__(
-            self, namespace: str, wikis: list[str], owned: bool) -> None:
-        home_passage = ''
-        if owned:
-            home_passage += f'## [{namespace}]({
-                self.base_owner_url +
-                re.sub(
-                    r'@',
-                    '',
-                    namespace)})\n'
-        else:
-            home_passage += f'## {namespace}\n'
-        home_passage += '\n'
+    def _append_block(self, passage: list[str], namespace: str,
+                      wikis: list[str], owned: bool) -> None:
+        passage.append(f'{self._heading_for(namespace, owned=owned)}\n')
+        passage.append('\n')
         for wiki in wikis:
-            home_passage += f'- [[{re.sub(r'\.md', '', wiki)}]]\n'
-        home_passage += '\n'
+            passage.append(f'- [[{wiki.replace(".md", "")}]]\n')
+        passage.append('\n')
 
-        file_path = os.path.join(
-            self.path_to_wikis_by_owner_dir,
-            f'{namespace}.md')
-        with open(file_path, 'w') as f:
-            f.write(home_passage.rstrip() + '\n')
+    def _write_overflow_block(self, namespace: str, wikis: list[str],
+                              owned: bool) -> None:
+        scratch: list[str] = []
+        self._append_block(scratch, namespace, wikis, owned=owned)
+        filename = os.path.join(
+            self._path_to_wikis_by_owner_dir, f'{namespace}.md')
+        with open(filename, 'w') as f:
+            f.write(''.join(scratch).rstrip('\n') + '\n')
+
+    def _heading_for(self, namespace: str, owned: bool) -> str:
+        if owned:
+            url = self._base_owner_url + namespace.replace('@', '')
+            return f'## [{namespace}]({url})'
+        return f'## {namespace}'

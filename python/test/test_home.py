@@ -9,11 +9,12 @@ def _run_home(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
               language: str = 'English',
               home_overflow: bool = False) -> tuple[str, str, list[str]]:
     base_path = wiki_workspace(group_by=group_by, language=language)
-    Home(
+    Home.run(
         base_path=base_path,
         group_by=group_by,
         language=language,
-        home_overflow=home_overflow).run()
+        home_overflow=home_overflow,
+    )
     with open(os.path.join(base_path, 'Home.md')) as f:
         home = f.read()
     path_to_wikis_by_owner = os.path.join(base_path, 'wikis-by-owner')
