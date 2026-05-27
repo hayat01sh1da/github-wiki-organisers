@@ -17,6 +17,8 @@ class UnknownWikiListExporterForLLM(Application):
         ('Category', 'Japanese'): 'Category記載なし',
     }
 
+    _cached_unknown: list[str]
+
     def __init__(self, base_path: str = '', group_by: str = '',
                  language: str = '',
                  home_overflow: str | bool = 'false') -> None:

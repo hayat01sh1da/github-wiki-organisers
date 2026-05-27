@@ -24,6 +24,8 @@ class Application:
         'Category': re.compile(r'[Cc]ategory:\s?'),
     }
 
+    _cached_wiki_maps: dict[str, list[str]]
+
     @classmethod
     def run(cls, base_path: str = os.path.join('..', '..'),
             group_by: str = 'Owner', language: str = 'English',
