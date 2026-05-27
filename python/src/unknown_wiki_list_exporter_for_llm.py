@@ -1,63 +1,50 @@
-from application import Application
-import sys
 import os
+import sys
+
 sys.path.append('./src')
+
+from application import Application  # noqa: E402
 
 
 class UnknownWikiListExporterForLLM(Application):
-    def __init__(
-            self,
-            base_path: str = os.path.join(
-                '..',
-                '..'),
-            group_by: str = 'Owner',
-            language: str = 'English',
-            home_overflow: str | bool = False) -> None:
-        super().__init__(base_path, group_by, language, home_overflow)
-        self.path_to_export: str = os.path.join(
-            self.base_path, 'unknown_wiki_list_for_llm.txt')
-        self.unknown_wiki_list_for_llm: str = ''.join(
-            sorted(self.__unknown_wiki_list_for_llm__()))
+    """Writes a flat list of the wikis under the "unknown owner/category"
+    namespace in a form suitable for feeding to an LLM."""
 
-    def run(self) -> str:
-        with open(self.path_to_export, 'w') as f:
-            f.write(self.unknown_wiki_list_for_llm.rstrip() + '\n')
+    TARGET_NAMESPACE = {
+        ('Owner', 'English'): 'Unknown Owner nor Necessity',
+        ('Owner', 'Japanese'): 'Ownerチーム・要or不要が不明なページ群',
+        ('Category', 'English'): 'Uncategorised',
+        ('Category', 'Japanese'): 'Category記載なし',
+    }
 
-        return self.path_to_export
+    _cached_unknown: list[str]
+
+    def __init__(self, base_path: str = '', group_by: str = '',
+                 language: str = '',
+                 home_overflow: str | bool = 'false') -> None:
+        super().__init__(
+            base_path=base_path, group_by=group_by,
+            language=language, home_overflow=home_overflow,
+        )
+        self._path_to_export = os.path.join(
+            base_path, 'unknown_wiki_list_for_llm.txt')
 
     # private
 
-    # @return [str]
-    def __target_namespace__(self) -> str:
-        match self.group_by:
-            case 'Owner':
-                match self.language:
-                    case 'English':
-                        return 'Unknown Owner nor Necessity'
-                    case 'Japanese':
-                        return 'Ownerチーム・要or不要が不明なページ群'
-                    case _:
-                        raise ValueError(
-                            f'Invalid language: `{self.language}`')
-            case 'Category':
-                match self.language:
-                    case 'English':
-                        return 'Uncategorised'
-                    case 'Japanese':
-                        return 'Category記載なし'
-                    case _:
-                        raise ValueError(
-                            f'Invalid language: `{self.language}`')
-            case _:
-                raise ValueError(f'Invalid group_by: `{self.group_by}`')
+    def _run(self) -> str:
+        wikis = self._unknown_wiki_list_for_llm()
+        with open(self._path_to_export, 'wb') as f:
+            f.write(('\n'.join(wikis) + '\n').encode())
+        return self._path_to_export
 
-    # @return [list<str>]
-    def __unknown_wiki_list_for_llm__(self) -> list[str]:
-        unknown_wiki_list_for_llm: list[str] = []
+    def _target_namespace(self) -> str:
+        return self.TARGET_NAMESPACE.get(
+            (self._group_by, self._language), '')
 
-        for namespace, wikis in self.plain_wiki_maps.items():
-            if namespace == self.__target_namespace__():
-                for wiki in wikis:
-                    unknown_wiki_list_for_llm.append(f'{wiki}\n')
-
-        return unknown_wiki_list_for_llm
+    def _unknown_wiki_list_for_llm(self) -> list[str]:
+        if hasattr(self, '_cached_unknown'):
+            return self._cached_unknown
+        plain = self._plain_wiki_maps()
+        target = self._target_namespace()
+        self._cached_unknown = list(plain.get(target, []))
+        return self._cached_unknown

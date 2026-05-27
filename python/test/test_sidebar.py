@@ -7,7 +7,7 @@ from sidebar import Sidebar
 def _run_sidebar(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
                  language: str = 'English') -> str:
     base_path = wiki_workspace(group_by=group_by, language=language)
-    Sidebar(base_path, group_by=group_by, language=language).run()
+    Sidebar.run(base_path=base_path, group_by=group_by, language=language)
     with open(os.path.join(base_path, '_Sidebar.md')) as f:
         return f.read()
 

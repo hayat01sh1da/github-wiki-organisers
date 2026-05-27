@@ -1,83 +1,70 @@
-from application import Application
-import sys
 import os
+import sys
+
 sys.path.append('./src')
+
+from application import Application  # noqa: E402
 
 
 class UnknownWikiCountListExporter(Application):
-    def __init__(
-            self,
-            base_path: str = os.path.join(
-                '..',
-                '..'),
-            group_by: str = 'Owner',
-            language: str = 'English',
-            home_overflow: str | bool = False) -> None:
-        super().__init__(base_path, group_by, language, home_overflow)
-        self.path_to_export: str = os.path.join(
-            self.base_path, 'unknown_wiki_count_list_by_namespace.txt')
-        self.count_list_by_namespace: str = ''.join(
-            sorted(self.__count_list_by_namespace__()))
+    """Writes a sorted text report of how many wikis exist under each of
+    the well-known "unknown owner/category" namespaces."""
 
-    def run(self) -> tuple[str, str]:
-        with open(self.path_to_export, 'w') as f:
-            f.write(self.count_list_by_namespace.rstrip() + '\n')
+    NAMESPACE_LIST = {
+        ('Owner', 'English'): [
+            'Unknown Owner nor Necessity',
+            'Unowned but Necessary',
+            'Unowned',
+        ],
+        ('Owner', 'Japanese'): [
+            'Ownerチームが不明だが必要なページ群',
+            'Ownerチーム・要or不要が不明なページ群',
+            'Owner記名なし',
+        ],
+        ('Category', 'English'): ['Uncategorised'],
+        ('Category', 'Japanese'): ['Category記載なし'],
+    }
 
-        return self.count_list_by_namespace.rstrip() + '\n', self.path_to_export
+    _cached_counts: list[str]
+
+    def __init__(self, base_path: str = '', group_by: str = '',
+                 language: str = '',
+                 home_overflow: str | bool = 'false') -> None:
+        super().__init__(
+            base_path=base_path, group_by=group_by,
+            language=language, home_overflow=home_overflow,
+        )
+        self._path_to_export = os.path.join(
+            base_path, 'unknown_wiki_count_list_by_namespace.txt')
 
     # private
 
-    # @return [list<str>]
-    def __namespace_list__(self) -> list[str]:
-        match self.group_by:
-            case 'Owner':
-                match self.language:
-                    case 'English':
-                        return [
-                            'Unowned but Necessary',
-                            'Unknown Owner nor Necessity',
-                            'Unowned'
-                        ]
-                    case 'Japanese':
-                        return [
-                            'Ownerチームが不明だが必要なページ群',
-                            'Ownerチーム・要or不要が不明なページ群',
-                            'Owner記名なし'
-                        ]
-                    case _:
-                        raise ValueError(
-                            f'Invalid language: `{self.language}`')
-            case 'Category':
-                match self.language:
-                    case 'English':
-                        return [
-                            'Uncategorised'
-                        ]
-                    case 'Japanese':
-                        return [
-                            'Category記載なし'
-                        ]
-                    case _:
-                        raise ValueError(
-                            f'Invalid language: `{self.language}`')
-            case _:
-                raise ValueError(f'Invalid group_by: `{self.group_by}`')
+    def _run(self) -> tuple[list[str], str]:
+        counts = self._count_list_by_namespace()
+        with open(self._path_to_export, 'wb') as f:
+            f.write(('\n'.join(counts) + '\n').encode())
+        return counts, self._path_to_export
 
-    # @return [list<str>]
-    def __count_list_by_namespace__(self) -> list[str]:
-        filtered_count_list_by_namespace: dict[str, list[str]] = {}
-        count_list_by_namespace: list[str] = []
+    def _namespace_list(self) -> list[str]:
+        return self.NAMESPACE_LIST.get((self._group_by, self._language), [''])
 
-        for namespace, wikis in self.plain_wiki_maps.items():
-            if namespace in self.__namespace_list__():
-                filtered_count_list_by_namespace[namespace] = wikis
+    def _missing_count_list_by_namespace(self) -> list[str]:
+        plain_keys = set(self._plain_wiki_maps().keys())
+        return [
+            f'{namespace}: 0'
+            for namespace in self._namespace_list()
+            if namespace not in plain_keys
+        ]
 
-        for namespace in (
-                self.__namespace_list__() -  # type: ignore[operator]
-                filtered_count_list_by_namespace.keys()):
-            count_list_by_namespace.append(f'{namespace}: 0\n')
-
-        for namespace, wikis in filtered_count_list_by_namespace.items():
-            count_list_by_namespace.append(f'{namespace}: {len(wikis)}\n')
-
-        return count_list_by_namespace
+    def _count_list_by_namespace(self) -> list[str]:
+        if hasattr(self, '_cached_counts'):
+            return self._cached_counts
+        plain = self._plain_wiki_maps()
+        counts = [
+            f'{namespace}: {len(plain[namespace])}'
+            for namespace in self._namespace_list()
+            if namespace in plain
+        ]
+        self._cached_counts = sorted(
+            counts + self._missing_count_list_by_namespace())
+        return self._cached_counts

@@ -13,10 +13,11 @@ def _run(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
         group_by=group_by,
         language=language,
         file_maps=file_maps)
-    UnknownWikiCountListExporter(
-        base_path,
+    UnknownWikiCountListExporter.run(
+        base_path=base_path,
         group_by=group_by,
-        language=language).run()
+        language=language,
+    )
     with open(os.path.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')) as f:
         return f.read()
 
