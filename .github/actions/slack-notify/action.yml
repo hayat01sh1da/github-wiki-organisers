@@ -1,0 +1,55 @@
+name: Slack Notification
+description: Post a chat.postMessage to Slack with a plain-text header block and N mrkdwn section blocks
+
+inputs:
+  slack-token:
+    description: Slack app token (chat:write scope)
+    required: true
+  slack-channel:
+    description: Slack channel ID to post into
+    required: true
+  header:
+    description: Plain text shown in the header block
+    required: true
+  mrkdwn-sections:
+    description: |
+      Newline-separated mrkdwn texts.
+      Each non-empty line becomes one section block of type "mrkdwn".
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Build Slack payload
+      id: payload
+      shell: bash
+      env:
+        CHANNEL: ${{ inputs.slack-channel }}
+        HEADER: ${{ inputs.header }}
+        SECTIONS: ${{ inputs.mrkdwn-sections }}
+      run: |
+        set -e
+        payload_file="${RUNNER_TEMP:-/tmp}/slack_payload.json"
+        jq -n \
+          --arg channel  "$CHANNEL" \
+          --arg header   "$HEADER" \
+          --arg sections "$SECTIONS" \
+          '{
+            channel: $channel,
+            blocks: (
+              [{ type: "header", text: { type: "plain_text", text: $header } }]
+              + (
+                  $sections
+                  | split("\n")
+                  | map(select(length > 0))
+                  | map({ type: "section", text: { type: "mrkdwn", text: . } })
+                )
+            )
+          }' > "$payload_file"
+        echo "file=$payload_file" >> $GITHUB_OUTPUT
+    - name: Slack Notification
+      uses: slackapi/slack-github-action@v2
+      with:
+        method: chat.postMessage
+        token: ${{ inputs.slack-token }}
+        payload-file-path: ${{ steps.payload.outputs.file }}

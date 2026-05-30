@@ -1,0 +1,12 @@
+name: Configure Git Identity
+description: Configure git user.name and user.email globally for the GitHub Actions bot
+
+runs:
+  using: composite
+  steps:
+    - name: Configure Git Identity
+      shell: bash
+      run: |
+        set -xe
+        git config --global user.name  "GitHub Actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
