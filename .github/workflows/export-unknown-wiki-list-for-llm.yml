@@ -28,9 +28,12 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  export:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    outputs:
+      commit_message: ${{ steps.commit.outputs.commit_message }}
+      jst_current_datetime: ${{ steps.commit.outputs.jst_current_datetime }}
     steps:
       - name: Checkout the Main Repository
         uses: actions/checkout@v6
@@ -45,44 +48,35 @@ jobs:
           ref: master
           path: ./github-wiki-organisers/wiki
       - name: Configure Git Identity
-        working-directory: ./github-wiki-organisers/wiki
-        run: |
-          set -xe
-          git config --global user.name  "GitHub Actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        uses: ./github-wiki-organisers/.github/actions/configure-git-identity
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
       - name: Export Unknown Wiki List for LLM
-        id: export-unknown-wiki-list-for-llm
         working-directory: ./github-wiki-organisers/wiki
         run: |
           set -xe
           git pull origin master
           bash export_unknown_wiki_list_for_llm.sh "${{ github.event.inputs.group_by || 'Owner' }}" "${{ github.event.inputs.language || 'English' }}"
-          git add -A
-          jst_current_datetime=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S JST')
-          echo "jst_current_datetime=$jst_current_datetime" >> $GITHUB_OUTPUT
-          git commit -m "Commit unknown_wiki_list_for_llm.txt by GitHub Actions[bot] at $jst_current_datetime" || true
-          git push origin master || true
-          echo "commit_message=$(git log -1 --pretty=format:%s)" >> $GITHUB_OUTPUT
-      - name: Slack Notification
-        uses: slackapi/slack-github-action@v2
-        if: contains(steps.export-unknown-wiki-list-for-llm.outputs.commit_message, steps.export-unknown-wiki-list-for-llm.outputs.jst_current_datetime)
+      - name: Commit and Push
+        id: commit
+        uses: ./github-wiki-organisers/.github/actions/commit-and-push
         with:
-          method: chat.postMessage
-          token: ${{ secrets.SLACK_APP_TOKEN }}
-          payload: |
-            channel: ${{ secrets.SLACK_CHANNEL_ID }}
-            blocks:
-              - type: "header"
-                text:
-                  type: "plain_text"
-                  text: "【github-wiki-organisers Wiki LLM Notification for Ignored Page List Export】"
-              - type: "section"
-                text:
-                  type: "mrkdwn"
-                  text: "Message: The latest ignored page list for LLM has been exported! Make sure if it is as you expect by cloning ${{ github.repository }}.wiki !"
-              - type: "section"
-                text:
-                  type: "mrkdwn"
-                  text: "Workflows: <https://github.com/${{ github.repository }}/actions/workflows/export-unknown-wiki-list-for-llm.yml|Export Unknown Wiki List for LLM>"
+          working-directory: ./github-wiki-organisers/wiki
+          commit-message-prefix: "Commit unknown_wiki_list_for_llm.txt by GitHub Actions[bot]"
+
+  notify:
+    needs: export
+    if: contains(needs.export.outputs.commit_message, needs.export.outputs.jst_current_datetime)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the Main Repository
+        uses: actions/checkout@v6
+      - name: Slack Notification
+        uses: ./.github/actions/slack-notify
+        with:
+          slack-token: ${{ secrets.SLACK_APP_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL_ID }}
+          header: "【github-wiki-organisers Wiki LLM Notification for Ignored Page List Export】"
+          mrkdwn-sections: |
+            Message: The latest ignored page list for LLM has been exported! Make sure if it is as you expect by cloning ${{ github.repository }}.wiki !
+            Workflows: <https://github.com/${{ github.repository }}/actions/workflows/export-unknown-wiki-list-for-llm.yml|Export Unknown Wiki List for LLM>
