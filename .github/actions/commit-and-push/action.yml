@@ -1,0 +1,39 @@
+name: Commit and Push Wiki Changes
+description: Stage, commit (with a JST-timestamped message), and push wiki changes to origin/master
+
+inputs:
+  working-directory:
+    description: Directory inside the wiki repository in which git commands should run
+    required: true
+  commit-message-prefix:
+    description: |
+      Prefix used as the commit subject.
+      The JST timestamp is appended as "<prefix> at YYYY-MM-DD HH:MM:SS JST".
+      The notify job can detect whether this run actually produced a new commit.
+    required: true
+
+outputs:
+  commit_message:
+    description: Subject line of the most recent commit after push
+    value: ${{ steps.commit.outputs.commit_message }}
+  jst_current_datetime:
+    description: JST timestamp embedded in the commit message
+    value: ${{ steps.commit.outputs.jst_current_datetime }}
+
+runs:
+  using: composite
+  steps:
+    - name: Commit and Push
+      id: commit
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        COMMIT_MESSAGE_PREFIX: ${{ inputs.commit-message-prefix }}
+      run: |
+        set -xe
+        git add -A
+        jst_current_datetime=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M:%S JST')
+        echo "jst_current_datetime=$jst_current_datetime" >> $GITHUB_OUTPUT
+        git commit -m "$COMMIT_MESSAGE_PREFIX at $jst_current_datetime" || true
+        git push origin master || true
+        echo "commit_message=$(git log -1 --pretty=format:%s)" >> $GITHUB_OUTPUT

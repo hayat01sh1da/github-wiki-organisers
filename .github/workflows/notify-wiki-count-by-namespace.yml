@@ -1,0 +1,109 @@
+name: Notify Wiki Count by Namespace
+
+on:
+  schedule:
+    # 09:00 JST every Monday
+    # ⚠️ The timing is somehow not accurate at all
+    - cron: '0 0 * * 1'
+  workflow_dispatch:
+    inputs:
+      language:
+        description: Specify the language used for the wiki pages
+        required: true
+        default: English
+        type: choice
+        options:
+          - English
+          - Japanese
+
+permissions:
+  contents: read
+
+jobs:
+  count-uncategorised:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      uncategorised_wiki_count: ${{ steps.format.outputs.uncategorised_wiki_count }}
+    steps:
+      - name: Checkout the Wiki Repository
+        uses: actions/checkout@v6
+        with:
+          repository: "${{ github.repository }}.wiki"
+          ref: master
+          path: .wiki
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Format Uncategorised Wiki Count by Namespace
+        id: format
+        working-directory: .wiki
+        run: |
+          set -xe
+          git pull origin master
+          bash export_unknown_wiki_count_list_by_namespace.sh Category "${{ github.event.inputs.language || 'English' }}"
+          uncategorised_wiki_count=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
+          echo "uncategorised_wiki_count=$uncategorised_wiki_count" >> $GITHUB_OUTPUT
+          rm unknown_wiki_count_list_by_namespace.txt
+
+  notify-uncategorised:
+    needs: count-uncategorised
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the Main Repository
+        uses: actions/checkout@v6
+      - name: Slack Notification
+        uses: ./.github/actions/slack-notify
+        with:
+          slack-token: ${{ secrets.SLACK_APP_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL_ID }}
+          header: "【github-wiki-organisers Weekly Uncategorised Wiki Count by Namespace Report】"
+          mrkdwn-sections: |
+            <https://github.com/${{ github.repository }}/wiki#uncategorised|${{ needs.count-uncategorised.outputs.uncategorised_wiki_count }}>
+
+  count-unowned:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      unknown_but_necessary: ${{ steps.format.outputs.unknown_but_necessary }}
+      unknown_owner_nor_necessity: ${{ steps.format.outputs.unknown_owner_nor_necessity }}
+      unowned: ${{ steps.format.outputs.unowned }}
+    steps:
+      - name: Checkout the Wiki Repository
+        uses: actions/checkout@v6
+        with:
+          repository: "${{ github.repository }}.wiki"
+          ref: master
+          path: .wiki
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Format Unknown Wiki Count by Namespace
+        id: format
+        working-directory: .wiki
+        run: |
+          set -xe
+          git pull origin master
+          bash export_unknown_wiki_count_list_by_namespace.sh Owner "${{ github.event.inputs.language || 'English' }}"
+          unknown_but_necessary=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
+          unknown_owner_nor_necessity=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[1]")
+          unowned=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[2]")
+          echo "unknown_but_necessary=$unknown_but_necessary" >> $GITHUB_OUTPUT
+          echo "unknown_owner_nor_necessity=$unknown_owner_nor_necessity" >> $GITHUB_OUTPUT
+          echo "unowned=$unowned" >> $GITHUB_OUTPUT
+          rm unknown_wiki_count_list_by_namespace.txt
+
+  notify-unowned:
+    needs: count-unowned
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the Main Repository
+        uses: actions/checkout@v6
+      - name: Slack Notification
+        uses: ./.github/actions/slack-notify
+        with:
+          slack-token: ${{ secrets.SLACK_APP_TOKEN }}
+          slack-channel: ${{ secrets.SLACK_CHANNEL_ID }}
+          header: "【github-wiki-organisers Weekly Unowned Wiki Count Report】"
+          mrkdwn-sections: |
+            <https://github.com/${{ github.repository }}/wiki#unowned-but-necessary-wiki|${{ needs.count-unowned.outputs.unknown_but_necessary }}>
+            <https://github.com/${{ github.repository }}/wiki#unknown-owner-nor-necessity-wiki|${{ needs.count-unowned.outputs.unknown_owner_nor_necessity }}>
+            <https://github.com/${{ github.repository }}/wiki#unowned|${{ needs.count-unowned.outputs.unowned }}>
