@@ -9,8 +9,8 @@
 | ------------------------ | ----------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | OS baseline              | WSL (Ubuntu 25.10)                  | Shared environment across tracks.                                                                           |
 | Ruby automation          | Ruby 4.0.5 (`.ruby-version`)        | Scripts rely on Bundler plus standard library; declare additional gems inside each tool.                    |
-| Gemfile                  | 4.0.12                              | Per-project dependency manifest; versions install via Bundler.                                              |
-| Bundler                  | 4.0.12                              | Resolves and installs the gems declared in the Gemfile.                                                     |
+| Gemfile                  | 4.0.14                              | Per-project dependency manifest; versions install via Bundler.                                              |
+| Bundler                  | 4.0.14                              | Resolves and installs the gems declared in the Gemfile.                                                     |
 | Python automation        | CPython 3.14.6 (`.python-version`)  | Python helpers currently depend on the stdlib. Add `requirements.txt` if third-party packages are required. |
 | GitHub Actions workflows | Runs on GitHub-hosted Ubuntu images | Cron jobs send Slack notifications and mutate wiki content; keep action versions pinned.                    |
 
