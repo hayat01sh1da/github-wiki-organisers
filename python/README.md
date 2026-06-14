@@ -1,6 +1,6 @@
 ## 1. Environment
 
-- Python 3.14.5
+- Python 3.14.6
 
 ## 2. Install Libraries via requirements.txt
 
@@ -141,7 +141,7 @@ Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
 ```command
 $ invoke
 ============================= test session starts ==============================
-platform linux -- Python 3.14.5, pytest-9.0.3, pluggy-1.6.0
+platform linux -- Python 3.14.6, pytest-9.0.3, pluggy-1.6.0
 rootdir: github-wiki-organisers/python
 configfile: pyproject.toml
 collected 32 items
