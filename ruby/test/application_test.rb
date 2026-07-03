@@ -5,6 +5,7 @@ require 'minitest/autorun'
 require_relative '../src/application'
 
 class ApplicationTest < Minitest::Test
+  # @rbs skip
   TEST_FILE_MAPS = {
     %w[Owner English] => {
       'Owned Wiki.md' => 'Owner: @test-owner',
@@ -30,7 +31,10 @@ class ApplicationTest < Minitest::Test
       'Category記載なしページ1.md' => '',
       'Category記載なしページ2.md' => 'サンプル Wiki'
     }
-  }.freeze #: Hash[Array[String], Hash[String, String]]
+  }.freeze
+
+  # @rbs!
+  #   TEST_FILE_MAPS: Hash[Array[String], Hash[String, String]]
 
   def setup(base_path: File.join('.', 'test', 'wiki'), group_by: 'Owner', language: 'English', home_overflow: 'false')
     @base_path     = base_path
