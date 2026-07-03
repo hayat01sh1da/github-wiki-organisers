@@ -30,7 +30,7 @@ class ApplicationTest < Minitest::Test
       'Category記載なしページ1.md' => '',
       'Category記載なしページ2.md' => 'サンプル Wiki'
     }
-  }.freeze
+  }.freeze #: Hash[Array[String], Hash[String, String]]
 
   def setup(base_path: File.join('.', 'test', 'wiki'), group_by: 'Owner', language: 'English', home_overflow: 'false')
     @base_path     = base_path
@@ -79,6 +79,7 @@ class ApplicationTest < Minitest::Test
 
   attr_reader :base_path, :group_by, :language, :home_overflow
 
+  # @rbs return: Hash[String, String]
   def test_file_maps
     TEST_FILE_MAPS.fetch([group_by, language])
   end

@@ -17,6 +17,8 @@ class SidebarTest < ApplicationTest
   attr_reader :path_to_sidebar, :sidebar
 
   # Expected Sidebar pages live under test/fixtures/sidebar/.
+  # @rbs basename: String
+  # @rbs return: String
   def expected_sidebar(basename)
     File.read(File.join('.', 'test', 'fixtures', 'sidebar', basename))
   end

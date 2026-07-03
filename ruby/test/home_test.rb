@@ -18,6 +18,8 @@ class HomeTest < ApplicationTest
   attr_reader :path_to_home, :home, :path_to_wikis_by_owner
 
   # Expected Home pages live under test/fixtures/home/.
+  # @rbs basename: String
+  # @rbs return: String
   def expected_home(basename)
     File.read(File.join('.', 'test', 'fixtures', 'home', basename))
   end
