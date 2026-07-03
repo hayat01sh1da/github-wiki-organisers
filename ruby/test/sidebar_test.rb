@@ -16,26 +16,15 @@ class SidebarTest < ApplicationTest
 
   attr_reader :path_to_sidebar, :sidebar
 
+  # Expected Sidebar pages live under test/fixtures/sidebar/.
+  def expected_sidebar(basename)
+    File.read(File.join('.', 'test', 'fixtures', 'sidebar', basename))
+  end
+
   module English
     class OwnedSidebarTest < SidebarTest
       def test_self_run
-        assert_equal(wiki_list.join, sidebar)
-      end
-
-      private
-
-      def wiki_list
-        [
-          "- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n",
-          "  - [[Owned Wiki]]\n",
-          "- Unknown Owner nor Necessity\n",
-          "  - [[Unknown Owner nor Necessity Wiki]]\n",
-          "- Unowned but Necessary\n",
-          "  - [[Unowned but Necessary Wiki]]\n",
-          "- Unowned\n",
-          "  - [[Unowned Wiki 1]]\n",
-          "  - [[Unowned Wiki 2]]\n"
-        ]
+        assert_equal(expected_sidebar('english_owned.md'), sidebar)
       end
     end
 
@@ -45,19 +34,7 @@ class SidebarTest < ApplicationTest
       end
 
       def test_self_run
-        assert_equal(wiki_list.join, sidebar)
-      end
-
-      private
-
-      def wiki_list
-        [
-          "- test-category\n",
-          "  - [[Categorised Wiki]]\n",
-          "- Uncategorised\n",
-          "  - [[Uncategorised Wiki 1]]\n",
-          "  - [[Uncategorised Wiki 2]]\n"
-        ]
+        assert_equal(expected_sidebar('english_categorised.md'), sidebar)
       end
     end
   end
@@ -69,23 +46,7 @@ class SidebarTest < ApplicationTest
       end
 
       def test_self_run
-        assert_equal(wiki_list.join, sidebar)
-      end
-
-      private
-
-      def wiki_list
-        [
-          "- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n",
-          "  - [[Owner記名ありページ]]\n",
-          "- Ownerチームが不明だが必要なページ群\n",
-          "  - [[Ownerチームが不明だが必要なページ]]\n",
-          "- Ownerチーム・要or不要が不明なページ群\n",
-          "  - [[Ownerチーム・要or不要が不明なページ]]\n",
-          "- Owner記名なし\n",
-          "  - [[Owner記名なしページ1]]\n",
-          "  - [[Owner記名なしページ2]]\n"
-        ]
+        assert_equal(expected_sidebar('japanese_owned.md'), sidebar)
       end
     end
 
@@ -95,19 +56,7 @@ class SidebarTest < ApplicationTest
       end
 
       def test_self_run
-        assert_equal(wiki_list.join, sidebar)
-      end
-
-      private
-
-      def wiki_list
-        [
-          "- test-category\n",
-          "  - [[Category記載ありページ]]\n",
-          "- Category記載なし\n",
-          "  - [[Category記載なしページ1]]\n",
-          "  - [[Category記載なしページ2]]\n"
-        ]
+        assert_equal(expected_sidebar('japanese_categorised.md'), sidebar)
       end
     end
   end

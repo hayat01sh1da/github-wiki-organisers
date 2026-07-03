@@ -5,6 +5,33 @@ require 'minitest/autorun'
 require_relative '../src/application'
 
 class ApplicationTest < Minitest::Test
+  TEST_FILE_MAPS = {
+    %w[Owner English] => {
+      'Owned Wiki.md' => 'Owner: @test-owner',
+      'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
+      'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
+      'Unowned Wiki 1.md' => '',
+      'Unowned Wiki 2.md' => 'This is a sample Wiki'
+    },
+    %w[Owner Japanese] => {
+      'Owner記名ありページ.md' => 'Owner: @test-owner',
+      'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
+      'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
+      'Owner記名なしページ1.md' => '',
+      'Owner記名なしページ2.md' => 'サンプル Wiki'
+    },
+    %w[Category English] => {
+      'Categorised Wiki.md' => 'Category: test-category',
+      'Uncategorised Wiki 1.md' => '',
+      'Uncategorised Wiki 2.md' => 'This is a sample Wiki'
+    },
+    %w[Category Japanese] => {
+      'Category記載ありページ.md' => 'Category: test-category',
+      'Category記載なしページ1.md' => '',
+      'Category記載なしページ2.md' => 'サンプル Wiki'
+    }
+  }.freeze
+
   def setup(base_path: File.join('.', 'test', 'wiki'), group_by: 'Owner', language: 'English', home_overflow: 'false')
     @base_path     = base_path
     @group_by      = group_by
@@ -53,41 +80,6 @@ class ApplicationTest < Minitest::Test
   attr_reader :base_path, :group_by, :language, :home_overflow
 
   def test_file_maps
-    case group_by
-    when 'Owner'
-      case language
-      when 'English'
-        {
-          'Owned Wiki.md' => 'Owner: @test-owner',
-          'Unowned but Necessary Wiki.md' => 'Owner: Unowned but Necessary',
-          'Unknown Owner nor Necessity Wiki.md' => 'Owner: Unknown Owner nor Necessity',
-          'Unowned Wiki 1.md' => '',
-          'Unowned Wiki 2.md' => 'This is a sample Wiki'
-        }
-      when 'Japanese'
-        {
-          'Owner記名ありページ.md' => 'Owner: @test-owner',
-          'Ownerチームが不明だが必要なページ.md' => 'Owner: Ownerチームが不明だが必要なページ群',
-          'Ownerチーム・要or不要が不明なページ.md' => 'Owner: Ownerチーム・要or不要が不明なページ群',
-          'Owner記名なしページ1.md' => '',
-          'Owner記名なしページ2.md' => 'サンプル Wiki'
-        }
-      end
-    when 'Category'
-      case language
-      when 'English'
-        {
-          'Categorised Wiki.md' => 'Category: test-category',
-          'Uncategorised Wiki 1.md' => '',
-          'Uncategorised Wiki 2.md' => 'This is a sample Wiki'
-        }
-      when 'Japanese'
-        {
-          'Category記載ありページ.md' => 'Category: test-category',
-          'Category記載なしページ1.md' => '',
-          'Category記載なしページ2.md' => 'サンプル Wiki'
-        }
-      end
-    end
+    TEST_FILE_MAPS.fetch([group_by, language])
   end
 end
