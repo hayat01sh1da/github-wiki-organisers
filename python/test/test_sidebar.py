@@ -3,67 +3,40 @@ from collections.abc import Callable
 
 from sidebar import Sidebar
 
+_FIXTURES_DIR = os.path.join('.', 'test', 'fixtures', 'sidebar')
+
 
 def _run_sidebar(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
                  language: str = 'English') -> str:
     base_path = wiki_workspace(group_by=group_by, language=language)
     Sidebar.run(base_path=base_path, group_by=group_by, language=language)
-    with open(os.path.join(base_path, '_Sidebar.md')) as f:
+    with open(os.path.join(base_path, '_Sidebar.md'), encoding='utf-8') as f:
         return f.read()
 
 
-_ENGLISH_OWNED = (
-    '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
-    '  - [[Owned Wiki]]\n'
-    '- Unknown Owner nor Necessity\n'
-    '  - [[Unknown Owner nor Necessity Wiki]]\n'
-    '- Unowned but Necessary\n'
-    '  - [[Unowned but Necessary Wiki]]\n'
-    '- Unowned\n'
-    '  - [[Unowned Wiki 1]]\n'
-    '  - [[Unowned Wiki 2]]\n'
-)
-_ENGLISH_PLAIN = (
-    '- test-category\n'
-    '  - [[Categorised Wiki]]\n'
-    '- Uncategorised\n'
-    '  - [[Uncategorised Wiki 1]]\n'
-    '  - [[Uncategorised Wiki 2]]\n'
-)
-_JAPANESE_OWNED = (
-    '- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)\n'
-    '  - [[Owner記名ありページ]]\n'
-    '- Ownerチームが不明だが必要なページ群\n'
-    '  - [[Ownerチームが不明だが必要なページ]]\n'
-    '- Ownerチーム・要or不要が不明なページ群\n'
-    '  - [[Ownerチーム・要or不要が不明なページ]]\n'
-    '- Owner記名なし\n'
-    '  - [[Owner記名なしページ1]]\n'
-    '  - [[Owner記名なしページ2]]\n'
-)
-_JAPANESE_PLAIN = (
-    '- test-category\n'
-    '  - [[Category記載ありページ]]\n'
-    '- Category記載なし\n'
-    '  - [[Category記載なしページ1]]\n'
-    '  - [[Category記載なしページ2]]\n'
-)
+def _expected_sidebar(basename: str) -> str:
+    """Expected Sidebar pages live under test/fixtures/sidebar/."""
+    with open(os.path.join(_FIXTURES_DIR, basename), encoding='utf-8') as f:
+        return f.read()
 
 
 def test_english_owned_sidebar(wiki_workspace: Callable[..., str]) -> None:
-    assert _run_sidebar(wiki_workspace) == _ENGLISH_OWNED
+    assert _run_sidebar(wiki_workspace) == _expected_sidebar(
+        'english_owned.md')
 
 
 def test_english_plain_sidebar(wiki_workspace: Callable[..., str]) -> None:
-    assert _run_sidebar(wiki_workspace, group_by='Category') == _ENGLISH_PLAIN
+    assert _run_sidebar(wiki_workspace, group_by='Category') == \
+        _expected_sidebar('english_categorised.md')
 
 
 def test_japanese_owned_sidebar(wiki_workspace: Callable[..., str]) -> None:
-    assert _run_sidebar(wiki_workspace, language='Japanese') == _JAPANESE_OWNED
+    assert _run_sidebar(wiki_workspace, language='Japanese') == \
+        _expected_sidebar('japanese_owned.md')
 
 
 def test_japanese_plain_sidebar(wiki_workspace: Callable[..., str]) -> None:
     assert _run_sidebar(
         wiki_workspace,
         group_by='Category',
-        language='Japanese') == _JAPANESE_PLAIN
+        language='Japanese') == _expected_sidebar('japanese_categorised.md')

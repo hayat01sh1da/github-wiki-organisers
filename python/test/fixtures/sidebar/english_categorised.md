@@ -1,0 +1,5 @@
+- test-category
+  - [[Categorised Wiki]]
+- Uncategorised
+  - [[Uncategorised Wiki 1]]
+  - [[Uncategorised Wiki 2]]
