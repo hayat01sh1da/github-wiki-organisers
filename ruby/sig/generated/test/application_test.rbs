@@ -1,6 +1,8 @@
 # Generated from test/application_test.rb with RBS::Inline
 
 class ApplicationTest < Minitest::Test
+  TEST_FILE_MAPS: Hash[Array[String], Hash[String, String]]
+
   def setup: (?base_path: untyped, ?group_by: untyped, ?language: untyped, ?home_overflow: untyped) -> untyped
 
   def teardown: () -> untyped
@@ -23,5 +25,6 @@ class ApplicationTest < Minitest::Test
 
   attr_reader home_overflow: untyped
 
-  def test_file_maps: () -> untyped
+  # @rbs return: Hash[String, String]
+  def test_file_maps: () -> Hash[String, String]
 end

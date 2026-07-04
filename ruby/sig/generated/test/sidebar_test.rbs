@@ -9,23 +9,20 @@ class SidebarTest < ApplicationTest
 
   attr_reader sidebar: untyped
 
+  # Expected Sidebar pages live under test/fixtures/sidebar/.
+  # @rbs basename: String
+  # @rbs return: String
+  def expected_sidebar: (String basename) -> String
+
   module English
     class OwnedSidebarTest < SidebarTest
       def test_self_run: () -> untyped
-
-      private
-
-      def wiki_list: () -> untyped
     end
 
     class PlainSidebarTest < SidebarTest
       def setup: () -> untyped
 
       def test_self_run: () -> untyped
-
-      private
-
-      def wiki_list: () -> untyped
     end
   end
 
@@ -34,20 +31,12 @@ class SidebarTest < ApplicationTest
       def setup: () -> untyped
 
       def test_self_run: () -> untyped
-
-      private
-
-      def wiki_list: () -> untyped
     end
 
     class PlainSidebarTest < SidebarTest
       def setup: () -> untyped
 
       def test_self_run: () -> untyped
-
-      private
-
-      def wiki_list: () -> untyped
     end
   end
 end

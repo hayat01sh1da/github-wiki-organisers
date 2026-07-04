@@ -11,24 +11,21 @@ class HomeTest < ApplicationTest
 
   attr_reader path_to_wikis_by_owner: untyped
 
+  # Expected Home pages live under test/fixtures/home/.
+  # @rbs basename: String
+  # @rbs return: String
+  def expected_home: (String basename) -> String
+
   module English
     class OwnedHomeTest < HomeTest
       class NonOverflowTest < OwnedHomeTest
         def test_self_run: () -> untyped
-
-        private
-
-        def home_passage: () -> untyped
       end
 
       class OverflowTest < OwnedHomeTest
         def setup: () -> untyped
 
         def test_self_run: () -> untyped
-
-        private
-
-        def home_passage: () -> untyped
       end
     end
 
@@ -36,10 +33,6 @@ class HomeTest < ApplicationTest
       def setup: () -> untyped
 
       def test_self_run: () -> untyped
-
-      private
-
-      def home_passage: () -> untyped
     end
   end
 
@@ -49,20 +42,12 @@ class HomeTest < ApplicationTest
         def setup: () -> untyped
 
         def test_self_run: () -> untyped
-
-        private
-
-        def home_passage: () -> untyped
       end
 
       class OverflowTest < OwnedHomeTest
         def setup: () -> untyped
 
         def test_self_run: () -> untyped
-
-        private
-
-        def home_passage: () -> untyped
       end
     end
 
@@ -70,10 +55,6 @@ class HomeTest < ApplicationTest
       def setup: () -> untyped
 
       def test_self_run: () -> untyped
-
-      private
-
-      def home_passage: () -> untyped
     end
   end
 end
