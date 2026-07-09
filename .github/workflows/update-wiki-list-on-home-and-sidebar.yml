@@ -34,7 +34,7 @@ permissions:
   contents: write
 
 jobs:
-  update:
+  update_wiki_list_on_home_and_sidebar:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
@@ -71,8 +71,8 @@ jobs:
           commit-message-prefix: "Update Wiki list on Home and Sidebar by GitHub Actions[bot]"
 
   notify:
-    needs: update
-    if: contains(needs.update.outputs.commit_message, needs.update.outputs.jst_current_datetime)
+    needs: update_wiki_list_on_home_and_sidebar
+    if: contains(needs.update_wiki_list_on_home_and_sidebar.outputs.commit_message, needs.update_wiki_list_on_home_and_sidebar.outputs.jst_current_datetime)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the Main Repository
