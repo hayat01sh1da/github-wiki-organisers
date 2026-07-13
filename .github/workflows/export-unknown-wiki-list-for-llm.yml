@@ -36,20 +36,21 @@ jobs:
       jst_current_datetime: ${{ steps.commit.outputs.jst_current_datetime }}
     steps:
       - name: Checkout the Main Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: "${{ github.repository }}"
           ref: master
           path: ./github-wiki-organisers
       - name: Checkout the Wiki Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: "${{ github.repository }}.wiki"
           ref: master
           path: ./github-wiki-organisers/wiki
       - name: Configure Git Identity
         uses: ./github-wiki-organisers/.github/actions/configure-git-identity
-      - uses: ./.github/actions/setup-ruby
+      - uses: actions/checkout@v7
+      - uses: ./github-wiki-organisers/.github/actions/setup-ruby
       - name: Export Unknown Wiki List for LLM
         working-directory: ./github-wiki-organisers/wiki
         run: |
@@ -69,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the Main Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Slack Notification
         uses: ./.github/actions/slack-notify
         with:

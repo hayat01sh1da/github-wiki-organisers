@@ -27,13 +27,13 @@ jobs:
       uncategorised_wiki_count: ${{ steps.format.outputs.uncategorised_wiki_count }}
     steps:
       - name: Checkout the Wiki Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: "${{ github.repository }}.wiki"
           ref: master
           path: .wiki
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@v7
+      - uses: ./github-wiki-organisers/.github/actions/setup-ruby
       - name: Format Uncategorised Wiki Count by Namespace
         id: format
         working-directory: .wiki
@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the Main Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Slack Notification
         uses: ./.github/actions/slack-notify
         with:
@@ -69,12 +69,13 @@ jobs:
       unowned: ${{ steps.format.outputs.unowned }}
     steps:
       - name: Checkout the Wiki Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: "${{ github.repository }}.wiki"
           ref: master
           path: .wiki
-      - uses: ./.github/actions/setup-ruby
+      - uses: actions/checkout@v7
+      - uses: ./github-wiki-organisers/.github/actions/setup-ruby
       - name: Format Unknown Wiki Count by Namespace
         id: format
         working-directory: .wiki
@@ -95,7 +96,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the Main Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
       - name: Slack Notification
         uses: ./.github/actions/slack-notify
         with:
