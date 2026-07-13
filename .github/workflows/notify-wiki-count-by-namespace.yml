@@ -33,7 +33,7 @@ jobs:
           ref: master
           path: .wiki
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: ./github-wiki-organisers/.github/actions/setup-ruby
       - name: Format Uncategorised Wiki Count by Namespace
         id: format
         working-directory: .wiki
@@ -74,7 +74,7 @@ jobs:
           repository: "${{ github.repository }}.wiki"
           ref: master
           path: .wiki
-      - uses: ./.github/actions/setup-ruby
+      - uses: ./github-wiki-organisers/.github/actions/setup-ruby
       - name: Format Unknown Wiki Count by Namespace
         id: format
         working-directory: .wiki
