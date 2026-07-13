@@ -96,5 +96,5 @@ jobs:
           header: "【github-wiki-organisers Daily Wiki List on Home and Sidebar Update Report】"
           mrkdwn-sections: |
             Workflows: <https://github.com/${{ github.repository }}/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml|Update Wiki List on Home and Sidebar>
-            Commit: ${{ needs.update.outputs.commit_message }}
+            Commit: ${{ needs.update_wiki_list_on_home_and_sidebar.outputs.commit_message }}
             Source: <https://github.com/${{ github.repository }}/wiki|github-wiki-organisers Wiki>
