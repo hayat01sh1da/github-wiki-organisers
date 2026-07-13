@@ -8,22 +8,23 @@
 [![Actions Status: Update Wiki List on Home and Sidebar](https://github.com/hayat01sh1da/github-wiki-organisers/workflows/Update%20Wiki%20List%20on%20Home%20and%20Sidebar/badge.svg)](https://github.com/hayat01sh1da/github-wiki-organisers/actions?query=workflow%3A%22Update%20Wiki%20List%20on%20Home%20and%20Sidebar%22)
 [![Actions Status: CodeQL](https://github.com/hayat01sh1da/github-wiki-organisers/workflows/CodeQL/badge.svg)](https://github.com/hayat01sh1da/github-wiki-organisers/actions?query=workflow%3A%22CodeQL%22)
 
-# github-wiki-organisers
+# spreen-wiki
 
 Organises a GitHub wiki: generates `Home.md` and `_Sidebar.md` by grouping the pages by the **Owner** or **Category** declared on the first line of each page (English and Japanese labels built in, extensible via a config file), and exports reports of the pages whose owner or category is unknown.
 
-The tool ships twice with identical behaviour: as the RubyGems gem **`github_wiki_organiser`** and as the PyPI library **`github-wiki-organiser`**.  Both install the same `wiki-organise` command.
+The name blends the falcon's **stoop** and the **preen** that follows — a falconet at work, after Hayato (隼人, "falcon man").  
+The tool ships twice with identical behaviour: as the RubyGems gem **`spreen-wiki`** and as the PyPI library **`spreen-wiki`**.  Both install the same `spreen` command.
 
 ## 1. Quickstart
 
 Install one of the two implementations:
 
 ```command
-$ gem install github_wiki_organiser
+$ gem install spreen-wiki
 ```
 
 ```command
-$ pipx install github-wiki-organiser
+$ pipx install spreen-wiki
 ```
 
 Clone your repository's wiki, declare an owner (or category) on the first line of each page, and run the organiser:
@@ -31,7 +32,7 @@ Clone your repository's wiki, declare an owner (or category) on the first line o
 ```command
 $ git clone git@github.com:<org>/<repo>.wiki.git
 $ cd <repo>.wiki
-$ wiki-organise update --path . --org <org> --repo <repo>
+$ spreen update --path . --org <org> --repo <repo>
 Updated Home.md and _Sidebar.md.
 Check them out at 'https://github.com/<org>/<repo>/wiki' !!
 $ git add Home.md _Sidebar.md && git commit -m 'Organise wiki' && git push origin master
@@ -40,11 +41,11 @@ $ git add Home.md _Sidebar.md && git commit -m 'Organise wiki' && git push origi
 The other two commands export reports about the pages whose owner/category is still unknown:
 
 ```command
-$ wiki-organise count-report --path . # counts per unknown namespace
-$ wiki-organise llm-export --path .   # flat page list to feed to an LLM
+$ spreen count-report --path . # counts per unknown namespace
+$ spreen llm-export --path .   # flat page list to feed to an LLM
 ```
 
-Run `wiki-organise <command> --help` for the full flag list (`--group-by`, `--language`, `--overflow`, `--template-dir`, `--exclude`, `--output`, ...).
+Run `spreen <command> --help` for the full flag list (`--group-by`, `--language`, `--overflow`, `--template-dir`, `--exclude`, `--output`, ...).
 
 ## 2. Wiki Page Convention
 
@@ -70,9 +71,9 @@ Pages without a declaration are collected under the "Unowned" / "Uncategorised" 
 
 ## 3. Configuration
 
-Every hardcoded assumption of the original tool is now configurable. Values are resolved with the same precedence everywhere: **explicit CLI flag / keyword argument → `.wiki-organiser.yml` → `ORGANISATION_NAME` environment variable (organisation only) → built-in default**.
+Every hardcoded assumption of the original tool is now configurable. Values are resolved with the same precedence everywhere: **explicit CLI flag / keyword argument → `.spreen.yml` → `ORGANISATION_NAME` environment variable (organisation only) → built-in default**.
 
-Place a `.wiki-organiser.yml` at the root of the wiki clone (or point at one with `--config`):
+Place a `.spreen.yml` at the root of the wiki clone (or point at one with `--config`):
 
 ```yaml
 # Used to build the wiki URL and the owner-team links. Equivalent to
