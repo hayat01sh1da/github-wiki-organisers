@@ -1,41 +1,21 @@
 import os
-import sys
+from typing import Any
 
-sys.path.append('./src')
+from .application import Application
 
-from application import Application  # noqa: E402
+DEFAULT_OUTPUT_FILENAME = 'unknown_wiki_count_list_by_namespace.txt'
 
 
 class UnknownWikiCountListExporter(Application):
     """Writes a sorted text report of how many wikis exist under each of
-    the well-known "unknown owner/category" namespaces."""
-
-    NAMESPACE_LIST = {
-        ('Owner', 'English'): [
-            'Unknown Owner nor Necessity',
-            'Unowned but Necessary',
-            'Unowned',
-        ],
-        ('Owner', 'Japanese'): [
-            'Ownerチームが不明だが必要なページ群',
-            'Ownerチーム・要or不要が不明なページ群',
-            'Owner記名なし',
-        ],
-        ('Category', 'English'): ['Uncategorised'],
-        ('Category', 'Japanese'): ['Category記載なし'],
-    }
+    the configured "unknown owner/category" namespaces."""
 
     _cached_counts: list[str]
 
-    def __init__(self, base_path: str = '', group_by: str = '',
-                 language: str = '',
-                 home_overflow: str | bool = 'false') -> None:
-        super().__init__(
-            base_path=base_path, group_by=group_by,
-            language=language, home_overflow=home_overflow,
-        )
+    def __init__(self, output: str | None = None, **options: Any) -> None:
+        super().__init__(**options)
         self._path_to_export = os.path.join(
-            base_path, 'unknown_wiki_count_list_by_namespace.txt')
+            self._base_path, output or DEFAULT_OUTPUT_FILENAME)
 
     # private
 
@@ -46,7 +26,8 @@ class UnknownWikiCountListExporter(Application):
         return counts, self._path_to_export
 
     def _namespace_list(self) -> list[str]:
-        return self.NAMESPACE_LIST.get((self._group_by, self._language), [''])
+        return self._config.unknown_namespaces(self._group_by,
+                                               self._language)
 
     def _missing_count_list_by_namespace(self) -> list[str]:
         plain_keys = set(self._plain_wiki_maps().keys())

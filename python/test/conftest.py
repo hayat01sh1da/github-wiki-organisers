@@ -2,10 +2,7 @@ import pytest
 import re
 import os
 import shutil
-import sys
 from collections.abc import Callable, Iterator
-
-sys.path.append('./src')
 
 
 _DEFAULT_FILE_MAPS = {
