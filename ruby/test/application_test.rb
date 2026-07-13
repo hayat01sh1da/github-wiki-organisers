@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 # rbs_inline: enabled
 
+require 'fileutils'
 require 'minitest/autorun'
-require_relative '../src/application'
+require_relative '../lib/github_wiki_organiser/application'
 
 class ApplicationTest < Minitest::Test
   # @rbs skip
@@ -53,28 +54,28 @@ class ApplicationTest < Minitest::Test
 
   def test_validate_group_by!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, group_by: 'Group', language:, home_overflow:).validate!
+      GithubWikiOrganiser::Application.new(base_path:, group_by: 'Group', language:, home_overflow:).validate!
     end
     assert_equal('Invalid group_by: `Group`', error.message)
   end
 
   def test_validate_language!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, group_by:, language: 'Spanish', home_overflow:).validate!
+      GithubWikiOrganiser::Application.new(base_path:, group_by:, language: 'Spanish', home_overflow:).validate!
     end
     assert_equal('Invalid language: `Spanish`', error.message)
   end
 
   def test_validate_home_overflow!
     error = assert_raises ArgumentError do
-      Application.new(base_path:, group_by:, language:, home_overflow: 'foo').validate!
+      GithubWikiOrganiser::Application.new(base_path:, group_by:, language:, home_overflow: 'foo').validate!
     end
     assert_equal('Invalid home_overflow: `foo` must be boolean', error.message)
   end
 
   def test_self_run
-    error = assert_raises Application::NotImplementedError do
-      Application.run(base_path:)
+    error = assert_raises GithubWikiOrganiser::Application::NotImplementedError do
+      GithubWikiOrganiser::Application.run(base_path:)
     end
     assert_equal('This method must be implemented in each subclass.', error.message)
   end

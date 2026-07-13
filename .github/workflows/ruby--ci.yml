@@ -18,6 +18,7 @@ on:
       - ruby/**/*.rb
       - ruby/**/*.rbs
       - ruby/Gemfile
+      - ruby/*.gemspec
       - ruby/Gemfile.lock
       - ruby/.rubocop.yml
       - ruby/.rubocop_todo.yml
@@ -30,6 +31,7 @@ on:
       - ruby/**/*.rb
       - ruby/**/*.rbs
       - ruby/Gemfile
+      - ruby/*.gemspec
       - ruby/Gemfile.lock
       - ruby/.rubocop.yml
       - ruby/.rubocop_todo.yml
@@ -59,6 +61,7 @@ jobs:
               - .ruby-version
               - ruby/**/*.rb
               - ruby/Gemfile
+              - ruby/*.gemspec
               - ruby/Gemfile.lock
             rubocop:
               - .github/actions/setup-ruby/action.yml
@@ -66,6 +69,7 @@ jobs:
               - .ruby-version
               - ruby/**/*.rb
               - ruby/Gemfile
+              - ruby/*.gemspec
               - ruby/Gemfile.lock
               - ruby/.rubocop.yml
               - ruby/.rubocop_todo.yml
@@ -76,6 +80,7 @@ jobs:
               - ruby/**/*.rb
               - ruby/**/*.rbs
               - ruby/Gemfile
+              - ruby/*.gemspec
               - ruby/Gemfile.lock
               - ruby/Steepfile
   minitest:

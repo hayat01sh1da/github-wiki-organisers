@@ -1,177 +1,114 @@
-## 1. Environment
+# github_wiki_organiser (Ruby)
 
-- Ruby 4.0.5
-- Gemfile 4.0.12
-- Bundler 4.0.12
+The RubyGems implementation of [github-wiki-organisers](../README.md): generates `Home.md` and `_Sidebar.md` for a GitHub wiki grouped by the Owner/Category declared on the first line of each page, and exports reports of the pages whose owner or category is unknown.
 
-## 2. Install Gems via Gemfile and Bundler
+## 1. Installation
 
 ```command
-$ bundle install
-$ bundle lock --add-checksums
+$ gem install github_wiki_organiser
 ```
 
-## 3. Execution
+Requires Ruby 3.4+.
 
-Run the commands under `./ruby`
-
-### 3-1. Update Wiki List on Home and Sidebar
+## 2. CLI Usage
 
 ```command
-$ rake update_wiki_list_on_home_and_sidebar
-Provide the group_by(Owner or Category)
-Owner
-Provide the language(English or Japanese)
-English
-Provide the home_overflow(true or false)
-false
--------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------
+$ cd path/to/your-repo.wiki
+$ wiki-organise update --path . --org your-org --repo your-repo
+Updated Home.md and _Sidebar.md.
+Check them out at 'https://github.com/your-org/your-repo/wiki' !!
 
--------------------- Organising Home... --------------------
-Check out an Up-to-date Wiki List on Home at 'https://github.com/hayat01sh1da/github-wiki-organisers/wiki' !!
--------------------- Done Organising Home 🎉 --------------------
-
--------------------- Organising Sidebar... --------------------
-Check out an Up-to-date Wiki List on Sidebar at 'https://github.com/hayat01sh1da/github-wiki-organisers/wiki' !!
--------------------- Done Organising Sidebar 🎉 --------------------
-
--------------------- Done Categorising the Entire github-wiki-organisers Wiki Pages 🎉 --------------------
-```
-
-## 3-2. Export Unknown Wiki Count List by Namespace
-
-### 3-2-1. Owner
-
-```command
-$ rake export_unknown_wiki_count_list_by_namespace
-Provide the group_by(Owner or Category)
-Owner
-Provide the language(English or Japanese)
-English
--------------------- Exporting Unknown Wiki Count List... --------------------
-
-Here is the result:
-
----------------------------------------
+$ wiki-organise count-report --path .
 Unknown Owner nor Necessity: 1
 Unowned but Necessary: 1
 Unowned: 10
----------------------------------------
+Exported the unknown wiki count report to './unknown_wiki_count_list_by_namespace.txt'.
 
-Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
-
--------------------- Done Exporting Unknown Wiki Count List 🎉 -------------------
+$ wiki-organise llm-export --path .
+Exported the unknown wiki list for LLM to './unknown_wiki_list_for_llm.txt'.
 ```
 
+Common flags (see `wiki-organise <command> --help`): `--group-by Owner|Category`, `--language English|Japanese`, `--overflow` (split Home into per-namespace pages under `wikis-by-owner/`), `--template-dir`, `--config`, `--exclude`, `--output`, `--wiki-url`.
+
+Persistent settings, custom labels and additional languages go into a [`.wiki-organiser.yml`](../README.md#3-configuration) at the wiki root.
+
+## 3. Library Usage
+
+```ruby
+require 'github_wiki_organiser'
+
+GithubWikiOrganiser::Home.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
+GithubWikiOrganiser::Sidebar.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
+GithubWikiOrganiser::UnknownWikiCountListExporter.run(base_path: '.', output: 'report.txt')
+GithubWikiOrganiser::UnknownWikiListExporterForLLM.run(base_path: '.', group_by: 'Category', language: 'Japanese')
+```
+
+All classes accept `base_path:`, `group_by:`, `language:`, `home_overflow:` plus the configuration keywords `organisation:`, `repository:`, `wiki_url:`, `owner_base_url:`, `template_dir:`, `excluded_dirs:`, `config_path:` (and `output:` on the exporters).
+
+## 4. Development
+
+### 4-1. Environment
+
+- Ruby 4.0.5
+- Bundler 4.0.x
+
 ```command
+$ bundle install
+```
+
+### 4-2. Interactive Rake Tasks (this repository's own automation)
+
+The wiki cron workflows drive these stdin-prompted tasks; they pin this repository's settings and read `ORGANISATION_NAME` from the environment.
+
+```command
+$ rake update_wiki_list_on_home_and_sidebar
 $ rake export_unknown_wiki_count_list_by_namespace
-Provide the group_by(Owner or Category)
-Owner
-Provide the language(English or Japanese)
-Japanese
--------------------- Exporting Unknown Wiki Count List... --------------------
-
-Here is the result:
-
----------------------------------------
-Ownerチームが不明だが必要なページ群: 1
-Ownerチーム・要or不要が不明なページ群: 1
-Owner記名なし: 10
----------------------------------------
-
-Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
-
--------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
-```
-
-### 3-2-2. Category
-
-```command
-$ rake export_unknown_wiki_count_list_by_namespace
-Provide the group_by(Owner or Category)
-Category
-Provide the language(English or Japanese)
-English
--------------------- Exporting Unknown Wiki Count List... --------------------
-
-Here is the result:
-
----------------------------------------
-Uncategorised: 14
----------------------------------------
-
-Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
-
--------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
-```
-
-```command
-$ rake export_unknown_wiki_count_list_by_namespace
-Provide the group_by(Owner or Category)
-Category
-Provide the language(English or Japanese)
-Japanese
--------------------- Exporting Unknown Wiki Count List... --------------------
-
-Here is the result:
-
----------------------------------------
-Category記載なし: 14
----------------------------------------
-
-Check it out result on '../../unknown_wiki_count_list_by_namespace.txt' !!
-
--------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------
-```
-
-## 3-3. Export Unknown Wiki List for LLM
-
-```command
 $ rake export_unknown_wiki_list_for_llm
-Provide the group_by(Owner or Category)
-Owner
-Provide the language(English or Japanese)
-English
--------------------- Exporting Unknown Wiki List... --------------------
-
-Check it out result on '../../export_unknown_wiki_list_for_llm.txt' !!
-
--------------------- Done Exporting Unknown Wiki List 🎉 --------------------
 ```
 
-## 4. Unit Tests
+### 4-3. Unit Tests
 
 ```command
-$ rake
+$ bundle exec rake
 Run options: --seed 33975
 
 # Running:
 
-............................................................................................................................................................
+.........................................................................................................................................................................
 
-Finished in 32.985576s, 4.7293 runs/s, 8.7311 assertions/s.
+Finished in 9.889896s, 17.0881 runs/s, 32.7607 assertions/s.
 
-156 runs, 288 assertions, 0 failures, 0 errors, 0 skips
+174 runs, 323 assertions, 0 failures, 0 errors, 0 skips
 ```
 
-## 5. Static Code Analysis
+### 4-4. Static Code Analysis
 
 ```command
-$ rubocop
-Inspecting 13 files
-.............
+$ bundle exec rubocop
+Inspecting 20 files
+....................
 
-13 files inspected, no offenses detected
+20 files inspected, no offenses detected
 ```
 
-## 6. Type Checks
+### 4-5. Type Checks
 
 ```command
-$ rbs-inline --output sig/generated/ .
-🎉 Generated 10 RBS files under sig/generated
+$ bundle exec rbs-inline --output sig/generated/ lib test
+🎉 Generated 15 RBS files under sig/generated
+$ bundle exec steep check
 # Type checking files:
 
-....................
+..............................
 
 No type error detected. 🫖
 ```
+
+### 4-6. Build & Release
+
+```command
+$ gem build github_wiki_organiser.gemspec
+$ gem push github_wiki_organiser-x.y.z.gem
+```
+
+Releases are tagged `ruby-vX.Y.Z`; update [CHANGELOG.md](../CHANGELOG.md) with every release.

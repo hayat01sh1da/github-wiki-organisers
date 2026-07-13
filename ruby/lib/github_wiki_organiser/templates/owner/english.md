@@ -6,20 +6,3 @@ Absence of ownership declaration worsens maintainability and searchability becau
 Kindly make sure to articulate `Owner: @OWNER_TEAM` of the top of each of your wiki page to avoid it.
 
 Also, please keep in mind that you do not have to edit Home and Sidebar by yourself, which are automatically updated by a GitHub Actions cron job.
-
-## [@test-owner](https://github.com/orgs/test-org/teams/test-owner)
-
-- [[Owned Wiki]]
-
-## Unknown Owner nor Necessity
-
-- [[Unknown Owner nor Necessity Wiki]]
-
-## Unowned but Necessary
-
-- [[Unowned but Necessary Wiki]]
-
-## Unowned
-
-- [[Unowned Wiki 1]]
-- [[Unowned Wiki 2]]

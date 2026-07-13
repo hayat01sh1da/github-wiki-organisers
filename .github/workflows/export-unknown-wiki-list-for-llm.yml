@@ -63,6 +63,10 @@ jobs:
           job-name: export_unknown_wiki_list_for_llm
       - name: Export Unknown Wiki List for LLM
         working-directory: ./wiki
+        env:
+          # The library no longer hardcodes the organisation; the Rake tasks
+          # read it from this variable.
+          ORGANISATION_NAME: ${{ github.repository_owner }}
         run: |
           set -xe
           git pull origin master
