@@ -1,11 +1,11 @@
-# github_wiki_organiser (Ruby)
+# spreen-wiki (Ruby)
 
-The RubyGems implementation of [github-wiki-organisers](../README.md): generates `Home.md` and `_Sidebar.md` for a GitHub wiki grouped by the Owner/Category declared on the first line of each page, and exports reports of the pages whose owner or category is unknown.
+The RubyGems implementation of [spreen-wiki](../README.md): generates `Home.md` and `_Sidebar.md` for a GitHub wiki grouped by the Owner/Category declared on the first line of each page, and exports reports of the pages whose owner or category is unknown.
 
 ## 1. Installation
 
 ```command
-$ gem install github_wiki_organiser
+$ gem install spreen-wiki
 ```
 
 Requires Ruby 3.4+.
@@ -14,33 +14,33 @@ Requires Ruby 3.4+.
 
 ```command
 $ cd path/to/your-repo.wiki
-$ wiki-organise update --path . --org your-org --repo your-repo
+$ spreen update --path . --org your-org --repo your-repo
 Updated Home.md and _Sidebar.md.
 Check them out at 'https://github.com/your-org/your-repo/wiki' !!
 
-$ wiki-organise count-report --path .
+$ spreen count-report --path .
 Unknown Owner nor Necessity: 1
 Unowned but Necessary: 1
 Unowned: 10
 Exported the unknown wiki count report to './unknown_wiki_count_list_by_namespace.txt'.
 
-$ wiki-organise llm-export --path .
+$ spreen llm-export --path .
 Exported the unknown wiki list for LLM to './unknown_wiki_list_for_llm.txt'.
 ```
 
-Common flags (see `wiki-organise <command> --help`): `--group-by Owner|Category`, `--language English|Japanese`, `--overflow` (split Home into per-namespace pages under `wikis-by-owner/`), `--template-dir`, `--config`, `--exclude`, `--output`, `--wiki-url`.
+Common flags (see `spreen <command> --help`): `--group-by Owner|Category`, `--language English|Japanese`, `--overflow` (split Home into per-namespace pages under `wikis-by-owner/`), `--template-dir`, `--config`, `--exclude`, `--output`, `--wiki-url`.
 
-Persistent settings, custom labels and additional languages go into a [`.wiki-organiser.yml`](../README.md#3-configuration) at the wiki root.
+Persistent settings, custom labels and additional languages go into a [`.spreen.yml`](../README.md#3-configuration) at the wiki root.
 
 ## 3. Library Usage
 
 ```ruby
-require 'github_wiki_organiser'
+require 'spreen/wiki'
 
-GithubWikiOrganiser::Home.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
-GithubWikiOrganiser::Sidebar.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
-GithubWikiOrganiser::UnknownWikiCountListExporter.run(base_path: '.', output: 'report.txt')
-GithubWikiOrganiser::UnknownWikiListExporterForLLM.run(base_path: '.', group_by: 'Category', language: 'Japanese')
+Spreen::Wiki::Home.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
+Spreen::Wiki::Sidebar.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
+Spreen::Wiki::UnknownWikiCountListExporter.run(base_path: '.', output: 'report.txt')
+Spreen::Wiki::UnknownWikiListExporterForLLM.run(base_path: '.', group_by: 'Category', language: 'Japanese')
 ```
 
 All classes accept `base_path:`, `group_by:`, `language:`, `home_overflow:` plus the configuration keywords `organisation:`, `repository:`, `wiki_url:`, `owner_base_url:`, `template_dir:`, `excluded_dirs:`, `config_path:` (and `output:` on the exporters).
@@ -85,7 +85,7 @@ Finished in 9.889896s, 17.0881 runs/s, 32.7607 assertions/s.
 
 ```command
 $ bundle exec rubocop
-Inspecting 20 files
+Inspecting 21 files
 ....................
 
 20 files inspected, no offenses detected
@@ -95,7 +95,7 @@ Inspecting 20 files
 
 ```command
 $ bundle exec rbs-inline --output sig/generated/ lib test
-🎉 Generated 15 RBS files under sig/generated
+🎉 Generated 16 RBS files under sig/generated
 $ bundle exec steep check
 # Type checking files:
 
@@ -107,8 +107,8 @@ No type error detected. 🫖
 ### 4-6. Build & Release
 
 ```command
-$ gem build github_wiki_organiser.gemspec
-$ gem push github_wiki_organiser-x.y.z.gem
+$ gem build spreen-wiki.gemspec
+$ gem push spreen-wiki-x.y.z.gem
 ```
 
 Releases are tagged `ruby-vX.Y.Z`; update [CHANGELOG.md](../CHANGELOG.md) with every release.

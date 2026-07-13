@@ -2,12 +2,12 @@
 # rbs_inline: enabled
 
 require_relative 'application_test'
-require_relative '../lib/github_wiki_organiser/sidebar'
+require_relative '../lib/spreen/wiki/sidebar'
 
 class SidebarTest < ApplicationTest
   def setup(group_by: 'Owner', language: 'English')
     super
-    GithubWikiOrganiser::Sidebar.run(base_path:, group_by:, language:, organisation: 'test-org')
+    Spreen::Wiki::Sidebar.run(base_path:, group_by:, language:, organisation: 'test-org')
     @path_to_sidebar = File.join(base_path, '_Sidebar.md')
     @sidebar         = File.read(path_to_sidebar)
   end

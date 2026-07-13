@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rake/testtask'
-require_relative 'lib/github_wiki_organiser'
+require_relative 'lib/spreen/wiki'
 
 task default: :test
 
@@ -31,12 +31,12 @@ Rake::Task.define_task(:update_wiki_list_on_home_and_sidebar) do
   puts '-------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------'
   puts
   puts '-------------------- Organising Home... --------------------'
-  home_url = GithubWikiOrganiser::Home.run(**REPOSITORY_DEFAULTS, **params)
+  home_url = Spreen::Wiki::Home.run(**REPOSITORY_DEFAULTS, **params)
   puts "Check out an Up-to-date Wiki List on Home at '#{home_url}' !!"
   puts '-------------------- Done Organising Home 🎉 --------------------'
   puts
   puts '-------------------- Organising Sidebar... --------------------'
-  GithubWikiOrganiser::Sidebar.run(**REPOSITORY_DEFAULTS, **params)
+  Spreen::Wiki::Sidebar.run(**REPOSITORY_DEFAULTS, **params)
   puts "Check out an Up-to-date Wiki List on Sidebar at '#{home_url}' !!"
   puts '-------------------- Done Organising Sidebar 🎉 --------------------'
   puts
@@ -54,7 +54,7 @@ Rake::Task.define_task(:export_unknown_wiki_count_list_by_namespace) do
   params = { group_by:, language: }.reject { |_, value| value&.empty? }
 
   puts '-------------------- Exporting Unknown Wiki Count List... --------------------'
-  count_list_by_namespace, path_to_export = GithubWikiOrganiser::UnknownWikiCountListExporter.run(
+  count_list_by_namespace, path_to_export = Spreen::Wiki::UnknownWikiCountListExporter.run(
     **REPOSITORY_DEFAULTS, **params
   )
   puts
@@ -80,7 +80,7 @@ Rake::Task.define_task(:export_unknown_wiki_list_for_llm) do
   params = { group_by:, language: }.reject { |_, value| value&.empty? }
 
   puts '-------------------- Exporting Unknown Wiki List... --------------------'
-  path_to_export = GithubWikiOrganiser::UnknownWikiListExporterForLLM.run(**REPOSITORY_DEFAULTS, **params)
+  path_to_export = Spreen::Wiki::UnknownWikiListExporterForLLM.run(**REPOSITORY_DEFAULTS, **params)
   puts
   puts "Check it out result on '#{path_to_export}' !!"
   puts

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 # rbs_inline: enabled
 
-module GithubWikiOrganiser
-  VERSION = '0.1.0'
+module Spreen
+  module Wiki
+    VERSION = '0.1.0'
+  end
 end

@@ -13,6 +13,11 @@ Layout/LeadingCommentSpace:
   # `#: Type` trailing comments are rbs-inline annotations, not prose.
   AllowRBSInlineAnnotation: true
 
+Naming/FileName:
+  # lib/spreen-wiki.rb mirrors the gem name so `require 'spreen-wiki'` works.
+  Exclude:
+    - lib/spreen-wiki.rb
+
 Metrics/ClassLength:
   # Data literals such as Configuration::DEFAULT_LABELS count as one line.
   CountAsOne:

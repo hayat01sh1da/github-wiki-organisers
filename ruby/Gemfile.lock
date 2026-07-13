@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    github_wiki_organiser (0.1.0)
+    spreen-wiki (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -112,13 +112,13 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  github_wiki_organiser!
   minitest (~> 5.25)
   rake (~> 13.0)
   rbs-inline (~> 0.14.0)
   rubocop (~> 1.88.2)
   rubocop-minitest (~> 0.39.1)
   rubocop-performance (~> 1.26.1)
+  spreen-wiki!
   steep (~> 2.0.0)
 
 CHECKSUMS
@@ -138,7 +138,6 @@ CHECKSUMS
   ffi (1.17.4-x86_64-linux-gnu) sha256=9d3db14c2eae074b382fa9c083fe95aec6e0a1451da249eab096c34002bc752d
   ffi (1.17.4-x86_64-linux-musl) sha256=3fdf9888483de005f8ef8d1cf2d3b20d86626af206cbf780f6a6a12439a9c49e
   fileutils (1.8.0) sha256=8c6b1df54e2540bdb2f39258f08af78853aa70bad52b4d394bbc6424593c6e02
-  github_wiki_organiser (0.1.0)
   json (2.21.0) sha256=8de199e53f93450414b9fd49811012a73f3e3265b60468c7274d1cacebde1969
   language_server-protocol (3.17.0.6) sha256=5ef2c0c138f8267e1bc631d3328347d354f96724b0af22f2c79516120443b7f0
   lint_roller (1.1.0) sha256=2c0c845b632a7d172cb849cc90c1bce937a28c5c8ccccb50dfd46a485003cc87
@@ -162,6 +161,7 @@ CHECKSUMS
   rubocop-performance (1.26.1) sha256=cd19b936ff196df85829d264b522fd4f98b6c89ad271fa52744a8c11b8f71834
   ruby-progressbar (1.13.0) sha256=80fc9c47a9b640d6834e0dc7b3c94c9df37f08cb072b7761e4a71e22cff29b33
   securerandom (0.4.1) sha256=cc5193d414a4341b6e225f0cb4446aceca8e50d5e1888743fac16987638ea0b1
+  spreen-wiki (0.1.0)
   steep (2.0.0) sha256=6eb0ecc09637bbb54f0a5f2cf63daea6d3208ccace64b4f1107d976333605c30
   strscan (3.1.8) sha256=aae2db611a225559f21ffbb71765c9a4e60fd262534a9ea84f4f11c7f32f679e
   terminal-table (4.0.0) sha256=f504793203f8251b2ea7c7068333053f0beeea26093ec9962e62ea79f94301d2
