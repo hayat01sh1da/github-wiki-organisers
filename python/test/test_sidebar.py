@@ -1,7 +1,7 @@
 import os
 from collections.abc import Callable
 
-from sidebar import Sidebar
+from github_wiki_organiser.sidebar import Sidebar
 
 _FIXTURES_DIR = os.path.join('.', 'test', 'fixtures', 'sidebar')
 
@@ -9,7 +9,8 @@ _FIXTURES_DIR = os.path.join('.', 'test', 'fixtures', 'sidebar')
 def _run_sidebar(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
                  language: str = 'English') -> str:
     base_path = wiki_workspace(group_by=group_by, language=language)
-    Sidebar.run(base_path=base_path, group_by=group_by, language=language)
+    Sidebar.run(base_path=base_path, group_by=group_by, language=language,
+                organisation='test-org')
     with open(os.path.join(base_path, '_Sidebar.md'), encoding='utf-8') as f:
         return f.read()
 

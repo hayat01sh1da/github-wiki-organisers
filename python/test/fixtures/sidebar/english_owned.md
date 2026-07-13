@@ -1,4 +1,4 @@
-- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)
+- [@test-owner](https://github.com/orgs/test-org/teams/test-owner)
   - [[Owned Wiki]]
 - Unknown Owner nor Necessity
   - [[Unknown Owner nor Necessity Wiki]]

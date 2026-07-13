@@ -2,7 +2,7 @@ import glob
 import os
 from collections.abc import Callable
 
-from home import Home
+from github_wiki_organiser.home import Home
 
 _FIXTURES_DIR = os.path.join('.', 'test', 'fixtures', 'home')
 
@@ -16,6 +16,7 @@ def _run_home(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
         group_by=group_by,
         language=language,
         home_overflow=home_overflow,
+        organisation='test-org',
     )
     with open(os.path.join(base_path, 'Home.md'), encoding='utf-8') as f:
         home = f.read()

@@ -1,7 +1,9 @@
 import os
 from collections.abc import Callable
 
-from unknown_wiki_list_exporter_for_llm import UnknownWikiListExporterForLLM
+from github_wiki_organiser.unknown_wiki_list_exporter_for_llm import (
+    UnknownWikiListExporterForLLM,
+)
 
 
 def _run(wiki_workspace: Callable[..., str], group_by: str = 'Owner',

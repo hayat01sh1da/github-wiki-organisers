@@ -6,14 +6,22 @@ from invoke import Context, task
 _ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(_ROOT, 'src'))
 
-from home import Home  # noqa: E402
-from sidebar import Sidebar  # noqa: E402
-from unknown_wiki_count_list_exporter import (  # noqa: E402
+from github_wiki_organiser import (  # noqa: E402
+    Home,
+    Sidebar,
     UnknownWikiCountListExporter,
-)
-from unknown_wiki_list_exporter_for_llm import (  # noqa: E402
     UnknownWikiListExporterForLLM,
 )
+
+# The interactive tasks below are this repository's own automation. They pin
+# the repository-specific settings that the packaged library now takes as
+# configuration.
+REPOSITORY_DEFAULTS = {
+    'base_path': os.path.join('..', '..'),
+    'organisation': os.environ.get('ORGANISATION_NAME', ''),
+    'repository': 'github-wiki-organisers',
+    'template_dir': os.path.join('..', 'home_template'),
+}
 
 
 @task
@@ -28,7 +36,7 @@ def update_wiki_list_on_home_and_sidebar(c: Context) -> None:
     print('Provide the home_overflow(true or false)')
     home_overflow = input().strip()
 
-    params: dict[str, str] = {}
+    params: dict[str, str] = dict(REPOSITORY_DEFAULTS)
     for key, value in {
         'group_by': group_by,
         'language': language,
@@ -67,7 +75,7 @@ def export_unknown_wiki_count_list_by_namespace(c: Context) -> None:
     print('Provide the language(English or Japanese)')
     language = input().strip()
 
-    params: dict[str, str] = {}
+    params: dict[str, str] = dict(REPOSITORY_DEFAULTS)
     for key, value in {'group_by': group_by, 'language': language}.items():
         if value:
             params[key] = value
@@ -97,7 +105,7 @@ def export_unknown_wiki_list_for_llm(c: Context) -> None:
     print('Provide the language(English or Japanese)')
     language = input().strip()
 
-    params: dict[str, str] = {}
+    params: dict[str, str] = dict(REPOSITORY_DEFAULTS)
     for key, value in {'group_by': group_by, 'language': language}.items():
         if value:
             params[key] = value

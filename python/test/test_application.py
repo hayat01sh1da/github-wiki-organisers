@@ -2,7 +2,7 @@ from collections.abc import Callable
 
 import pytest
 
-from application import Application
+from github_wiki_organiser.application import Application
 
 
 def test_validate_group_by(wiki_workspace: Callable[..., str]) -> None:

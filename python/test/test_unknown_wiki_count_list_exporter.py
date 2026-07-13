@@ -3,7 +3,9 @@ from collections.abc import Callable
 
 import pytest
 
-from unknown_wiki_count_list_exporter import UnknownWikiCountListExporter
+from github_wiki_organiser.unknown_wiki_count_list_exporter import (
+    UnknownWikiCountListExporter,
+)
 
 
 def _run(wiki_workspace: Callable[..., str], group_by: str = 'Owner',
