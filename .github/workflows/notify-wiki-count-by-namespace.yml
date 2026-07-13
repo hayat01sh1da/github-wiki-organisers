@@ -48,6 +48,10 @@ jobs:
       - name: Format Uncategorised Wiki Count by Namespace
         id: format
         working-directory: .wiki
+        env:
+          # The library no longer hardcodes the organisation; the Rake tasks
+          # read it from this variable.
+          ORGANISATION_NAME: ${{ github.repository_owner }}
         run: |
           set -xe
           git pull origin master
@@ -97,6 +101,10 @@ jobs:
       - name: Format Unknown Wiki Count by Namespace
         id: format
         working-directory: .wiki
+        env:
+          # The library no longer hardcodes the organisation; the Rake tasks
+          # read it from this variable.
+          ORGANISATION_NAME: ${{ github.repository_owner }}
         run: |
           set -xe
           git pull origin master

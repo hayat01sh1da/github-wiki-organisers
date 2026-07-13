@@ -69,6 +69,10 @@ jobs:
           job-name: update_wiki_list_on_home_and_sidebar
       - name: Update github-wiki-organisers Wiki
         working-directory: ./wiki
+        env:
+          # The library no longer hardcodes the organisation; the Rake tasks
+          # read it from this variable.
+          ORGANISATION_NAME: ${{ github.repository_owner }}
         run: |
           set -xe
           git pull origin master
