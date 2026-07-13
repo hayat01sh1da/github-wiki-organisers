@@ -1,0 +1,37 @@
+# Generated from lib/spreen/wiki/unknown_wiki_list_exporter_for_llm.rb with RBS::Inline
+
+module Spreen
+  module Wiki
+    # Writes a flat list of the wikis under the configured "unknown
+    # owner/category" namespace in a form suitable for feeding to an LLM.
+    class UnknownWikiListExporterForLLM < Application
+      DEFAULT_OUTPUT_FILENAME: ::String
+
+      # @rbs base_path: String
+      # @rbs group_by: String
+      # @rbs language: String
+      # @rbs home_overflow: (bool | String)
+      # @rbs output: String?
+      # @rbs **options: untyped
+      # @rbs return: void
+      def initialize: (?base_path: String, ?group_by: String, ?language: String, ?home_overflow: bool | String, ?output: String?, **untyped) -> void
+
+      # @rbs return: String
+      def run: () -> String
+
+      private
+
+      attr_reader path_to_export: String
+
+      # @rbs filename: String
+      # @rbs return: String
+      def resolve_output_path: (String filename) -> String
+
+      # @rbs return: String
+      def target_namespace: () -> String
+
+      # @rbs return: Array[String]
+      def unknown_wiki_list_for_llm: () -> Array[String]
+    end
+  end
+end

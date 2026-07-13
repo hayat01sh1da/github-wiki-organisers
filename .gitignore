@@ -2,12 +2,12 @@
 .env
 
 # Python
-python/**/__pycache__/
-python/**/.pytest_cache/
-python/**/.mypy_cache/
-python/build/
-python/dist/
-python/src/*.egg-info/
+PyPI/**/__pycache__/
+PyPI/**/.pytest_cache/
+PyPI/**/.mypy_cache/
+PyPI/build/
+PyPI/dist/
+PyPI/src/*.egg-info/
 
 # Ruby
-ruby/*.gem
+RubyGem/*.gem

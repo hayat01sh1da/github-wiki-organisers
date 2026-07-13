@@ -1,0 +1,93 @@
+# frozen_string_literal: true
+
+require 'rake/testtask'
+require_relative 'lib/spreen/wiki'
+
+task default: :test
+
+# The interactive tasks below are this repository's own automation (the wiki
+# cron workflows pipe their answers in via stdin). They pin the repository-
+# specific settings that the packaged library now takes as configuration.
+REPOSITORY_DEFAULTS = {
+  base_path: File.join('..', '..'),
+  organisation: ENV.fetch('ORGANISATION_NAME', ''),
+  repository: 'spreen-wiki',
+  template_dir: File.join('..', 'home_template')
+}.freeze
+
+desc 'Update Wiki List on Home and Sidebar'
+Rake::Task.define_task(:update_wiki_list_on_home_and_sidebar) do
+  puts 'Provide the group_by(Owner or Category)'
+  group_by = $stdin.gets&.chomp&.strip
+
+  puts 'Provide the language(English or Japanese)'
+  language = $stdin.gets&.chomp&.strip
+
+  puts 'Provide the home_overflow(true or false)'
+  home_overflow = $stdin.gets&.chomp&.strip
+
+  params = { group_by:, language:, home_overflow: }.reject { |_, value| value&.empty? }
+
+  puts '-------------------- Categorising the Entire spreen-wiki Wiki Pages... --------------------'
+  puts
+  puts '-------------------- Organising Home... --------------------'
+  home_url = Spreen::Wiki::Home.run(**REPOSITORY_DEFAULTS, **params)
+  puts "Check out an Up-to-date Wiki List on Home at '#{home_url}' !!"
+  puts '-------------------- Done Organising Home 🎉 --------------------'
+  puts
+  puts '-------------------- Organising Sidebar... --------------------'
+  Spreen::Wiki::Sidebar.run(**REPOSITORY_DEFAULTS, **params)
+  puts "Check out an Up-to-date Wiki List on Sidebar at '#{home_url}' !!"
+  puts '-------------------- Done Organising Sidebar 🎉 --------------------'
+  puts
+  puts '-------------------- Done Categorising the Entire spreen-wiki Wiki Pages 🎉 --------------------'
+end
+
+desc 'Export Unknown Wiki Count List by Namespace'
+Rake::Task.define_task(:export_unknown_wiki_count_list_by_namespace) do
+  puts 'Provide the group_by(Owner or Category)'
+  group_by = $stdin.gets&.chomp&.strip
+
+  puts 'Provide the language(English or Japanese)'
+  language = $stdin.gets&.chomp&.strip
+
+  params = { group_by:, language: }.reject { |_, value| value&.empty? }
+
+  puts '-------------------- Exporting Unknown Wiki Count List... --------------------'
+  count_list_by_namespace, path_to_export = Spreen::Wiki::UnknownWikiCountListExporter.run(
+    **REPOSITORY_DEFAULTS, **params
+  )
+  puts
+  puts 'Here is the result:'
+  puts
+  puts '---------------------------------------'
+  puts count_list_by_namespace
+  puts '---------------------------------------'
+  puts
+  puts "Check it out result on '#{path_to_export}' !!"
+  puts
+  puts '-------------------- Done Exporting Unknown Wiki Count List 🎉 --------------------'
+end
+
+desc 'Export Unknown Wiki List for LLM'
+Rake::Task.define_task(:export_unknown_wiki_list_for_llm) do
+  puts 'Provide the group_by(Owner or Category)'
+  group_by = $stdin.gets&.chomp&.strip
+
+  puts 'Provide the language(English or Japanese)'
+  language = $stdin.gets&.chomp&.strip
+
+  params = { group_by:, language: }.reject { |_, value| value&.empty? }
+
+  puts '-------------------- Exporting Unknown Wiki List... --------------------'
+  path_to_export = Spreen::Wiki::UnknownWikiListExporterForLLM.run(**REPOSITORY_DEFAULTS, **params)
+  puts
+  puts "Check it out result on '#{path_to_export}' !!"
+  puts
+  puts '-------------------- Done Exporting Unknown Wiki List 🎉 --------------------'
+end
+
+desc 'Run all tests'
+Rake::TestTask.new do |task|
+  task.pattern = File.join('.', '**', '*_test.rb')
+end

@@ -1,0 +1,54 @@
+# Generated from lib/spreen/wiki/home.rb with RBS::Inline
+
+module Spreen
+  module Wiki
+    # Generates the wiki Home page, optionally splitting per-owner content out
+    # into `wikis-by-owner/<owner>.md` when home_overflow is enabled. Returns
+    # the configured wiki URL (if any) so callers can point at the result.
+    class Home < Application
+      # @rbs return: String?
+      def run: () -> String?
+
+      private
+
+      # @rbs return: String
+      def path_to_wikis_by_owner: () -> String
+
+      # @rbs return: String
+      def path_to_home_template: () -> String
+
+      # @rbs return: Array[String]
+      def home_passage: () -> Array[String]
+
+      # @rbs return: void
+      def write_home_passage: () -> void
+
+      # @rbs return: void
+      def write_concise_home_passage: () -> void
+
+      # @rbs return: void
+      def write_per_namespace_files: () -> void
+
+      # @rbs return: void
+      def write_home_table_of_contents: () -> void
+
+      # @rbs passage: Array[String]
+      # @rbs namespace: String
+      # @rbs wikis: Array[String]
+      # @rbs owned: bool
+      # @rbs return: void
+      def append_block: (Array[String] passage, String namespace, Array[String] wikis, owned: bool) -> void
+
+      # @rbs namespace: String
+      # @rbs wikis: Array[String]
+      # @rbs owned: bool
+      # @rbs return: void
+      def write_overflow_block: (String namespace, Array[String] wikis, owned: bool) -> void
+
+      # @rbs namespace: String
+      # @rbs owned: bool
+      # @rbs return: String
+      def heading_for: (String namespace, owned: bool) -> String
+    end
+  end
+end

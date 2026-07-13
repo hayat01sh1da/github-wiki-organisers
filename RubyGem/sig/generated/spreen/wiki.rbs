@@ -1,0 +1,10 @@
+# Generated from lib/spreen/wiki.rb with RBS::Inline
+
+module Spreen
+  # Spreens a GitHub wiki — the falcon's stoop, then the preen: generates
+  # Home.md and _Sidebar.md grouped by the Owner/Category declared on the
+  # first line of each page, and exports reports of the pages whose owner
+  # or category is unknown.
+  module Wiki
+  end
+end
