@@ -19,7 +19,7 @@ from spreen_wiki import (  # noqa: E402
 REPOSITORY_DEFAULTS = {
     'base_path': os.path.join('..', '..'),
     'organisation': os.environ.get('ORGANISATION_NAME', ''),
-    'repository': 'github-wiki-organisers',
+    'repository': 'spreen-wiki',
     'template_dir': os.path.join('..', 'home_template'),
 }
 
@@ -46,7 +46,7 @@ def update_wiki_list_on_home_and_sidebar(c: Context) -> None:
             params[key] = value
 
     print('-------------------- Categorising the Entire '
-          'github-wiki-organisers Wiki Pages... --------------------')
+          'spreen-wiki Wiki Pages... --------------------')
     print()
     print('-------------------- Organising Home... --------------------')
     home_url = Home.run(**params)
@@ -63,7 +63,7 @@ def update_wiki_list_on_home_and_sidebar(c: Context) -> None:
           '--------------------')
     print()
     print('-------------------- Done Categorising the Entire '
-          'github-wiki-organisers Wiki Pages 🎉 --------------------')
+          'spreen-wiki Wiki Pages 🎉 --------------------')
 
 
 @task

@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
                      'for a GitHub wiki by grouping pages by the Owner/Category declared on the first ' \
                      'line of each page (English and Japanese labels built in, extensible via ' \
                      '.spreen.yml), and exports reports of the pages whose owner or category is unknown.'
-  spec.homepage = 'https://github.com/hayat01sh1da/github-wiki-organisers'
+  spec.homepage = 'https://github.com/hayat01sh1da/spreen-wiki'
   spec.license  = 'MIT'
   spec.required_ruby_version = '>= 3.4'
 

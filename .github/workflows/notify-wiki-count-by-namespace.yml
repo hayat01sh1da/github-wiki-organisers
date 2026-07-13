@@ -71,7 +71,7 @@ jobs:
         with:
           slack-token: ${{ secrets.SLACK_APP_TOKEN }}
           slack-channel: ${{ secrets.SLACK_CHANNEL_ID }}
-          header: "【github-wiki-organisers Weekly Uncategorised Wiki Count by Namespace Report】"
+          header: "【spreen-wiki Weekly Uncategorised Wiki Count by Namespace Report】"
           mrkdwn-sections: |
             <https://github.com/${{ github.repository }}/wiki#uncategorised|${{ needs.count-uncategorised.outputs.uncategorised_wiki_count }}>
 
@@ -128,7 +128,7 @@ jobs:
         with:
           slack-token: ${{ secrets.SLACK_APP_TOKEN }}
           slack-channel: ${{ secrets.SLACK_CHANNEL_ID }}
-          header: "【github-wiki-organisers Weekly Unowned Wiki Count Report】"
+          header: "【spreen-wiki Weekly Unowned Wiki Count Report】"
           mrkdwn-sections: |
             <https://github.com/${{ github.repository }}/wiki#unowned-but-necessary-wiki|${{ needs.count-unowned.outputs.unknown_but_necessary }}>
             <https://github.com/${{ github.repository }}/wiki#unknown-owner-nor-necessity-wiki|${{ needs.count-unowned.outputs.unknown_owner_nor_necessity }}>

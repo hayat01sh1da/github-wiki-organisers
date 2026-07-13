@@ -91,7 +91,7 @@ jobs:
         with:
           slack-token: ${{ secrets.SLACK_APP_TOKEN }}
           slack-channel: ${{ secrets.SLACK_CHANNEL_ID }}
-          header: "【github-wiki-organisers Wiki LLM Notification for Ignored Page List Export】"
+          header: "【spreen-wiki Wiki LLM Notification for Ignored Page List Export】"
           mrkdwn-sections: |
             Message: The latest ignored page list for LLM has been exported! Make sure if it is as you expect by cloning ${{ github.repository }}.wiki !
             Workflows: <https://github.com/${{ github.repository }}/actions/workflows/export-unknown-wiki-list-for-llm.yml|Export Unknown Wiki List for LLM>
