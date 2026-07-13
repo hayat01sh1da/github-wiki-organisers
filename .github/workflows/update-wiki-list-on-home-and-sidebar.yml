@@ -41,33 +41,44 @@ jobs:
       commit_message: ${{ steps.commit.outputs.commit_message }}
       jst_current_datetime: ${{ steps.commit.outputs.jst_current_datetime }}
     steps:
+      # The main repository must live at the workspace root so that the local
+      # .github/actions/* resolve and ruby/setup-ruby finds .ruby-version.
       - name: Checkout the Main Repository
         uses: actions/checkout@v7
         with:
           repository: "${{ github.repository }}"
           ref: master
-          path: ./github-wiki-organisers
       - name: Checkout the Wiki Repository
         uses: actions/checkout@v7
         with:
           repository: "${{ github.repository }}.wiki"
           ref: master
-          path: ./github-wiki-organisers/wiki
+          path: ./wiki
+      # The Ruby entry points resolve the wiki as base_path '../..', i.e. they
+      # expect to run from <wiki>/github-wiki-organisers/ruby (the wiki tracks
+      # the main repository as a submodule there). The submodule's SSH URL
+      # cannot be cloned with GITHUB_TOKEN, so copy the checkout into that path
+      # instead; git ignores the contents of an uninitialised submodule path,
+      # so commit-and-push will not pick the copy up.
+      - name: Nest the Main Repository in the Wiki
+        run: rsync -a --exclude .git --exclude wiki ./ wiki/github-wiki-organisers/
       - name: Configure Git Identity
-        uses: ./github-wiki-organisers/.github/actions/configure-git-identity
-      - uses: actions/checkout@v7
-      - uses: ./github-wiki-organisers/.github/actions/setup-ruby
+        uses: ./.github/actions/configure-git-identity
+      - uses: ./.github/actions/setup-ruby
+        with:
+          job-name: update_wiki_list_on_home_and_sidebar
       - name: Update github-wiki-organisers Wiki
-        working-directory: ./github-wiki-organisers/wiki
+        working-directory: ./wiki
         run: |
           set -xe
           git pull origin master
-          bash update_wiki_list_on_home_and_sidebar.sh "${{ github.event.inputs.group_by || 'Owner' }}" "${{ github.event.inputs.language || 'English' }}" "${{ github.event.inputs.home_overflow || false }}"
+          cd github-wiki-organisers/ruby
+          printf '%s\n%s\n%s\n' "${{ github.event.inputs.group_by || 'Owner' }}" "${{ github.event.inputs.language || 'English' }}" "${{ github.event.inputs.home_overflow || false }}" | rake update_wiki_list_on_home_and_sidebar
       - name: Commit and Push
         id: commit
-        uses: ./github-wiki-organisers/.github/actions/commit-and-push
+        uses: ./.github/actions/commit-and-push
         with:
-          working-directory: ./github-wiki-organisers/wiki
+          working-directory: ./wiki
           commit-message-prefix: "Update Wiki list on Home and Sidebar by GitHub Actions[bot]"
 
   notify:
