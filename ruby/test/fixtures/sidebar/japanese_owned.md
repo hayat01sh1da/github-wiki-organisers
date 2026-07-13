@@ -1,4 +1,4 @@
-- [@test-owner](https://github.com/orgs/hayat01sh1da/teams/test-owner)
+- [@test-owner](https://github.com/orgs/test-org/teams/test-owner)
   - [[Owner記名ありページ]]
 - Ownerチームが不明だが必要なページ群
   - [[Ownerチームが不明だが必要なページ]]

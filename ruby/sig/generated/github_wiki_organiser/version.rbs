@@ -1,0 +1,5 @@
+# Generated from lib/github_wiki_organiser/version.rb with RBS::Inline
+
+module GithubWikiOrganiser
+  VERSION: ::String
+end

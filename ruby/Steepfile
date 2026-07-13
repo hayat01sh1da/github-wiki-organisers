@@ -3,12 +3,18 @@
 D = Steep::Diagnostic
 
 target :app do
-  check 'src'
+  check 'lib'
   check 'test'
   signature 'sig'
 
   library 'fileutils'
+  library 'yaml'
+  library 'optparse'
   library 'minitest'
 
-  configure_code_diagnostics(D::Ruby.default)
+  configure_code_diagnostics(D::Ruby.default) do |hash|
+    # `EMPTY_HASH = {}.freeze` carries its type on the constant; the literal
+    # itself cannot be annotated through the `.freeze` call.
+    hash[D::Ruby::UnannotatedEmptyCollection] = :hint
+  end
 end

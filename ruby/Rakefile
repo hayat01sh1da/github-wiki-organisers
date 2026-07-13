@@ -1,12 +1,19 @@
 # frozen_string_literal: true
 
 require 'rake/testtask'
-require_relative 'src/home'
-require_relative 'src/sidebar'
-require_relative 'src/unknown_wiki_count_list_exporter'
-require_relative 'src/unknown_wiki_list_exporter_for_llm'
+require_relative 'lib/github_wiki_organiser'
 
 task default: :test
+
+# The interactive tasks below are this repository's own automation (the wiki
+# cron workflows pipe their answers in via stdin). They pin the repository-
+# specific settings that the packaged library now takes as configuration.
+REPOSITORY_DEFAULTS = {
+  base_path: File.join('..', '..'),
+  organisation: ENV.fetch('ORGANISATION_NAME', ''),
+  repository: 'github-wiki-organisers',
+  template_dir: File.join('..', 'home_template')
+}.freeze
 
 desc 'Update Wiki List on Home and Sidebar'
 Rake::Task.define_task(:update_wiki_list_on_home_and_sidebar) do
@@ -24,12 +31,12 @@ Rake::Task.define_task(:update_wiki_list_on_home_and_sidebar) do
   puts '-------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------'
   puts
   puts '-------------------- Organising Home... --------------------'
-  home_url = Home.run(**params)
+  home_url = GithubWikiOrganiser::Home.run(**REPOSITORY_DEFAULTS, **params)
   puts "Check out an Up-to-date Wiki List on Home at '#{home_url}' !!"
   puts '-------------------- Done Organising Home 🎉 --------------------'
   puts
   puts '-------------------- Organising Sidebar... --------------------'
-  Sidebar.run(**params)
+  GithubWikiOrganiser::Sidebar.run(**REPOSITORY_DEFAULTS, **params)
   puts "Check out an Up-to-date Wiki List on Sidebar at '#{home_url}' !!"
   puts '-------------------- Done Organising Sidebar 🎉 --------------------'
   puts
@@ -47,7 +54,9 @@ Rake::Task.define_task(:export_unknown_wiki_count_list_by_namespace) do
   params = { group_by:, language: }.reject { |_, value| value&.empty? }
 
   puts '-------------------- Exporting Unknown Wiki Count List... --------------------'
-  count_list_by_namespace, path_to_export = UnknownWikiCountListExporter.run(**params)
+  count_list_by_namespace, path_to_export = GithubWikiOrganiser::UnknownWikiCountListExporter.run(
+    **REPOSITORY_DEFAULTS, **params
+  )
   puts
   puts 'Here is the result:'
   puts
@@ -71,7 +80,7 @@ Rake::Task.define_task(:export_unknown_wiki_list_for_llm) do
   params = { group_by:, language: }.reject { |_, value| value&.empty? }
 
   puts '-------------------- Exporting Unknown Wiki List... --------------------'
-  path_to_export = UnknownWikiListExporterForLLM.run(**params)
+  path_to_export = GithubWikiOrganiser::UnknownWikiListExporterForLLM.run(**REPOSITORY_DEFAULTS, **params)
   puts
   puts "Check it out result on '#{path_to_export}' !!"
   puts

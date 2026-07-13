@@ -2,12 +2,12 @@
 # rbs_inline: enabled
 
 require_relative 'application_test'
-require_relative '../src/unknown_wiki_count_list_exporter'
+require_relative '../lib/github_wiki_organiser/unknown_wiki_count_list_exporter'
 
 class UnknownWikiCountListExporterTest < ApplicationTest
   def setup(group_by: 'Owner', language: 'English')
     super
-    UnknownWikiCountListExporter.run(base_path:, group_by:, language:)
+    GithubWikiOrganiser::UnknownWikiCountListExporter.run(base_path:, group_by:, language:)
     @path_to_unknown_wiki_count_list = File.join(base_path, 'unknown_wiki_count_list_by_namespace.txt')
     @unknown_wiki_count_list         = File.read(path_to_unknown_wiki_count_list)
   end

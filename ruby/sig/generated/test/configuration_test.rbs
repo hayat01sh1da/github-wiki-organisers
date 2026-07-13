@@ -1,0 +1,38 @@
+# Generated from test/configuration_test.rb with RBS::Inline
+
+class ConfigurationTest < ApplicationTest
+  CUSTOM_CONFIG: ::String
+
+  def test_default_group_bys_and_languages: () -> untyped
+
+  def test_default_labels: () -> untyped
+
+  def test_default_unknown_namespaces: () -> untyped
+
+  def test_default_excluded_dirs: () -> untyped
+
+  def test_urls_are_absent_without_an_organisation: () -> untyped
+
+  def test_urls_derived_from_organisation_and_repository: () -> untyped
+
+  def test_explicit_urls_win_over_derived_ones: () -> untyped
+
+  def test_empty_values_are_treated_as_absent: () -> untyped
+
+  def test_default_template_dir_ships_with_the_library: () -> untyped
+
+  def test_config_file_overrides_values: () -> untyped
+
+  def test_config_file_extends_languages: () -> untyped
+
+  def test_explicit_options_win_over_the_config_file: () -> untyped
+
+  def test_config_file_language_passes_validation: () -> untyped
+
+  def test_exporter_honours_custom_output_filename: () -> untyped
+
+  private
+
+  # @rbs return: void
+  def write_config_file: () -> void
+end
