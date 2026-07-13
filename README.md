@@ -191,6 +191,6 @@ Edit it on [./home_template/](https://github.com/hayat01sh1da/spreen-wiki/blob/m
 ## 7. Development
 
 - Common environment: WSL (Ubuntu 25.10)
-- [Ruby implementation](./ruby/README.md) — gem sources under [./ruby/](./ruby/)
-- [Python implementation](./python/README.md) — package sources under [./python/](./python/)
+- [Ruby implementation](./RubyGem/README.md) — gem sources under [./RubyGem/](./RubyGem/)
+- [Python implementation](./PyPI/README.md) — package sources under [./PyPI/](./PyPI/)
 - Release notes live in [CHANGELOG.md](./CHANGELOG.md)

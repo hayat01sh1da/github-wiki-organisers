@@ -74,7 +74,7 @@ $ invoke export_unknown_wiki_list_for_llm
 $ invoke
 ============================= test session starts ==============================
 platform linux -- Python 3.14.6, pytest-9.0.3, pluggy-1.6.0
-rootdir: spreen-wiki/python
+rootdir: spreen-wiki/PyPI
 configfile: pyproject.toml
 collected 46 items
 
