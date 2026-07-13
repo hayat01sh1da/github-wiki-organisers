@@ -30,7 +30,7 @@ Exported the unknown wiki list for LLM to './unknown_wiki_list_for_llm.txt'.
 
 Common flags (see `spreen <command> --help`): `--group-by Owner|Category`, `--language English|Japanese`, `--overflow` (split Home into per-namespace pages under `wikis-by-owner/`), `--template-dir`, `--config`, `--exclude`, `--output`, `--wiki-url`.
 
-Persistent settings, custom labels and additional languages go into a [`.spreen.yml`](../README.md#3-configuration) at the wiki root.
+Persistent settings, custom labels and additional languages go into a [`.spreen.yml`](../README.md#4-configuration) at the wiki root.
 
 ## 3. Library Usage
 
