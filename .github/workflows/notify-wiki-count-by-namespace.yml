@@ -41,7 +41,7 @@ jobs:
       # the main repository as a submodule there). The submodule's SSH URL
       # cannot be cloned with GITHUB_TOKEN, so copy the checkout into that path.
       - name: Nest the Main Repository in the Wiki
-        run: rsync -a --exclude .git --exclude .wiki ./ .wiki/spreen-wiki/
+        run: rsync -a --exclude .git --exclude /.wiki ./ .wiki/spreen-wiki/
       - uses: ./.github/actions/setup-ruby
         with:
           job-name: count_uncategorised
@@ -94,7 +94,7 @@ jobs:
           ref: master
           path: .wiki
       - name: Nest the Main Repository in the Wiki
-        run: rsync -a --exclude .git --exclude .wiki ./ .wiki/spreen-wiki/
+        run: rsync -a --exclude .git --exclude /.wiki ./ .wiki/spreen-wiki/
       - uses: ./.github/actions/setup-ruby
         with:
           job-name: count_unowned

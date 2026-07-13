@@ -61,7 +61,7 @@ jobs:
       # instead; git ignores the contents of an uninitialised submodule path,
       # so commit-and-push will not pick the copy up.
       - name: Nest the Main Repository in the Wiki
-        run: rsync -a --exclude .git --exclude wiki ./ wiki/spreen-wiki/
+        run: rsync -a --exclude .git --exclude /wiki ./ wiki/spreen-wiki/
       - name: Configure Git Identity
         uses: ./.github/actions/configure-git-identity
       - uses: ./.github/actions/setup-ruby
