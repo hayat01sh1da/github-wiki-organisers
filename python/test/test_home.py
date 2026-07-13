@@ -2,7 +2,7 @@ import glob
 import os
 from collections.abc import Callable
 
-from github_wiki_organiser.home import Home
+from spreen_wiki.home import Home
 
 _FIXTURES_DIR = os.path.join('.', 'test', 'fixtures', 'home')
 

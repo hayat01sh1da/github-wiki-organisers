@@ -3,7 +3,7 @@ requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "github-wiki-organiser"
+name = "spreen-wiki"
 version = "0.1.0"
 description = "Organise GitHub wiki Home and _Sidebar pages by owner or category."
 readme = "README.md"
@@ -29,13 +29,13 @@ Source = "https://github.com/hayat01sh1da/github-wiki-organisers"
 Changelog = "https://github.com/hayat01sh1da/github-wiki-organisers/blob/master/CHANGELOG.md"
 
 [project.scripts]
-wiki-organise = "github_wiki_organiser.cli:main"
+spreen = "spreen_wiki.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-github_wiki_organiser = ["templates/**/*.md", "py.typed"]
+spreen_wiki = ["templates/**/*.md", "py.typed"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

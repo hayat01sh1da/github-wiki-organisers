@@ -3,7 +3,7 @@ from collections.abc import Callable
 
 import pytest
 
-from github_wiki_organiser.unknown_wiki_count_list_exporter import (
+from spreen_wiki.unknown_wiki_count_list_exporter import (
     UnknownWikiCountListExporter,
 )
 

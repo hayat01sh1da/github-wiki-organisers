@@ -1,5 +1,5 @@
-"""Command line interface behind the `wiki-organise` executable:
-`wiki-organise <update|count-report|llm-export> [options]`."""
+"""Command line interface behind the `spreen` executable:
+`spreen <update|count-report|llm-export> [options]`."""
 
 import argparse
 import sys
@@ -37,7 +37,7 @@ def _common_parser() -> argparse.ArgumentParser:
         help='Directory of <group_by>/<language>.md Home templates')
     common.add_argument(
         '--config', dest='config_path', metavar='FILE',
-        help='Config file path (default: <path>/.wiki-organiser.yml)')
+        help='Config file path (default: <path>/.spreen.yml)')
     common.add_argument(
         '--exclude', dest='excluded_dirs', action='append', metavar='DIR',
         help='Directory to skip while scanning (repeatable)')
@@ -46,7 +46,7 @@ def _common_parser() -> argparse.ArgumentParser:
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        prog='wiki-organise',
+        prog='spreen',
         description='Organise a GitHub wiki: generate Home.md/_Sidebar.md '
                     'and export unknown-namespace reports.')
     parser.add_argument('--version', action='version', version=__version__)

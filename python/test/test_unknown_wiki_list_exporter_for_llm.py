@@ -1,7 +1,7 @@
 import os
 from collections.abc import Callable
 
-from github_wiki_organiser.unknown_wiki_list_exporter_for_llm import (
+from spreen_wiki.unknown_wiki_list_exporter_for_llm import (
     UnknownWikiListExporterForLLM,
 )
 

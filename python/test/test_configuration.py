@@ -1,12 +1,12 @@
 import os
 from collections.abc import Callable
 
-from github_wiki_organiser.application import Application
-from github_wiki_organiser.configuration import (
+from spreen_wiki.application import Application
+from spreen_wiki.configuration import (
     CONFIG_FILENAME,
     Configuration,
 )
-from github_wiki_organiser.unknown_wiki_count_list_exporter import (
+from spreen_wiki.unknown_wiki_count_list_exporter import (
     UnknownWikiCountListExporter,
 )
 

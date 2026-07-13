@@ -6,7 +6,7 @@ from invoke import Context, task
 _ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(_ROOT, 'src'))
 
-from github_wiki_organiser import (  # noqa: E402
+from spreen_wiki import (  # noqa: E402
     Home,
     Sidebar,
     UnknownWikiCountListExporter,

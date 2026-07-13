@@ -11,7 +11,7 @@ class Application:
     under base_path, groups it by Owner or Category in either English or
     Japanese, and exposes the resulting maps to its subclasses. Grouping
     criteria, languages and labels are resolved through Configuration and
-    can be extended via a `.wiki-organiser.yml` file."""
+    can be extended via a `.spreen.yml` file."""
 
     class NotImplementedError(Exception):
         pass

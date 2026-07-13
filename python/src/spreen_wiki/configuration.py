@@ -5,7 +5,7 @@ from typing import Any
 
 import yaml
 
-CONFIG_FILENAME = '.wiki-organiser.yml'
+CONFIG_FILENAME = '.spreen.yml'
 DEFAULT_EXCLUDED_DIRS = ['github-wiki-organisers', 'wikis-by-owner']
 
 # Built-in labels: how the first line of a wiki page is parsed (regexp),
@@ -80,7 +80,7 @@ def _deep_merge(base: dict[str, Any], override: dict[str, Any]) -> dict[str, Any
 class Configuration:
     """Resolves the runtime configuration for a wiki checkout. Every value
     is looked up with the same precedence: explicit keyword argument, then
-    the `.wiki-organiser.yml` file under base_path (or config_path), then
+    the `.spreen.yml` file under base_path (or config_path), then
     the ORGANISATION_NAME environment variable (organisation only), then
     the built-in defaults."""
 

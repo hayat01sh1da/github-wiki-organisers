@@ -1,7 +1,7 @@
 import os
 from collections.abc import Callable
 
-from github_wiki_organiser.sidebar import Sidebar
+from spreen_wiki.sidebar import Sidebar
 
 _FIXTURES_DIR = os.path.join('.', 'test', 'fixtures', 'sidebar')
 

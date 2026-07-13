@@ -1,41 +1,41 @@
-# github-wiki-organiser (Python)
+# spreen-wiki (Python)
 
-The PyPI implementation of [github-wiki-organisers](../README.md): generates `Home.md` and `_Sidebar.md` for a GitHub wiki grouped by the Owner/Category declared on the first line of each page, and exports reports of the pages whose owner or category is unknown.
+The PyPI implementation of [spreen-wiki](../README.md): generates `Home.md` and `_Sidebar.md` for a GitHub wiki grouped by the Owner/Category declared on the first line of each page, and exports reports of the pages whose owner or category is unknown.
 
 ## 1. Installation
 
 ```command
-$ pipx install github-wiki-organiser
+$ pipx install spreen-wiki
 ```
 
-(or `pip install github-wiki-organiser` into a virtual environment). Requires Python 3.10+.
+(or `pip install spreen-wiki` into a virtual environment). Requires Python 3.10+.
 
 ## 2. CLI Usage
 
 ```command
 $ cd path/to/your-repo.wiki
-$ wiki-organise update --path . --org your-org --repo your-repo
+$ spreen update --path . --org your-org --repo your-repo
 Updated Home.md and _Sidebar.md.
 Check them out at 'https://github.com/your-org/your-repo/wiki' !!
 
-$ wiki-organise count-report --path .
+$ spreen count-report --path .
 Unknown Owner nor Necessity: 1
 Unowned but Necessary: 1
 Unowned: 10
 Exported the unknown wiki count report to './unknown_wiki_count_list_by_namespace.txt'.
 
-$ wiki-organise llm-export --path .
+$ spreen llm-export --path .
 Exported the unknown wiki list for LLM to './unknown_wiki_list_for_llm.txt'.
 ```
 
-Common flags (see `wiki-organise <command> --help`): `--group-by Owner|Category`, `--language English|Japanese`, `--overflow` (split Home into per-namespace pages under `wikis-by-owner/`), `--template-dir`, `--config`, `--exclude`, `--output`, `--wiki-url`.
+Common flags (see `spreen <command> --help`): `--group-by Owner|Category`, `--language English|Japanese`, `--overflow` (split Home into per-namespace pages under `wikis-by-owner/`), `--template-dir`, `--config`, `--exclude`, `--output`, `--wiki-url`.
 
-Persistent settings, custom labels and additional languages go into a [`.wiki-organiser.yml`](../README.md#3-configuration) at the wiki root.
+Persistent settings, custom labels and additional languages go into a [`.spreen.yml`](../README.md#3-configuration) at the wiki root.
 
 ## 3. Library Usage
 
 ```python
-from github_wiki_organiser import (
+from spreen_wiki import (
     Home, Sidebar, UnknownWikiCountListExporter, UnknownWikiListExporterForLLM,
 )
 
@@ -74,7 +74,7 @@ $ invoke export_unknown_wiki_list_for_llm
 $ invoke
 ============================= test session starts ==============================
 platform linux -- Python 3.14.6, pytest-9.0.3, pluggy-1.6.0
-rootdir: github-wiki-organisers/python
+rootdir: spreen-wiki/python
 configfile: pyproject.toml
 collected 46 items
 
