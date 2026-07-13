@@ -1,7 +1,7 @@
 # This workflow updates pip library dependencies every day and opens a pull
 # request when any dependency changes are detected.
 
-name: Python - Daily Dependencies Update
+name: PyPI - Daily Dependencies Update
 
 on:
   schedule:
@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-python
-      - name: Update pip Library Dependencies
+      - name: Update PyPI Library Dependencies
         working-directory: ./PyPI
         run: |
           pip install --upgrade pip
@@ -48,7 +48,7 @@ jobs:
             cat <<'OVERVIEW'
           ## 1. Overview
 
-          This pull request was created automatically by the Python - Daily Dependencies Update workflow.
+          This pull request was created automatically by the PyPI - Daily Dependencies Update workflow.
           It upgrades pip itself, upgrades every library listed in requirements.txt to the latest available versions, regenerates requirements.lock (which also records the pip version), and mirrors the updated versions to requirements.txt:
 
           ~~~console
@@ -71,7 +71,7 @@ jobs:
 
           ## 4. References
 
-          - [Python - Daily Dependencies Update workflow run](https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)
+          - [PyPI - Daily Dependencies Update workflow run](https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)
           - [pip install documentation](https://pip.pypa.io/en/stable/cli/pip_install/)
           - [PyPI](https://pypi.org/)
           SUMMARY
@@ -87,8 +87,8 @@ jobs:
           add-paths: |
             PyPI/requirements.txt
             PyPI/requirements.lock
-          commit-message: "[Daily][Python] Update PyPI library dependencies at ${{ env.TIMESTAMP }}"
-          title: "[Daily][Python] Update PyPI Library Dependencies"
+          commit-message: "[Daily][PyPI] Update PyPI library dependencies at ${{ env.TIMESTAMP }}"
+          title: "[Daily][PyPI] Update PyPI Library Dependencies"
           body-path: ${{ runner.temp }}/pr_body.md
           reviewers: hayat01sh1da
           assignees: hayat01sh1da

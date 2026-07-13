@@ -61,7 +61,7 @@ def test_default_unknown_namespaces(
 def test_default_excluded_dirs(wiki_workspace: Callable[..., str]) -> None:
     configuration = Configuration(base_path=wiki_workspace())
     assert configuration.excluded_dirs == [
-        'github-wiki-organisers', 'wikis-by-owner']
+        'spreen-wiki', 'wikis-by-owner']
 
 
 def test_urls_are_absent_without_an_organisation(

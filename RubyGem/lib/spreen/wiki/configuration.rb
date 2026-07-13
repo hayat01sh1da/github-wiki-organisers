@@ -14,7 +14,7 @@ module Spreen
       CONFIG_FILENAME = '.spreen.yml'
       EMPTY_HASH = {}.freeze #: Hash[String, untyped]
       DEFAULT_TEMPLATE_DIR = File.expand_path(File.join(__dir__.to_s, 'templates'))
-      DEFAULT_EXCLUDED_DIRS = %w[github-wiki-organisers wikis-by-owner].freeze
+      DEFAULT_EXCLUDED_DIRS = %w[spreen-wiki wikis-by-owner].freeze
 
       # Built-in labels: how the first line of a wiki page is parsed (regexp),
       # which namespace collects pages without a declaration (no_declaration),

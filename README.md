@@ -1,7 +1,7 @@
-[![Actions Status: Python - CI](https://github.com/hayat01sh1da/spreen-wiki/workflows/Python%20-%20CI/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22Python%20-%20CI%22)
-[![Actions Status: Python - Daily Dependencies Update](https://github.com/hayat01sh1da/spreen-wiki/workflows/Python%20-%20Daily%20Dependencies%20Update/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22Python%20-%20Daily%20Dependencies%20Update%22)
-[![Actions Status: Ruby - CI](https://github.com/hayat01sh1da/spreen-wiki/workflows/Ruby%20-%20CI/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22Ruby%20-%20CI%22)
-[![Actions Status: Ruby - Daily Dependencies Update](https://github.com/hayat01sh1da/spreen-wiki/workflows/Ruby%20-%20Daily%20Dependencies%20Update/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22Ruby%20-%20Daily%20Dependencies%20Update%22)
+[![Actions Status: PyPI - CI](https://github.com/hayat01sh1da/spreen-wiki/workflows/PyPI%20-%20CI/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22PyPI%20-%20CI%22)
+[![Actions Status: PyPI - Daily Dependencies Update](https://github.com/hayat01sh1da/spreen-wiki/workflows/PyPI%20-%20Daily%20Dependencies%20Update/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22PyPI%20-%20Daily%20Dependencies%20Update%22)
+[![Actions Status: RubyGem - CI](https://github.com/hayat01sh1da/spreen-wiki/workflows/RubyGem%20-%20CI/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22RubyGem%20-%20CI%22)
+[![Actions Status: RubyGem - Daily Dependencies Update](https://github.com/hayat01sh1da/spreen-wiki/workflows/RubyGem%20-%20Daily%20Dependencies%20Update/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22RubyGem%20-%20Daily%20Dependencies%20Update%22)
 [![Actions Status: Export Unknown Wiki List for LLM](https://github.com/hayat01sh1da/spreen-wiki/workflows/Export%20Unknown%20Wiki%20List%20for%20LLM/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22Export%20Unknown%20Wiki%20List%20for%20LLM%22)
 [![Actions Status: Notify Uncategorised Wiki Count by Namespace](https://github.com/hayat01sh1da/spreen-wiki/workflows/Notify%20Uncategorised%20Wiki%20Count%20by%20Namespace/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22Notify%20Uncategorised%20Wiki%20Count%20by%20Namespace%22)
 [![Actions Status: Notify Unknown Wiki Count by Namespace](https://github.com/hayat01sh1da/spreen-wiki/workflows/Notify%20Unknown%20Wiki%20Count%20by%20Namespace/badge.svg)](https://github.com/hayat01sh1da/spreen-wiki/actions?query=workflow%3A%22Notify%20Unknown%20Wiki%20Count%20by%20Namespace%22)
@@ -101,7 +101,7 @@ repository: my-repo
 # Directories skipped while scanning (default below). Keep wikis-by-owner in
 # the list when you use `update --overflow`, which writes into it.
 exclude:
-  - github-wiki-organisers
+  - spreen-wiki
   - wikis-by-owner
 
 # Where the Home header templates live, as <group_by>/<language>.md

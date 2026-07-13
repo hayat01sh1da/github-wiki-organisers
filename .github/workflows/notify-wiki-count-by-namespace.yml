@@ -37,11 +37,11 @@ jobs:
           ref: master
           path: .wiki
       # The Ruby entry points resolve the wiki as base_path '../..', i.e. they
-      # expect to run from <wiki>/github-wiki-organisers/RubyGem (the wiki tracks
+      # expect to run from <wiki>/spreen-wiki/RubyGem (the wiki tracks
       # the main repository as a submodule there). The submodule's SSH URL
       # cannot be cloned with GITHUB_TOKEN, so copy the checkout into that path.
       - name: Nest the Main Repository in the Wiki
-        run: rsync -a --exclude .git --exclude .wiki ./ .wiki/github-wiki-organisers/
+        run: rsync -a --exclude .git --exclude .wiki ./ .wiki/spreen-wiki/
       - uses: ./.github/actions/setup-ruby
         with:
           job-name: count_uncategorised
@@ -55,7 +55,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          (cd github-wiki-organisers/RubyGem && printf 'Category\n%s\n' "${{ github.event.inputs.language || 'English' }}" | rake export_unknown_wiki_count_list_by_namespace)
+          (cd spreen-wiki/RubyGem && printf 'Category\n%s\n' "${{ github.event.inputs.language || 'English' }}" | rake export_unknown_wiki_count_list_by_namespace)
           uncategorised_wiki_count=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
           echo "uncategorised_wiki_count=$uncategorised_wiki_count" >> $GITHUB_OUTPUT
           rm unknown_wiki_count_list_by_namespace.txt
@@ -94,7 +94,7 @@ jobs:
           ref: master
           path: .wiki
       - name: Nest the Main Repository in the Wiki
-        run: rsync -a --exclude .git --exclude .wiki ./ .wiki/github-wiki-organisers/
+        run: rsync -a --exclude .git --exclude .wiki ./ .wiki/spreen-wiki/
       - uses: ./.github/actions/setup-ruby
         with:
           job-name: count_unowned
@@ -108,7 +108,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          (cd github-wiki-organisers/RubyGem && printf 'Owner\n%s\n' "${{ github.event.inputs.language || 'English' }}" | rake export_unknown_wiki_count_list_by_namespace)
+          (cd spreen-wiki/RubyGem && printf 'Owner\n%s\n' "${{ github.event.inputs.language || 'English' }}" | rake export_unknown_wiki_count_list_by_namespace)
           unknown_but_necessary=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
           unknown_owner_nor_necessity=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[1]")
           unowned=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[2]")

@@ -6,7 +6,7 @@ from typing import Any
 import yaml
 
 CONFIG_FILENAME = '.spreen.yml'
-DEFAULT_EXCLUDED_DIRS = ['github-wiki-organisers', 'wikis-by-owner']
+DEFAULT_EXCLUDED_DIRS = ['spreen-wiki', 'wikis-by-owner']
 
 # Built-in labels: how the first line of a wiki page is parsed (regexp),
 # which namespace collects pages without a declaration (no_declaration),

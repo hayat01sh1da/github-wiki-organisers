@@ -47,7 +47,7 @@ class ConfigurationTest < ApplicationTest
   def test_default_excluded_dirs
     configuration = Spreen::Wiki::Configuration.new(base_path:)
 
-    assert_equal(%w[github-wiki-organisers wikis-by-owner], configuration.excluded_dirs)
+    assert_equal(%w[spreen-wiki wikis-by-owner], configuration.excluded_dirs)
   end
 
   def test_urls_are_absent_without_an_organisation
