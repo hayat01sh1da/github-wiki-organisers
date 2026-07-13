@@ -55,6 +55,7 @@ jobs:
           path: ./github-wiki-organisers/wiki
       - name: Configure Git Identity
         uses: ./github-wiki-organisers/.github/actions/configure-git-identity
+      - uses: actions/checkout@v7
       - uses: ./github-wiki-organisers/.github/actions/setup-ruby
       - name: Update github-wiki-organisers Wiki
         working-directory: ./github-wiki-organisers/wiki
