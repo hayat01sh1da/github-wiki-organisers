@@ -37,7 +37,7 @@ jobs:
           ref: master
           path: .wiki
       # The Ruby entry points resolve the wiki as base_path '../..', i.e. they
-      # expect to run from <wiki>/github-wiki-organisers/ruby (the wiki tracks
+      # expect to run from <wiki>/github-wiki-organisers/RubyGem (the wiki tracks
       # the main repository as a submodule there). The submodule's SSH URL
       # cannot be cloned with GITHUB_TOKEN, so copy the checkout into that path.
       - name: Nest the Main Repository in the Wiki
@@ -55,7 +55,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          (cd github-wiki-organisers/ruby && printf 'Category\n%s\n' "${{ github.event.inputs.language || 'English' }}" | rake export_unknown_wiki_count_list_by_namespace)
+          (cd github-wiki-organisers/RubyGem && printf 'Category\n%s\n' "${{ github.event.inputs.language || 'English' }}" | rake export_unknown_wiki_count_list_by_namespace)
           uncategorised_wiki_count=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
           echo "uncategorised_wiki_count=$uncategorised_wiki_count" >> $GITHUB_OUTPUT
           rm unknown_wiki_count_list_by_namespace.txt
@@ -71,7 +71,7 @@ jobs:
         with:
           slack-token: ${{ secrets.SLACK_APP_TOKEN }}
           slack-channel: ${{ secrets.SLACK_CHANNEL_ID }}
-          header: "【github-wiki-organisers Weekly Uncategorised Wiki Count by Namespace Report】"
+          header: "【spreen-wiki Weekly Uncategorised Wiki Count by Namespace Report】"
           mrkdwn-sections: |
             <https://github.com/${{ github.repository }}/wiki#uncategorised|${{ needs.count-uncategorised.outputs.uncategorised_wiki_count }}>
 
@@ -108,7 +108,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          (cd github-wiki-organisers/ruby && printf 'Owner\n%s\n' "${{ github.event.inputs.language || 'English' }}" | rake export_unknown_wiki_count_list_by_namespace)
+          (cd github-wiki-organisers/RubyGem && printf 'Owner\n%s\n' "${{ github.event.inputs.language || 'English' }}" | rake export_unknown_wiki_count_list_by_namespace)
           unknown_but_necessary=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[0]")
           unknown_owner_nor_necessity=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[1]")
           unowned=$(ruby -e "puts File.readlines('unknown_wiki_count_list_by_namespace.txt')[2]")
@@ -128,7 +128,7 @@ jobs:
         with:
           slack-token: ${{ secrets.SLACK_APP_TOKEN }}
           slack-channel: ${{ secrets.SLACK_CHANNEL_ID }}
-          header: "【github-wiki-organisers Weekly Unowned Wiki Count Report】"
+          header: "【spreen-wiki Weekly Unowned Wiki Count Report】"
           mrkdwn-sections: |
             <https://github.com/${{ github.repository }}/wiki#unowned-but-necessary-wiki|${{ needs.count-unowned.outputs.unknown_but_necessary }}>
             <https://github.com/${{ github.repository }}/wiki#unknown-owner-nor-necessity-wiki|${{ needs.count-unowned.outputs.unknown_owner_nor_necessity }}>

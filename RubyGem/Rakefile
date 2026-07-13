@@ -11,7 +11,7 @@ task default: :test
 REPOSITORY_DEFAULTS = {
   base_path: File.join('..', '..'),
   organisation: ENV.fetch('ORGANISATION_NAME', ''),
-  repository: 'github-wiki-organisers',
+  repository: 'spreen-wiki',
   template_dir: File.join('..', 'home_template')
 }.freeze
 
@@ -28,7 +28,7 @@ Rake::Task.define_task(:update_wiki_list_on_home_and_sidebar) do
 
   params = { group_by:, language:, home_overflow: }.reject { |_, value| value&.empty? }
 
-  puts '-------------------- Categorising the Entire github-wiki-organisers Wiki Pages... --------------------'
+  puts '-------------------- Categorising the Entire spreen-wiki Wiki Pages... --------------------'
   puts
   puts '-------------------- Organising Home... --------------------'
   home_url = Spreen::Wiki::Home.run(**REPOSITORY_DEFAULTS, **params)
@@ -40,7 +40,7 @@ Rake::Task.define_task(:update_wiki_list_on_home_and_sidebar) do
   puts "Check out an Up-to-date Wiki List on Sidebar at '#{home_url}' !!"
   puts '-------------------- Done Organising Sidebar 🎉 --------------------'
   puts
-  puts '-------------------- Done Categorising the Entire github-wiki-organisers Wiki Pages 🎉 --------------------'
+  puts '-------------------- Done Categorising the Entire spreen-wiki Wiki Pages 🎉 --------------------'
 end
 
 desc 'Export Unknown Wiki Count List by Namespace'

@@ -15,27 +15,27 @@ on:
       - .github/actions/setup-ruby/action.yml
       - .github/workflows/ruby--ci.yml
       - .ruby-version
-      - ruby/**/*.rb
-      - ruby/**/*.rbs
-      - ruby/Gemfile
-      - ruby/*.gemspec
-      - ruby/Gemfile.lock
-      - ruby/.rubocop.yml
-      - ruby/.rubocop_todo.yml
-      - ruby/Steepfile
+      - RubyGem/**/*.rb
+      - RubyGem/**/*.rbs
+      - RubyGem/Gemfile
+      - RubyGem/*.gemspec
+      - RubyGem/Gemfile.lock
+      - RubyGem/.rubocop.yml
+      - RubyGem/.rubocop_todo.yml
+      - RubyGem/Steepfile
   pull_request:
     paths:
       - .github/actions/setup-ruby/action.yml
       - .github/workflows/ruby--ci.yml
       - .ruby-version
-      - ruby/**/*.rb
-      - ruby/**/*.rbs
-      - ruby/Gemfile
-      - ruby/*.gemspec
-      - ruby/Gemfile.lock
-      - ruby/.rubocop.yml
-      - ruby/.rubocop_todo.yml
-      - ruby/Steepfile
+      - RubyGem/**/*.rb
+      - RubyGem/**/*.rbs
+      - RubyGem/Gemfile
+      - RubyGem/*.gemspec
+      - RubyGem/Gemfile.lock
+      - RubyGem/.rubocop.yml
+      - RubyGem/.rubocop_todo.yml
+      - RubyGem/Steepfile
 
 permissions:
   contents: read
@@ -59,30 +59,30 @@ jobs:
               - .github/actions/setup-ruby/action.yml
               - .github/workflows/ruby--ci.yml
               - .ruby-version
-              - ruby/**/*.rb
-              - ruby/Gemfile
-              - ruby/*.gemspec
-              - ruby/Gemfile.lock
+              - RubyGem/**/*.rb
+              - RubyGem/Gemfile
+              - RubyGem/*.gemspec
+              - RubyGem/Gemfile.lock
             rubocop:
               - .github/actions/setup-ruby/action.yml
               - .github/workflows/ruby--ci.yml
               - .ruby-version
-              - ruby/**/*.rb
-              - ruby/Gemfile
-              - ruby/*.gemspec
-              - ruby/Gemfile.lock
-              - ruby/.rubocop.yml
-              - ruby/.rubocop_todo.yml
+              - RubyGem/**/*.rb
+              - RubyGem/Gemfile
+              - RubyGem/*.gemspec
+              - RubyGem/Gemfile.lock
+              - RubyGem/.rubocop.yml
+              - RubyGem/.rubocop_todo.yml
             steep:
               - .github/actions/setup-ruby/action.yml
               - .github/workflows/ruby--ci.yml
               - .ruby-version
-              - ruby/**/*.rb
-              - ruby/**/*.rbs
-              - ruby/Gemfile
-              - ruby/*.gemspec
-              - ruby/Gemfile.lock
-              - ruby/Steepfile
+              - RubyGem/**/*.rb
+              - RubyGem/**/*.rbs
+              - RubyGem/Gemfile
+              - RubyGem/*.gemspec
+              - RubyGem/Gemfile.lock
+              - RubyGem/Steepfile
   minitest:
     timeout-minutes: 10
     runs-on: ubuntu-latest
@@ -94,7 +94,7 @@ jobs:
         with:
           job-name: minitest
       - name: Minitest
-        working-directory: ./ruby
+        working-directory: ./RubyGem
         run: rake
   rubocop:
     timeout-minutes: 10
@@ -107,7 +107,7 @@ jobs:
         with:
           job-name: rubocop
       - name: RuboCop
-        working-directory: ./ruby
+        working-directory: ./RubyGem
         run: bundle exec rubocop
   steep:
     timeout-minutes: 10
@@ -120,6 +120,6 @@ jobs:
         with:
           job-name: steep
       - name: Steep
-        working-directory: ./ruby
+        working-directory: ./RubyGem
         run: |
           bundle exec steep check

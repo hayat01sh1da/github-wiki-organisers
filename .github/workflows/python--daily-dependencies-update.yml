@@ -21,14 +21,14 @@ jobs:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-python
       - name: Update pip Library Dependencies
-        working-directory: ./python
+        working-directory: ./PyPI
         run: |
           pip install --upgrade pip
           sed -E 's/==.*//' requirements.txt | xargs pip install --upgrade
           pip freeze > requirements.lock
           pip --version | awk '{print "pip==" $2}' >> requirements.lock
       - name: Mirror Updated Versions to requirements.txt
-        working-directory: ./python
+        working-directory: ./PyPI
         run: |
           python - <<'PY'
           import re
@@ -61,12 +61,12 @@ jobs:
           ## 2. Key Changes & Differences
           OVERVIEW
             echo
-            bash .github/scripts/dependency_report.sh pip python/requirements.lock python/requirements.txt Libraries
+            bash .github/scripts/dependency_report.sh pip PyPI/requirements.lock PyPI/requirements.txt Libraries
             cat <<SUMMARY
 
           ## 3. Summary
 
-          All pip library dependencies in python/requirements.txt and python/requirements.lock are now up to date.
+          All pip library dependencies in PyPI/requirements.txt and PyPI/requirements.lock are now up to date.
           Please make sure that all CI workflows pass before merging this pull request.
 
           ## 4. References
@@ -85,8 +85,8 @@ jobs:
           branch: hayat01sh1da/daily/python/update-pypi-library-dependencies
           delete-branch: true
           add-paths: |
-            python/requirements.txt
-            python/requirements.lock
+            PyPI/requirements.txt
+            PyPI/requirements.lock
           commit-message: "[Daily][Python] Update PyPI library dependencies at ${{ env.TIMESTAMP }}"
           title: "[Daily][Python] Update PyPI Library Dependencies"
           body-path: ${{ runner.temp }}/pr_body.md

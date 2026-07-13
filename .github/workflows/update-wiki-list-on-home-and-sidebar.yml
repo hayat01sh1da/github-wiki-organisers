@@ -55,7 +55,7 @@ jobs:
           ref: master
           path: ./wiki
       # The Ruby entry points resolve the wiki as base_path '../..', i.e. they
-      # expect to run from <wiki>/github-wiki-organisers/ruby (the wiki tracks
+      # expect to run from <wiki>/github-wiki-organisers/RubyGem (the wiki tracks
       # the main repository as a submodule there). The submodule's SSH URL
       # cannot be cloned with GITHUB_TOKEN, so copy the checkout into that path
       # instead; git ignores the contents of an uninitialised submodule path,
@@ -67,7 +67,7 @@ jobs:
       - uses: ./.github/actions/setup-ruby
         with:
           job-name: update_wiki_list_on_home_and_sidebar
-      - name: Update github-wiki-organisers Wiki
+      - name: Update spreen-wiki Wiki
         working-directory: ./wiki
         env:
           # The library no longer hardcodes the organisation; the Rake tasks
@@ -76,7 +76,7 @@ jobs:
         run: |
           set -xe
           git pull origin master
-          cd github-wiki-organisers/ruby
+          cd github-wiki-organisers/RubyGem
           printf '%s\n%s\n%s\n' "${{ github.event.inputs.group_by || 'Owner' }}" "${{ github.event.inputs.language || 'English' }}" "${{ github.event.inputs.home_overflow || false }}" | rake update_wiki_list_on_home_and_sidebar
       - name: Commit and Push
         id: commit
@@ -97,8 +97,8 @@ jobs:
         with:
           slack-token: ${{ secrets.SLACK_APP_TOKEN }}
           slack-channel: ${{ secrets.SLACK_CHANNEL_ID }}
-          header: "【github-wiki-organisers Daily Wiki List on Home and Sidebar Update Report】"
+          header: "【spreen-wiki Daily Wiki List on Home and Sidebar Update Report】"
           mrkdwn-sections: |
             Workflows: <https://github.com/${{ github.repository }}/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml|Update Wiki List on Home and Sidebar>
             Commit: ${{ needs.update_wiki_list_on_home_and_sidebar.outputs.commit_message }}
-            Source: <https://github.com/${{ github.repository }}/wiki|github-wiki-organisers Wiki>
+            Source: <https://github.com/${{ github.repository }}/wiki|spreen-wiki Wiki>

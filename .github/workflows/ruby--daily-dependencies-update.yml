@@ -23,7 +23,7 @@ jobs:
         with:
           job-name: update_gem_dependencies
       - name: Update Gem Dependencies
-        working-directory: ./ruby
+        working-directory: ./RubyGem
         env:
           BUNDLE_FROZEN: "false"
         run: |
@@ -32,7 +32,7 @@ jobs:
           bundle update --bundler
           bundle update --all
       - name: Mirror Updated Versions to Gemfile
-        working-directory: ./ruby
+        working-directory: ./RubyGem
         run: |
           ruby <<'RUBY'
           versions = File.read('Gemfile.lock').scan(/^    (\S+) \((\d+(?:\.\d+)*)\)$/).to_h
@@ -62,12 +62,12 @@ jobs:
           ## 2. Key Changes & Differences
           OVERVIEW
             echo
-            bash .github/scripts/dependency_report.sh gem ruby/Gemfile.lock ruby/Gemfile Gems
+            bash .github/scripts/dependency_report.sh gem RubyGem/Gemfile.lock RubyGem/Gemfile Gems
             cat <<SUMMARY
 
           ## 3. Summary
 
-          All gem dependencies in ruby/Gemfile and ruby/Gemfile.lock are now up to date.
+          All gem dependencies in RubyGem/Gemfile and RubyGem/Gemfile.lock are now up to date.
           Please make sure that all CI workflows pass before merging this pull request.
 
           ## 4. References
@@ -86,8 +86,8 @@ jobs:
           branch: hayat01sh1da/daily/ruby/update-rubygems-dependencies
           delete-branch: true
           add-paths: |
-            ruby/Gemfile
-            ruby/Gemfile.lock
+            RubyGem/Gemfile
+            RubyGem/Gemfile.lock
           commit-message: "[Daily][Ruby] Update RubyGems dependencies at ${{ env.TIMESTAMP }}"
           title: "[Daily][Ruby] Update RubyGems Dependencies"
           body-path: ${{ runner.temp }}/pr_body.md

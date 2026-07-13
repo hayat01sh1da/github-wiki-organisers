@@ -24,9 +24,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/hayat01sh1da/github-wiki-organisers"
-Source = "https://github.com/hayat01sh1da/github-wiki-organisers"
-Changelog = "https://github.com/hayat01sh1da/github-wiki-organisers/blob/master/CHANGELOG.md"
+Homepage = "https://github.com/hayat01sh1da/spreen-wiki"
+Source = "https://github.com/hayat01sh1da/spreen-wiki"
+Changelog = "https://github.com/hayat01sh1da/spreen-wiki/blob/master/CHANGELOG.md"
 
 [project.scripts]
 spreen = "spreen_wiki.cli:main"
