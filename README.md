@@ -19,15 +19,15 @@ Both install the same `spreen` command.
 
 ## 1. Origin of the Name
 
-The author's name, **Hayato Ishida (石田隼人)**, hides a small legend: *Hayato* (隼人) is the **falcon man**, and *Ishida* (石田) is the **stone in the rice field**.  
+**stoop + preen = spreen** — dive on the messy wiki, then groom it page by page.  
+The icon tells the story: an origami falcon(隼 /hayabusa/) mid-stoop across the falcon's-eye stone, its golden eye keeping watch over the field.
+
+The author's name hides a small legend: the given name *Hayato* (隼人) is the **falcon man**, and the surname *Ishida* (石田) is the **stone in the rice field**.  
 The hunt for a name flew through *hayabusa* (隼) — the peregrine falcon, the fastest animal alive — and landed on **falcon's eye**, the blue-grey quartz whose single chatoyant band of light sweeps across the stone like a cat's eye.
 
 So the falcon man releases a **falconet** — a small falcon — over the rice field of wiki pages.  
 First it **stoops**: the peregrine's signature dive, 300 km/h of intent.  
 Then it **preens**: straightening every feather until the plumage gleams.
-
-**stoop + preen = spreen** — dive on the messy wiki, then groom it page by page.  
-The icon tells the same story: an origami falcon mid-stoop across the falcon's-eye stone, its golden eye keeping watch over the field.
 
 ## 2. Quickstart
 
