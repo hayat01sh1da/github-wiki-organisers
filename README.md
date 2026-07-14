@@ -19,15 +19,15 @@ Both install the same `spreen` command.
 
 ## 1. Origin of the Name
 
-The author's name, **Hayato Ishida (石田隼人)**, hides a small legend: *Hayato* (隼人) is the **falcon man**, and *Ishida* (石田) is the **stone in the rice field**.  
+**stoop + preen = spreen** — dive on the messy wiki, then groom it page by page.  
+The icon tells the story: an origami falcon(隼 /hayabusa/) mid-stoop across the falcon's-eye stone, its golden eye keeping watch over the field.
+
+The author's name hides a small legend: the given name *Hayato* (隼人) is the **falcon man**, and the surname *Ishida* (石田) is the **stone in the rice field**.  
 The hunt for a name flew through *hayabusa* (隼) — the peregrine falcon, the fastest animal alive — and landed on **falcon's eye**, the blue-grey quartz whose single chatoyant band of light sweeps across the stone like a cat's eye.
 
 So the falcon man releases a **falconet** — a small falcon — over the rice field of wiki pages.  
 First it **stoops**: the peregrine's signature dive, 300 km/h of intent.  
 Then it **preens**: straightening every feather until the plumage gleams.
-
-**stoop + preen = spreen** — dive on the messy wiki, then groom it page by page.  
-The icon tells the same story: an origami falcon mid-stoop across the falcon's-eye stone, its golden eye keeping watch over the field.
 
 ## 2. Quickstart
 
@@ -129,42 +129,23 @@ When no organisation is configured at all, owner headings are rendered without t
 The point of the organiser is automation: this repository runs it on its own wiki with cron workflows you can copy into your repository.  
 They check out the wiki, run the organiser, commit and push when there is a diff, and notify a Slack channel (as a sample, [#github-actions-notifications - hayat01sh1da](https://hayat01sh1da.slack.com/archives/C09BBHZPD5E) is set as the target channel).
 
-### 5-1. Update Wiki List on Home and Sidebar
+### 5-1. Update Wiki List on Home And Sidebar
 
 [update-wiki-list-on-home-and-sidebar.yml](./.github/workflows/update-wiki-list-on-home-and-sidebar.yml) regenerates Home and Sidebar at 12:00 and 22:00 JST every weekday.
 
-> 【spreen-wiki Daily Wiki List on Home and Sidebar Update Report】
-> Workflows: [Update Wiki List on Home and Sidebar](https://github.com/hayat01sh1da/spreen-wiki/blob/master/.github/workflows/update-wiki-list-on-home-and-sidebar.yml)
-> Commit: 04debbe Update Wiki list on Home and Sidebar by GitHub Actions[bot] at 2025-08-16 15:02:27
-> Source: [spreen-wiki Wiki](https://github.com/hayat01sh1da/spreen-wiki/wiki)
+<img src="./assets/update-wiki-list-on-home-and-sidebar.png" width="700" alt="spreen-wiki Daily Wiki List on Home and Sidebar Update Report" />
 
-<img width="624" height="199" alt="Screenshot 2025-08-16 150632" src="https://github.com/user-attachments/assets/a493ef56-3510-4ab0-80ca-9053ee1a237f" />
-
-### 5-2. Notify Wiki Count by Namespace
+### 5-2. Notify Wiki Count vy Namespace
 
 [notify-wiki-count-by-namespace.yml](./.github/workflows/notify-wiki-count-by-namespace.yml) reports the unknown-owner and uncategorised counts at 09:00 JST every Monday.
 
-> 【spreen-wiki Weekly Unowned Wiki Count Report】
-> [Unknown Owner nor Necessity: 1](https://github.com/hayat01sh1da/spreen-wiki/wiki#unowned-but-necessary-wiki)
-> [Unowned but Necessary: 1](https://github.com/hayat01sh1da/spreen-wiki/wiki#unknown-owner-nor-necessity-wiki)
-> [Unowned: 10](https://github.com/hayat01sh1da/spreen-wiki/wiki#unowned)
+<img src="./assets/notify-wiki-count-by-namespace.png" width="500" alt="spreen-wiki Daily Wiki List on Home and Sidebar Update Report" />
 
-<img width="540" height="156" alt="Screenshot 2025-08-16 152014" src="https://github.com/user-attachments/assets/2d659efd-06e2-45b2-91f9-e37bb78f50b7" />
-
-> 【spreen-wiki Weekly Uncategorised Wiki Count by Namespace Report】
-> [Uncategorised: 14](https://github.com/hayat01sh1da/spreen-wiki/wiki#uncategorised)
-
-<img width="516" height="87" alt="Screenshot 2025-08-16 152118" src="https://github.com/user-attachments/assets/639d1d7a-ac7a-42d4-8033-b5f3672d5f3c" />
-
-### 5-3. Export Unknown Wiki List for LLM
+### 5-3. Export Unknown Wiki List dor LLM
 
 [export-unknown-wiki-list-for-llm.yml](./.github/workflows/export-unknown-wiki-list-for-llm.yml) exports the ignored page list for LLM noise-cancelling at 00:00 JST every weekday.
 
-> 【spreen-wiki Wiki LLM Notification for Ignored Page List Export】
-> Message: The latest ignored page list for LLM has been exported! Make sure if it is as you expect by cloning hayat01sh1da/spreen-wiki.wiki !
-> Workflows: [Export Unknown Wiki List for LLM](https://github.com/hayat01sh1da/spreen-wiki/actions/workflows/export-unknown-wiki-list-for-llm.yml)
-
-<img width="602" height="161" alt="Screenshot 2025-08-16 152957" src="https://github.com/user-attachments/assets/2e425647-50d2-41ae-b953-79a19331ebcf" />
+<img src="./assets/export-unknown-wiki-list-for-llm.png" width="900" alt="spreen-wiki Daily Wiki List on Home and Sidebar Update Report" />
 
 ## 6. Editing This Repository's Wiki
 
