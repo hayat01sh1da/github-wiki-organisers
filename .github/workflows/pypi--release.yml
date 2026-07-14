@@ -5,6 +5,9 @@ on:
     tags:
       - python-v*
 
+permissions:
+  contents: read
+
 jobs:
   build:
     timeout-minutes: 10
