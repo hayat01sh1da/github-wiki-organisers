@@ -1,0 +1,91 @@
+# Generated from lib/spreen_wiki/application.rb with RBS::Inline
+
+module SpreenWiki
+  # Base class for the wiki-organising commands. Loads the wiki tree under
+  # base_path, groups it by Owner or Category in either English or Japanese,
+  # and exposes the resulting maps to its subclasses. Grouping criteria,
+  # languages and labels are resolved through Configuration and can be
+  # extended via a `.spreen.yml` file.
+  class Application
+    class NotImplementedError < StandardError
+    end
+
+    # @rbs base_path: String
+    # @rbs group_by: String
+    # @rbs language: String
+    # @rbs home_overflow: (bool | String)
+    # @rbs **options: untyped
+    # @rbs return: untyped
+    def self.run: (?base_path: String, ?group_by: String, ?language: String, ?home_overflow: bool | String, **untyped) -> untyped
+
+    # @rbs base_path: String
+    # @rbs group_by: String
+    # @rbs language: String
+    # @rbs home_overflow: (bool | String)
+    # @rbs config: Configuration?
+    # @rbs **options: untyped
+    # @rbs return: void
+    def initialize: (?base_path: String, ?group_by: String, ?language: String, ?home_overflow: bool | String, ?config: Configuration?, **untyped) -> void
+
+    # @rbs return: void
+    def validate!: () -> void
+
+    # @rbs return: untyped
+    def run: () -> untyped
+
+    private
+
+    attr_reader base_path: untyped
+
+    attr_reader group_by: untyped
+
+    attr_reader language: untyped
+
+    attr_reader home_overflow: untyped
+
+    attr_reader config: untyped
+
+    attr_reader path_to_home: untyped
+
+    attr_reader path_to_sidebar: untyped
+
+    attr_reader paths_to_wikis: untyped
+
+    attr_reader excluded_paths: untyped
+
+    # @rbs return: void
+    def validate_home_overflow!: () -> void
+
+    # @rbs raw: (bool | String)
+    # @rbs return: (bool | String)
+    def parse_home_overflow: (bool | String raw) -> (bool | String)
+
+    # @rbs return: Array[String]
+    def target_paths: () -> Array[String]
+
+    # @rbs return: Regexp
+    def target_regexp: () -> Regexp
+
+    # @rbs return: String
+    def no_declaration: () -> String
+
+    # @rbs return: Hash[String, Array[String]]
+    def wiki_maps_with_namespace: () -> Hash[String, Array[String]]
+
+    # @rbs target_path: String
+    # @rbs named: Hash[String, Array[String]]
+    # @rbs undeclared: Hash[String, Array[String]]
+    # @rbs return: void
+    def populate_namespace: (String target_path, Hash[String, Array[String]] named, Hash[String, Array[String]] undeclared) -> void
+
+    # @rbs target_path: String
+    # @rbs return: String
+    def namespace_for: (String target_path) -> String
+
+    # @rbs return: Hash[String, Array[String]]
+    def owned_wiki_maps: () -> Hash[String, Array[String]]
+
+    # @rbs return: Hash[String, Array[String]]
+    def plain_wiki_maps: () -> Hash[String, Array[String]]
+  end
+end

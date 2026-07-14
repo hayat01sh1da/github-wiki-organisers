@@ -1,0 +1,29 @@
+# Generated from lib/spreen_wiki/sidebar.rb with RBS::Inline
+
+module SpreenWiki
+  # Generates the wiki _Sidebar.md as a nested list of owners/categories and
+  # their wiki pages.
+  class Sidebar < Application
+    # @rbs return: void
+    def run: () -> void
+
+    private
+
+    # @rbs return: Array[String]
+    def wiki_list: () -> Array[String]
+
+    # @rbs return: void
+    def update_wiki_list: () -> void
+
+    # @rbs namespace: String
+    # @rbs wikis: Array[String]
+    # @rbs owned: bool
+    # @rbs return: void
+    def append_section: (String namespace, Array[String] wikis, owned: bool) -> void
+
+    # @rbs namespace: String
+    # @rbs owned: bool
+    # @rbs return: String
+    def section_heading: (String namespace, owned: bool) -> String
+  end
+end
