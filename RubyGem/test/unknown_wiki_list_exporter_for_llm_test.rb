@@ -2,12 +2,12 @@
 # rbs_inline: enabled
 
 require_relative 'application_test'
-require_relative '../lib/spreen/wiki/unknown_wiki_list_exporter_for_llm'
+require_relative '../lib/spreen_wiki/unknown_wiki_list_exporter_for_llm'
 
 class UnknownWikiListExporterForLLMTest < ApplicationTest
   def setup(group_by: 'Owner', language: 'English')
     super
-    Spreen::Wiki::UnknownWikiListExporterForLLM.run(base_path:, group_by:, language:)
+    SpreenWiki::UnknownWikiListExporterForLLM.run(base_path:, group_by:, language:)
     @path_to_unknown_wiki_list_for_llm = File.join(base_path, 'unknown_wiki_list_for_llm.txt')
     @unknown_wiki_list_for_llm         = File.read(path_to_unknown_wiki_list_for_llm)
   end
