@@ -1,0 +1,5 @@
+# Generated from lib/spreen_wiki/version.rb with RBS::Inline
+
+module SpreenWiki
+  VERSION: ::String
+end

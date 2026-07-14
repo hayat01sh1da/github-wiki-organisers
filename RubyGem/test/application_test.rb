@@ -3,7 +3,7 @@
 
 require 'fileutils'
 require 'minitest/autorun'
-require_relative '../lib/spreen/wiki/application'
+require_relative '../lib/spreen_wiki/application'
 
 class ApplicationTest < Minitest::Test
   # @rbs skip
@@ -54,28 +54,28 @@ class ApplicationTest < Minitest::Test
 
   def test_validate_group_by!
     error = assert_raises ArgumentError do
-      Spreen::Wiki::Application.new(base_path:, group_by: 'Group', language:, home_overflow:).validate!
+      SpreenWiki::Application.new(base_path:, group_by: 'Group', language:, home_overflow:).validate!
     end
     assert_equal('Invalid group_by: `Group`', error.message)
   end
 
   def test_validate_language!
     error = assert_raises ArgumentError do
-      Spreen::Wiki::Application.new(base_path:, group_by:, language: 'Spanish', home_overflow:).validate!
+      SpreenWiki::Application.new(base_path:, group_by:, language: 'Spanish', home_overflow:).validate!
     end
     assert_equal('Invalid language: `Spanish`', error.message)
   end
 
   def test_validate_home_overflow!
     error = assert_raises ArgumentError do
-      Spreen::Wiki::Application.new(base_path:, group_by:, language:, home_overflow: 'foo').validate!
+      SpreenWiki::Application.new(base_path:, group_by:, language:, home_overflow: 'foo').validate!
     end
     assert_equal('Invalid home_overflow: `foo` must be boolean', error.message)
   end
 
   def test_self_run
-    error = assert_raises Spreen::Wiki::Application::NotImplementedError do
-      Spreen::Wiki::Application.run(base_path:)
+    error = assert_raises SpreenWiki::Application::NotImplementedError do
+      SpreenWiki::Application.run(base_path:)
     end
     assert_equal('This method must be implemented in each subclass.', error.message)
   end

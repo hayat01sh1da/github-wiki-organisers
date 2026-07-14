@@ -19,6 +19,7 @@ One repository hosts two packages, so releases are tagged per ecosystem (`ruby-v
 
 - Renamed the repository to `spreen-wiki` and the ecosystem directories to `RubyGem/` (from `ruby/`) and `PyPI/` (from `python/`).
 - Named the packages **`spreen-wiki`** — a blend of the falcon's *stoop* and the *preen* that follows, after Hayato (隼人, "falcon man"): RubyGem `spreen-wiki` (`Spreen::Wiki`), PyPI `spreen-wiki` (`spreen_wiki`), CLI `spreen`, config file `.spreen.yml` (renamed from the working titles `github_wiki_organiser` / `github-wiki-organiser`, CLI `wiki-organise`, `.wiki-organiser.yml`).
+- Renamed the Ruby namespace from `Spreen::Wiki` to `SpreenWiki` and the lib path from `lib/spreen/wiki/` to `lib/spreen_wiki/`, matching the Python package's flat `spreen_wiki` layout; `require 'spreen-wiki'`, the gem name and the `spreen` CLI are unchanged.
 - Generalised the hardcoded assumptions: the organisation/repository/wiki URL, the owner-team URL, the template path, the scanned base path (now defaulting to the current directory), the excluded directories and the export filenames are all configuration, with the previous behaviour preserved as defaults.
 - Owner headings degrade gracefully to unlinked text when no organisation is configured instead of linking to a hardcoded personal account.
 - The wiki cron workflows pass `ORGANISATION_NAME` from `github.repository_owner` and keep driving the (unchanged) interactive Rake task interface.

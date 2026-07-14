@@ -2,5 +2,5 @@
 # rbs_inline: enabled
 
 # Convenience shim so that both `require 'spreen-wiki'` (the gem name) and
-# `require 'spreen/wiki'` (the conventional path) work.
-require_relative 'spreen/wiki'
+# `require 'spreen_wiki'` (the conventional path) work.
+require_relative 'spreen_wiki'

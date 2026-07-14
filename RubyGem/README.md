@@ -35,12 +35,12 @@ Persistent settings, custom labels and additional languages go into a [`.spreen.
 ## 3. Library Usage
 
 ```ruby
-require 'spreen/wiki'
+require 'spreen_wiki'
 
-Spreen::Wiki::Home.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
-Spreen::Wiki::Sidebar.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
-Spreen::Wiki::UnknownWikiCountListExporter.run(base_path: '.', output: 'report.txt')
-Spreen::Wiki::UnknownWikiListExporterForLLM.run(base_path: '.', group_by: 'Category', language: 'Japanese')
+SpreenWiki::Home.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
+SpreenWiki::Sidebar.run(base_path: '.', organisation: 'your-org', repository: 'your-repo')
+SpreenWiki::UnknownWikiCountListExporter.run(base_path: '.', output: 'report.txt')
+SpreenWiki::UnknownWikiListExporterForLLM.run(base_path: '.', group_by: 'Category', language: 'Japanese')
 ```
 
 All classes accept `base_path:`, `group_by:`, `language:`, `home_overflow:` plus the configuration keywords `organisation:`, `repository:`, `wiki_url:`, `owner_base_url:`, `template_dir:`, `excluded_dirs:`, `config_path:` (and `output:` on the exporters).

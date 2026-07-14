@@ -1,0 +1,148 @@
+# Generated from lib/spreen_wiki/configuration.rb with RBS::Inline
+
+module SpreenWiki
+  # Resolves the runtime configuration for a wiki checkout. Every value is
+  # looked up with the same precedence: explicit keyword argument, then the
+  # `.spreen.yml` file under base_path (or config_path), then the
+  # ORGANISATION_NAME environment variable (organisation only), then the
+  # built-in defaults.
+  class Configuration
+    CONFIG_FILENAME: ::String
+
+    EMPTY_HASH: Hash[String, untyped]
+
+    DEFAULT_TEMPLATE_DIR: untyped
+
+    DEFAULT_EXCLUDED_DIRS: untyped
+
+    # Built-in labels: how the first line of a wiki page is parsed (regexp),
+    # which namespace collects pages without a declaration (no_declaration),
+    # which namespaces the count report covers (unknown_namespaces) and which
+    # namespace the LLM export targets (llm_target_namespace). A config file
+    # can override any of these, add languages or add group_by criteria.
+    DEFAULT_LABELS: untyped
+
+    attr_reader organisation: untyped
+
+    attr_reader repository: untyped
+
+    attr_reader wiki_url: untyped
+
+    attr_reader owner_base_url: untyped
+
+    attr_reader excluded_dirs: untyped
+
+    attr_reader template_dir: untyped
+
+    @organisation: String?
+
+    @repository: String?
+
+    @wiki_url: String?
+
+    @owner_base_url: String?
+
+    @excluded_dirs: Array[String]
+
+    @template_dir: String
+
+    @file: Hash[String, untyped]
+
+    @labels: Hash[String, untyped]
+
+    # @rbs base_path: String
+    # @rbs config_path: String?
+    # @rbs organisation: String?
+    # @rbs repository: String?
+    # @rbs wiki_url: String?
+    # @rbs owner_base_url: String?
+    # @rbs excluded_dirs: Array[String]?
+    # @rbs template_dir: String?
+    # @rbs return: void
+    def initialize: (base_path: String, ?config_path: String?, ?organisation: String?, ?repository: String?, ?wiki_url: String?, ?owner_base_url: String?, ?excluded_dirs: Array[String]?, ?template_dir: String?) -> void
+
+    # @rbs return: Array[String]
+    def group_bys: () -> Array[String]
+
+    # @rbs group_by: String
+    # @rbs return: Array[String]
+    def languages: (String group_by) -> Array[String]
+
+    # @rbs group_by: String
+    # @rbs return: Regexp
+    def target_regexp: (String group_by) -> Regexp
+
+    # @rbs group_by: String
+    # @rbs language: String
+    # @rbs return: String
+    def no_declaration: (String group_by, String language) -> String
+
+    # @rbs group_by: String
+    # @rbs language: String
+    # @rbs return: Array[String]
+    def unknown_namespaces: (String group_by, String language) -> Array[String]
+
+    # @rbs group_by: String
+    # @rbs language: String
+    # @rbs return: String
+    def llm_target_namespace: (String group_by, String language) -> String
+
+    # @rbs group_by: String
+    # @rbs language: String
+    # @rbs return: String
+    def path_to_template: (String group_by, String language) -> String
+
+    private
+
+    attr_reader file: untyped
+
+    attr_reader labels: untyped
+
+    # Treats empty strings the same as nil so that callers can pass values
+    # straight from optional environment variables or CLI flags.
+    # @rbs value: String?
+    # @rbs return: String?
+    def presence: (String? value) -> String?
+
+    # @rbs explicit: String?
+    # @rbs key: String
+    # @rbs return: String?
+    def resolve: (String? explicit, String key) -> String?
+
+    # @rbs explicit: String?
+    # @rbs return: String?
+    def resolve_organisation: (String? explicit) -> String?
+
+    # @rbs explicit: String?
+    # @rbs return: String?
+    def resolve_wiki_url: (String? explicit) -> String?
+
+    # @rbs explicit: String?
+    # @rbs return: String?
+    def resolve_owner_base_url: (String? explicit) -> String?
+
+    # @rbs path: String
+    # @rbs return: Hash[String, untyped]
+    def load_file: (String path) -> Hash[String, untyped]
+
+    # @rbs group_by: String
+    # @rbs return: Hash[String, untyped]
+    def label_for: (String group_by) -> Hash[String, untyped]
+
+    # @rbs group_by: String
+    # @rbs language: String
+    # @rbs return: Hash[String, untyped]
+    def language_labels: (String group_by, String language) -> Hash[String, untyped]
+
+    # @rbs return: String?
+    def default_wiki_url: () -> String?
+
+    # @rbs return: String?
+    def default_owner_base_url: () -> String?
+
+    # @rbs base: Hash[String, untyped]
+    # @rbs override: Hash[String, untyped]
+    # @rbs return: Hash[String, untyped]
+    def deep_merge: (Hash[String, untyped] base, Hash[String, untyped] override) -> Hash[String, untyped]
+  end
+end

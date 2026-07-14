@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'lib/spreen/wiki/version'
+require_relative 'lib/spreen_wiki/version'
 
 Gem::Specification.new do |spec|
   spec.name    = 'spreen-wiki'
-  spec.version = Spreen::Wiki::VERSION
+  spec.version = SpreenWiki::VERSION
   spec.authors = ['hayat01sh1da']
 
   spec.summary     = 'Spreen your GitHub wiki: organise Home and _Sidebar pages by owner or category.'
@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.metadata['bug_tracker_uri']       = "#{spec.homepage}/issues"
   spec.metadata['rubygems_mfa_required'] = 'true'
 
-  spec.files         = Dir['exe/*', 'lib/**/*.rb', 'lib/spreen/wiki/templates/**/*.md', 'sig/**/*.rbs',
+  spec.files         = Dir['exe/*', 'lib/**/*.rb', 'lib/spreen_wiki/templates/**/*.md', 'sig/**/*.rbs',
                            'README.md', 'LICENSE.txt']
   spec.bindir        = 'exe'
   spec.executables   = ['spreen']
