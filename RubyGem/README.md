@@ -49,8 +49,7 @@ All classes accept `base_path:`, `group_by:`, `language:`, `home_overflow:` plus
 
 ### 4-1. Environment
 
-- Ruby 4.0.5
-- Bundler 4.0.x
+- Ruby 4.0.6
 
 ```command
 $ bundle install
