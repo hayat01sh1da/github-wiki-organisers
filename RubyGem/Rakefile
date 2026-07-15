@@ -3,8 +3,9 @@
 require 'rake/testtask'
 require_relative 'lib/spreen_wiki'
 require 'bundler/gem_helper'
-Bundler::GemHelper.tag_prefix = 'ruby-' # rake release tags ruby-vX.Y.Z
 Bundler::GemHelper.install_tasks
+# Must come after install_tasks: the setter delegates to the instance that install_tasks creates.
+Bundler::GemHelper.tag_prefix = 'ruby-' # rake release tags ruby-vX.Y.Z
 
 task default: :test
 

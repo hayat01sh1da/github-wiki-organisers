@@ -17,11 +17,12 @@ on:
       - .ruby-version
       - RubyGem/**/*.rb
       - RubyGem/**/*.rbs
-      - RubyGem/Gemfile
       - RubyGem/*.gemspec
-      - RubyGem/Gemfile.lock
       - RubyGem/.rubocop.yml
       - RubyGem/.rubocop_todo.yml
+      - RubyGem/Gemfile
+      - RubyGem/Gemfile.lock
+      - RubyGem/Rakefile
       - RubyGem/Steepfile
   pull_request:
     paths:
@@ -30,11 +31,12 @@ on:
       - .ruby-version
       - RubyGem/**/*.rb
       - RubyGem/**/*.rbs
-      - RubyGem/Gemfile
       - RubyGem/*.gemspec
-      - RubyGem/Gemfile.lock
       - RubyGem/.rubocop.yml
       - RubyGem/.rubocop_todo.yml
+      - RubyGem/Gemfile
+      - RubyGem/Gemfile.lock
+      - RubyGem/Rakefile
       - RubyGem/Steepfile
 
 permissions:
@@ -45,7 +47,7 @@ jobs:
   change-detection:
     runs-on: ubuntu-latest
     outputs:
-      ruby-changes: ${{ steps.change-detection.outputs.ruby }}
+      minitest-changes: ${{ steps.change-detection.outputs.minitest }}
       rubocop-changes: ${{ steps.change-detection.outputs.rubocop}}
       steep-changes: ${{ steps.change-detection.outputs.steep}}
     steps:
@@ -55,39 +57,42 @@ jobs:
         id: change-detection
         with:
           filters: |
-            ruby:
+            minitest:
               - .github/actions/setup-ruby/action.yml
               - .github/workflows/rubygem--ci.yml
               - .ruby-version
               - RubyGem/**/*.rb
-              - RubyGem/Gemfile
               - RubyGem/*.gemspec
+              - RubyGem/Gemfile
               - RubyGem/Gemfile.lock
+              - RubyGem/Rakefile
             rubocop:
               - .github/actions/setup-ruby/action.yml
               - .github/workflows/rubygem--ci.yml
               - .ruby-version
               - RubyGem/**/*.rb
-              - RubyGem/Gemfile
               - RubyGem/*.gemspec
-              - RubyGem/Gemfile.lock
               - RubyGem/.rubocop.yml
               - RubyGem/.rubocop_todo.yml
+              - RubyGem/Gemfile
+              - RubyGem/Gemfile.lock
+              - RubyGem/Rakefile
+              - RubyGem/Steepfile
             steep:
               - .github/actions/setup-ruby/action.yml
               - .github/workflows/rubygem--ci.yml
               - .ruby-version
               - RubyGem/**/*.rb
               - RubyGem/**/*.rbs
-              - RubyGem/Gemfile
               - RubyGem/*.gemspec
+              - RubyGem/Gemfile
               - RubyGem/Gemfile.lock
               - RubyGem/Steepfile
   minitest:
     timeout-minutes: 10
     runs-on: ubuntu-latest
     needs: change-detection
-    if: needs.change-detection.outputs.ruby-changes == 'true'
+    if: needs.change-detection.outputs.minitest-changes == 'true'
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup-ruby
