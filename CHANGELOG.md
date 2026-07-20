@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).  
 One repository hosts two packages, so releases are tagged per ecosystem (`ruby-vX.Y.Z` for the RubyGems gem, `python-vX.Y.Z` for the PyPI library).
 
+## 0.2.0
+
+RubyGem only — the PyPI library has no shipped changes since `0.1.0` and stays on that version, so no `python-v0.2.0` tag is cut.
+
+### 1. Added
+
+- RubyGem release automation: `RubyGem/Rakefile` defines the Bundler gem tasks with the `ruby-` tag prefix, and `.github/workflows/rubygem--release.yml` builds and publishes via RubyGems Trusted Publishing on `ruby-v*` tags.
+- PyPI release automation: `.github/workflows/pypi--release.yml` builds the distributions and publishes via PyPI Trusted Publishers on `python-v*` tags, with the OIDC grant isolated in a `pypi`-environment publish job.
+- Ecosystem-scoped toolchain version files `RubyGem/.ruby-version` and `PyPI/.python-version`, alongside the repository-root ones.
+
+### 2. Changed
+
+- **Breaking (gem):** renamed the Ruby namespace from `Spreen::Wiki` to `SpreenWiki` and the lib path from `lib/spreen/wiki/` to `lib/spreen_wiki/`, matching the Python package's flat `spreen_wiki` layout. `require 'spreen-wiki'`, the gem name and the `spreen` CLI are unchanged, so CLI users are unaffected; library callers must replace `Spreen::Wiki::Home` with `SpreenWiki::Home` (likewise `Sidebar`, `UnknownWikiCountListExporter`, `UnknownWikiListExporterForLLM`, `Configuration`, `Application`).
+- Bumped the development Ruby toolchain from 4.0.5 to 4.0.6; the gem's `required_ruby_version` remains `>= 3.4`.
+- Updated the daily RubyGems dependencies (`concurrent-ruby` 1.3.7 → 1.3.8); the gem has no runtime dependencies, so this affects the development bundle only.
+- `.github/scripts/dependency_report.sh` labels ecosystems by registry name (`PyPI` / `RubyGems` / `npm`) instead of by installer command (`pip` / `gem` / `pnpm`).
+- Refined the `README.md` "Origin of the Name" section and replaced the obsolete workflow captures with current ones.
+- Rewrote `SECURITY.md` for the packaged releases, and pinned explicit `permissions` on the CodeQL workflow.
+- Numbered the `CHANGELOG.md` section headings to match the convention used across the other repositories.
+
+### 3. Removed
+
+- The `Spreen::Wiki` namespace and the `lib/spreen/wiki/` load path, superseded by `SpreenWiki` and `lib/spreen_wiki/`. `require 'spreen/wiki'` no longer resolves.
+
 ## 0.1.0
 
 ### 1. Added
@@ -19,7 +43,6 @@ One repository hosts two packages, so releases are tagged per ecosystem (`ruby-v
 
 - Renamed the repository to `spreen-wiki` and the ecosystem directories to `RubyGem/` (from `ruby/`) and `PyPI/` (from `python/`).
 - Named the packages **`spreen-wiki`** — a blend of the falcon's *stoop* and the *preen* that follows, after Hayato (隼人, "falcon man"): RubyGem `spreen-wiki` (`Spreen::Wiki`), PyPI `spreen-wiki` (`spreen_wiki`), CLI `spreen`, config file `.spreen.yml` (renamed from the working titles `github_wiki_organiser` / `github-wiki-organiser`, CLI `wiki-organise`, `.wiki-organiser.yml`).
-- Renamed the Ruby namespace from `Spreen::Wiki` to `SpreenWiki` and the lib path from `lib/spreen/wiki/` to `lib/spreen_wiki/`, matching the Python package's flat `spreen_wiki` layout; `require 'spreen-wiki'`, the gem name and the `spreen` CLI are unchanged.
 - Generalised the hardcoded assumptions: the organisation/repository/wiki URL, the owner-team URL, the template path, the scanned base path (now defaulting to the current directory), the excluded directories and the export filenames are all configuration, with the previous behaviour preserved as defaults.
 - Owner headings degrade gracefully to unlinked text when no organisation is configured instead of linking to a hardcoded personal account.
 - The wiki cron workflows pass `ORGANISATION_NAME` from `github.repository_owner` and keep driving the (unchanged) interactive Rake task interface.
