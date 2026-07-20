@@ -11,3 +11,6 @@ PyPI/src/*.egg-info/
 
 # Ruby
 RubyGem/*.gem
+RubyGem/.bundle/
+RubyGem/pkg/
+RubyGem/vendor/
